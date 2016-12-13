@@ -1,7 +1,11 @@
 PathDB
 =====
 
-[![Build Status](https://travis-ci.org/maxsumrall/PathDB.svg?branch=master)](https://travis-ci.org/maxsumrall/PathDB)
+Schematic overview of the architecture:
+
+![](src/main/resources/pathdb.png?raw=true)
+
+<!-- [![Build Status](https://travis-ci.org/maxsumrall/PathDB.svg?branch=master)](https://travis-ci.org/maxsumrall/PathDB)
 
 A data store for graph paths.
 
@@ -176,4 +180,4 @@ Interpreter
 
 _WORK IN PROGRESS_
 
-This section describes how query-plans are executed and where join-algorithms fit in.
+This section describes how query-plans are executed and where join-algorithms fit in. -->
