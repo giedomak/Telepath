@@ -2,12 +2,11 @@ var searchData=
 [
   ['newroot',['newRoot',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#a4bf0019b44be7530c6e64975c28ebd9b',1,'pathdb::kpathindex::pathindex::tree::IndexTree']]],
   ['next',['next',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_search_cursor.html#a3e9376ce912bf2c7d5dd3f4393191800',1,'pathdb::kpathindex::pathindex::tree::SearchCursor']]],
-  ['nextpage',['nextPage',['../interfacepathdb_1_1kpathindex_1_1util_1_1_bulk_load_data_source.html#a45199df4606719ddb1bced147abd07df',1,'pathdb::kpathindex::util::BulkLoadDataSource']]],
   ['node',['Node',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_node.html',1,'pathdb::kpathindex::pathdb']]],
   ['node',['Node',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_node.html#a23aa9efc989443d459e3d7808b4131d9',1,'pathdb::kpathindex::pathdb::Node']]],
   ['node_2ejava',['Node.java',['../_node_8java.html',1,'']]],
   ['node_5fheader_5flength',['NODE_HEADER_LENGTH',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_header.html#aa4d6be911bf01e7bb5c546110e79bd3a',1,'pathdb::kpathindex::storage::NodeHeader']]],
-  ['nodebulkloadertest',['NodeBulkLoaderTest',['../classpath_index_1_1_node_bulk_loader_test.html',1,'pathIndex']]],
+  ['nodebulkloadertest',['NodeBulkLoaderTest',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_node_bulk_loader_test.html',1,'pathdb::kpathindex::pathindex']]],
   ['nodebulkloadertest_2ejava',['NodeBulkLoaderTest.java',['../_node_bulk_loader_test_8java.html',1,'']]],
   ['nodedeletion',['nodeDeletion',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#a45803f76d66784f6d6d2610e8b5b9d83',1,'pathdb::kpathindex::pathindex::tree::IndexTree']]],
   ['nodeheader',['NodeHeader',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_header.html',1,'pathdb::kpathindex::storage']]],
@@ -17,9 +16,9 @@ var searchData=
   ['nodesearch',['nodeSearch',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#a686aa3c55195cba8ccb4307f5e82b4c9',1,'pathdb::kpathindex::pathindex::tree::IndexTree']]],
   ['nodesize',['NodeSize',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_size.html',1,'pathdb::kpathindex::storage']]],
   ['nodesize_2ejava',['NodeSize.java',['../_node_size_8java.html',1,'']]],
-  ['numberofbytes',['numberOfBytes',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a88794bb571ad6d21a297288340821952',1,'pathdb.kpathindex.storage.CompressedPageCursor.numberOfBytes()'],['../classpath_index_1_1_compression_example.html#a5a4e913080b8e6c9558ff60ac7005027',1,'pathIndex.CompressionExample.numberOfBytes()']]],
-  ['numberofbytestest',['numberOfBytesTest',['../classpath_index_1_1number_of_bytes_test.html',1,'pathIndex']]],
+  ['numberofbytes',['numberOfBytes',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a88794bb571ad6d21a297288340821952',1,'pathdb.kpathindex.storage.CompressedPageCursor.numberOfBytes()'],['../classpathdb_1_1kpathindex_1_1pathindex_1_1_compression_example.html#ae937aef736cbf641ae1f6fc464cc46b6',1,'pathdb.kpathindex.pathindex.CompressionExample.numberOfBytes()']]],
+  ['numberofbytestest',['numberOfBytesTest',['../classpathdb_1_1kpathindex_1_1pathindex_1_1number_of_bytes_test.html',1,'pathdb::kpathindex::pathindex']]],
   ['numberofbytestest_2ejava',['numberOfBytesTest.java',['../number_of_bytes_test_8java.html',1,'']]],
   ['numberofkeys',['numberOfKeys',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_in_memory_node.html#af7377ed2233d7fbd28cc92868d70d32f',1,'pathdb::kpathindex::pathindex::InMemoryNode']]],
-  ['numberofpages',['numberOfPages',['../classpath_index_1_1_simple_data_generator.html#a8a5f6f7dac0955785714466928f8ff2e',1,'pathIndex::SimpleDataGenerator']]]
+  ['numberofpages',['numberOfPages',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_simple_data_generator.html#a8e64a0a41f1693f31ac9f5f27faaf9ec',1,'pathdb::kpathindex::pathindex::SimpleDataGenerator']]]
 ];

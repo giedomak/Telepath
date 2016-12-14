@@ -2,7 +2,7 @@ var searchData=
 [
   ['abstractpath',['AbstractPath',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_abstract_path.html',1,'pathdb::kpathindex::pathdb']]],
   ['abstractpath_2ejava',['AbstractPath.java',['../_abstract_path_8java.html',1,'']]],
-  ['abstractpathcomparisiontest',['AbstractPathComparisionTest',['../classpath_d_b_1_1_abstract_path_comparision_test.html',1,'pathDB']]],
+  ['abstractpathcomparisiontest',['AbstractPathComparisionTest',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_abstract_path_comparision_test.html',1,'pathdb::kpathindex::pathdb']]],
   ['abstractpathcomparisiontest_2ejava',['AbstractPathComparisionTest.java',['../_abstract_path_comparision_test_8java.html',1,'']]],
   ['acquire',['acquire',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_tree_node_i_d_manager.html#a771fc3c44cb5e557758ae5ac22fca7c3',1,'pathdb::kpathindex::pathindex::tree::TreeNodeIDManager']]],
   ['acquirenewinternalnode',['acquireNewInternalNode',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#a477ff793c8f3ef288b37a93ff0527b56',1,'pathdb::kpathindex::pathindex::tree::IndexTree']]],

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['generaterandompathprefixes',['generateRandomPathPrefixes',['../classpath_d_b_1_1_path_prefix_test.html#ac6b17d8ab08b2733bf30211dffb9b667',1,'pathDB::PathPrefixTest']]],
-  ['generaterandompaths',['generateRandomPaths',['../classpath_d_b_1_1_path_test.html#a962f035abeae8838757a3c7b0755463a',1,'pathDB::PathTest']]],
-  ['generatesequentialpathprefixes',['generateSequentialPathPrefixes',['../classpath_d_b_1_1_path_prefix_test.html#a9cfdaa181bf12df7034fd3e3c01b653c',1,'pathDB::PathPrefixTest']]],
-  ['generatesequentialpaths',['generateSequentialPaths',['../classpath_d_b_1_1_path_test.html#ab6b7fc018c02aa5d8115f8351f076fbe',1,'pathDB::PathTest']]],
+  ['generaterandompathprefixes',['generateRandomPathPrefixes',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_prefix_test.html#ae504e67c7eb397294400b2e13e12436a',1,'pathdb::kpathindex::pathdb::PathPrefixTest']]],
+  ['generaterandompaths',['generateRandomPaths',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_test.html#a7f9e8f255eeff083e8baccd2c00531f4',1,'pathdb::kpathindex::pathdb::PathTest']]],
+  ['generatesequentialpathprefixes',['generateSequentialPathPrefixes',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_prefix_test.html#a55815d0ced091c229285d47bb4b5767b',1,'pathdb::kpathindex::pathdb::PathPrefixTest']]],
+  ['generatesequentialpaths',['generateSequentialPaths',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_test.html#a41f5e70a0cbe78da8976e580a110ab42',1,'pathdb::kpathindex::pathdb::PathTest']]],
   ['getall',['getAll',['../classpathdb_1_1kpathindex_1_1pagecachesort_1_1_page_set.html#a680ce068d3733e5985cd5e45914f3e5f',1,'pathdb::kpathindex::pagecachesort::PageSet']]],
   ['getbyte',['getByte',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a7f693394f6eb33d0ff46a75117bebcf9',1,'pathdb.kpathindex.storage.CompressedPageCursor.getByte()'],['../classpathdb_1_1kpathindex_1_1storage_1_1_page_proxy_cursor.html#a7fe665c767b6f1bfb23026b61191e608',1,'pathdb.kpathindex.storage.PageProxyCursor.getByte()']]],
   ['getbytes',['getBytes',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a9e98cae7f7f172eca654798b3698f87b',1,'pathdb.kpathindex.storage.CompressedPageCursor.getBytes()'],['../classpathdb_1_1kpathindex_1_1storage_1_1_in_memory_block_storage.html#ad1769167ea64514a5d520c139d49db11',1,'pathdb.kpathindex.storage.InMemoryBlockStorage.getBytes()'],['../classpathdb_1_1kpathindex_1_1storage_1_1_page_proxy_cursor.html#acf1fd674d55442694ec2b12314e739c5',1,'pathdb.kpathindex.storage.PageProxyCursor.getBytes()']]],

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['calculateaverage',['calculateAverage',['../class_benchmark_1_1_benchmark.html#a67ee44652bae166be033d9315c268faa',1,'Benchmark::Benchmark']]],
-  ['calculatesum',['calculateSum',['../class_benchmark_1_1_benchmark.html#a9a1a972b405fd66bf762920c794a2d20',1,'Benchmark::Benchmark']]],
+  ['calculateaverage',['calculateAverage',['../classpathdb_1_1kpathindex_1_1benchmark_1_1_benchmark_test.html#aba03d4b5126e36605370814eb730581c',1,'pathdb::kpathindex::benchmark::BenchmarkTest']]],
+  ['calculatesum',['calculateSum',['../classpathdb_1_1kpathindex_1_1benchmark_1_1_benchmark_test.html#a3fa4fffb7f467fc67d679397d5d498d6',1,'pathdb::kpathindex::benchmark::BenchmarkTest']]],
   ['capacity',['capacity',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a279f21679acbebce92e9b3c4dd34b43b',1,'pathdb.kpathindex.storage.CompressedPageCursor.capacity()'],['../classpathdb_1_1kpathindex_1_1storage_1_1_page_proxy_cursor.html#a2483bb554d9ef7751f5368263c2ca51e',1,'pathdb.kpathindex.storage.PageProxyCursor.capacity()']]],
   ['children',['children',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_in_memory_node.html#a0dce7a5708bd4d052d80355484644dba',1,'pathdb::kpathindex::pathindex::InMemoryNode']]],
   ['comparator',['comparator',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#a4116e6b81799b720a5c8096165ce5cf1',1,'pathdb::kpathindex::pathindex::tree::IndexTree']]],
@@ -11,10 +11,10 @@ var searchData=
   ['compressedpagecursor',['CompressedPageCursor',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html#a551a34ea144597096cde4909d4dc7d4a',1,'pathdb::kpathindex::storage::CompressedPageCursor']]],
   ['compressedpagecursor',['CompressedPageCursor',['../classpathdb_1_1kpathindex_1_1storage_1_1_compressed_page_cursor.html',1,'pathdb::kpathindex::storage']]],
   ['compressedpagecursor_2ejava',['CompressedPageCursor.java',['../_compressed_page_cursor_8java.html',1,'']]],
-  ['compressedpagecursortest',['CompressedPageCursorTest',['../classpath_index_1_1_compressed_page_cursor_test.html',1,'pathIndex']]],
+  ['compressedpagecursortest',['CompressedPageCursorTest',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_compressed_page_cursor_test.html',1,'pathdb::kpathindex::pathindex']]],
   ['compressedpagecursortest_2ejava',['CompressedPageCursorTest.java',['../_compressed_page_cursor_test_8java.html',1,'']]],
   ['compression',['COMPRESSION',['../classpathdb_1_1kpathindex_1_1storage_1_1_disk_cache.html#a5c7a050fa5f2f7ff512beedbf7fa4b4b',1,'pathdb::kpathindex::storage::DiskCache']]],
-  ['compressionexample',['CompressionExample',['../classpath_index_1_1_compression_example.html',1,'pathIndex']]],
+  ['compressionexample',['CompressionExample',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_compression_example.html',1,'pathdb::kpathindex::pathindex']]],
   ['compressionexample_2ejava',['CompressionExample.java',['../_compression_example_8java.html',1,'']]],
   ['currentid',['currentID',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_tree_node_i_d_manager.html#a7f9b1f9360cb51d12fe7f7998206e9d8',1,'pathdb::kpathindex::pathindex::tree::TreeNodeIDManager']]],
   ['cursor',['cursor',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_deletion.html#a860ac2336440dcb9f865f3ea89114464',1,'pathdb.kpathindex.pathindex.tree.IndexDeletion.cursor()'],['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_insertion.html#afe7c42118154aeb2812c171ea314ca46',1,'pathdb.kpathindex.pathindex.tree.IndexInsertion.cursor()'],['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_search.html#a2695faaab7340aa628df2716811058b5',1,'pathdb.kpathindex.pathindex.tree.IndexSearch.cursor()'],['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_index_tree.html#aff3385ecba64ec02889d56b35a3d2f63',1,'pathdb.kpathindex.pathindex.tree.IndexTree.cursor()'],['../classpathdb_1_1kpathindex_1_1storage_1_1_node_size.html#a7d3548e1a3818ba0cf30d2e090bf07a2',1,'pathdb.kpathindex.storage.NodeSize.cursor()'],['../classpathdb_1_1kpathindex_1_1util_1_1_index_bulk_loader.html#a47a27bcbc6afe9d72c85b3c14489f7c3',1,'pathdb.kpathindex.util.IndexBulkLoader.cursor()']]]

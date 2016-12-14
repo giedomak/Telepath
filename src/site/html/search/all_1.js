@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['benchmark',['Benchmark',['../class_benchmark_1_1_benchmark.html',1,'Benchmark']]],
-  ['benchmark',['Benchmark',['../namespace_benchmark.html',1,'']]],
-  ['benchmark_2ejava',['Benchmark.java',['../_benchmark_8java.html',1,'']]],
+  ['benchmarktest',['BenchmarkTest',['../classpathdb_1_1kpathindex_1_1benchmark_1_1_benchmark_test.html',1,'pathdb::kpathindex::benchmark']]],
+  ['benchmarktest_2ejava',['BenchmarkTest.java',['../_benchmark_test_8java.html',1,'']]],
   ['block',['Block',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_block.html',1,'pathdb::kpathindex::pathindex']]],
   ['block_2ejava',['Block.java',['../_block_8java.html',1,'']]],
   ['blockserializer',['BlockSerializer',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_block_serializer.html',1,'pathdb::kpathindex::pathindex']]],
@@ -10,8 +9,6 @@ var searchData=
   ['blockserializerintermediary',['BlockSerializerIntermediary',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_block_serializer_intermediary.html',1,'pathdb::kpathindex::pathindex']]],
   ['blockserializerintermediary',['BlockSerializerIntermediary',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_block_serializer_intermediary.html#a84bf5a2132087a03df28c5abbe28c311',1,'pathdb::kpathindex::pathindex::BlockSerializerIntermediary']]],
   ['blockserializerintermediary_2ejava',['BlockSerializerIntermediary.java',['../_block_serializer_intermediary_8java.html',1,'']]],
-  ['bulkloaddatasource',['BulkLoadDataSource',['../interfacepathdb_1_1kpathindex_1_1util_1_1_bulk_load_data_source.html',1,'pathdb::kpathindex::util']]],
-  ['bulkloaddatasource_2ejava',['BulkLoadDataSource.java',['../_bulk_load_data_source_8java.html',1,'']]],
   ['byte_5fposition_5fkey_5fcount',['BYTE_POSITION_KEY_COUNT',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_header.html#aeb4f8915c0f6a358ce1587d3e8854966',1,'pathdb::kpathindex::storage::NodeHeader']]],
   ['byte_5fposition_5fkey_5flength',['BYTE_POSITION_KEY_LENGTH',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_header.html#a86f5d3ceefaec6172061cf13b4753395',1,'pathdb::kpathindex::storage::NodeHeader']]],
   ['byte_5fposition_5fnode_5ftype',['BYTE_POSITION_NODE_TYPE',['../classpathdb_1_1kpathindex_1_1storage_1_1_node_header.html#aca992b31a6d28b1454cc9888a07c5220',1,'pathdb::kpathindex::storage::NodeHeader']]],

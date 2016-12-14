@@ -9,5 +9,5 @@ var searchData=
   ['precedingnode',['precedingNode',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_in_memory_node.html#aadd1873a38f7464a46d0781dc8be4846',1,'pathdb::kpathindex::pathindex::InMemoryNode']]],
   ['prefixlength',['prefixLength',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_prefix.html#abc58244a28a61201fd384642e350b95b',1,'pathdb::kpathindex::pathdb::PathPrefix']]],
   ['primkey',['primkey',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_split_result.html#a211858db41d7d3da0a171e262c2796b4',1,'pathdb::kpathindex::pathindex::tree::SplitResult']]],
-  ['proxy',['proxy',['../class_benchmark_1_1_benchmark.html#a124cf66c03faa111a63ef46f31deda68',1,'Benchmark::Benchmark']]]
+  ['proxy',['proxy',['../classpathdb_1_1kpathindex_1_1benchmark_1_1_benchmark_test.html#a8573cacfe9f918b5d09d2343e49c3353',1,'pathdb::kpathindex::benchmark::BenchmarkTest']]]
 ];

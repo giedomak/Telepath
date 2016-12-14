@@ -7,7 +7,7 @@ var searchData=
   ['leafnodesamelengthkeydeserialization',['leafNodeSameLengthKeyDeserialization',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_in_memory_node.html#ab67738acff783623f6c38b7a419c6fac',1,'pathdb::kpathindex::pathindex::InMemoryNode']]],
   ['left',['left',['../classpathdb_1_1kpathindex_1_1pathindex_1_1tree_1_1_split_result.html#aa7153b625740a8c1ee4a3df46198e2f0',1,'pathdb::kpathindex::pathindex::tree::SplitResult']]],
   ['length',['length',['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path.html#a8c8656f6466059e2c5003b8fca0efe14',1,'pathdb.kpathindex.pathdb.Path.length()'],['../classpathdb_1_1kpathindex_1_1pathdb_1_1_path_prefix.html#ab994556651b811efae8425b42bafe493',1,'pathdb.kpathindex.pathdb.PathPrefix.length()']]],
-  ['loadtest',['loadTest',['../classpath_index_1_1_node_bulk_loader_test.html#aadd10520de2f529e5a42d95b7308eabb',1,'pathIndex::NodeBulkLoaderTest']]],
-  ['log2nlz',['log2nlz',['../classpath_index_1_1_compression_example.html#aa56399535fd9f778e01351ba8e06ed70',1,'pathIndex.CompressionExample.log2nlz()'],['../classpath_index_1_1number_of_bytes_test.html#a43fc33ff1be6d9414bcc243e3b334d70',1,'pathIndex.numberOfBytesTest.log2nlz()']]],
-  ['logtofile',['logToFile',['../class_benchmark_1_1_benchmark.html#a6456d2640d3e7e6c99c83b25251061ec',1,'Benchmark::Benchmark']]]
+  ['loadtest',['loadTest',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_node_bulk_loader_test.html#ab23359ab826cd157a9855ed9bf4f5011',1,'pathdb::kpathindex::pathindex::NodeBulkLoaderTest']]],
+  ['log2nlz',['log2nlz',['../classpathdb_1_1kpathindex_1_1pathindex_1_1_compression_example.html#afe81a50193fe780bd9380c7d5caf8203',1,'pathdb.kpathindex.pathindex.CompressionExample.log2nlz()'],['../classpathdb_1_1kpathindex_1_1pathindex_1_1number_of_bytes_test.html#a4cc7e81e5b26541c660099c64ac7bee3',1,'pathdb.kpathindex.pathindex.numberOfBytesTest.log2nlz()']]],
+  ['logtofile',['logToFile',['../classpathdb_1_1kpathindex_1_1benchmark_1_1_benchmark_test.html#a0945969959f1ff8572e0b941a35a0fba',1,'pathdb::kpathindex::benchmark::BenchmarkTest']]]
 ];
