@@ -7,16 +7,16 @@
 
 package pathdb.kpathindex.util;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.LongBuffer;
+
 import pathdb.kpathindex.pathindex.tree.IndexInsertion;
 import pathdb.kpathindex.pathindex.tree.IndexTree;
 import pathdb.kpathindex.pathindex.tree.TreeNodeIDManager;
 import pathdb.kpathindex.storage.DiskCache;
 import pathdb.kpathindex.storage.NodeHeader;
 import pathdb.kpathindex.storage.PageProxyCursor;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.LongBuffer;
 
 public class IndexBulkLoader {
   private DiskCache disk;
@@ -159,7 +159,7 @@ public class IndexBulkLoader {
     this.currentOffset += 8;
   }
 
-  public byte[] traverseToFindFirstKeyInLeafAsBytes(PageProxyCursor cursor) throws IOException {
+  private byte[] traverseToFindFirstKeyInLeafAsBytes(PageProxyCursor cursor) throws IOException {
     if (NodeHeader.isLeafNode(cursor)) {
       return IndexInsertion.getFirstKeyInNodeAsBytes(cursor);
     } else {

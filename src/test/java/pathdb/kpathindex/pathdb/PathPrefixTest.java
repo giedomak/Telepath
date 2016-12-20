@@ -135,7 +135,7 @@ public class PathPrefixTest {
     return true;
   }
 
-  public static PathPrefix simplePathPrefix(int prefixLength, int length, Long value) {
+  protected static PathPrefix simplePathPrefix(int prefixLength, int length, Long value) {
     List<Node> nodes = new ArrayList<>(length + 1);
 
     for (int i = 0; i < length + 1; i++) {
@@ -145,7 +145,7 @@ public class PathPrefixTest {
     return new PathPrefix(prefixLength, nodes);
   }
 
-  public static PathPrefix randomPathPrefix(int prefixLength, int length) {
+  private static PathPrefix randomPathPrefix(int prefixLength, int length) {
     List<Node> nodes = new ArrayList<>(length);
     for (int i = 0; i < length; i++) {
       nodes.add(new Node(random.nextLong()));
@@ -154,7 +154,7 @@ public class PathPrefixTest {
   }
 
 
-  public static List<PathPrefix> generateRandomPathPrefixes(int prefixLength, int length, int amount) {
+  private static List<PathPrefix> generateRandomPathPrefixes(int prefixLength, int length, int amount) {
     List<PathPrefix> pathPrefixes = new ArrayList<>(amount);
     for (long i = 0; i < amount; i++) {
       pathPrefixes.add(randomPathPrefix(prefixLength, length));
@@ -162,7 +162,7 @@ public class PathPrefixTest {
     return pathPrefixes;
   }
 
-  public static List<PathPrefix> generateSequentialPathPrefixes(int prefixLength, int length, int amount) {
+  private static List<PathPrefix> generateSequentialPathPrefixes(int prefixLength, int length, int amount) {
     List<PathPrefix> pathPrefixes = new ArrayList<>(amount);
     for (long i = 0; i < amount; i++) {
       pathPrefixes.add(simplePathPrefix(prefixLength, length, i));
