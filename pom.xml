@@ -17,18 +17,19 @@
 
     <!-- DEPENDENCIES -->
     <dependencies>
+
+        <!-- Max Sumrall's path index through Github -->
         <dependency>
+            <groupId>com.github.maxsumrall</groupId>
+            <artifactId>PathDB</artifactId>
+            <version>master</version> <!-- branch -->
+        </dependency>
+        <!-- Or through local maven repository -->
+        <!-- <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
             <version>0.1-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Max Sumrall's path index -->
-        <!--<dependency>-->
-            <!--<groupId>com.github.maxsumrall</groupId>-->
-            <!--<artifactId>PathDB</artifactId>-->
-            <!--<version>c07d905</version> &lt;!&ndash; commit hash &ndash;&gt;-->
-        <!--</dependency>-->
+        </dependency> -->
 
         <!-- TESTING -->
         <dependency>
