@@ -17,6 +17,11 @@
 
     <!-- DEPENDENCIES -->
     <dependencies>
+        <dependency>
+            <groupId>com.pathdb</groupId>
+            <artifactId>pathdb</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
 
         <!-- Max Sumrall's path index -->
         <!--<dependency>-->
