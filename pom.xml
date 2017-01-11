@@ -15,6 +15,11 @@
         <inceptionYear>2017</inceptionYear>
     </properties>
 
+    <!-- We want mvn javadoc:javadoc to be inside the repo -->
+    <reporting>
+        <outputDirectory>${basedir}/src/site</outputDirectory>
+    </reporting>
+
     <!-- DEPENDENCIES -->
     <dependencies>
 
