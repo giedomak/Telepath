@@ -1,8 +1,0 @@
-var dir_3135458817b176b1c584314415f121b4 =
-[
-    [ "pagecachesort", "dir_5b29c6c9812c5e098372197e5d3de986.html", "dir_5b29c6c9812c5e098372197e5d3de986" ],
-    [ "pathdb", "dir_3b01f5d8c078a74fc2c67178759ac247.html", "dir_3b01f5d8c078a74fc2c67178759ac247" ],
-    [ "pathindex", "dir_1e37a1eb8e252677f7a5f108109e1f8b.html", "dir_1e37a1eb8e252677f7a5f108109e1f8b" ],
-    [ "storage", "dir_89968b199672462e56a72672772daf74.html", "dir_89968b199672462e56a72672772daf74" ],
-    [ "util", "dir_68dda2862bd4a6156218767155480d81.html", "dir_68dda2862bd4a6156218767155480d81" ]
-];

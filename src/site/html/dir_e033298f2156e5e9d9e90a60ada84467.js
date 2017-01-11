@@ -1,4 +1,0 @@
-var dir_e033298f2156e5e9d9e90a60ada84467 =
-[
-    [ "pathdb", "dir_474bd77f153002c98303d6d51129bf3f.html", "dir_474bd77f153002c98303d6d51129bf3f" ]
-];
