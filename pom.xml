@@ -3,12 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>pathdb</groupId>
-    <artifactId>pathdb</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.telepathdb</groupId>
+    <artifactId>telepathdb</artifactId>
+    <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>PathDB</name>
+    <name>TelepathDB</name>
+    <url>https://github.com/giedomak/TelepathDB</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,7 +24,7 @@
     <!-- DEPENDENCIES -->
     <dependencies>
 
-        <!-- Max Sumrall's path index through Github -->
+        <!-- Max Sumrall's PathDB through Github -->
         <dependency>
             <groupId>com.github.maxsumrall</groupId>
             <artifactId>PathDB</artifactId>
@@ -71,7 +72,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>pathdb.PathDB</mainClass>
+                            <mainClass>com.telepathdb.TelepathDB</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,4 +1,4 @@
-PathDB
+TelepathDB
 =====
 
 Schematic overview of the architecture:
