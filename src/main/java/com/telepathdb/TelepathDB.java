@@ -7,8 +7,18 @@
 
 package com.telepathdb;
 
+import com.telepathdb.kpathindex.KPathIndex;
+import com.telepathdb.kpathindex.KPathIndexInMemory;
+
 class TelepathDB {
+
+  private static KPathIndex kPathIndex;
+
   public static void main(String[] args) {
+
+    // We want to use the InMemory version of the KPathIndex
+    kPathIndex = new KPathIndexInMemory();
+
     System.out.println("TelepathDB is up and running");
   }
 }
