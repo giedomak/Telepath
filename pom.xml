@@ -9,6 +9,7 @@
     <packaging>jar</packaging>
 
     <name>TelepathDB</name>
+    <description>A fully-fledged graph database which uses path indexing to speed-up regular path queries.</description>
     <url>https://github.com/giedomak/TelepathDB</url>
 
     <properties>
@@ -51,6 +52,12 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <!-- We use Mockito to mock objects -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.6.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -64,6 +71,21 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+
+            <!-- Integration tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Assembly plugin to create fat jars -->
@@ -174,6 +196,21 @@
             <url>http://www.gnu.org/licenses/gpl.txt</url>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/giedomak/TelepathDB</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>giedomak</id>
+            <name>Giedo Mak</name>
+            <email>giedomak@gmail.com</email>
+            <roles>
+                <role>Core developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <!-- We need this in order to specify github dependencies -->
     <repositories>

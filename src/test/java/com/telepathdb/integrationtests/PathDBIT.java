@@ -5,7 +5,7 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package integrationtests.pathindex;
+package com.telepathdb.integrationtests;
 
 import com.pathdb.pathIndex.Node;
 import com.pathdb.pathIndex.Path;
@@ -21,7 +21,7 @@ import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class PathIndexIntegrationTest {
+public class PathDBIT {
   @Test
   public void pathIndexIntegrationTest() throws Exception {
     // given
