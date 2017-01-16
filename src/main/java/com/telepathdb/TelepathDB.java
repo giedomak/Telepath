@@ -9,12 +9,18 @@ package com.telepathdb;
 
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
+import com.telepathdb.staticparser.StaticParser;
+import com.telepathdb.staticparser.StaticParserSparql;
 
 class TelepathDB {
 
+  private static StaticParser staticParser;
   private static KPathIndex kPathIndex;
 
   public static void main(String[] args) {
+
+    // We want to use the Sparql query language
+    staticParser = new StaticParserSparql();
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();
