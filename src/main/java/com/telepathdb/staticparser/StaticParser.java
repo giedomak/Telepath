@@ -13,4 +13,5 @@ package com.telepathdb.staticparser;
 public interface StaticParser {
 
   public void input();
+  public void parse(String input);
 }

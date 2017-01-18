@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +36,7 @@ public class TelepathDBTest {
   }
 
   @Test
-  public void mainMethodPrintsUpAndRunningString() {
+  public void mainMethodPrintsUpAndRunningString() throws IOException {
     // when
     new TelepathDB().main(new String[]{"max", "giedo"});
 
