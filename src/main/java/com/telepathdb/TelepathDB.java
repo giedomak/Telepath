@@ -9,6 +9,7 @@ package com.telepathdb;
 
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
+import com.telepathdb.kpathindex.utilities.GMarkImport;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserSparql;
 
@@ -19,11 +20,18 @@ class TelepathDB {
 
   private static StaticParser staticParser;
   private static KPathIndex kPathIndex;
+  private static GMarkImport gMarkImport;
 
   public static void main(String[] args) throws IOException {
 
     // Init everything we need
     setupModules();
+
+    // Import test dataset
+    long imported = gMarkImport.doImport("/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
+    System.out.println("Imported paths: " + imported);
+//    System.out.println(kPathIndex.search(new PathPrefix(null, )));
+
     System.out.println("TelepathDB is up and running");
 
     // Start TelepathDB and listen for query input
@@ -65,6 +73,9 @@ class TelepathDB {
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();
+
+    // We might want to use the GMarkImporter
+    gMarkImport = new GMarkImport(kPathIndex);
 
   }
 }

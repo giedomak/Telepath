@@ -7,10 +7,10 @@
 
 package com.telepathdb.kpathindex;
 
-import com.pathdb.pathIndex.Path;
 import com.pathdb.pathIndex.PathIndex;
-import com.pathdb.pathIndex.PathPrefix;
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
+import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.PathPrefix;
 
 import java.io.IOException;
 
@@ -37,7 +37,7 @@ public class KPathIndexInMemory implements KPathIndex {
    */
   @Override
   public Iterable<Path> search(PathPrefix pathPrefix) throws IOException {
-    return pathIndex.getPaths(pathPrefix);
+    return (Iterable<Path>) (Iterable<?>) pathIndex.getPaths(pathPrefix);
   }
 
   /**

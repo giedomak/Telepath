@@ -7,8 +7,8 @@
 
 package com.telepathdb.kpathindex;
 
-import com.pathdb.pathIndex.Path;
-import com.pathdb.pathIndex.PathPrefix;
+import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.PathPrefix;
 
 import java.io.IOException;
 

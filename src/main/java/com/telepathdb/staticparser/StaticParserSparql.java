@@ -46,6 +46,8 @@ public class StaticParserSparql implements StaticParser {
 
   private void parseInput(String input) {
 
+    // Inspiration: http://stackoverflow.com/a/15051200/3238444
+
     // Get our lexer
     SparqlLexer sparqlLexer = new SparqlLexer(new ANTLRInputStream(input));
 
