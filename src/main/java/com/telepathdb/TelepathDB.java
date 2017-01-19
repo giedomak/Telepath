@@ -30,6 +30,7 @@ class TelepathDB {
     // Import test dataset
     long imported = gMarkImport.doImport("/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
     System.out.println("Imported paths: " + imported);
+
 //    System.out.println(kPathIndex.search(new PathPrefix(null, )));
 
     System.out.println("TelepathDB is up and running");

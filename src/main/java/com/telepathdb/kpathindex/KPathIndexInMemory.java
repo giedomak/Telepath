@@ -9,6 +9,7 @@ package com.telepathdb.kpathindex;
 
 import com.pathdb.pathIndex.PathIndex;
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
+
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 
@@ -37,6 +38,7 @@ public class KPathIndexInMemory implements KPathIndex {
    */
   @Override
   public Iterable<Path> search(PathPrefix pathPrefix) throws IOException {
+    // We have to cast the Path model from pathDB's one, to our own again
     return (Iterable<Path>) (Iterable<?>) pathIndex.getPaths(pathPrefix);
   }
 
