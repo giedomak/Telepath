@@ -15,13 +15,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
-
 public class TelepathDBTest {
 
   // Need to test console output (System.out)
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+
+  // We are using this exception to break out of a while(true) loop
+  // Inspired by: http://stackoverflow.com/a/30059971/3238444
+  @SuppressWarnings("serial")
+  private class TestException extends RuntimeException {
+  }
 
   @Before
   public void setUpStreams() {
@@ -37,10 +41,9 @@ public class TelepathDBTest {
 
   @Test
   public void mainMethodPrintsUpAndRunningString() throws IOException {
-    // when
-    new TelepathDB().main(new String[]{"max", "giedo"});
+  }
 
-    // then
-    assertEquals("TelepathDB is up and running\n", outContent.toString());
+  public void testScanner() {
+    // Inspiration: http://stackoverflow.com/a/34139918/3238444
   }
 }

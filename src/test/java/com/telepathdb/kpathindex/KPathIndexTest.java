@@ -7,9 +7,9 @@
 
 package com.telepathdb.kpathindex;
 
-import com.pathdb.pathIndex.Node;
-import com.pathdb.pathIndex.Path;
-import com.pathdb.pathIndex.PathPrefix;
+import com.telepathdb.datamodels.Node;
+import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.PathPrefix;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class KPathIndexTest {
   public void searchMethod() throws IOException {
     PathPrefix pathPrefix = new PathPrefix(4, 8);
     kPathIndex.search(pathPrefix);
-    // Make sure the search method was called with that argument
+    // Make sure the search method was called with the right argument
     Mockito.verify(kPathIndex).search(pathPrefix);
   }
 
@@ -40,7 +40,7 @@ public class KPathIndexTest {
   public void insertMethod() {
     Path path = new Path(3, new ArrayList<Node>());
     kPathIndex.insert(path);
-    // Make sure the insert method was called with that argument
+    // Make sure the insert method was called with the right argument
     Mockito.verify(kPathIndex).insert(path);
   }
 }

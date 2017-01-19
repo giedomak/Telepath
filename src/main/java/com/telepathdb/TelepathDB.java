@@ -42,7 +42,7 @@ class TelepathDB {
   /**
    * Listen for query input and gather results
    */
-  private static void start() {
+  protected static void start() {
 
     Scanner in = new Scanner(System.in);
 
