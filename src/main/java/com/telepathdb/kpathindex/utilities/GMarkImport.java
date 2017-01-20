@@ -23,29 +23,36 @@ public class GMarkImport {
   }
 
   /**
-   * Imports gMark file. Assumes the format of the file resembles:
-   * 42 4 6
-   * Where 42 and 6 are node ID's and 4 can be discarded.
+   * Imports a gMark file
+   *
+   * Assumes the format of the file resembles: node_id; edge_label; node_id 42 4 6 Meaning the above
+   * row indicates a path between nodes 42 and 6, connected by an edge with edgelabel 4.
    */
   public long doImport(String gMarkFile) throws IOException {
 
     long importedLines = 0;
 
-    try(BufferedReader br = new BufferedReader(new FileReader(gMarkFile))) {
+    try (BufferedReader br = new BufferedReader(new FileReader(gMarkFile))) {
       String line = br.readLine();
 
       while (line != null) {
         // Split the line on space
         String[] split = line.split(" ");
 
-        // First split is the starting node
+        // split[0] is the starting node id
+        long startNodeID = Long.parseLong(split[0]);
+        // split[1] is the edgelabel id
+        long edgeLabelID = Long.parseLong(split[1]);
+        // split[2] is the end node id
+        long endNodeID = Long.parseLong(split[2]);
+
+        // Put them into an array
         List<Node> nodes = new ArrayList<>(2);
-        nodes.add(new Node(Long.parseLong(split[0])));
-        // Second split is the end node
-        nodes.add(new Node(Long.parseLong(split[2])));
+        nodes.add(new Node(startNodeID));
+        nodes.add(new Node(endNodeID));
 
         // Insert into the kpathindex
-        kPathIndex.insert(new Path(importedLines, nodes));
+        kPathIndex.insert(new Path(edgeLabelID, nodes));
 
         importedLines++;
         line = br.readLine();

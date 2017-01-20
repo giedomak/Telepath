@@ -6,27 +6,42 @@ import com.telepathdb.staticparser.rpq.antlr.RPQLexer;
 import com.telepathdb.staticparser.rpq.antlr.RPQParser;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.misc.NotNull;
 
 /**
- * Parse the RPQ ANTLR4 AST into our ParseTree model
+ * Parse the RPQ ANTLR4 AST into our internal ParseTree model
+ * We use the Visitor approach instead of the Listener approach
+ * Inspiration: http://jakubdziworski.github.io/java/2016/04/01/antlr_visitor_vs_listener.html
  */
 public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
 
+  /**
+   * This is the main method which we need to call if we want to parse a RPQ.
+   * Here we define to start parsing the input using the query() rule.
+   *
+   * @param RPQSourceCode The complete RPQ formatted as a String
+   * @return ParseTree The complete ParseTree after recursively traversing the complete ANTLR AST.
+   */
   public ParseTree parse(String RPQSourceCode) {
-    CharStream charStream = new ANTLRInputStream(RPQSourceCode);
-    RPQLexer lexer = new RPQLexer(charStream);
-    TokenStream tokens = new CommonTokenStream(lexer);
-    RPQParser parser = new RPQParser(tokens);
 
+    // Setup the lexer and parser
+    RPQLexer lexer = new RPQLexer(new ANTLRInputStream(RPQSourceCode));
+    RPQParser parser = new RPQParser(new CommonTokenStream(lexer));
+
+    // Here we define to start parsing our query with the query() rule
     QueryOperatorVisitor queryOperatorVisitor = new QueryOperatorVisitor();
     ParseTree parseTree = queryOperatorVisitor.visit(parser.query());
     return parseTree;
   }
 
+  /**
+   * Our query visitor inline class This class extends the RPQBaseVisitor class and contains the
+   * appropriate visitor methods, "listeners". These methods will be "fired" if we visit one of the
+   * rules from the RPQ grammar while visiting the ANTLR ParseTree. The overridden methods from
+   * RPQBaseVisitor allow us to check if we are dealing with unary operators like Kleene star or
+   * Plus, or binary operators like Union or Concatenation for example.
+   */
   private static class QueryOperatorVisitor extends RPQBaseVisitor<ParseTree> {
 
     @Override
