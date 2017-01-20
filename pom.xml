@@ -90,6 +90,7 @@
                 <version>4.5</version>
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/resources/antlr4</sourceDirectory>
+                    <visitor>true</visitor>
                 </configuration>
                 <executions>
                     <execution>

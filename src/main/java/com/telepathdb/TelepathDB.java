@@ -12,6 +12,7 @@ import com.telepathdb.kpathindex.KPathIndexInMemory;
 import com.telepathdb.kpathindex.utilities.GMarkImport;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserSparql;
+import com.telepathdb.staticparser.StaticParserRPQ;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -71,6 +72,7 @@ class TelepathDB {
 
     // We want to use the Sparql query language
     staticParser = new StaticParserSparql();
+    staticParser = new StaticParserRPQ();
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();
