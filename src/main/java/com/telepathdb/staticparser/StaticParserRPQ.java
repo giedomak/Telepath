@@ -7,7 +7,7 @@
 
 package com.telepathdb.staticparser;
 
-
+import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.staticparser.rpq.RPQVisitorParser;
 
 /**
@@ -27,50 +27,9 @@ public class StaticParserRPQ implements StaticParser {
     RPQVisitorParser rpqVisitorParser = new RPQVisitorParser();
 
     // Catch the IllegalStateException, since we don't want further propogation when this occurs
-    try {
-      rpqVisitorParser.parse(input);
-    } catch (IllegalStateException exception) {
-      System.out.println(exception);
-    }
+    ParseTree parseTree = rpqVisitorParser.parse(input);
+
+    parseTree.inOrderPrint(parseTree);
 
   }
-
-
-//  private void parseInput(String input) {
-//
-//    // Inspiration: http://stackoverflow.com/a/15051200/3238444
-//
-//    // Get our lexer
-//    RPQLexer rpqLexer = new RPQLexer(new ANTLRInputStream(input));
-//
-//    // Pass the tokens to the parser
-//    RPQParser rpqParser = new RPQParser(new CommonTokenStream(rpqLexer));
-//
-//    // Attach an error listener in order to raise errors when needed
-//    rpqParser.addErrorListener(new BaseErrorListener() {
-//      @Override
-//      public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line, int charPositionInLine, String msg, RecognitionException e) {
-//        throw new IllegalStateException("failed to parse at line " + line + " due to " + msg, e);
-//      }
-//    });
-//
-//    // Attach a listener to parsing events in order to specify behavior
-//    RPQBaseListener listener = new RPQBaseListener() {
-//      @Override
-//      public void enterQuery(RPQParser.QueryContext ctx) {
-//        System.out.println(ctx.getText());
-//      }
-//    };
-//
-//    // Specify our entry point
-//    RPQParser.QueryContext queryContext = rpqParser.query();
-//    System.out.println(queryContext.toStringTree());
-//
-//    // Open the parse tree in a GUI
-//    new TreeViewer(Arrays.asList(rpqParser.getRuleNames()), queryContext).open();
-//
-//    // Walk it and attach our listener
-//    // ParseTreeWalker walker = new ParseTreeWalker();
-//    // walker.walk(listener, queryContext);
-//  }
 }

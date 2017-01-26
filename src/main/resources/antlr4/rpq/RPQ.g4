@@ -9,12 +9,12 @@ grammar RPQ;
 
 /**
  * Parser rules
- * We give each term a name in queryOperator, queryOperatorQuery, leaf or parenthesis
+ * Each parser rule gets one of the following names: queryOperator, queryOperatorQuery, leaf or parenthesis
  */
 
 query
-    : query unaryOperator               # queryOperator
-    | query binaryOperator query 	    # queryOperatorQuery
+    : query unaryOperator               # unaryExpression
+    | query binaryOperator query 	    # binaryExpression
     | LABEL						        # leaf
     | '(' query ')'		 		        # parenthesis
     ;

@@ -112,6 +112,31 @@ public class RPQParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class BinaryExpressionContext extends QueryContext {
+		public List<QueryContext> query() {
+			return getRuleContexts(QueryContext.class);
+		}
+		public QueryContext query(int i) {
+			return getRuleContext(QueryContext.class,i);
+		}
+		public BinaryOperatorContext binaryOperator() {
+			return getRuleContext(BinaryOperatorContext.class,0);
+		}
+		public BinaryExpressionContext(QueryContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RPQListener) ((RPQListener)listener).enterBinaryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RPQListener) ((RPQListener)listener).exitBinaryExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitBinaryExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class LeafContext extends QueryContext {
 		public TerminalNode LABEL() { return getToken(RPQParser.LABEL, 0); }
 		public LeafContext(QueryContext ctx) { copyFrom(ctx); }
@@ -126,6 +151,28 @@ public class RPQParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitLeaf(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class UnaryExpressionContext extends QueryContext {
+		public QueryContext query() {
+			return getRuleContext(QueryContext.class,0);
+		}
+		public UnaryOperatorContext unaryOperator() {
+			return getRuleContext(UnaryOperatorContext.class,0);
+		}
+		public UnaryExpressionContext(QueryContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof RPQListener) ((RPQListener)listener).enterUnaryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof RPQListener) ((RPQListener)listener).exitUnaryExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitUnaryExpression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -145,53 +192,6 @@ public class RPQParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitParenthesis(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class QueryOperatorQueryContext extends QueryContext {
-		public List<QueryContext> query() {
-			return getRuleContexts(QueryContext.class);
-		}
-		public QueryContext query(int i) {
-			return getRuleContext(QueryContext.class,i);
-		}
-		public BinaryOperatorContext binaryOperator() {
-			return getRuleContext(BinaryOperatorContext.class,0);
-		}
-		public QueryOperatorQueryContext(QueryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RPQListener) ((RPQListener)listener).enterQueryOperatorQuery(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RPQListener) ((RPQListener)listener).exitQueryOperatorQuery(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitQueryOperatorQuery(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class QueryOperatorContext extends QueryContext {
-		public QueryContext query() {
-			return getRuleContext(QueryContext.class,0);
-		}
-		public UnaryOperatorContext unaryOperator() {
-			return getRuleContext(UnaryOperatorContext.class,0);
-		}
-		public QueryOperatorContext(QueryContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof RPQListener) ((RPQListener)listener).enterQueryOperator(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof RPQListener) ((RPQListener)listener).exitQueryOperator(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof RPQVisitor) return ((RPQVisitor<? extends T>)visitor).visitQueryOperator(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -252,7 +252,7 @@ public class RPQParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
-						_localctx = new QueryOperatorQueryContext(new QueryContext(_parentctx, _parentState));
+						_localctx = new BinaryExpressionContext(new QueryContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_query);
 						setState(14);
 						if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
@@ -264,7 +264,7 @@ public class RPQParser extends Parser {
 						break;
 					case 2:
 						{
-						_localctx = new QueryOperatorContext(new QueryContext(_parentctx, _parentState));
+						_localctx = new UnaryExpressionContext(new QueryContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_query);
 						setState(18);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");

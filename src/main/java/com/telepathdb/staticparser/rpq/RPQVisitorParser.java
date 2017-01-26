@@ -37,8 +37,8 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
     RPQParser parser = new RPQParser(new CommonTokenStream(lexer));
 
     // Here we define to start parsing our query with the query() rule
-    QueryOperatorVisitor queryOperatorVisitor = new QueryOperatorVisitor();
-    ParseTree parseTree = queryOperatorVisitor.visit(parser.query());
+    RPQQueryVisitor RPQQueryVisitor = new RPQQueryVisitor();
+    ParseTree parseTree = RPQQueryVisitor.visit(parser.query());
     return parseTree;
   }
 
@@ -49,45 +49,60 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
    * RPQBaseVisitor allow us to check if we are dealing with unary operators like Kleene star or
    * Plus, or binary operators like Union or Concatenation for example.
    */
-  private static class QueryOperatorVisitor extends RPQBaseVisitor<ParseTree> {
+  private static class RPQQueryVisitor extends RPQBaseVisitor<ParseTree> {
 
     @Override
-    public ParseTree visitQueryOperator(@NotNull RPQParser.QueryOperatorContext ctx) {
-      String className = ctx.getText();
+    public ParseTree visitUnaryExpression(@NotNull RPQParser.UnaryExpressionContext ctx) {
 
-      System.out.println("--> YAY: " + className);
-      System.out.println("--> YAY2: " + ctx.unaryOperator().getText());
-      System.out.println("--> YAY2: " + ctx.unaryOperator().PLUS());
-      System.out.println("--> YAY2: " + RPQParser.PLUS);
+      ParseTree result = new ParseTree();
 
-//      MethodVisitor methodVisitor = new MethodVisitor();
-//      List<Method> methods = ctx.method()
-//          .stream()
-//          .map(method -> method.accept(methodVisitor))
-//          .collect(toList());
-      return new ParseTree();
+      if (ctx.unaryOperator().PLUS() != null) {
+        // PLUS
+        result.setOperator(ParseTree.PLUS);
+      } else if (ctx.unaryOperator().KLEENE_STAR() != null) {
+        // KLEENE STAR
+        result.setOperator(ParseTree.KLEENE_STAR);
+      }
+
+      // Recurse on the left-side for which this operator was intended
+      result.setLeft(visit(ctx.query()));
+
+      return result;
+    }
+
+    @Override
+    public ParseTree visitBinaryExpression(@NotNull RPQParser.BinaryExpressionContext ctx) {
+
+      ParseTree result = new ParseTree();
+
+      if (ctx.binaryOperator().UNION() != null) {
+        // UNION
+        result.setOperator(ParseTree.UNION);
+      } else if (ctx.binaryOperator().CONJUNCTION() != null) {
+        // CONJUNCTION
+        result.setOperator(ParseTree.CONJUNCTION);
+      }
+
+      // Recurse on the left-side and the right-side for which this operator was intended
+      result.setLeft(visit(ctx.query(0))); // First occurence of query
+      result.setRight(visit(ctx.query(1))); // Second occurence of query
+
+      return result;
+    }
+
+    @Override
+    public ParseTree visitLeaf(@NotNull RPQParser.LeafContext ctx) {
+
+      ParseTree result = new ParseTree();
+      result.setOperator(ParseTree.LEAF);
+      result.setLeaf(ctx.LABEL().getText());
+
+      return result;
+    }
+
+    @Override
+    public ParseTree visitParenthesis(@NotNull RPQParser.ParenthesisContext ctx) {
+      return visit(ctx.query());
     }
   }
-
-//  private static class MethodVisitor extends RPQBaseVisitor<ParseTree> {
-//    @Override
-//    public Method visitMethod(@NotNull RPQParser.MethodContext ctx) {
-//      String methodName = ctx.methodName().getText();
-//      InstructionVisitor instructionVisitor = new InstructionVisitor();
-//      List<Instruction> instructions = ctx.instruction()
-//          .stream()
-//          .map(instruction -> instruction.accept(instructionVisitor))
-//          .collect(toList());
-//      return new Method(methodName, instructions);
-//    }
-//  }
-//
-//  private static class InstructionVisitor extends RPQBaseVisitor<ParseTree> {
-//
-//    @Override
-//    public Instruction visitInstruction(@NotNull RPQParser.InstructionContext ctx) {
-//      String instructionName = ctx.getText();
-//      return new Instruction(instructionName);
-//    }
-//  }
 }

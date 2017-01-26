@@ -18,6 +18,13 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface RPQVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by the {@code binaryExpression}
+	 * labeled alternative in {@link RPQParser#query}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinaryExpression(RPQParser.BinaryExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code leaf}
 	 * labeled alternative in {@link RPQParser#query}.
 	 * @param ctx the parse tree
@@ -25,26 +32,19 @@ public interface RPQVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLeaf(RPQParser.LeafContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code unaryExpression}
+	 * labeled alternative in {@link RPQParser#query}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpression(RPQParser.UnaryExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code parenthesis}
 	 * labeled alternative in {@link RPQParser#query}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitParenthesis(RPQParser.ParenthesisContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code queryOperatorQuery}
-	 * labeled alternative in {@link RPQParser#query}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQueryOperatorQuery(RPQParser.QueryOperatorQueryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code queryOperator}
-	 * labeled alternative in {@link RPQParser#query}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitQueryOperator(RPQParser.QueryOperatorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RPQParser#unaryOperator}.
 	 * @param ctx the parse tree
