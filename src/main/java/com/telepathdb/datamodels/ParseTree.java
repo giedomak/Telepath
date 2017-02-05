@@ -14,14 +14,16 @@ public class ParseTree {
 
   // Our public constants identifying our symbolic names
   public static final int
-      KLEENE_STAR = 0, PLUS = 1, CONJUNCTION = 2, UNION = 3, LEAF = 4;
+      KLEENE_STAR = 1, PLUS = 2, CONJUNCTION = 3, UNION = 4, LEAF = 5;
 
   private static final String[] SYMBOLIC_NAMES = {
-      "KLEENE_STAR", "PLUS", "CONJUNCTION", "UNION", "LEAF"
+      null, "KLEENE_STAR", "PLUS", "CONJUNCTION", "UNION", "LEAF"
   };
 
   // Can be one of above constants
   private int operator;
+
+  // The payload when this node is a leaf
   private String leaf;
 
   private ParseTree left;
@@ -62,20 +64,16 @@ public class ParseTree {
     this.right = right;
   }
 
-  public void inOrderPrint(ParseTree root) {
-    if (root != null) {
-      inOrderPrint(root.left);
-      // Visit the node by Printing the node data
-      System.out.printf("%s ", getSymbolicName(root.operator));
-      if (root.leaf != null)
-        System.out.printf("%s ", root.leaf);
-      inOrderPrint(root.right);
-      System.out.printf("\n");
+  public String getLeafOrOperator() {
+    if (getLeaf() == null) {
+      return getSymbolicName();
+    } else {
+      return getLeaf();
     }
   }
 
-  private String getSymbolicName(int index) {
-    return SYMBOLIC_NAMES[index];
+  private String getSymbolicName() {
+    return SYMBOLIC_NAMES[operator];
   }
 
 }

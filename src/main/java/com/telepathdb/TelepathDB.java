@@ -32,7 +32,7 @@ class TelepathDB {
     long imported = gMarkImport.doImport("/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
     System.out.println("Imported paths: " + imported);
 
-//    System.out.println(kPathIndex.search(new PathPrefix(null, )));
+    //System.out.println(kPathIndex.search(new PathPrefix(null, )));
 
     System.out.println("TelepathDB is up and running");
 
@@ -50,8 +50,10 @@ class TelepathDB {
 
     while(true) {
 
-      // Gather input from the user
-      System.out.println("We are using the " + staticParser.getClass().getSimpleName() + " parser, enter your query and end with the keyword END:");
+      // State which parser we are using
+      System.out.println("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
+
+      // Retrieve input from the user
       String input = "";
       String val = in.nextLine();
       while(val.indexOf("END") == -1) {

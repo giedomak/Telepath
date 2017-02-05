@@ -8,6 +8,7 @@
 package com.telepathdb.staticparser;
 
 import com.telepathdb.datamodels.ParseTree;
+import com.telepathdb.datamodels.ParseTreePrinter;
 import com.telepathdb.staticparser.rpq.RPQVisitorParser;
 
 /**
@@ -29,7 +30,8 @@ public class StaticParserRPQ implements StaticParser {
     // Catch the IllegalStateException, since we don't want further propogation when this occurs
     ParseTree parseTree = rpqVisitorParser.parse(input);
 
-    parseTree.inOrderPrint(parseTree);
+    // Print the parsed ParseTree
+    ParseTreePrinter.printParseTree(parseTree);
 
   }
 }
