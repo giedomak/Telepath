@@ -7,14 +7,17 @@
 
 package com.telepathdb.kpathindex.utilities;
 
+import com.telepathdb.datamodels.Edge;
 import com.telepathdb.datamodels.Node;
 import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.PathIdentifierStore;
 import com.telepathdb.kpathindex.KPathIndex;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -58,8 +61,11 @@ public class GMarkImport {
         nodes.add(new Node(startNodeID));
         nodes.add(new Node(endNodeID));
 
+        // Get the path identifier from the pathIdentifierStore
+        long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeSet(Arrays.asList(new Edge(edgeLabelID)));
+
         // Insert into the kpathindex
-        kPathIndex.insert(new Path(edgeLabelID, nodes));
+        kPathIndex.insert(new Path(pathIdentifier, nodes));
 
         importedLines++;
         line = br.readLine();

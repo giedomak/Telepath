@@ -7,12 +7,14 @@
 
 package com.telepathdb;
 
+import com.telepathdb.datamodels.PathIdentifierStore;
+import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
 import com.telepathdb.kpathindex.utilities.GMarkImport;
 import com.telepathdb.staticparser.StaticParser;
-import com.telepathdb.staticparser.StaticParserSparql;
 import com.telepathdb.staticparser.StaticParserRPQ;
+import com.telepathdb.staticparser.StaticParserSparql;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -32,7 +34,13 @@ class TelepathDB {
     long imported = gMarkImport.doImport("/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
     System.out.println("Imported paths: " + imported);
 
-    //System.out.println(kPathIndex.search(new PathPrefix(null, )));
+    // Print PathIdentifierStore data
+    System.out.println(PathIdentifierStore.pathIdentifierStore.keySet());
+    System.out.println(PathIdentifierStore.pathIdentifierStore.values());
+
+    // Print a random search in the index
+    long randomPathIdentifier = (long) PathIdentifierStore.pathIdentifierStore.values().toArray()[0];
+    kPathIndex.search(new PathPrefix(randomPathIdentifier, 2)).forEach((e) -> System.out.println(e));
 
     System.out.println("TelepathDB is up and running");
 
@@ -48,7 +56,7 @@ class TelepathDB {
 
     Scanner in = new Scanner(System.in);
 
-    while(true) {
+    while (true) {
 
       // State which parser we are using
       System.out.println("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
@@ -56,7 +64,7 @@ class TelepathDB {
       // Retrieve input from the user
       String input = "";
       String val = in.nextLine();
-      while(val.indexOf("END") == -1) {
+      while (val.indexOf("END") == -1) {
         input += val;
         val = in.nextLine();
       }
