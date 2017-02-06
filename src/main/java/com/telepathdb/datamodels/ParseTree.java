@@ -8,7 +8,7 @@
 package com.telepathdb.datamodels;
 
 /**
- * Created by giedomak on 20/01/2017.
+ * Our internal representation of a query
  */
 public class ParseTree {
 
@@ -20,7 +20,7 @@ public class ParseTree {
       null, "KLEENE_STAR", "PLUS", "CONJUNCTION", "UNION", "LEAF"
   };
 
-  // Can be one of above constants
+  // Can be one of above constants if this node is an internal node
   private int operator;
 
   // The payload when this node is a leaf
@@ -29,23 +29,32 @@ public class ParseTree {
   private ParseTree left;
   private ParseTree right;
 
-  public ParseTree() {
-  }
+  //
+  // ---------------- METHODS ----------------
+  //
 
   public String getLeaf() {
     return leaf;
   }
 
+  /**
+   * Set the leaf and reset the operator; we can either be a leaf OR an internal node
+   */
   public void setLeaf(String leaf) {
     this.leaf = leaf;
+    this.operator = 0;
   }
 
   public int getOperator() {
     return operator;
   }
 
+  /**
+   * Set the operator and reset the leaf; we can either be a leaf OR an internal node
+   */
   public void setOperator(int operator) {
     this.operator = operator;
+    this.leaf = null;
   }
 
   public ParseTree getLeft() {
@@ -64,6 +73,11 @@ public class ParseTree {
     this.right = right;
   }
 
+  /**
+   * Get the correct value of this node when it is a leaf or a internal node.
+   *
+   * @return String with the value of the Leaf or the Symbolic name of the operator
+   */
   public String getLeafOrOperator() {
     if (getLeaf() == null) {
       return getSymbolicName();
@@ -72,6 +86,11 @@ public class ParseTree {
     }
   }
 
+  /**
+   * Convert the operator identifier back to its symbolic name.
+   *
+   * @return String with the Symbolic name of the operator
+   */
   private String getSymbolicName() {
     return SYMBOLIC_NAMES[operator];
   }
