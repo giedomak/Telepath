@@ -8,7 +8,7 @@
 package com.telepathdb.staticparser;
 
 import com.telepathdb.datamodels.ParseTree;
-import com.telepathdb.datamodels.ParseTreePrinter;
+import com.telepathdb.datamodels.utilities.ParseTreePrinter;
 import com.telepathdb.staticparser.rpq.RPQVisitorParser;
 
 /**

@@ -1,4 +1,6 @@
-package com.telepathdb.datamodels;
+package com.telepathdb.datamodels.utilities;
+
+import com.telepathdb.datamodels.ParseTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
