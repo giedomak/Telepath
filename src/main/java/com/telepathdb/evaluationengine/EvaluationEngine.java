@@ -1,7 +1,5 @@
 package com.telepathdb.evaluationengine;
 
-import com.google.common.collect.Lists;
-
 import com.telepathdb.datamodels.Edge;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
@@ -11,12 +9,12 @@ import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.physicallibrary.MergeJoin;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Created by giedomak on 08/02/2017.
@@ -24,7 +22,7 @@ import java.util.stream.Stream;
 public class EvaluationEngine {
 
   private KPathIndex kPathIndex;
-  private HashMap<Long, List<Path>> intermediateResults;
+  private HashMap<Long, List<Path>> intermediateResults; // In-memory for now
 
   public EvaluationEngine(KPathIndex kPathIndex) {
     this.kPathIndex = kPathIndex;
@@ -39,31 +37,38 @@ public class EvaluationEngine {
     evaluate(parseTree.getLeft());
     evaluate(parseTree.getRight());
 
-    List<Path> results = new ArrayList<>();
+    Stream<Path> results;
 
     // Collect results from the leafs and put them in the intermediateResults HashMap
     if (parseTree.isLeaf()) {
+
       long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeSet(Arrays.asList(new Edge(Long.parseLong(parseTree.getLeaf()))));
       PathPrefix search = new PathPrefix(pathIdentifier, 2);
-      Iterable<Path> iterator = kPathIndex.search(search);
-
-      results = Lists.newArrayList(iterator);
-      intermediateResults.put(parseTree.getId(), results);
-
-      System.out.println("Search kpathindex: " + parseTree.getLeaf() + ": " + results.size());
+      results = StreamSupport.stream(kPathIndex.search(search).spliterator(), false);
 
     } else {
       // Perform the Operations
       switch (parseTree.getOperator()) {
 
         case ParseTree.UNION:
-          results = MergeJoin.perform(intermediateResults.get(parseTree.getLeft().getId()), intermediateResults.get(parseTree.getRight().getId())).collect(Collectors.toList());
+          results = MergeJoin.perform(intermediateResults.get(parseTree.getLeft().getId()), intermediateResults.get(parseTree.getRight().getId()));
           break;
+
+        default:
+          throw new IllegalArgumentException("Operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
 
       }
     }
 
-    return results.stream();
-  }
+    if (parseTree.isRoot()) {
+      // Make sure we return the stream when this node was the root
+      return results;
+    } else {
+      List<Path> collectedResults = results.collect(Collectors.toList());
+      System.out.println("Itermediateresult: " + parseTree.getLeafOrOperator() + ": " + collectedResults.size());
+      intermediateResults.put(parseTree.getId(), collectedResults);
+    }
 
+    return null;
+  }
 }
