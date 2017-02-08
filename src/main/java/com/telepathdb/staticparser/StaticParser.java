@@ -7,11 +7,12 @@
 
 package com.telepathdb.staticparser;
 
+import com.telepathdb.datamodels.ParseTree;
+
 /**
  * Parse the query language into an internal representation
  */
 public interface StaticParser {
 
-  public void input();
-  public void parse(String input);
+  public ParseTree parse(String input);
 }

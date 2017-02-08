@@ -17,12 +17,7 @@ import com.telepathdb.staticparser.rpq.RPQVisitorParser;
 public class StaticParserRPQ implements StaticParser {
 
   @Override
-  public void input() {
-
-  }
-
-  @Override
-  public void parse(String input) {
+  public ParseTree parse(String input) {
 
     System.out.println("Your input: " + input);
     RPQVisitorParser rpqVisitorParser = new RPQVisitorParser();
@@ -32,6 +27,8 @@ public class StaticParserRPQ implements StaticParser {
 
     // Print the parsed ParseTree
     ParseTreePrinter.printParseTree(parseTree);
+
+    return parseTree;
 
   }
 }

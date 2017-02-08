@@ -8,6 +8,7 @@
 package com.telepathdb.staticparser;
 
 
+import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.staticparser.sparql.SparqlBaseListener;
 import com.telepathdb.staticparser.sparql.SparqlLexer;
 import com.telepathdb.staticparser.sparql.SparqlParser;
@@ -27,12 +28,7 @@ import java.util.Arrays;
 public class StaticParserSparql implements StaticParser {
 
   @Override
-  public void input() {
-
-  }
-
-  @Override
-  public void parse(String input) {
+  public ParseTree parse(String input) {
 
     System.out.println("Your input: " + input);
 
@@ -42,6 +38,7 @@ public class StaticParserSparql implements StaticParser {
     } catch (IllegalStateException exception) {
     }
 
+    return null;
   }
 
   private void parseInput(String input) {

@@ -15,7 +15,9 @@ import java.util.List;
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java
  */
 public class PathPrefix extends com.pathdb.pathIndex.PathPrefix {
+
   public PathPrefix(long pathId, int length) {
+
     super(pathId, length);
   }
 

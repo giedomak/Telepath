@@ -28,6 +28,12 @@
     <!-- DEPENDENCIES -->
     <dependencies>
 
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
+
         <!-- Max Sumrall's PathDB through Github -->
         <dependency>
             <groupId>com.github.maxsumrall</groupId>

@@ -1,5 +1,9 @@
 package com.telepathdb.datamodels;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,28 +37,41 @@ final public class PathIdentifierStore {
     }
   }
 
+  static public long getPathIdentifierByEdgeLabel(String edgeLabel) {
+
+    List edges = Arrays.asList(new Edge(Long.parseLong(edgeLabel)));
+    return getPathIdentifierByEdgeSet(edges);
+  }
+
   /**
    * Generate a path identifier for an edge set and add it to the store
    *
-   * @param edges List of edges of which to generate an Path identifier for
+   * @param serialized Serialized list of edges of which to generate a Path identifier for
    * @return The generated path identifier
    */
-  static private long generatePathIdentifier(String edges) {
-    pathIdentifierStore.put(edges, maxId++);
+  static private long generatePathIdentifier(String serialized) {
+    pathIdentifierStore.put(serialized, maxId++);
     return maxId - 1;
   }
 
+  /**
+   * Serialize a list of edges into a String
+   * Let's say we have 3 edges with ids 3, 6 and 33.
+   * We will get the String "3,6,33"
+   *
+   * @param edges List of edges to serialize
+   * @return Serialized String
+   */
   static private String serializeEdgeSet(List<Edge> edges) {
 
-    // Initialize
-    String serializedEdgeIds = "";
-
-    // Fill the String
+    // Get the ids
+    List<String> ids = new ArrayList<String>();
     for (Edge edge : edges) {
-      serializedEdgeIds += edge.getId() + ",";
+      ids.add(Long.toString(edge.getId()));
     }
 
-    return serializedEdgeIds;
+    // Return the joined string with a separator
+    return StringUtils.join(ids, ",");
   }
 
 }

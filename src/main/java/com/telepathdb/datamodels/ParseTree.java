@@ -29,6 +29,13 @@ public class ParseTree {
   private ParseTree left;
   private ParseTree right;
 
+  private long id;
+  static private long maxid = 1;
+
+  public ParseTree() {
+    this.id = maxid++;
+  }
+
   //
   // ---------------- METHODS ----------------
   //
@@ -95,4 +102,16 @@ public class ParseTree {
     return SYMBOLIC_NAMES[operator];
   }
 
+  /**
+   * @return Boolean value indicating if this node is a leaf
+   */
+  public boolean isLeaf() {
+    return leaf != null;
+  }
+
+  public long getId() { return id; }
+
+  public boolean isRoot() {
+    return id == 1;
+  }
 }
