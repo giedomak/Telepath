@@ -80,8 +80,8 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
         // UNION
         result.setOperator(ParseTree.UNION);
       } else if (ctx.binaryOperator().CONJUNCTION() != null) {
-        // CONJUNCTION
-        result.setOperator(ParseTree.CONJUNCTION);
+        // CONCATENATION
+        result.setOperator(ParseTree.CONCATENATION);
       }
 
       // Recurse on the left-side and the right-side for which this operator was intended

@@ -14,10 +14,10 @@ public class ParseTree {
 
   // Our public constants identifying our symbolic names
   public static final int
-      KLEENE_STAR = 1, PLUS = 2, CONJUNCTION = 3, UNION = 4, LEAF = 5;
+      KLEENE_STAR = 1, PLUS = 2, CONCATENATION = 3, UNION = 4, LEAF = 5;
 
   private static final String[] SYMBOLIC_NAMES = {
-      null, "KLEENE_STAR", "PLUS", "CONJUNCTION", "UNION", "LEAF"
+      null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF"
   };
 
   // Can be one of above constants if this node is an internal node
