@@ -5,7 +5,7 @@ import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import com.telepathdb.kpathindex.KPathIndex;
-import com.telepathdb.physicallibrary.MergeJoin;
+import com.telepathdb.physicallibrary.PhysicalLibrary;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class EvaluationEngine {
       switch (parseTree.getOperator()) {
 
         case ParseTree.UNION:
-          results = MergeJoin.perform(intermediateResults.get(parseTree.getLeft().getId()), intermediateResults.get(parseTree.getRight().getId()));
+          results = PhysicalLibrary.union(intermediateResults.get(parseTree.getLeft().getId()), intermediateResults.get(parseTree.getRight().getId()));
           break;
 
         default:

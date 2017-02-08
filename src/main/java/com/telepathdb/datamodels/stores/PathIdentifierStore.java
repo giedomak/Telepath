@@ -14,7 +14,7 @@ import java.util.List;
  */
 final public class PathIdentifierStore {
 
-  // Let's say we have 3 edges along a path with ids 3, 6 and 33.
+  // Let's say we have 3 edges along a path with EdgeIds 3, 6 and 33.
   // We will get the String "3,6,33" as the key for this hashmap for that path.
   static private HashMap<String, Long> pathEdgeSerializationStore = new HashMap<>();
   static public HashMap<Long, String> pathIdentifierStore = new HashMap<>();
@@ -42,12 +42,23 @@ final public class PathIdentifierStore {
     }
   }
 
+  /**
+   * Proxy method for getPathIdentifierByEdgeSet when only one edgeLabel is given.
+   *
+   * @param edgeLabel The edgeLabel for which we create an Edge.
+   * @return The Path identifier created or found for the given edge
+   */
   static public long getPathIdentifierByEdgeLabel(String edgeLabel) {
-
     List edges = Arrays.asList(new Edge(edgeLabel));
     return getPathIdentifierByEdgeSet(edges);
   }
 
+  /**
+   * Return a list of Edges for a given path identifier.
+   *
+   * @param pathIdentifier The path identifier for which to gather the list of containing Edges.
+   * @return A list of Edges belonging to a certain path identifier.
+   */
   static public List<Edge> getEdgeSet(long pathIdentifier) {
     if (pathIdentifierStore.containsKey(pathIdentifier)) {
       return deserializeEdgeSet(pathIdentifierStore.get(pathIdentifier));
@@ -89,10 +100,16 @@ final public class PathIdentifierStore {
     return StringUtils.join(ids, ",");
   }
 
+  /**
+   * Deserialize a serializedEdgeSet String back to a List of Edges.
+   *
+   * @param serializedEdgeSet The serialized String for an Edge Set.
+   * @return A list of edges belonging to the serialized String.
+   */
   static private List<Edge> deserializeEdgeSet(String serializedEdgeSet) {
     String[] edgeIds = serializedEdgeSet.split(",");
     List<Edge> edges = new ArrayList<>();
-    for(String edgeId : edgeIds ) {
+    for (String edgeId : edgeIds) {
       edges.add(EdgeIdentifierStore.getEdge(Long.parseLong(edgeId)));
     }
     return edges;
