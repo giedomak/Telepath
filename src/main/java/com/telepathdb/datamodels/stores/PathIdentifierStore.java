@@ -8,7 +8,10 @@
 package com.telepathdb.datamodels.stores;
 
 import com.telepathdb.datamodels.Edge;
+import com.telepathdb.datamodels.Node;
+import com.telepathdb.datamodels.Path;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -74,6 +77,17 @@ final public class PathIdentifierStore {
     }
   }
 
+  static public Path concatenatePathsAndStore(Path path1, Path path2) {
+    List<Edge> edges = ListUtils.union(getEdgeSet(path1.pathId), getEdgeSet(path2.pathId));
+    List<Node> sliced = new ArrayList<Node>((List<Node>) (List<?>) path2.nodes); // Some typecasting
+
+    // Remove the first node from the second path, otherwise we have a duplicate
+    sliced.remove(0);
+
+    List<Node> nodes = ListUtils.union(path1.nodes, sliced);
+    return new Path(getPathIdentifierByEdgeSet(edges), nodes);
+  }
+
   /**
    * Generate a path identifier for an edge set and add it to the store
    *
@@ -83,6 +97,8 @@ final public class PathIdentifierStore {
   static private long generatePathIdentifier(String serialized) {
     pathEdgeSerializationStore.put(serialized, maxId);
     pathIdentifierStore.put(maxId, serialized);
+    System.out.println("Added to PathIdentifierStore: " + maxId);
+    deserializeEdgeSet(serialized).forEach(System.out::println);
     return ++maxId - 1;
   }
 

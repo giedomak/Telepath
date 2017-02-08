@@ -22,7 +22,6 @@ public class StaticParserRPQ implements StaticParser {
     System.out.println("Your input: " + input);
     RPQVisitorParser rpqVisitorParser = new RPQVisitorParser();
 
-    // Catch the IllegalStateException, since we don't want further propogation when this occurs
     ParseTree parseTree = rpqVisitorParser.parse(input);
 
     // Print the parsed ParseTree

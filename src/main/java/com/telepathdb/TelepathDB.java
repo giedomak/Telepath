@@ -9,7 +9,6 @@ package com.telepathdb;
 
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
-import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import com.telepathdb.evaluationengine.EvaluationEngine;
 import com.telepathdb.kpathindex.KPathIndex;
@@ -46,8 +45,8 @@ class TelepathDB {
     System.out.println("Values:  " + PathIdentifierStore.pathIdentifierStore.values());
 
     // Print a random search in the index
-    long randomPathIdentifier = PathIdentifierStore.pathIdentifierStore.keySet().iterator().next();
-    kPathIndex.search(new PathPrefix(randomPathIdentifier)).forEach(System.out::println);
+//    long randomPathIdentifier = PathIdentifierStore.pathIdentifierStore.keySet().iterator().next();
+//    kPathIndex.search(new PathPrefix(randomPathIdentifier)).forEach(System.out::println);
 
     System.out.println("TelepathDB is up and running");
 

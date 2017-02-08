@@ -22,8 +22,19 @@ public class Path extends com.pathdb.pathIndex.Path {
     // Convert our own Node model back to the Node model from PathDB
     super(pathId, (List<com.pathdb.pathIndex.Node>) (List<?>) nodes);
 
+    if (nodes.size() < 2)
+      throw new IllegalArgumentException("A Path must have at least two nodes");
+
     this.numberOfEdges = nodes.size() - 1;
 
+  }
+
+  public Node lastNode() {
+    return (Node) nodes.get(nodes.size() - 1);
+  }
+
+  public Node firstNode() {
+    return (Node) nodes.get(0);
   }
 
 }

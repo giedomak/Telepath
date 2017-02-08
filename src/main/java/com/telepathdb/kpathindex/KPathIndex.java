@@ -11,6 +11,7 @@ import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 
 import java.io.IOException;
+import java.util.stream.Stream;
 
 /**
  * KPathIndex interface defining the public methods of the kpathindex package
@@ -24,7 +25,7 @@ public interface KPathIndex {
    * @return An Iterable with Paths which satisfy the pathPrefix
    * @throws IOException I/O error
    */
-  Iterable<Path> search(PathPrefix pathPrefix) throws IOException;
+  Stream<Path> search(PathPrefix pathPrefix) throws IOException;
 
   /**
    * Insert method to insert a Path into the KPathIndex

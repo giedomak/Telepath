@@ -9,11 +9,12 @@ package com.telepathdb.kpathindex;
 
 import com.pathdb.pathIndex.PathIndex;
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
-
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 
 import java.io.IOException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * InMemory implementation of the KPathIndex
@@ -34,12 +35,12 @@ public class KPathIndexInMemory implements KPathIndex {
    * Search method to lookup paths in the KPathIndex
    *
    * @param pathPrefix The prefix of a path which we need to search
-   * @return An Iterable with Paths which satisfy the pathPrefix
+   * @return An Stream with Paths which satisfy the pathPrefix
    */
   @Override
-  public Iterable<Path> search(PathPrefix pathPrefix) throws IOException {
+  public Stream<Path> search(PathPrefix pathPrefix) throws IOException {
     // We have to cast the Path model from pathDB's one, to our own again
-    return (Iterable<Path>) (Iterable<?>) pathIndex.getPaths(pathPrefix);
+    return StreamSupport.stream(((Iterable<Path>) (Iterable<?>) pathIndex.getPaths(pathPrefix)).spliterator(), false);
   }
 
   /**

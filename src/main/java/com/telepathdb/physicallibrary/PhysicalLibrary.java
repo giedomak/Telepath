@@ -8,34 +8,38 @@
 package com.telepathdb.physicallibrary;
 
 import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.stores.PathIdentifierStore;
 
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
- * Created by giedomak on 08/02/2017.
+ * The physical operators we support
  */
 final public class PhysicalLibrary {
 
   final static private boolean defaultDistinct = true;
 
-  public static Stream<Path> union(Iterable<Path> iterator1, Iterable<Path> iterator2) {
-
-    Stream<Path> stream1 = StreamSupport.stream(iterator1.spliterator(), false);
-    Stream<Path> stream2 = StreamSupport.stream(iterator2.spliterator(), false);
-
-    return union(stream1, stream2, defaultDistinct);
-  }
+  // ------------- UNION ---------------
 
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2) {
     return union(stream1, stream2, defaultDistinct);
   }
 
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2, boolean distinct) {
+    // Out-of-the-box Java 8 Streams
     if (distinct) {
       return Stream.concat(stream1, stream2).distinct();
     } else {
       return Stream.concat(stream1, stream2);
     }
+  }
+
+  // ------------- CONCATENATION ---------------
+
+  public static Stream<Path> concatenation(Stream<Path> stream1, Stream<Path> stream2) {
+    // Basically we are doing a nested loop to do an inner-join and concatentate the paths.
+    return stream1.flatMap(v1 -> stream2
+        .filter(v2 -> v1.lastNode().equals(v2.firstNode()))
+        .map(v2 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2)));
   }
 }

@@ -21,4 +21,9 @@ public class Edge {
   public String getLabel() {
     return label;
   }
+
+  public String toString() {
+    return "Edge{label=" + this.label + '}';
+  }
+
 }

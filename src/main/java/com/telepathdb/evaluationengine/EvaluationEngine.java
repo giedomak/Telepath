@@ -56,7 +56,7 @@ public class EvaluationEngine {
       switch (parseTree.getOperator()) {
 
         case ParseTree.UNION:
-          results = PhysicalLibrary.union(intermediateResults.get(parseTree.getLeft().getId()), intermediateResults.get(parseTree.getRight().getId()));
+          results = PhysicalLibrary.union(intermediateResults.get(parseTree.getLeft().getId()).stream(), intermediateResults.get(parseTree.getRight().getId()).stream());
           break;
 
         default:
@@ -65,8 +65,11 @@ public class EvaluationEngine {
       }
     }
 
+    System.out.println(parseTree.isRoot());
+
     if (parseTree.isRoot()) {
       // Make sure we return the stream when this node was the root
+      intermediateResults.clear();
       return results;
     } else {
       List<Path> collectedResults = results.collect(Collectors.toList());

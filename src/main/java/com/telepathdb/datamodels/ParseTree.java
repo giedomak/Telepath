@@ -26,10 +26,12 @@ public class ParseTree {
   // The payload when this node is a leaf
   private String leaf;
 
+  private boolean root = false;
+
   private ParseTree left;
   private ParseTree right;
 
-  private long id;
+  final private long id;
   static private long maxid = 1;
 
   public ParseTree() {
@@ -111,7 +113,11 @@ public class ParseTree {
 
   public long getId() { return id; }
 
+  public void setRoot() {
+    this.root = true;
+  }
+
   public boolean isRoot() {
-    return id == 1;
+    return root;
   }
 }

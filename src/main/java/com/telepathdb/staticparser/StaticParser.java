@@ -14,5 +14,5 @@ import com.telepathdb.datamodels.ParseTree;
  */
 public interface StaticParser {
 
-  public ParseTree parse(String input);
+  ParseTree parse(String input);
 }
