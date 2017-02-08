@@ -1,15 +1,13 @@
 package com.telepathdb.evaluationengine;
 
-import com.telepathdb.datamodels.Edge;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
-import com.telepathdb.datamodels.PathIdentifierStore;
 import com.telepathdb.datamodels.PathPrefix;
+import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.physicallibrary.MergeJoin;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,8 +40,8 @@ public class EvaluationEngine {
     // Collect results from the leafs and put them in the intermediateResults HashMap
     if (parseTree.isLeaf()) {
 
-      long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeSet(Arrays.asList(new Edge(Long.parseLong(parseTree.getLeaf()))));
-      PathPrefix search = new PathPrefix(pathIdentifier, 2);
+      long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeLabel(parseTree.getLeaf());
+      PathPrefix search = new PathPrefix(pathIdentifier);
       results = StreamSupport.stream(kPathIndex.search(search).spliterator(), false);
 
     } else {

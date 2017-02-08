@@ -1,4 +1,6 @@
-package com.telepathdb.datamodels;
+package com.telepathdb.datamodels.stores;
+
+import com.telepathdb.datamodels.Edge;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,7 +14,10 @@ import java.util.List;
  */
 final public class PathIdentifierStore {
 
-  static public HashMap<String, Long> pathIdentifierStore = new HashMap<>();
+  // Let's say we have 3 edges along a path with ids 3, 6 and 33.
+  // We will get the String "3,6,33" as the key for this hashmap for that path.
+  static private HashMap<String, Long> pathEdgeSerializationStore = new HashMap<>();
+  static public HashMap<Long, String> pathIdentifierStore = new HashMap<>();
   static private long maxId = 1;
 
   private PathIdentifierStore() {
@@ -30,8 +35,8 @@ final public class PathIdentifierStore {
     String serialized = serializeEdgeSet(edges);
 
     // Access the store or generate a key
-    if (pathIdentifierStore.containsKey(serialized)) {
-      return pathIdentifierStore.get(serialized);
+    if (pathEdgeSerializationStore.containsKey(serialized)) {
+      return pathEdgeSerializationStore.get(serialized);
     } else {
       return generatePathIdentifier(serialized);
     }
@@ -39,8 +44,16 @@ final public class PathIdentifierStore {
 
   static public long getPathIdentifierByEdgeLabel(String edgeLabel) {
 
-    List edges = Arrays.asList(new Edge(Long.parseLong(edgeLabel)));
+    List edges = Arrays.asList(new Edge(edgeLabel));
     return getPathIdentifierByEdgeSet(edges);
+  }
+
+  static public List<Edge> getEdgeSet(long pathIdentifier) {
+    if (pathIdentifierStore.containsKey(pathIdentifier)) {
+      return deserializeEdgeSet(pathIdentifierStore.get(pathIdentifier));
+    } else {
+      throw new IllegalArgumentException("Path ID not known");
+    }
   }
 
   /**
@@ -50,8 +63,9 @@ final public class PathIdentifierStore {
    * @return The generated path identifier
    */
   static private long generatePathIdentifier(String serialized) {
-    pathIdentifierStore.put(serialized, maxId++);
-    return maxId - 1;
+    pathEdgeSerializationStore.put(serialized, maxId);
+    pathIdentifierStore.put(maxId, serialized);
+    return ++maxId - 1;
   }
 
   /**
@@ -64,14 +78,24 @@ final public class PathIdentifierStore {
    */
   static private String serializeEdgeSet(List<Edge> edges) {
 
-    // Get the ids
+    // Get the ids as string
     List<String> ids = new ArrayList<String>();
     for (Edge edge : edges) {
-      ids.add(Long.toString(edge.getId()));
+      Long edgeId = EdgeIdentifierStore.getEdgeIdentifier(edge);
+      ids.add(Long.toString(edgeId));
     }
 
     // Return the joined string with a separator
     return StringUtils.join(ids, ",");
+  }
+
+  static private List<Edge> deserializeEdgeSet(String serializedEdgeSet) {
+    String[] edgeIds = serializedEdgeSet.split(",");
+    List<Edge> edges = new ArrayList<>();
+    for(String edgeId : edgeIds ) {
+      edges.add(EdgeIdentifierStore.getEdge(Long.parseLong(edgeId)));
+    }
+    return edges;
   }
 
 }
