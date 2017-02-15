@@ -42,7 +42,7 @@ public class EvaluationEngine {
     evaluate(parseTree.getLeft());
     evaluate(parseTree.getRight());
 
-    Stream<Path> results;
+    Stream<Path> results = Stream.empty();
 
     // Collect results from the leafs and put them in the intermediateResults HashMap
     if (parseTree.isLeaf()) {
@@ -81,11 +81,11 @@ public class EvaluationEngine {
     return null;
   }
 
-  private Stream<Path> getLeft(ParseTree parseTree) {
-    return intermediateResults.get(parseTree.getLeft().getId()).stream();
+  private List<Path> getLeft(ParseTree parseTree) {
+    return intermediateResults.get(parseTree.getLeft().getId());
   }
 
-  private Stream<Path> getRight(ParseTree parseTree) {
-    return intermediateResults.get(parseTree.getRight().getId()).stream();
+  private List<Path> getRight(ParseTree parseTree) {
+    return intermediateResults.get(parseTree.getRight().getId());
   }
 }

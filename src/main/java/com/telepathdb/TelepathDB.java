@@ -84,7 +84,7 @@ class TelepathDB {
       // Print
       List<Path> collectedResults = results.collect(Collectors.toList());
       System.out.println("Results: " + collectedResults.size());
-//      collectedResults.forEach((e) -> System.out.println(e));
+      collectedResults.forEach(System.out::println);
 
     }
 
