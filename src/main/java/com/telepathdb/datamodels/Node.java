@@ -7,13 +7,45 @@
 
 package com.telepathdb.datamodels;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  * Node model
  * At the moment, we just extend Node from PathDB:
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java
  */
-public class Node extends com.pathdb.pathIndex.Node {
+public class Node implements Serializable {
+
+  private final long id;
+
   public Node(long id) {
-    super(id);
+    this.id = id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Node node = (Node) o;
+    return Objects.equals(id, node.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
+
+  @Override
+  public String toString() {
+    return "Node{" + "id=" + id + '}';
+  }
+
+  public long getId() {
+    return id;
   }
 }

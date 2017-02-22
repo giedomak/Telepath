@@ -10,26 +10,58 @@ package com.telepathdb.datamodels;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Collections.emptyList;
 
 /**
  * PathPrefix model At the moment, we just extend PathPrefix from PathDB:
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java
  */
-public class PathPrefix extends com.pathdb.pathIndex.PathPrefix {
+
+public class PathPrefix extends AbstractPath {
+  public final int length;
+  public final List<Node> nodes;
+  final int prefixLength;
 
   public PathPrefix(long pathId) {
     // We have to use numberOfEdges + 1, since PathDB uses the number of nodes.
-    super(pathId, PathIdentifierStore.getEdgeSet(pathId).size() + 1);
+    this(pathId, PathIdentifierStore.getEdgeSet(pathId).size() + 1);
   }
 
-  public PathPrefix(long pathId, int length) {
-    super(pathId, length);
-    throw new IllegalArgumentException("Incompatible with PathDB at the moment, use PathPrefix(long) for now");
+  private PathPrefix(long pathId, int length) {
+    super(pathId);
+    this.length = length;
+    this.nodes = emptyList();
+    this.prefixLength = 0;
   }
 
-  public PathPrefix(long pathId, int length, List<Node> nodes) {
-    // Convert our own Node model back to the Node model from PathDB
-    super(pathId, length, (List<com.pathdb.pathIndex.Node>) (List<?>) nodes);
-    throw new IllegalArgumentException("Incompatible with PathDB at the moment, use PathPrefix(long) for now");
+  private PathPrefix(long pathId, int length, List<Node> nodes) {
+    super(pathId);
+    this.length = length;
+    this.nodes = nodes;
+    this.prefixLength = nodes.size();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    PathPrefix that = (PathPrefix) o;
+    return pathId == that.pathId && length == that.length && Objects.equals(nodes, that.nodes);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(pathId, length, nodes);
+  }
+
+  @Override
+  public String toString() {
+    return "PathPrefix{" + "pathId=" + pathId + ", length=" + length + ", nodes=" + nodes + "}\n";
   }
 }

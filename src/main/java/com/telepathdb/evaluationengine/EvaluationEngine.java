@@ -12,14 +12,12 @@ import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import com.telepathdb.kpathindex.KPathIndex;
+import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by giedomak on 08/02/2017.
@@ -27,11 +25,9 @@ import java.util.stream.StreamSupport;
 public class EvaluationEngine {
 
   private KPathIndex kPathIndex;
-  private HashMap<Long, List<Path>> intermediateResults; // In-memory for now
 
   public EvaluationEngine(KPathIndex kPathIndex) {
     this.kPathIndex = kPathIndex;
-    this.intermediateResults = new HashMap<>();
   }
 
   public Stream<Path> evaluate(ParseTree parseTree) throws IOException {
@@ -49,7 +45,7 @@ public class EvaluationEngine {
 
       long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeLabel(parseTree.getLeaf());
       PathPrefix search = new PathPrefix(pathIdentifier);
-      results = StreamSupport.stream(kPathIndex.search(search).spliterator(), false);
+      results = kPathIndex.search(search);
 
     } else {
       // Perform the Operations
@@ -73,19 +69,18 @@ public class EvaluationEngine {
       // Make sure we return the stream when this node was the root
       return results;
     } else {
-      List<Path> collectedResults = results.collect(Collectors.toList());
-      System.out.println("Itermediateresult: " + parseTree.getLeafOrOperator() + ": " + collectedResults.size());
-      intermediateResults.put(parseTree.getId(), collectedResults);
+      System.out.println("Itermediateresult: " + parseTree.getLeafOrOperator());
+      MemoryManager.put(parseTree.getId(), results);
     }
 
     return null;
   }
 
-  private List<Path> getLeft(ParseTree parseTree) {
-    return intermediateResults.get(parseTree.getLeft().getId());
+  protected List<Path> getLeft(ParseTree parseTree) {
+    return MemoryManager.get(parseTree.getLeft().getId());
   }
 
-  private List<Path> getRight(ParseTree parseTree) {
-    return intermediateResults.get(parseTree.getRight().getId());
+  protected List<Path> getRight(ParseTree parseTree) {
+    return MemoryManager.get(parseTree.getRight().getId());
   }
 }

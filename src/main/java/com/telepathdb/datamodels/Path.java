@@ -7,20 +7,26 @@
 
 package com.telepathdb.datamodels;
 
+import org.apache.commons.lang3.SerializationUtils;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Path model
- * At the moment, we just extend Path from PathDB:
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Path.java
  */
-public class Path extends com.pathdb.pathIndex.Path {
+public class Path extends AbstractPath implements Serializable {
 
+  public final int length;
+  public List<Node> nodes;
   private final int numberOfEdges;
 
   public Path(long pathId, List<Node> nodes) {
-    // Convert our own Node model back to the Node model from PathDB
-    super(pathId, (List<com.pathdb.pathIndex.Node>) (List<?>) nodes);
+    super(pathId);
+    this.length = nodes.size();
+    this.nodes = nodes;
 
     if (nodes.size() < 2)
       throw new IllegalArgumentException("A Path must have at least two nodes");
@@ -37,4 +43,35 @@ public class Path extends com.pathdb.pathIndex.Path {
     return (Node) nodes.get(0);
   }
 
+  public static byte[] serialize(List<Path> paths) {
+    return SerializationUtils.serialize((Serializable) paths);
+  }
+
+  public static List<Path> deserialize(byte[] data) {
+    return (List<Path>) SerializationUtils.deserialize(data);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Path that = (Path) o;
+    return pathId == that.pathId &&
+        length == that.length &&
+        Objects.equals(nodes, that.nodes);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(length, nodes);
+  }
+
+  @Override
+  public String toString() {
+    return "Path{" + "pathId=" + pathId + ", length=" + length + ", nodes=" + nodes + "}\n";
+  }
 }

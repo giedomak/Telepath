@@ -31,6 +31,8 @@ final public class PhysicalLibrary {
   }
 
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2, boolean distinct) {
+    System.out.println(stream1.isParallel());
+    System.out.println(stream2.isParallel());
     // Out-of-the-box Java 8 Streams
     if (distinct) {
       return Stream.concat(stream1, stream2).distinct();

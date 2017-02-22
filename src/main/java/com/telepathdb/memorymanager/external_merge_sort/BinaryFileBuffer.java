@@ -5,7 +5,7 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.telepathdb.memorymanager;
+package com.telepathdb.memorymanager.external_merge_sort;
 
 import java.io.BufferedReader;
 import java.io.IOException;

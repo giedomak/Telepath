@@ -11,6 +11,7 @@ import com.pathdb.pathIndex.PathIndex;
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
+import com.telepathdb.datamodels.integrations.PathDBWrapper;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -35,12 +36,16 @@ public class KPathIndexInMemory implements KPathIndex {
    * Search method to lookup paths in the KPathIndex
    *
    * @param pathPrefix The prefix of a path which we need to search
-   * @return An Stream with Paths which satisfy the pathPrefix
+   * @return A Stream with Paths which satisfy the pathPrefix
    */
   @Override
   public Stream<Path> search(PathPrefix pathPrefix) throws IOException {
     // We have to cast the Path model from pathDB's one, to our own again
-    return StreamSupport.stream(((Iterable<Path>) (Iterable<?>) pathIndex.getPaths(pathPrefix)).spliterator(), false);
+    return
+        StreamSupport.stream(
+            pathIndex.getPaths(
+                PathDBWrapper.toPathPrefix(pathPrefix)).spliterator(), false
+        ).map(PathDBWrapper::fromPath);
   }
 
   /**
@@ -50,6 +55,6 @@ public class KPathIndexInMemory implements KPathIndex {
    */
   @Override
   public void insert(Path path) {
-    pathIndex.insert(path);
+    pathIndex.insert(PathDBWrapper.toPath(path));
   }
 }

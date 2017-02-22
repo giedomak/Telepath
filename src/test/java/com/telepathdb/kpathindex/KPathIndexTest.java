@@ -30,7 +30,7 @@ public class KPathIndexTest {
 
   @Test
   public void searchMethod() throws IOException {
-    PathPrefix pathPrefix = new PathPrefix(4, 8);
+    PathPrefix pathPrefix = new PathPrefix(4);
     kPathIndex.search(pathPrefix);
     // Make sure the search method was called with the right argument
     Mockito.verify(kPathIndex).search(pathPrefix);
