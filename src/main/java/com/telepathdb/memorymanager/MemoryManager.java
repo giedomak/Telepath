@@ -33,7 +33,9 @@ public final class MemoryManager {
   private static final int PARTITION_SIZE = 10000;
   private static final int BATCH_SIZE = 10;
 
-  private static HashMap<Long, List<File>> intermediateResults = new HashMap<>();
+  private static HashMap<Long, Boolean> tooBigHashMap = new HashMap<>();
+  private static HashMap<Long, Stream<Path>> streamHashMap = new HashMap<>();
+  private static HashMap<Long, List<File>> fileHashMap = new HashMap<>();
   private static long maxId = 0;
 
   public static long put(Stream<Path> stream) {
@@ -42,19 +44,38 @@ public final class MemoryManager {
 
   public static long put(long id, Stream<Path> stream) {
 
-    // Partition the existingStream into a stream with Lists of Paths
-    Stream<List<Path>> partitioned = partition(stream, PARTITION_SIZE, BATCH_SIZE);
+    System.out.println(stream.spliterator().getExactSizeIfKnown());
+    boolean tooBig = true;
+    tooBigHashMap.put(id, tooBig);
 
-    partitioned
-        .forEach(partition -> MemoryManager.writePartition(id, partition));
+    if(tooBig) {
+      // Save the files
+      // Partition the existingStream into a stream with Lists of Paths
+      Stream<List<Path>> partitioned = partition(stream, PARTITION_SIZE, BATCH_SIZE);
+
+      partitioned
+          .forEach(partition -> MemoryManager.writePartition(id, partition));
+
+    } else {
+      // Save the stream
+      streamHashMap.put(id, stream);
+    }
+
+    if (id > maxId)
+      maxId = id;
 
     return id;
   }
 
   public static Stream<Path> get(Long id) {
-    return intermediateResults.get(id).stream()
-        .map(MemoryManager::readPartition)
-        .flatMap(list -> list.stream());
+
+    if (tooBigHashMap.get(id)) {
+      return fileHashMap.get(id).stream()
+          .map(MemoryManager::readPartition)
+          .flatMap(list -> list.stream());
+    } else {
+      return streamHashMap.get(id);
+    }
   }
 
   public static Supplier<Stream<Path>> streamSupplier(Stream<Path> stream) {
@@ -68,17 +89,14 @@ public final class MemoryManager {
       return;
 
     try {
-      if (id > maxId)
-        maxId = id;
-
       // Create the temp file
       File temp = File.createTempFile("partition_" + id + "_", ".tmp");
       temp.deleteOnExit(); // delete on JVM exit
 
       // Add this file to our intermediateResults
-      List<File> fileHandles = intermediateResults.getOrDefault(id, new ArrayList<File>());
+      List<File> fileHandles = fileHashMap.getOrDefault(id, new ArrayList<File>());
       fileHandles.add(temp);
-      intermediateResults.put(id, fileHandles);
+      fileHashMap.put(id, fileHandles);
 
       // Write our partition into the file as a byte[]
       ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(temp));
