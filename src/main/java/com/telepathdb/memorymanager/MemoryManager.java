@@ -29,13 +29,16 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
+  private static final int PARTITION_SIZE = 10000;
+  private static final int BATCH_SIZE = 10;
+
   private static HashMap<Long, List<File>> intermediateResults = new HashMap<>();
   private static long maxId = 0;
 
   public static void put(Long id, Stream<Path> stream) {
 
     // Partition the existingStream into a stream with Lists of Paths
-    Stream<List<Path>> partitioned = partition(stream, 100, 1);
+    Stream<List<Path>> partitioned = partition(stream, PARTITION_SIZE, BATCH_SIZE);
 
     partitioned
         .forEach(partition -> MemoryManager.writePartition(id, partition));

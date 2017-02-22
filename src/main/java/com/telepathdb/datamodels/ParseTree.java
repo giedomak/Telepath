@@ -8,7 +8,7 @@
 package com.telepathdb.datamodels;
 
 /**
- * Our internal representation of a query
+ * Our internal representation of a query; how we can parse the user-input.
  */
 public class ParseTree {
 

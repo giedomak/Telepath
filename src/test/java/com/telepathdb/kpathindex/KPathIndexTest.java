@@ -7,7 +7,6 @@
 
 package com.telepathdb.kpathindex;
 
-import com.telepathdb.datamodels.Node;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 
@@ -16,7 +15,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class KPathIndexTest {
 
@@ -28,17 +26,21 @@ public class KPathIndexTest {
     kPathIndex = Mockito.mock(KPathIndex.class);
   }
 
+  // ---------- SEARCH -----------
+
   @Test
   public void searchMethod() throws IOException {
-    PathPrefix pathPrefix = new PathPrefix(4);
+    PathPrefix pathPrefix = Mockito.mock(PathPrefix.class);
     kPathIndex.search(pathPrefix);
     // Make sure the search method was called with the right argument
     Mockito.verify(kPathIndex).search(pathPrefix);
   }
 
+  // ---------- INSERT -----------
+
   @Test
   public void insertMethod() {
-    Path path = new Path(3, new ArrayList<Node>());
+    Path path = Mockito.mock(Path.class);
     kPathIndex.insert(path);
     // Make sure the insert method was called with the right argument
     Mockito.verify(kPathIndex).insert(path);

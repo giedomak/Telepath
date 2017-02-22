@@ -7,8 +7,6 @@
 
 package com.telepathdb.datamodels;
 
-import org.apache.commons.lang3.SerializationUtils;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -64,6 +62,6 @@ public class Path extends AbstractPath implements Serializable {
 
   @Override
   public String toString() {
-    return "Path{" + "pathId=" + pathId + ", length=" + length + ", nodes=" + nodes + "}\n";
+    return "Path{" + "pathId=" + pathId + ", edges=" + numberOfEdges + ", nodes=" + length + ", nodes=" + nodes + "}\n";
   }
 }
