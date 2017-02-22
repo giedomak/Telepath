@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.partition;
@@ -35,13 +36,19 @@ public final class MemoryManager {
   private static HashMap<Long, List<File>> intermediateResults = new HashMap<>();
   private static long maxId = 0;
 
-  public static void put(Long id, Stream<Path> stream) {
+  public static long put(Stream<Path> stream) {
+    return put(++maxId, stream);
+  }
+
+  public static long put(long id, Stream<Path> stream) {
 
     // Partition the existingStream into a stream with Lists of Paths
     Stream<List<Path>> partitioned = partition(stream, PARTITION_SIZE, BATCH_SIZE);
 
     partitioned
         .forEach(partition -> MemoryManager.writePartition(id, partition));
+
+    return id;
   }
 
   public static Stream<Path> get(Long id) {
@@ -50,14 +57,22 @@ public final class MemoryManager {
         .flatMap(list -> list.stream());
   }
 
-  private static void writePartition(Long id, List<Path> partition) {
+  public static Supplier<Stream<Path>> streamSupplier(Stream<Path> stream) {
+    long id = put(stream);
+    return () -> get(id);
+  }
+
+  private static void writePartition(long id, List<Path> partition) {
 
     if (partition.isEmpty())
       return;
 
     try {
+      if (id > maxId)
+        maxId = id;
+
       // Create the temp file
-      File temp = File.createTempFile("partition_" + maxId++ + "_", ".tmp");
+      File temp = File.createTempFile("partition_" + id + "_", ".tmp");
       temp.deleteOnExit(); // delete on JVM exit
 
       // Add this file to our intermediateResults
