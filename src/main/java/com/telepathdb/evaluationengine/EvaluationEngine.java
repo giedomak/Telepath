@@ -16,7 +16,6 @@ import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -76,11 +75,11 @@ public class EvaluationEngine {
     return null;
   }
 
-  protected List<Path> getLeft(ParseTree parseTree) {
+  protected Stream<Path> getLeft(ParseTree parseTree) {
     return MemoryManager.get(parseTree.getLeft().getId());
   }
 
-  protected List<Path> getRight(ParseTree parseTree) {
+  protected Stream<Path> getRight(ParseTree parseTree) {
     return MemoryManager.get(parseTree.getRight().getId());
   }
 }

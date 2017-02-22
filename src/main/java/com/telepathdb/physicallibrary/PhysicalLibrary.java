@@ -11,6 +11,7 @@ import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -43,9 +44,14 @@ final public class PhysicalLibrary {
 
   // ------------- CONCATENATION ---------------
 
-  public static Stream<Path> concatenation(List<Path> stream1, List<Path> stream2) {
+  public static Stream<Path> concatenation(Stream<Path> stream1, Stream<Path> stream2) {
+
+    // TODO: still some kind of bug when directly operating on streams
+    List<Path> paths1 = stream1.collect(Collectors.toList());
+    List<Path> paths2 = stream2.collect(Collectors.toList());
+
     // Basically we are doing a nested loop to do an inner-join and concatentate the paths.
-    return stream1.stream().flatMap(v1 -> stream2.stream()
+    return paths1.stream().flatMap(v1 -> paths2.stream()
         .filter(v2 -> v1.lastNode().equals(v2.firstNode()))
         .map(v2 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2)));
   }

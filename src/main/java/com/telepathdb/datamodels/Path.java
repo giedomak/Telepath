@@ -43,14 +43,6 @@ public class Path extends AbstractPath implements Serializable {
     return (Node) nodes.get(0);
   }
 
-  public static byte[] serialize(List<Path> paths) {
-    return SerializationUtils.serialize((Serializable) paths);
-  }
-
-  public static List<Path> deserialize(byte[] data) {
-    return (List<Path>) SerializationUtils.deserialize(data);
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {

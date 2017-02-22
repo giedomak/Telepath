@@ -9,15 +9,17 @@ package com.telepathdb.memorymanager;
 
 import com.telepathdb.datamodels.Path;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.partition;
@@ -27,10 +29,11 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
-  private static HashMap<Long, List<File>> intermediateResults = new HashMap<>(); // In-memory for now
+  private static HashMap<Long, List<File>> intermediateResults = new HashMap<>();
   private static long maxId = 0;
 
   public static void put(Long id, Stream<Path> stream) {
+
     // Partition the existingStream into a stream with Lists of Paths
     Stream<List<Path>> partitioned = partition(stream, 100, 1);
 
@@ -38,11 +41,10 @@ public final class MemoryManager {
         .forEach(partition -> MemoryManager.writePartition(id, partition));
   }
 
-  public static List<Path> get(Long id) {
+  public static Stream<Path> get(Long id) {
     return intermediateResults.get(id).stream()
         .map(MemoryManager::readPartition)
-        .flatMap(list -> list.stream())
-        .collect(Collectors.toList());
+        .flatMap(list -> list.stream());
   }
 
   private static void writePartition(Long id, List<Path> partition) {
@@ -62,7 +64,7 @@ public final class MemoryManager {
 
       // Write our partition into the file as a byte[]
       ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(temp));
-      oos.writeObject(Path.serialize(partition));
+      oos.writeObject(serialize(partition));
       oos.flush();
 
       // Done
@@ -76,14 +78,21 @@ public final class MemoryManager {
   private static List<Path> readPartition(File file) {
 
     try {
-      FileInputStream in = new FileInputStream(file);
-      ObjectInputStream ois = new ObjectInputStream(in);
-      List<Path> result = Path.deserialize((byte[]) ois.readObject());
-      return result;
+      ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+      return (List<Path>) deserialize((byte[]) ois.readObject());
     } catch (Exception e) {
       System.out.println("Problem deserializing: " + e);
       System.out.println("File: " + file.getAbsolutePath());
     }
     return null;
   }
+
+  private static byte[] serialize(Object paths) {
+    return SerializationUtils.serialize((Serializable) paths);
+  }
+
+  private static Object deserialize(byte[] data) {
+    return SerializationUtils.deserialize(data);
+  }
+
 }
