@@ -20,21 +20,19 @@ import java.util.stream.Stream;
  */
 final public class PhysicalLibrary {
 
-  final static private boolean defaultDistinct = true;
+  final static private boolean DEFAULT_DISTINCT = true;
 
   // ------------- UNION ---------------
 
   public static Stream<Path> union(List<Path> list1, List<Path> list2) {
-    return union(list1.stream(), list2.stream(), defaultDistinct);
+    return union(list1.stream(), list2.stream(), DEFAULT_DISTINCT);
   }
 
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2) {
-    return union(stream1, stream2, defaultDistinct);
+    return union(stream1, stream2, DEFAULT_DISTINCT);
   }
 
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2, boolean distinct) {
-    System.out.println(stream1.isParallel());
-    System.out.println(stream2.isParallel());
     // Out-of-the-box Java 8 Streams
     if (distinct) {
       return Stream.concat(stream1, stream2).distinct();
