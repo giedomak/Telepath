@@ -18,6 +18,8 @@ import java.util.stream.Stream;
  */
 public interface KPathIndex {
 
+  int k = 1;
+
   /**
    * Search method to lookup paths in the KPathIndex
    *

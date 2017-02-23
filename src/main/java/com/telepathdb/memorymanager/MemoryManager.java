@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.partition;
 
 /**
- * Created by giedomak on 17/02/2017.
+ * Created by giedomak
  */
 public final class MemoryManager {
 
@@ -87,18 +87,18 @@ public final class MemoryManager {
   private static Stream<Path> getCombinedResults(List<List<Path>> paths, List<File> files) {
     // Gather the in-memory partitions and the partitions which are written to disk
     return PhysicalLibrary.union(
-        paths.stream()
-            .flatMap(list -> list.stream()),
-        files.stream()
+        paths.parallelStream()
+            .flatMap(list -> list.parallelStream()),
+        files.parallelStream()
             .map(MemoryManager::readPartition)
-            .flatMap(list -> list.stream()));
+            .flatMap(list -> list.parallelStream()));
 
   }
 
   private static Stream<Path> getCombinedResults(long id) {
 
     if(cache.a == id) {
-      return cache.b.stream();
+      return cache.b.parallelStream();
     }
 
     List<List<Path>> paths = pathHashMap.getOrDefault(id, Collections.emptyList());
@@ -106,7 +106,7 @@ public final class MemoryManager {
 
     // Store and use the cache when possible
     if(storeInCacheWhenPossible(id, paths, files))
-      return cache.b.stream();
+      return cache.b.parallelStream();
 
     // Otherwise we just stream our results without the cache
     return getCombinedResults(paths, files);

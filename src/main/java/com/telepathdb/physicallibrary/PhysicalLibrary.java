@@ -35,9 +35,9 @@ final public class PhysicalLibrary {
   public static Stream<Path> union(Stream<Path> stream1, Stream<Path> stream2, boolean distinct) {
     // Out-of-the-box Java 8 Streams
     if (distinct) {
-      return Stream.concat(stream1, stream2).distinct();
+      return Stream.concat(stream1, stream2).distinct().parallel();
     } else {
-      return Stream.concat(stream1, stream2);
+      return Stream.concat(stream1, stream2).parallel();
     }
   }
 
@@ -51,6 +51,6 @@ final public class PhysicalLibrary {
     // Basically we are doing a nested loop to do an inner-join and concatentate the paths.
     return stream1.flatMap(v1 -> streamSupplier.get()
         .filter(v2 -> v1.lastNode().equals(v2.firstNode()))
-        .map(v2 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2)));
+        .map(v2 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2))).parallel();
   }
 }

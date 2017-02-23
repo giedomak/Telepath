@@ -12,6 +12,7 @@ import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.integrations.PathDBWrapper;
+import com.telepathdb.memorymanager.spliterator.FixedBatchSpliterator;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -41,11 +42,11 @@ public class KPathIndexInMemory implements KPathIndex {
   @Override
   public Stream<Path> search(PathPrefix pathPrefix) throws IOException {
     // We have to cast the Path model from pathDB's one, to our own again
-    return
-        StreamSupport.stream(
+    return StreamSupport.stream(
+        new FixedBatchSpliterator<>(
             pathIndex.getPaths(
-                PathDBWrapper.toPathPrefix(pathPrefix)).spliterator(), false
-        ).map(PathDBWrapper::fromPath);
+                PathDBWrapper.toPathPrefix(pathPrefix)).spliterator()), true
+    ).map(PathDBWrapper::fromPath);
   }
 
   /**

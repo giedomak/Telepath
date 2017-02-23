@@ -28,7 +28,6 @@ class TelepathDB {
 
   private static StaticParser staticParser;
   private static KPathIndex kPathIndex;
-  private static GMarkImport gMarkImport;
   private static EvaluationEngine evaluationEngine;
 
   public static void main(String[] args) throws IOException {
@@ -37,7 +36,7 @@ class TelepathDB {
     setupModules();
 
     // Import test dataset
-    long imported = gMarkImport.doImport("/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
+    long imported = GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
     System.out.println("Imported paths: " + imported);
 
     // Print PathIdentifierStore data
@@ -101,9 +100,6 @@ class TelepathDB {
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();
-
-    // We might want to use the GMarkImporter
-    gMarkImport = new GMarkImport(kPathIndex);
 
     // Setup the Evaluation Engine
     evaluationEngine = new EvaluationEngine(kPathIndex);
