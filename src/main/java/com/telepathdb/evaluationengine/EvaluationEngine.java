@@ -15,7 +15,6 @@ import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 /**
@@ -29,7 +28,7 @@ public class EvaluationEngine {
     this.kPathIndex = kPathIndex;
   }
 
-  public Stream<Path> evaluate(ParseTree parseTree) throws IOException {
+  public Stream<Path> evaluate(ParseTree parseTree) {
 
     if (parseTree == null) return null;
 

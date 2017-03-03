@@ -24,6 +24,7 @@ import java.util.stream.StreamSupport;
 public class KPathIndexInMemory implements KPathIndex {
 
   private PathIndex pathIndex;
+  private int k;
 
   /**
    * Constructor which populates our pathIndex variable with the InMemoryIndex obtained from the
@@ -40,13 +41,18 @@ public class KPathIndexInMemory implements KPathIndex {
    * @return A Stream with Paths which satisfy the pathPrefix
    */
   @Override
-  public Stream<Path> search(PathPrefix pathPrefix) throws IOException {
+  public Stream<Path> search(PathPrefix pathPrefix) {
     // We have to cast the Path model from pathDB's one, to our own again
-    return StreamSupport.stream(
-        new FixedBatchSpliterator<>(
-            pathIndex.getPaths(
-                PathDBWrapper.toPathPrefix(pathPrefix)).spliterator()), true
-    ).map(PathDBWrapper::fromPath);
+    try {
+      return StreamSupport.stream(
+          new FixedBatchSpliterator<>(
+              pathIndex.getPaths(
+                  PathDBWrapper.toPathPrefix(pathPrefix)).spliterator()), true
+      ).map(PathDBWrapper::fromPath);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return Stream.empty();
   }
 
   /**
@@ -57,5 +63,13 @@ public class KPathIndexInMemory implements KPathIndex {
   @Override
   public void insert(Path path) {
     pathIndex.insert(PathDBWrapper.toPath(path));
+  }
+
+  public int getK() {
+    return k;
+  }
+
+  public void setK(int k) {
+    this.k = k;
   }
 }

@@ -9,11 +9,12 @@ package com.telepathdb;
 
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
-import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import com.telepathdb.evaluationengine.EvaluationEngine;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
 import com.telepathdb.kpathindex.utilities.GMarkImport;
+import com.telepathdb.kpathindex.utilities.KExtender;
+import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserRPQ;
 import com.telepathdb.staticparser.StaticParserSparql;
@@ -36,17 +37,13 @@ class TelepathDB {
     setupModules();
 
     // Import test dataset
-    long imported = GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10K.txt");
-    System.out.println("Imported paths: " + imported);
+    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
 
-    // Print PathIdentifierStore data
-    System.out.println("PathIds: " + PathIdentifierStore.pathIdentifierStore.keySet());
-    System.out.println("Values:  " + PathIdentifierStore.pathIdentifierStore.values());
+    // Extend from k=1 to k=3
+    KExtender.run(kPathIndex, 3);
 
-    // Print a random search in the index
-//    long randomPathIdentifier = PathIdentifierStore.pathIdentifierStore.keySet().iterator().next();
-//    kPathIndex.search(new PathPrefix(randomPathIdentifier)).forEach(System.out::println);
-
+    // We're alive!
+    System.out.println("----------------------------");
     System.out.println("TelepathDB is up and running");
 
     // Start TelepathDB and listen for query input
@@ -63,10 +60,10 @@ class TelepathDB {
 
     while (true) {
 
-      // State which parser we are using
+      // Print which parser we are using
       System.out.println("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
 
-      // Retrieve input from the user
+      // Retrieve input from the user until we retrieve 'END'
       String input = "";
       String val = in.nextLine();
       while (val.indexOf("END") == -1) {
@@ -80,11 +77,14 @@ class TelepathDB {
       // Evaluate the physical plan
       Stream<Path> results = evaluationEngine.evaluate(parseTree);
 
-      // Print
+      // Print the results
       List<Path> collectedResults = results.collect(Collectors.toList());
-      System.out.println("Results: " + collectedResults.size());
+      System.out.println("Number of results: " + collectedResults.size());
       collectedResults.forEach(System.out::println);
+      System.out.println("----------------------------");
 
+      // Clear the intermediate results in our memory and cache
+      MemoryManager.clear();
     }
 
   }
@@ -103,6 +103,5 @@ class TelepathDB {
 
     // Setup the Evaluation Engine
     evaluationEngine = new EvaluationEngine(kPathIndex);
-
   }
 }

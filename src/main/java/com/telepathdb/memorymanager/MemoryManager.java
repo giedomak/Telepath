@@ -34,19 +34,36 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
-  private static final int MEMORY_BUDGET = 3_000;
-  private static final int CACHE_BUDGET = 10_000;
-  private static final int PARTITION_SIZE = 1_000;
-  private static final int BATCH_SIZE = 10;
+  private static final int MEMORY_BUDGET = 100_000;
+  private static final int CACHE_BUDGET = 100_000;
+  private static final int PARTITION_SIZE = 10_000;
+  private static final int BATCH_SIZE = 100;
 
-  private static HashMap<Long, Boolean> tooBigHashMap = new HashMap<>();
-  private static HashMap<Long, List<List<Path>>> pathHashMap = new HashMap<>();
-  private static HashMap<Long, List<File>> fileHashMap = new HashMap<>();
 
-  private static Tuple2<Long, List<Path>> cache = new Tuple2<Long, List<Path>>(-1l, Collections.emptyList());
+  private static HashMap<Long, List<List<Path>>> pathHashMap;
+  private static HashMap<Long, List<File>> fileHashMap;
 
-  private static int memoryUsed = 0;
-  private static long maxId = 0;
+  private static Tuple2<Long, List<Path>> cache;
+
+  private static int memoryUsed;
+  private static long maxId;
+
+  // "Static constructor"
+  static {
+    clear();
+  }
+
+  /**
+   * Clear all stored data from the MemoryManager.
+   * Temp files will be deleted on JVM exit.
+   */
+  public static void clear() {
+    pathHashMap = new HashMap<>();
+    fileHashMap = new HashMap<>();
+    cache = new Tuple2<Long, List<Path>>(-1l, Collections.emptyList());
+    memoryUsed = 0;
+    maxId = 0;
+  }
 
   public static long put(Stream<Path> stream) {
     return put(++maxId, stream);
@@ -64,7 +81,7 @@ public final class MemoryManager {
   }
 
   public static Stream<Path> get(Long id) {
-    // returned the combined results from our in-memory collection, and from what is stored on disk
+    // Returns the combined results from our in-memory collection, and from what is stored on disk
     return getCombinedResults(id);
   }
 
@@ -87,17 +104,17 @@ public final class MemoryManager {
   private static Stream<Path> getCombinedResults(List<List<Path>> paths, List<File> files) {
     // Gather the in-memory partitions and the partitions which are written to disk
     return PhysicalLibrary.union(
-        paths.parallelStream()
-            .flatMap(list -> list.parallelStream()),
-        files.parallelStream()
+        paths.stream()
+            .flatMap(list -> list.stream()),
+        files.stream()
             .map(MemoryManager::readPartition)
-            .flatMap(list -> list.parallelStream()));
+            .flatMap(list -> list.stream()));
 
   }
 
   private static Stream<Path> getCombinedResults(long id) {
 
-    if(cache.a == id) {
+    if (cache.a == id) {
       return cache.b.parallelStream();
     }
 
@@ -105,7 +122,7 @@ public final class MemoryManager {
     List<File> files = fileHashMap.getOrDefault(id, Collections.emptyList());
 
     // Store and use the cache when possible
-    if(storeInCacheWhenPossible(id, paths, files))
+    if (storeInCacheWhenPossible(id, paths, files))
       return cache.b.parallelStream();
 
     // Otherwise we just stream our results without the cache
@@ -117,10 +134,8 @@ public final class MemoryManager {
     if (partition.isEmpty())
       return;
 
-    boolean tooBig = memoryUsed + partition.size() > MEMORY_BUDGET;
-    tooBigHashMap.put(id, tooBig);
-
-    if (tooBig) {
+    // Check if we have enough memory left, or if we need to write to disk
+    if (memoryUsed + partition.size() > MEMORY_BUDGET) {
       // Save the files
       MemoryManager.writePartition(id, partition);
 
@@ -130,22 +145,28 @@ public final class MemoryManager {
       paths.add(partition);
       pathHashMap.put(id, paths);
 
-      setMemoryUsed(partition.size());
+      increaseMemoryUsed(partition.size());
     }
 
     setMaxId(id);
   }
 
-  private static void setMemoryUsed(int size) {
+  private static void increaseMemoryUsed(int size) {
     memoryUsed += size;
   }
 
   private static void setMaxId(long id) {
-    // Set the MaxId to the current id when needed
+    // Set the MaxId to the current id if greater
     if (id > maxId)
       maxId = id;
   }
 
+  /**
+   * Write a partition of List<Path> to disk.
+   *
+   * @param id        The intermediate result identifier (might consist out of multiple partitions)
+   * @param partition The List<Path> partition we need to store on disk
+   */
   private static void writePartition(long id, List<Path> partition) {
 
     if (partition.isEmpty())
@@ -161,23 +182,33 @@ public final class MemoryManager {
       fileHandles.add(temp);
       fileHashMap.put(id, fileHandles);
 
-      // Write our partition into the file as a byte[]
-      ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(temp));
-      oos.writeObject(serialize(partition));
-      oos.flush();
+      // Try-with-resources will auto close our streams
+      try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(temp))) {
+        // Write our partition into the file as a byte[]
+        oos.writeObject(serialize(partition));
+        oos.flush();
 
-      // Done
-      System.out.println("Partition written to: " + temp.getAbsolutePath());
+        // Done
+        System.out.println("Partition written to: " + temp.getAbsolutePath());
+      }
 
     } catch (Exception e) {
       System.out.println("Problem serializing: " + e);
     }
   }
 
+  /**
+   * Read and deserialize a partition file back into a List<Path> Object.
+   *
+   * @param file The file we need to deserialize
+   * @return The deserialized file into List<Path>
+   */
   private static List<Path> readPartition(File file) {
 
-    try {
-      ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+    System.out.println("readPartition");
+
+    // Try-with-resources will auto close our streams
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
       return (List<Path>) deserialize((byte[]) ois.readObject());
     } catch (Exception e) {
       System.out.println("Problem deserializing: " + e);
@@ -186,10 +217,22 @@ public final class MemoryManager {
     return null;
   }
 
-  private static byte[] serialize(Object paths) {
-    return SerializationUtils.serialize((Serializable) paths);
+  /**
+   * Serialize any Object into a byte array.
+   *
+   * @param partition The partition we need to serialize into a byte array.
+   * @return The serialized partition into a byte array.
+   */
+  private static byte[] serialize(Object partition) {
+    return SerializationUtils.serialize((Serializable) partition);
   }
 
+  /**
+   * Deserialize a byte array back into a Object.
+   *
+   * @param data The byte array.
+   * @return The object.
+   */
   private static Object deserialize(byte[] data) {
     return SerializationUtils.deserialize(data);
   }

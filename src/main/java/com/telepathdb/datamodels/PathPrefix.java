@@ -62,6 +62,6 @@ public class PathPrefix extends AbstractPath {
 
   @Override
   public String toString() {
-    return "PathPrefix{" + "pathId=" + pathId + ", length=" + length + ", nodes=" + nodes + "}\n";
+    return "PathPrefix{" + "pathId=" + pathId + ", length=" + length + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + nodes + "}";
   }
 }

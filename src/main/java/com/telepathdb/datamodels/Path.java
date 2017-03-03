@@ -62,6 +62,6 @@ public class Path extends AbstractPath implements Serializable {
 
   @Override
   public String toString() {
-    return "Path{" + "pathId=" + pathId + ", edges=" + numberOfEdges + ", nodes=" + length + ", nodes=" + nodes + "}\n";
+    return "Path{" + "pathId=" + pathId + ", edges=" + numberOfEdges + ", nodes=" + length + ", nodes=" + nodes + "}";
   }
 }
