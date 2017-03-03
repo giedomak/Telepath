@@ -95,7 +95,7 @@ final public class PathIdentifierStore {
   }
 
   static public List<Long> getPathIdentifiers(int k) {
-    return new ArrayList<Long>(kPathIdentifierStore.getOrDefault(k, Collections.emptyList()));
+    return kPathIdentifierStore.getOrDefault(k, Collections.emptyList());
   }
 
   /**

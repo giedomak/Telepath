@@ -33,7 +33,7 @@ public final class GMarkImport {
    */
   public static long run(KPathIndex kPathIndex, String gMarkFile) throws IOException {
 
-    System.out.println("GMarkImport: Importing: " + gMarkFile);
+    System.out.println("GMarkImport: importing: " + gMarkFile);
 
     long importedLines = 0;
 
@@ -70,7 +70,7 @@ public final class GMarkImport {
     // Set K to 1 for the kPathIndex becuase we only imported paths with 1 edge
     kPathIndex.setK(1);
 
-    System.out.println("GMarkImport: Imported paths: " + importedLines);
+    System.out.println("GMarkImport: imported paths: " + importedLines);
 
     return importedLines;
   }
