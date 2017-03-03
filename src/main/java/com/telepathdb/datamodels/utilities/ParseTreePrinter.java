@@ -63,6 +63,7 @@ public class ParseTreePrinter {
     int firstSpaces = (int) Math.pow(2, (floor)) - 1;
     int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
 
+    Logger.debug("", false);
     ParseTreePrinter.printWhitespaces(firstSpaces);
 
     List<ParseTree> newNodes = new ArrayList<ParseTree>();
@@ -79,7 +80,9 @@ public class ParseTreePrinter {
 
       ParseTreePrinter.printWhitespaces(betweenSpaces);
     }
+
     System.out.println("");
+    Logger.debug("", false);
 
     for (int i = 1; i <= endgeLines; i++) {
       for (int j = 0; j < nodes.size(); j++) {

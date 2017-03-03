@@ -11,6 +11,7 @@ import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
@@ -58,7 +59,7 @@ public class EvaluationEngine {
           break;
 
         default:
-          throw new IllegalArgumentException("Operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
+          throw new IllegalArgumentException("EvaluationEngine: operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
 
       }
     }
@@ -67,7 +68,7 @@ public class EvaluationEngine {
       // Make sure we return the stream when this node was the root
       return results;
     } else {
-      System.out.println("Itermediateresult: " + parseTree.getLeafOrOperator());
+      Logger.debug("Itermediateresult: " + parseTree.getLeafOrOperator());
       MemoryManager.put(parseTree.getId(), results);
     }
 

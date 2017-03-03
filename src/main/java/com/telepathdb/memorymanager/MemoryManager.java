@@ -8,6 +8,7 @@
 package com.telepathdb.memorymanager;
 
 import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
 
 import org.apache.commons.lang3.SerializationUtils;
@@ -189,11 +190,11 @@ public final class MemoryManager {
         oos.flush();
 
         // Done
-        System.out.println("Partition written to: " + temp.getAbsolutePath());
+        Logger.debug("Partition written to: " + temp.getAbsolutePath());
       }
 
     } catch (Exception e) {
-      System.out.println("Problem serializing: " + e);
+      Logger.error("Problem serializing: " + e);
     }
   }
 
@@ -205,14 +206,14 @@ public final class MemoryManager {
    */
   private static List<Path> readPartition(File file) {
 
-    System.out.println("readPartition");
+    Logger.debug("readPartition() file: " +file.getAbsolutePath());
 
     // Try-with-resources will auto close our streams
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
       return (List<Path>) deserialize((byte[]) ois.readObject());
     } catch (Exception e) {
-      System.out.println("Problem deserializing: " + e);
-      System.out.println("File: " + file.getAbsolutePath());
+      Logger.error("Problem deserializing: " + e);
+      Logger.error("File: " + file.getAbsolutePath());
     }
     return null;
   }

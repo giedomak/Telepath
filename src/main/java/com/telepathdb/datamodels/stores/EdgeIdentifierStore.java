@@ -48,7 +48,7 @@ final public class EdgeIdentifierStore {
     if (edgeIdentifierStore.containsKey(edgeId)) {
       return new Edge(edgeIdentifierStore.get(edgeId));
     } else {
-      throw new IllegalArgumentException("Edge ID not known");
+      throw new IllegalArgumentException("EdgeIdentifierStore: edgeId not known");
     }
   }
 

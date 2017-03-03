@@ -10,6 +10,7 @@ package com.telepathdb.kpathindex.utilities;
 import com.telepathdb.datamodels.Node;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.kpathindex.KPathIndex;
 
 import java.io.BufferedReader;
@@ -33,7 +34,7 @@ public final class GMarkImport {
    */
   public static long run(KPathIndex kPathIndex, String gMarkFile) throws IOException {
 
-    System.out.println("GMarkImport: importing: " + gMarkFile);
+    Logger.info("Importing: " + gMarkFile);
 
     long importedLines = 0;
 
@@ -70,7 +71,7 @@ public final class GMarkImport {
     // Set K to 1 for the kPathIndex becuase we only imported paths with 1 edge
     kPathIndex.setK(1);
 
-    System.out.println("GMarkImport: imported paths: " + importedLines);
+    Logger.info("Imported paths: " + importedLines);
 
     return importedLines;
   }

@@ -11,6 +11,7 @@ import com.telepathdb.datamodels.Edge;
 import com.telepathdb.datamodels.Node;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
+import com.telepathdb.datamodels.utilities.Logger;
 
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -79,7 +80,7 @@ final public class PathIdentifierStore {
     if (pathIdentifierStore.containsKey(pathIdentifier)) {
       return deserializeEdgeSet(pathIdentifierStore.get(pathIdentifier));
     } else {
-      throw new IllegalArgumentException("Path ID not known");
+      throw new IllegalArgumentException("PathIdentifierStore: pathIdentifier not known");
     }
   }
 
@@ -119,7 +120,7 @@ final public class PathIdentifierStore {
     kPathIdentifierStore.put(edges.size(), ids);
 
     // Print the addition
-    System.out.println("PathIdentifierStore added: " + new PathPrefix(maxId));
+    Logger.debug("Add: " + new PathPrefix(maxId));
 
     // Increase maxId, but return the id we've just used for generation
     return ++maxId - 1;

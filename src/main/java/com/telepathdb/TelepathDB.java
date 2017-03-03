@@ -9,6 +9,7 @@ package com.telepathdb;
 
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.evaluationengine.EvaluationEngine;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
@@ -40,11 +41,11 @@ class TelepathDB {
     GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
 
     // Extend from k=1 to k=3
-    KExtender.run(kPathIndex, 3);
+    KExtender.run(kPathIndex, 1);
 
     // We're alive!
-    System.out.println("----------------------------");
-    System.out.println("TelepathDB is up and running");
+    Logger.debug("----------------------------");
+    Logger.debug("TelepathDB is up and running");
 
     // Start TelepathDB and listen for query input
     start();
@@ -61,7 +62,7 @@ class TelepathDB {
     while (true) {
 
       // Print which parser we are using
-      System.out.println("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
+      Logger.info("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
 
       // Retrieve input from the user until we retrieve 'END'
       String input = "";
@@ -79,9 +80,9 @@ class TelepathDB {
 
       // Print the results
       List<Path> collectedResults = results.collect(Collectors.toList());
-      System.out.println("Number of results: " + collectedResults.size());
-      collectedResults.forEach(System.out::println);
-      System.out.println("----------------------------");
+      Logger.info("Number of results: " + collectedResults.size());
+      collectedResults.forEach(Logger::info);
+      Logger.info("----------------------------");
 
       // Clear the intermediate results in our memory and cache
       MemoryManager.clear();

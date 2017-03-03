@@ -8,6 +8,7 @@
 package com.telepathdb.staticparser;
 
 import com.telepathdb.datamodels.ParseTree;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.datamodels.utilities.ParseTreePrinter;
 import com.telepathdb.staticparser.rpq.RPQVisitorParser;
 
@@ -19,7 +20,7 @@ public class StaticParserRPQ implements StaticParser {
   @Override
   public ParseTree parse(String input) {
 
-    System.out.println("Your input: " + input);
+    Logger.info("Your input: " + input);
     RPQVisitorParser rpqVisitorParser = new RPQVisitorParser();
 
     ParseTree parseTree = rpqVisitorParser.parse(input);
