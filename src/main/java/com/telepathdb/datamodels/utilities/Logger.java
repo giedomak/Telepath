@@ -1,38 +1,45 @@
 package com.telepathdb.datamodels.utilities;
 
 /**
- * Created by giedomak on 03/03/2017.
+ * This Logger class is reponsible for logging in 5 levels:
+ * debug, info, warning, error and fatal
  */
 public final class Logger {
 
-  public static void debug(String text) {
-    log(text);
+  public static void debug(Object object) {
+    log(object.toString());
   }
 
-  public static void debug(String text, boolean println) {
-    log(text, println);
+  public static void debug(Object object, boolean println) {
+    log(object.toString(), println);
   }
 
   public static void info(Object text) {
     log(text.toString());
   }
 
-  public static void warning(String text) {
-    log(text);
+  public static void warning(Object object) {
+    log(object.toString());
   }
 
-  public static void error(String text) {
-    log(text);
+  public static void error(Object object) {
+    log(object.toString());
   }
 
-  public static void fatal(String text) {
-    log(text);
+  public static void fatal(Object object) {
+    log(object.toString());
   }
 
   private static void log(String text) {
     log(text, true);
   }
 
+  /**
+   * This wil log a statement to the console for now
+   *
+   * @param text The text to print
+   * @param println Boolean indicating if we want to print on a newline or not
+   */
   private static void log(String text, boolean println) {
     if (println) {
       System.out.println(padLeft(getCallerClassName(), 19) + ": " + text);
@@ -41,6 +48,11 @@ public final class Logger {
     }
   }
 
+  /**
+   * Get the Caller's ClassName, so we can add that in our log
+   *
+   * @return A string with the ClassName of the caller, with the packages stripped away.
+   */
   private static String getCallerClassName() {
     StackTraceElement[] stElements = Thread.currentThread().getStackTrace();
     for (int i = 1; i < stElements.length; i++) {
@@ -56,10 +68,24 @@ public final class Logger {
     return null;
   }
 
+  /**
+   * Pad a String with spaces on the right
+   *
+   * @param string The String to pad
+   * @param n Number of total chars
+   * @return The padded String
+   */
   private static String padRight(String string, int n) {
     return String.format("%1$-" + n + "s", string);
   }
 
+  /**
+   * Pad a String with spaces from the left
+   *
+   * @param string The String to pad
+   * @param n Number of total chars
+   * @return The padded String
+   */
   private static String padLeft(String string, int n) {
     return String.format("%1$" + n + "s", string);
   }
