@@ -51,7 +51,10 @@ public class ParseTreePrinter {
   public static void printParseTree(ParseTree root) {
     int maxLevel = ParseTreePrinter.maxLevel(root);
 
+    Logger.debug("", false);
     printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+    Logger.debug("", true);
+
   }
 
   private static void printNodeInternal(List<ParseTree> nodes, int level, int maxLevel) {
@@ -63,7 +66,6 @@ public class ParseTreePrinter {
     int firstSpaces = (int) Math.pow(2, (floor)) - 1;
     int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
 
-    Logger.debug("", false);
     ParseTreePrinter.printWhitespaces(firstSpaces);
 
     List<ParseTree> newNodes = new ArrayList<ParseTree>();
@@ -108,6 +110,7 @@ public class ParseTreePrinter {
       }
 
       System.out.println("");
+      Logger.debug("", false);
     }
 
     printNodeInternal(newNodes, level + 1, maxLevel);

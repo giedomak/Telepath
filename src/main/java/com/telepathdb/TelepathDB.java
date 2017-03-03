@@ -40,10 +40,10 @@ class TelepathDB {
     setupModules();
 
     // Import test dataset
-    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
+    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph1M.txt");
 
     // Extend from k=1 to k=3
-    KExtender.run(kPathIndex, 2);
+    KExtender.run(kPathIndex, 3);
 
     // We're alive!
     long endTime = System.currentTimeMillis();
