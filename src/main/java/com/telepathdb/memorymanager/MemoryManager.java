@@ -35,7 +35,7 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
-  private static final int MEMORY_BUDGET = 100_000;
+  private static final int MEMORY_BUDGET = 10_000_000;
   private static final int CACHE_BUDGET = 100_000;
   private static final int PARTITION_SIZE = 10_000;
   private static final int BATCH_SIZE = 100;
@@ -206,7 +206,7 @@ public final class MemoryManager {
    */
   private static List<Path> readPartition(File file) {
 
-    Logger.debug("readPartition() file: " +file.getAbsolutePath());
+    // Logger.debug("readPartition() file: " +file.getAbsolutePath());
 
     // Try-with-resources will auto close our streams
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {

@@ -34,6 +34,8 @@ class TelepathDB {
 
   public static void main(String[] args) throws IOException {
 
+    long startTime = System.currentTimeMillis();
+
     // Init everything we need
     setupModules();
 
@@ -41,11 +43,12 @@ class TelepathDB {
     GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
 
     // Extend from k=1 to k=3
-    KExtender.run(kPathIndex, 1);
+    KExtender.run(kPathIndex, 2);
 
     // We're alive!
+    long endTime = System.currentTimeMillis();
     Logger.debug("----------------------------");
-    Logger.debug("TelepathDB is up and running");
+    Logger.debug("TelepathDB is up and running after " + (endTime-startTime) + " ms");
 
     // Start TelepathDB and listen for query input
     start();
@@ -72,6 +75,8 @@ class TelepathDB {
         val = in.nextLine();
       }
 
+      long startTime = System.currentTimeMillis();
+
       // Parse the input
       ParseTree parseTree = staticParser.parse(input);
 
@@ -80,8 +85,10 @@ class TelepathDB {
 
       // Print the results
       List<Path> collectedResults = results.collect(Collectors.toList());
-      Logger.info("Number of results: " + collectedResults.size());
+      long endTime = System.currentTimeMillis();
+      Logger.info("Results:");
       collectedResults.forEach(Logger::info);
+      Logger.info("Number of results: " + collectedResults.size() + ", after " + (endTime-startTime) + " ms");
       Logger.info("----------------------------");
 
       // Clear the intermediate results in our memory and cache
