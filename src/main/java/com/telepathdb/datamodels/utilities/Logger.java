@@ -68,7 +68,10 @@ public final class Logger {
       if (!name.equals(Logger.class.getName()) &&
           name.indexOf("java.lang.Thread") != 0 &&
           name.indexOf("Lambda") == -1 &&
-          name.indexOf("ArrayList") == -1) {
+          name.indexOf("ArrayList") == -1 &&
+          name.indexOf("ForEachOps") == -1 &&
+          name.indexOf("SliceOps") == -1 &&
+          name.indexOf("Pipeline") == -1) {
         return name.substring(name.lastIndexOf('.') + 1);
       }
     }

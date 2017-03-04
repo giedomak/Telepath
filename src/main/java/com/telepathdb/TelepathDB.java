@@ -40,7 +40,7 @@ class TelepathDB {
     setupModules();
 
     // Import test dataset
-    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph1M.txt");
+    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
 
     // Extend from k=1 to k=3
     KExtender.run(kPathIndex, 3);
@@ -48,7 +48,7 @@ class TelepathDB {
     // We're alive!
     long endTime = System.currentTimeMillis();
     Logger.debug("----------------------------");
-    Logger.debug("TelepathDB is up and running after " + (endTime-startTime) + " ms");
+    Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms");
 
     // Start TelepathDB and listen for query input
     start();
@@ -87,8 +87,10 @@ class TelepathDB {
       List<Path> collectedResults = results.collect(Collectors.toList());
       long endTime = System.currentTimeMillis();
       Logger.info("Results:");
-      collectedResults.forEach(Logger::info);
-      Logger.info("Number of results: " + collectedResults.size() + ", after " + (endTime-startTime) + " ms");
+      collectedResults.stream().limit(10).forEach(Logger::info);
+      if (collectedResults.size() > 10)
+        Logger.info("And more......");
+      Logger.info("Number of results: " + collectedResults.size() + ", after " + (endTime - startTime) + " ms");
       Logger.info("----------------------------");
 
       // Clear the intermediate results in our memory and cache

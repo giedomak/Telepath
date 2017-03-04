@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -35,11 +36,10 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
-  private static final int MEMORY_BUDGET = 10_000_000;
+  private static final int MEMORY_BUDGET = 100_000;
   private static final int CACHE_BUDGET = 100_000;
-  private static final int PARTITION_SIZE = 10_000;
+  private static final int PARTITION_SIZE = 1_000;
   private static final int BATCH_SIZE = 100;
-
 
   private static HashMap<Long, List<List<Path>>> pathHashMap;
   private static HashMap<Long, List<File>> fileHashMap;
@@ -70,6 +70,11 @@ public final class MemoryManager {
     return put(++maxId, stream);
   }
 
+  public static long put(long id, Path path) {
+    collectPartition(id, Arrays.asList(path));
+    return id;
+  }
+
   public static long put(long id, Stream<Path> stream) {
 
     // Partition the existingStream into a stream with Lists of Paths
@@ -81,7 +86,11 @@ public final class MemoryManager {
     return id;
   }
 
-  public static Stream<Path> get(Long id) {
+  public static Stream<Path> get(int id) {
+    return get(Integer.toUnsignedLong(id));
+  }
+
+  public static Stream<Path> get(long id) {
     // Returns the combined results from our in-memory collection, and from what is stored on disk
     return getCombinedResults(id);
   }
@@ -89,6 +98,10 @@ public final class MemoryManager {
   public static Supplier<Stream<Path>> streamSupplier(Stream<Path> stream) {
     long id = put(stream);
     return () -> get(id);
+  }
+
+  public static long getMaxId() {
+    return maxId;
   }
 
   private static boolean storeInCacheWhenPossible(long id, List<List<Path>> paths, List<File> files) {
