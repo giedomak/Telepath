@@ -7,10 +7,14 @@
 
 package com.telepathdb.datamodels;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 /**
  * Our internal representation of a query; how we can parse the user-input.
  */
-public class ParseTree {
+public class ParseTree implements Cloneable {
 
   // Our public constants identifying our symbolic names
   public static final int
@@ -28,8 +32,8 @@ public class ParseTree {
 
   private boolean root = false;
 
-  private ParseTree left;
-  private ParseTree right;
+  private ParseTree left = null;
+  private ParseTree right = null;
 
   final private long id;
   static private long maxid = 1;
@@ -64,6 +68,14 @@ public class ParseTree {
   public void setOperator(int operator) {
     this.operator = operator;
     this.leaf = null;
+  }
+
+  public boolean hasLeft() {
+    return getLeft() != null;
+  }
+
+  public boolean hasRight() {
+    return getRight() != null;
   }
 
   public ParseTree getLeft() {
@@ -111,13 +123,60 @@ public class ParseTree {
     return leaf != null;
   }
 
-  public long getId() { return id; }
+  public long getId() {
+    return id;
+  }
 
-  public void setRoot() {
+  public ParseTree setRoot() {
     this.root = true;
+    return this;
   }
 
   public boolean isRoot() {
     return root;
+  }
+
+  /**
+   * Deep clone the current parsetree.
+   *
+   * @return A deep clone of the current parsetree.
+   */
+  public ParseTree clone() {
+
+    ParseTree clonedTree = null;
+
+    // make a clone of the current tree
+    try {
+      clonedTree = (ParseTree) super.clone();
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+
+    // recusively clone the left and right childs (parsetrees) so that we don't keep references to the same objects
+    if (this.getLeft() != null) {
+      clonedTree.setLeft(this.getLeft().clone());
+    }
+    if (this.getRight() != null) {
+      clonedTree.setRight(this.getRight().clone());
+    }
+
+    return clonedTree;
+  }
+
+  private Stream<ParseTree> flattened() {
+    List<ParseTree> children = new ArrayList();
+    if (hasLeft()) {
+      children.add(getLeft());
+    }
+    if(hasRight()) {
+      children.add(getRight());
+    }
+    return Stream.concat(
+        Stream.of(this),
+        children.stream().flatMap(ParseTree::flattened));
+  }
+
+  public boolean containsOperator(int operator) {
+    return flattened().anyMatch(t -> t.getOperator() == operator);
   }
 }

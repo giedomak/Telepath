@@ -10,6 +10,7 @@ package com.telepathdb;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.utilities.Logger;
+import com.telepathdb.datamodels.utilities.ParseTreePrinter;
 import com.telepathdb.evaluationengine.EvaluationEngine;
 import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.kpathindex.KPathIndexInMemory;
@@ -19,6 +20,7 @@ import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserRPQ;
 import com.telepathdb.staticparser.StaticParserSparql;
+import com.telepathdb.staticparser.UnionPuller;
 
 import java.io.IOException;
 import java.util.List;
@@ -80,16 +82,28 @@ class TelepathDB {
       // Parse the input
       ParseTree parseTree = staticParser.parse(input);
 
+      // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
+      List<ParseTree> parseTrees = UnionPuller.parse(parseTree);
+
+      Logger.debug("UNION-less parsetrees:");
+      for(ParseTree tree : parseTrees) {
+        ParseTreePrinter.printParseTree(tree);
+      }
+
       // Evaluate the physical plan
       Stream<Path> results = evaluationEngine.evaluate(parseTree);
 
       // Print the results
       List<Path> collectedResults = results.collect(Collectors.toList());
       long endTime = System.currentTimeMillis();
+
       Logger.info("Results:");
+
       collectedResults.stream().limit(10).forEach(Logger::info);
-      if (collectedResults.size() > 10)
-        Logger.info("And more......");
+      if (collectedResults.size() > 10) {
+        Logger.info("And " + (collectedResults.size() - 10) + " more......");
+      }
+
       Logger.info("Number of results: " + collectedResults.size() + ", after " + (endTime - startTime) + " ms");
       Logger.info("----------------------------");
 

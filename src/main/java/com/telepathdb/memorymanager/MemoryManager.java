@@ -36,7 +36,7 @@ import static com.telepathdb.memorymanager.spliterator.PartitioningSpliterator.p
  */
 public final class MemoryManager {
 
-  private static final int MEMORY_BUDGET = 100_000;
+  private static final int MEMORY_BUDGET = 10_000_000;
   private static final int CACHE_BUDGET = 100_000;
   private static final int PARTITION_SIZE = 1_000;
   private static final int BATCH_SIZE = 100;
@@ -116,6 +116,12 @@ public final class MemoryManager {
   }
 
   private static Stream<Path> getCombinedResults(List<List<Path>> paths, List<File> files) {
+
+    if (paths.isEmpty()) {
+      paths = Collections.emptyList();
+//      throw new IllegalArgumentException("whoops");
+    }
+
     // Gather the in-memory partitions and the partitions which are written to disk
     return PhysicalLibrary.union(
         paths.stream()
