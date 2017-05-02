@@ -34,8 +34,9 @@ public class EvaluationEngine {
     if (parseTree == null) return null;
 
     // Make sure we do an Postorder treewalk, this way we gather all the information from the leafs first
-    evaluate(parseTree.getLeft());
-    evaluate(parseTree.getRight());
+    for (ParseTree child : parseTree.getChildren()) {
+      evaluate(child);
+    }
 
     Stream<Path> results = Stream.empty();
 
@@ -51,11 +52,11 @@ public class EvaluationEngine {
       switch (parseTree.getOperator()) {
 
         case ParseTree.UNION:
-          results = PhysicalLibrary.union(getLeft(parseTree), getRight(parseTree));
+          results = PhysicalLibrary.union(getChild(parseTree, 0), getChild(parseTree, 1));
           break;
 
         case ParseTree.CONCATENATION:
-          results = PhysicalLibrary.concatenation(getLeft(parseTree), getRight(parseTree));
+          results = PhysicalLibrary.concatenation(getChild(parseTree, 0), getChild(parseTree, 1));
           break;
 
         default:
@@ -75,11 +76,7 @@ public class EvaluationEngine {
     return null;
   }
 
-  protected Stream<Path> getLeft(ParseTree parseTree) {
-    return MemoryManager.get(parseTree.getLeft().getId());
-  }
-
-  protected Stream<Path> getRight(ParseTree parseTree) {
-    return MemoryManager.get(parseTree.getRight().getId());
+  protected Stream<Path> getChild(ParseTree parseTree, int index) {
+    return MemoryManager.get(parseTree.getChild(index).getId());
   }
 }

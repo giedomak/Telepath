@@ -32,13 +32,13 @@ public class ParseTree implements Cloneable {
 
   private boolean root = false;
 
-  private ParseTree left = null;
-  private ParseTree right = null;
+  private List<ParseTree> children;
 
   final private long id;
   static private long maxid = 1;
 
   public ParseTree() {
+    this.children = new ArrayList<ParseTree>();
     this.id = maxid++;
   }
 
@@ -70,28 +70,27 @@ public class ParseTree implements Cloneable {
     this.leaf = null;
   }
 
-  public boolean hasLeft() {
-    return getLeft() != null;
+  public boolean hasChild(int index) {
+    return getChild(index) != null;
   }
 
-  public boolean hasRight() {
-    return getRight() != null;
+  public ParseTree getChild(int index) {
+    if (children.size() > index) {
+      return children.get(index);
+    }
+    return null;
   }
 
-  public ParseTree getLeft() {
-    return left;
+  public List<ParseTree> getChildren() {
+    return children;
   }
 
-  public void setLeft(ParseTree left) {
-    this.left = left;
-  }
-
-  public ParseTree getRight() {
-    return right;
-  }
-
-  public void setRight(ParseTree right) {
-    this.right = right;
+  public void setChild(int index, ParseTree tree) {
+    try {
+      this.children.set(index, tree);
+    } catch(IndexOutOfBoundsException e) {
+      this.children.add(index, tree);
+    }
   }
 
   /**
@@ -152,31 +151,36 @@ public class ParseTree implements Cloneable {
       e.printStackTrace();
     }
 
+    // reset our children
+    clonedTree.children = new ArrayList<ParseTree>();
+
     // recusively clone the left and right childs (parsetrees) so that we don't keep references to the same objects
-    if (this.getLeft() != null) {
-      clonedTree.setLeft(this.getLeft().clone());
-    }
-    if (this.getRight() != null) {
-      clonedTree.setRight(this.getRight().clone());
+    for (ParseTree child : this.children) {
+      clonedTree.children.add(child.clone());
     }
 
     return clonedTree;
   }
 
-  private Stream<ParseTree> flattened() {
-    List<ParseTree> children = new ArrayList();
-    if (hasLeft()) {
-      children.add(getLeft());
-    }
-    if(hasRight()) {
-      children.add(getRight());
-    }
+  /**
+   * Post-order treewalk
+   *
+   * @return Stream of ParseTrees
+   */
+  public Stream<ParseTree> postOrderTreeWalk() {
     return Stream.concat(
-        Stream.of(this),
-        children.stream().flatMap(ParseTree::flattened));
+        children.stream().flatMap(ParseTree::postOrderTreeWalk),
+        Stream.of(this));
   }
 
+  /**
+   * Check if the current tree contains a given operator.
+   *
+   * @param operator The operator constant (e.g. ParseTree.UNION) to check for containment in the
+   *                 tree.
+   * @return Boolean indicating if the tree contains the operator.
+   */
   public boolean containsOperator(int operator) {
-    return flattened().anyMatch(t -> t.getOperator() == operator);
+    return postOrderTreeWalk().anyMatch(t -> t.getOperator() == operator);
   }
 }

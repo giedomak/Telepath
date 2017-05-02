@@ -1,6 +1,7 @@
 package com.telepathdb.staticparser;
 
 import com.telepathdb.datamodels.ParseTree;
+import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.datamodels.utilities.ParseTreePrinter;
 
 import java.util.ArrayList;
@@ -42,10 +43,11 @@ final public class UnionPuller {
         // Split them immediately when the Root is the UNION operator
         if (tree.isRoot() && tree.getOperator() == ParseTree.UNION) {
 
-          // Remove the current tree from the list, and add its left child and right child
+          // Remove the current tree from the list, and add its children to our parseTrees var
           parseTrees.remove(tree);
-          parseTrees.add(tree.getLeft().clone().setRoot());
-          parseTrees.add(tree.getRight().clone().setRoot());
+          for (ParseTree child : tree.getChildren()) {
+            parseTrees.add(child.clone().setRoot());
+          }
           continue; // Continue to the next parsetree containing UNION
         }
 
@@ -55,8 +57,12 @@ final public class UnionPuller {
         // Recursively remove the first UNION we find doing a pre-order treewalk.
         // Replace the UNION node with its left child in the original tree, and with the
         // right child in the clone of the original tree.
-        RemoveFirstUnion(tree, "left");
-        RemoveFirstUnion(clone, "right");
+        RemoveFirstUnion(tree, 0);
+        RemoveFirstUnion(clone, 1);
+
+        Logger.debug("UNIONNNN");
+        ParseTreePrinter.printParseTree(tree);
+        ParseTreePrinter.printParseTree(clone);
 
         // We still have to add the clone to the list
         parseTrees.add(clone);
@@ -71,47 +77,30 @@ final public class UnionPuller {
    * We use a pre-order tree walk and return after we've replaced the first UNION with its child.
    *
    * @param tree The tree we have to traverse finding the first occurence of a UNION operator.
-   * @param childChooser Define if we have to replace the UNION node with its right or left child.
+   * @param childChooserIndex Define if we have to replace the UNION node with its right or left child.
    * @return Boolean indicating if we've replaced a UNION node.
    */
-  private static boolean RemoveFirstUnion(ParseTree tree, String childChooser) {
+  private static boolean RemoveFirstUnion(ParseTree tree, int childChooserIndex) {
 
     // Return if we've reached a leaf
     if (tree.isLeaf()) {
       return false;
     }
 
-    // Check if our left child is a UNION node. If so, replace it with the chosen child of our left child.
-    if (tree.hasLeft() && tree.getLeft().getOperator() == ParseTree.UNION) {
-      if (childChooser == "left") {
-        tree.setLeft(tree.getLeft().getLeft());
-      } else if (childChooser == "right") {
-        tree.setLeft(tree.getLeft().getRight());
-      }
-      // Return if we've found one, breaking the recursive call
-      return true;
-    }
-
-    // Check if our right child is a UNION node. If so, replace it with the chosen child of our right child.
-    if (tree.hasRight() && tree.getRight().getOperator() == ParseTree.UNION) {
-      if (childChooser == "left") {
-        tree.setRight(tree.getRight().getLeft());
-      } else if (childChooser == "right") {
-        tree.setRight(tree.getRight().getRight());
-      }
-      // Return if we've found one, breaking the recursive call
-      return true;
-    }
-
-    // Traverse to the left child if we haven't found a UNION node already
-    if (tree.hasLeft()) {
-      if(RemoveFirstUnion(tree.getLeft(), childChooser)) {
+    // Check each child for a UNION node.
+    for (int i = 0; i < tree.getChildren().size(); i++) {
+      ParseTree child = tree.getChild(i);
+      // Check if our child is a UNION node. If so, replace it with the childChooserIndex of our child.
+      if (child.getOperator() == ParseTree.UNION) {
+        tree.setChild(i, child.getChild(childChooserIndex));
+        // Return if we've found one, breaking the recursive call
         return true;
       }
     }
-    // Traverse to the right child if we haven't found a UNION node already
-    if (tree.hasRight()) {
-      if(RemoveFirstUnion(tree.getRight(), childChooser)) {
+
+    // Traverse to the left child if we haven't found a UNION node already
+    for (ParseTree child : tree.getChildren()) {
+      if (RemoveFirstUnion(child, childChooserIndex)) {
         return true;
       }
     }

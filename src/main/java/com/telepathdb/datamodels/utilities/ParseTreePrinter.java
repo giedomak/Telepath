@@ -72,8 +72,8 @@ public class ParseTreePrinter {
     for (ParseTree node : nodes) {
       if (node != null) {
         System.out.print(node.getLeafOrOperator());
-        newNodes.add(node.getLeft());
-        newNodes.add(node.getRight());
+        newNodes.add(node.getChild(0));
+        newNodes.add(node.getChild(1));
       } else {
         newNodes.add(null);
         newNodes.add(null);
@@ -94,14 +94,14 @@ public class ParseTreePrinter {
           continue;
         }
 
-        if (nodes.get(j).getLeft() != null)
+        if (nodes.get(j).hasChild(0))
           System.out.print("/");
         else
           ParseTreePrinter.printWhitespaces(1);
 
         ParseTreePrinter.printWhitespaces(i + i - 1);
 
-        if (nodes.get(j).getRight() != null)
+        if (nodes.get(j).hasChild(1))
           System.out.print("\\");
         else
           ParseTreePrinter.printWhitespaces(1);
@@ -125,7 +125,15 @@ public class ParseTreePrinter {
     if (node == null)
       return 0;
 
-    return Math.max(ParseTreePrinter.maxLevel(node.getLeft()), ParseTreePrinter.maxLevel(node.getRight())) + 1;
+    if (node.isLeaf())
+      return 1;
+
+    List<Integer> childLevels = new ArrayList<>();
+    for(ParseTree child : node.getChildren()) {
+      childLevels.add(ParseTreePrinter.maxLevel(child));
+    }
+
+    return Collections.max(childLevels) + 1;
   }
 
   private static <T> boolean isAllElementsNull(List<T> list) {

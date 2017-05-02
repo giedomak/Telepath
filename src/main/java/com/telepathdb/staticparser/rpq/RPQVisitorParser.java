@@ -66,7 +66,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
       }
 
       // Recurse on the left-side for which this operator was intended
-      result.setLeft(visit(ctx.query()));
+      result.setChild(0, visit(ctx.query()));
 
       return result;
     }
@@ -85,8 +85,8 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
       }
 
       // Recurse on the left-side and the right-side for which this operator was intended
-      result.setLeft(visit(ctx.query(0))); // First occurence of query
-      result.setRight(visit(ctx.query(1))); // Second occurence of query
+      result.setChild(0, visit(ctx.query(0))); // First occurence of query
+      result.setChild(1, visit(ctx.query(1))); // Second occurence of query
 
       return result;
     }

@@ -17,6 +17,7 @@ import com.telepathdb.kpathindex.KPathIndexInMemory;
 import com.telepathdb.kpathindex.utilities.GMarkImport;
 import com.telepathdb.kpathindex.utilities.KExtender;
 import com.telepathdb.memorymanager.MemoryManager;
+import com.telepathdb.planner.Planner;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserRPQ;
 import com.telepathdb.staticparser.StaticParserSparql;
@@ -85,10 +86,13 @@ class TelepathDB {
       // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
       List<ParseTree> parseTrees = UnionPuller.parse(parseTree);
 
+
       Logger.debug("UNION-less parsetrees:");
       for(ParseTree tree : parseTrees) {
         ParseTreePrinter.printParseTree(tree);
+        Planner.generate(tree);
       }
+
 
       // Evaluate the physical plan
       Stream<Path> results = evaluationEngine.evaluate(parseTree);
