@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Create a Path with its identifier from a set of edges and store them in a hashmap
@@ -66,7 +67,11 @@ final public class PathIdentifierStore {
    * @return The Path identifier created or found for the given edge
    */
   static public long getPathIdentifierByEdgeLabel(String edgeLabel) {
-    List edges = Arrays.asList(new Edge(edgeLabel));
+    return getPathIdentifierByEdgeLabel(Arrays.asList(edgeLabel));
+  }
+
+  static public long getPathIdentifierByEdgeLabel(List<String> edgeLabels) {
+    List<Edge> edges = edgeLabels.stream().map(Edge::new).collect(Collectors.toList());
     return getPathIdentifierByEdgeSet(edges);
   }
 
@@ -95,6 +100,12 @@ final public class PathIdentifierStore {
     return new Path(getPathIdentifierByEdgeSet(edges), nodes);
   }
 
+  /**
+   * Get all path identifiers which have size k.
+   *
+   * @param k The size of the paths we are looking for.
+   * @return List of path identifiers of size k.
+   */
   static public List<Long> getPathIdentifiers(int k) {
     return kPathIdentifierStore.getOrDefault(k, Collections.emptyList());
   }

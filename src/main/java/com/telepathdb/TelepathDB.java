@@ -101,7 +101,7 @@ class TelepathDB {
       List<Path> collectedResults = results.collect(Collectors.toList());
       long endTime = System.currentTimeMillis();
 
-      Logger.info("Results:");
+      Logger.info(">>>>> Results:");
 
       collectedResults.stream().limit(10).forEach(Logger::info);
       if (collectedResults.size() > 10) {

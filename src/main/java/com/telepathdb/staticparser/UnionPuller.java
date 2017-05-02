@@ -46,7 +46,9 @@ final public class UnionPuller {
           // Remove the current tree from the list, and add its children to our parseTrees var
           parseTrees.remove(tree);
           for (ParseTree child : tree.getChildren()) {
-            parseTrees.add(child.clone().setRoot());
+            ParseTree cloned = child.clone();
+            cloned.setRoot(true); // This cloned tree is now a root
+            parseTrees.add(cloned);
           }
           continue; // Continue to the next parsetree containing UNION
         }

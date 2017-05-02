@@ -7,6 +7,8 @@
 
 package com.telepathdb.datamodels;
 
+import com.telepathdb.datamodels.stores.PathIdentifierStore;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,10 +20,10 @@ public class ParseTree implements Cloneable {
 
   // Our public constants identifying our symbolic names
   public static final int
-      KLEENE_STAR = 1, PLUS = 2, CONCATENATION = 3, UNION = 4, LEAF = 5;
+      KLEENE_STAR = 1, PLUS = 2, CONCATENATION = 3, UNION = 4, LEAF = 5, LOOKUP = 6;
 
   private static final String[] SYMBOLIC_NAMES = {
-      null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF"
+      null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF", "LOOKUP"
   };
 
   // Can be one of above constants if this node is an internal node
@@ -29,6 +31,7 @@ public class ParseTree implements Cloneable {
 
   // The payload when this node is a leaf
   private String leaf;
+  private Edge edge;
 
   private boolean root = false;
 
@@ -42,6 +45,11 @@ public class ParseTree implements Cloneable {
     this.id = maxid++;
   }
 
+  public ParseTree(boolean isRoot) {
+    this();
+    this.setRoot(isRoot);
+  }
+
   //
   // ---------------- METHODS ----------------
   //
@@ -50,12 +58,23 @@ public class ParseTree implements Cloneable {
     return leaf;
   }
 
+  public Edge getEdge() {
+    return edge;
+  }
+
   /**
    * Set the leaf and reset the operator; we can either be a leaf OR an internal node
    */
   public void setLeaf(String leaf) {
     this.leaf = leaf;
     this.operator = 0;
+    this.edge = null;
+  }
+
+  public void setLeaf(Edge edge) {
+    this.edge = edge;
+    this.operator = 0;
+    this.leaf = null;
   }
 
   public int getOperator() {
@@ -68,6 +87,7 @@ public class ParseTree implements Cloneable {
   public void setOperator(int operator) {
     this.operator = operator;
     this.leaf = null;
+    this.edge = null;
   }
 
   public boolean hasChild(int index) {
@@ -86,9 +106,10 @@ public class ParseTree implements Cloneable {
   }
 
   public void setChild(int index, ParseTree tree) {
+    tree.setRoot(false);
     try {
       this.children.set(index, tree);
-    } catch(IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       this.children.add(index, tree);
     }
   }
@@ -99,10 +120,12 @@ public class ParseTree implements Cloneable {
    * @return String with the value of the Leaf or the Symbolic name of the operator
    */
   public String getLeafOrOperator() {
-    if (getLeaf() == null) {
-      return getSymbolicName();
-    } else {
+    if (getLeaf() != null) {
       return getLeaf();
+    } else if (getEdge() != null){
+      return getEdge().getLabel();
+    } else {
+      return getSymbolicName();
     }
   }
 
@@ -119,16 +142,15 @@ public class ParseTree implements Cloneable {
    * @return Boolean value indicating if this node is a leaf
    */
   public boolean isLeaf() {
-    return leaf != null;
+    return leaf != null || edge != null;
   }
 
   public long getId() {
     return id;
   }
 
-  public ParseTree setRoot() {
-    this.root = true;
-    return this;
+  public void setRoot(boolean isRoot) {
+    this.root = isRoot;
   }
 
   public boolean isRoot() {
@@ -182,5 +204,34 @@ public class ParseTree implements Cloneable {
    */
   public boolean containsOperator(int operator) {
     return postOrderTreeWalk().anyMatch(t -> t.getOperator() == operator);
+  }
+
+  static public ParseTree createLookupTree(long pathId) {
+
+    List<Edge> edges = PathIdentifierStore.getEdgeSet(pathId);
+
+    ParseTree tree = new ParseTree(true);
+
+    tree.setOperator(LOOKUP);
+
+    edges.stream().map(edge -> {
+      ParseTree child = new ParseTree();
+      child.setLeaf(edge);
+      return child;
+    }).forEach(tree.children::add);
+
+    return tree;
+  }
+
+  static public ParseTree createConcatenationTree(ParseTree p1, ParseTree p2) {
+
+    ParseTree tree = new ParseTree(true);
+
+    tree.setOperator(CONCATENATION);
+
+    tree.setChild(0, p1);
+    tree.setChild(1, p2);
+
+    return tree;
   }
 }

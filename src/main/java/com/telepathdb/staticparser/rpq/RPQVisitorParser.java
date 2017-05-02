@@ -39,7 +39,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
     // Here we define to start parsing our query with the query() rule
     RPQQueryVisitor RPQQueryVisitor = new RPQQueryVisitor();
     ParseTree parseTree = RPQQueryVisitor.visit(parser.query());
-    parseTree.setRoot();
+    parseTree.setRoot(true);
     return parseTree;
   }
 

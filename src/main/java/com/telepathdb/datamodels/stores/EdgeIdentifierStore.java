@@ -37,6 +37,16 @@ final public class EdgeIdentifierStore {
   }
 
   /**
+   * Get or create an Edge ID for a given edge label.
+   *
+   * @param edgeLabel The edge label for which we want to generate or find an ID.
+   * @return The ID generated for the given edge.
+   */
+  static public long getEdgeIdentifier(String edgeLabel) {
+    return getEdgeIdentifier(new Edge(edgeLabel));
+  }
+
+  /**
    * Return the Edge when given an edgeId
    *
    * @param edgeId The EdgeID for which we want to find the Edge
