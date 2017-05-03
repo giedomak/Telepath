@@ -74,6 +74,7 @@ public class ParseTreePrinter {
         System.out.print(node.getLeafOrOperator());
         newNodes.add(node.getChild(0));
         newNodes.add(node.getChild(1));
+        newNodes.add(node.getChild(2));
       } else {
         newNodes.add(null);
         newNodes.add(null);
@@ -102,6 +103,13 @@ public class ParseTreePrinter {
         ParseTreePrinter.printWhitespaces(i + i - 1);
 
         if (nodes.get(j).hasChild(1))
+          System.out.print("\\");
+        else
+          ParseTreePrinter.printWhitespaces(1);
+
+        ParseTreePrinter.printWhitespaces(i + i - 1);
+
+        if (nodes.get(j).hasChild(2))
           System.out.print("\\");
         else
           ParseTreePrinter.printWhitespaces(1);
