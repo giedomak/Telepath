@@ -7,6 +7,7 @@
 
 package com.telepathdb.evaluationengine;
 
+import com.telepathdb.datamodels.Edge;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
@@ -16,6 +17,8 @@ import com.telepathdb.kpathindex.KPathIndex;
 import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -32,6 +35,7 @@ public class EvaluationEngine {
   public Stream<Path> evaluate(ParseTree parseTree) {
 
     if (parseTree == null) return null;
+    if (parseTree.isLeaf()) return null;
 
     // Make sure we do an Postorder treewalk, this way we gather all the information from the leafs first
     for (ParseTree child : parseTree.getChildren()) {
@@ -40,29 +44,28 @@ public class EvaluationEngine {
 
     Stream<Path> results = Stream.empty();
 
-    // Collect results from the leafs and put them in the intermediateResults HashMap
-    if (parseTree.isLeaf()) {
+    // Perform the Operations
+    switch (parseTree.getOperator()) {
 
-      long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeLabel(parseTree.getLeaf());
-      PathPrefix search = new PathPrefix(pathIdentifier);
-      results = kPathIndex.search(search);
+      case ParseTree.LOOKUP:
+        // Collect results from the leafs and put them in the intermediateResults HashMap
+        List<Edge> edges = parseTree.getChildren().stream().map(ParseTree::getEdge).collect(Collectors.toList());
+        long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeSet(edges);
+        PathPrefix search = new PathPrefix(pathIdentifier);
+        results = kPathIndex.search(search);
+        break;
 
-    } else {
-      // Perform the Operations
-      switch (parseTree.getOperator()) {
+      case ParseTree.UNION:
+        results = PhysicalLibrary.union(getChild(parseTree, 0), getChild(parseTree, 1));
+        break;
 
-        case ParseTree.UNION:
-          results = PhysicalLibrary.union(getChild(parseTree, 0), getChild(parseTree, 1));
-          break;
+      case ParseTree.CONCATENATION:
+        results = PhysicalLibrary.concatenation(getChild(parseTree, 0), getChild(parseTree, 1));
+        break;
 
-        case ParseTree.CONCATENATION:
-          results = PhysicalLibrary.concatenation(getChild(parseTree, 0), getChild(parseTree, 1));
-          break;
+      default:
+        throw new IllegalArgumentException("EvaluationEngine: operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
 
-        default:
-          throw new IllegalArgumentException("EvaluationEngine: operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
-
-      }
     }
 
     if (parseTree.isRoot()) {
