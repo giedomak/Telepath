@@ -10,6 +10,7 @@ package com.telepathdb.datamodels;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -122,10 +123,10 @@ public class ParseTree implements Cloneable {
   public String getLeafOrOperator() {
     if (getLeaf() != null) {
       return getLeaf();
-    } else if (getEdge() != null){
+    } else if (getEdge() != null) {
       return getEdge().getLabel();
     } else {
-      return getSymbolicName();
+      return getSymbolicName() + "[" + children.size() + "]";
     }
   }
 
@@ -234,4 +235,20 @@ public class ParseTree implements Cloneable {
 
     return tree;
   }
+
+  public int level() {
+    if (this == null)
+      return 0;
+
+    if (isLeaf())
+      return 1;
+
+    List<Integer> childLevels = new ArrayList<>();
+    for (ParseTree child : getChildren()) {
+      childLevels.add(child.level());
+    }
+
+    return Collections.max(childLevels) + 1;
+  }
+
 }

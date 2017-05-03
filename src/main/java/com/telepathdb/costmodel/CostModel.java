@@ -6,6 +6,6 @@ final public class CostModel {
 
   static public int cost(ParseTree tree) {
 
-    return 4;
+    return tree.level();
   }
 }

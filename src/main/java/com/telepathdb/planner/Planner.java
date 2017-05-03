@@ -3,8 +3,6 @@ package com.telepathdb.planner;
 import com.telepathdb.costmodel.CostModel;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
-import com.telepathdb.datamodels.utilities.Logger;
-import com.telepathdb.datamodels.utilities.ParseTreePrinter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +22,7 @@ final public class Planner {
         .map(ParseTree::getLeaf)
         .collect(Collectors.toList());
 
-    Logger.debug(labelPath);
+//    Logger.debug(labelPath);
 
     int n = labelPath.size();
     int k = 3;
@@ -42,9 +40,9 @@ final public class Planner {
         }
     );
 
-    Logger.debug("Planner test");
-    Logger.debug(bestPlans.keySet());
-    bestPlans.values().forEach(ParseTreePrinter::printParseTree);
+//    Logger.debug("Planner test");
+//    Logger.debug(bestPlans.keySet());
+//    bestPlans.values().forEach(ParseTreePrinter::printParseTree);
 
     for (int size = 2; size <= n; size++) {
 
@@ -72,17 +70,18 @@ final public class Planner {
           ParseTree p1 = bestPlans.get(L1Id);
           ParseTree p2 = bestPlans.get(L2Id);
 
-          Logger.debug("Size: " + size + ", split: " + split + ", offset: " + offset);
-          Logger.debug("P1:");
-          Logger.debug(L1);
-          ParseTreePrinter.printParseTree(p1);
-          Logger.debug("P2:");
-          Logger.debug(L2);
-          ParseTreePrinter.printParseTree(p2);
+//          Logger.debug("Size: " + size + ", split: " + split + ", offset: " + offset);
+//          Logger.debug("P1:");
+//          Logger.debug(L1);
+//          ParseTreePrinter.printParseTree(p1);
+//          Logger.debug("P2:");
+//          Logger.debug(L2);
+//          ParseTreePrinter.printParseTree(p2);
 
           ParseTree currPlan = ParseTree.createConcatenationTree(p1, p2);
-          Logger.debug("currPlan:");
-          ParseTreePrinter.printParseTree(currPlan);
+
+//          Logger.debug("currPlan:");
+//          ParseTreePrinter.printParseTree(currPlan);
 
           if (!bestPlans.containsKey(LsubId) ||
               CostModel.cost(currPlan) < CostModel.cost(bestPlans.get(LsubId))) {

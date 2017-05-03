@@ -86,19 +86,26 @@ class TelepathDB {
       // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
       List<ParseTree> parseTrees = UnionPuller.parse(parseTree);
 
-
       Logger.debug("UNION-less parsetrees:");
-      for(ParseTree tree : parseTrees) {
-        ParseTreePrinter.printParseTree(tree);
-        Planner.generate(tree);
+
+      List<ParseTree> physicalPlans = parseTrees.stream()
+          .map(Planner::generate)
+          .collect(Collectors.toList());
+
+      for(int i = 0; i < parseTrees.size(); i++) {
+        Logger.debug("ParseTree " + i);
+        ParseTreePrinter.printParseTree(parseTrees.get(i));
+        Logger.debug("PhysicalPlan " + i);
+        ParseTreePrinter.printParseTree(physicalPlans.get(i));
       }
 
-
       // Evaluate the physical plan
-      Stream<Path> results = evaluationEngine.evaluate(parseTree);
+      List<Stream<Path>> results = physicalPlans.stream()
+          .map(evaluationEngine::evaluate)
+          .collect(Collectors.toList());
 
       // Print the results
-      List<Path> collectedResults = results.collect(Collectors.toList());
+      List<Path> collectedResults = results.stream().flatMap(t -> t).collect(Collectors.toList());
       long endTime = System.currentTimeMillis();
 
       Logger.info(">>>>> Results:");
