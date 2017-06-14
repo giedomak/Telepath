@@ -20,7 +20,6 @@ import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.planner.Planner;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserRPQ;
-import com.telepathdb.staticparser.StaticParserSparql;
 import com.telepathdb.staticparser.UnionPuller;
 
 import java.io.IOException;
@@ -129,14 +128,14 @@ class TelepathDB {
    */
   private static void setupModules() throws IOException {
 
-    // We want to use the Sparql query language
-    staticParser = new StaticParserSparql();
+    // Setup the staticParser
+    // staticParser = new StaticParserSparql();
     staticParser = new StaticParserRPQ();
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();
 
-    // Setup the Evaluation Engine
+    // Setup the Evaluation Engine with the kPathIndex
     evaluationEngine = new EvaluationEngine(kPathIndex);
   }
 }

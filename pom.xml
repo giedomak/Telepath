@@ -123,6 +123,21 @@
                 </executions>
             </plugin>
 
+            <!-- Coverage report generation -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Assembly plugin to create fat jars -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
