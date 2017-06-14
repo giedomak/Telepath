@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Generate the best physical plan
+ * Generate the best physical plan for a given ParseTree
  */
 final public class Planner {
 
@@ -28,8 +28,6 @@ final public class Planner {
         .filter(t -> t.isLeaf())
         .map(ParseTree::getLeaf)
         .collect(Collectors.toList());
-
-//    Logger.debug(labelPath);
 
     int n = labelPath.size();
     int k = 3;
@@ -46,10 +44,6 @@ final public class Planner {
           );
         }
     );
-
-//    Logger.debug("Planner test");
-//    Logger.debug(bestPlans.keySet());
-//    bestPlans.values().forEach(ParseTreePrinter::printParseTree);
 
     for (int size = 2; size <= n; size++) {
 
@@ -76,19 +70,7 @@ final public class Planner {
 
           ParseTree p1 = bestPlans.get(L1Id);
           ParseTree p2 = bestPlans.get(L2Id);
-
-//          Logger.debug("Size: " + size + ", split: " + split + ", offset: " + offset);
-//          Logger.debug("P1:");
-//          Logger.debug(L1);
-//          ParseTreePrinter.printParseTree(p1);
-//          Logger.debug("P2:");
-//          Logger.debug(L2);
-//          ParseTreePrinter.printParseTree(p2);
-
           ParseTree currPlan = ParseTree.createConcatenationTree(p1, p2);
-
-//          Logger.debug("currPlan:");
-//          ParseTreePrinter.printParseTree(currPlan);
 
           if (!bestPlans.containsKey(LsubId) ||
               CostModel.cost(currPlan) < CostModel.cost(bestPlans.get(LsubId))) {

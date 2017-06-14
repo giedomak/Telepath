@@ -34,33 +34,25 @@ class TelepathDB {
   private static KPathIndex kPathIndex;
   private static EvaluationEngine evaluationEngine;
 
-  public static void main(String[] args) throws IOException {
+  /**
+   * Main loop. Setup the environment and wait for user-input
+   *
+   * @param args Not needed
+   * @throws IOException
+   */
+  public static void main(String[] args) {
 
-    long startTime = System.currentTimeMillis();
-
-    // Init everything we need
-    setupModules();
-
-    // Import test dataset
-    GMarkImport.run(kPathIndex, "/Users/giedomak/Dropbox/graphInstances/graph10k.txt");
-
-    // Extend from k=1 to k=3
-    KExtender.run(kPathIndex, 3);
-
-    // We're alive!
-    long endTime = System.currentTimeMillis();
-    Logger.debug("----------------------------");
-    Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms");
+    // Setup our environment
+    setup();
 
     // Start TelepathDB and listen for query input
     start();
-
   }
 
   /**
    * Listen for query input and gather results
    */
-  protected static void start() throws IOException {
+  private static void start() {
 
     Scanner in = new Scanner(System.in);
 
@@ -124,9 +116,28 @@ class TelepathDB {
   }
 
   /**
+   * Setup our modules and database and print the time needed.
+   */
+  private static void setup() {
+
+    long startTime = System.currentTimeMillis();
+
+    // Init everything we need
+    setupModules();
+
+    setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph10k.txt", 3);
+
+    // We're alive!
+    long endTime = System.currentTimeMillis();
+    Logger.debug("----------------------------");
+    Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms");
+
+  }
+
+  /**
    * Setup modules with the implementation of the interfaces we choose.
    */
-  private static void setupModules() throws IOException {
+  private static void setupModules() {
 
     // Setup the staticParser
     // staticParser = new StaticParserSparql();
@@ -137,5 +148,21 @@ class TelepathDB {
 
     // Setup the Evaluation Engine with the kPathIndex
     evaluationEngine = new EvaluationEngine(kPathIndex);
+  }
+
+  /**
+   * Setup the database and extend to our k-value
+   */
+  private static void setupDatabase(String gMarkFile, int k) {
+
+    try {
+      // Import test dataset
+      GMarkImport.run(kPathIndex, gMarkFile);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // Extend from k=1 to k
+    KExtender.run(kPathIndex, k);
   }
 }
