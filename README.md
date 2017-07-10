@@ -2,6 +2,7 @@ TelepathDB
 =====
 [![Build Status](https://travis-ci.org/giedomak/TelepathDB.svg?branch=master)](https://travis-ci.org/giedomak/TelepathDB)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/54b77ddc30294e5ca6ce0743f50811a4)](https://www.codacy.com/app/giedomak/TelepathDB?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=giedomak/TelepathDB&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 
 Schematic overview of the architecture:
 
