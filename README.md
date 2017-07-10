@@ -5,6 +5,7 @@ Schematic overview of the architecture:
 
 ![](src/main/resources/pathdb.png?raw=true)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/54b77ddc30294e5ca6ce0743f50811a4)](https://www.codacy.com/app/giedomak/TelepathDB?utm_source=github.com&utm_medium=referral&utm_content=giedomak/TelepathDB&utm_campaign=badger)
 <!-- [![Build Status](https://travis-ci.org/maxsumrall/PathDB.svg?branch=master)](https://travis-ci.org/maxsumrall/PathDB)
 
 A data store for graph paths.
