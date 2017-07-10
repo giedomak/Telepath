@@ -1,3 +1,17 @@
+sudo: true
 language: java
 jdk:
   - oraclejdk8
+
+env:
+  global:
+    secure: cTnCFq4nLo9E/aP/TCXLSZzASyY6AW6Tj/H4eLR85eXeG3kVdVg5rwFL8+Rp6SltbC66sRymhv4yu7ER6tLMm3D6TsUMruPOuyjrxEmyTKmUFerEKHp7Tds2CtRMbdXFGKp5PGjrC3zwsynE5OpB1tuSlp0nvdhuWNn2Ls20drlfSsjgEJGTI8OtQsOgz6kf+CTEkfe9Csp4KAHhg+3vkpqM6RPumAoJnnA1i01FO5FxN+Xs5eOMLyC58dqYI1w8bZPKxulKAdwBBFQHd6vPJCd/IecnuRdd4m7erjsSF5n+X7r6CBtbAk1fERWgHu6IoUX/a1+thayk4u3mAswl0o1UdN5QT3QUmL3dfbMIo0Te1Snn5mgrzKjyUqI+RZbDimow/n5O0btMO7X0pdV1oIHanvk8lzipR1OgVaSDE5PS1TAlbpNViDwbxFxfYnatyPx57PNmrIwxE1SxB3P/eS3+dtQrCEcg5Spt43bV1py6Lj2EwdMgpM/u1z/B7r/jsoVuaLqT6OaVLiugqY2WBsZ9h+ctYgxg4EymQYvDPYRwTbJAjnGFKt6uJRE5TTWjDaH0p1xAKH9s0MD49CkmMXbYfrd60LqFy1l+Un6gI5Lxw1EJPPH6YLsQHzaNYUljtMtpS+2bsdbnJKA8zZBqNEAUhzmQxnx3T2fwlMl5OOY=
+
+before_install:
+  - pip install --user codecov
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+
+after_success:
+  - codecov
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
