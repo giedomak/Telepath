@@ -14,4 +14,4 @@ before_install:
 
 after_success:
   - codecov
-  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+  - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r /home/travis/build/giedomak/TelepathDB/src/site/jacoco/jacoco.xml
