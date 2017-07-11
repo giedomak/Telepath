@@ -29,10 +29,10 @@ public class PathTest {
     Path path = new Path(3, createNodeList(1));
   }
 
-  @Test
-  public void createsPath() {
-    Path path = new Path(3, createNodeList(2));
-  }
+  // @Test
+  // public void createsPath() {
+  //   Path path = new Path(3, createNodeList(2));
+  // }
 
   // ---------- HELPERS ---------
 

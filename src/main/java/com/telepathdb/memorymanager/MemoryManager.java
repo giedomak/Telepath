@@ -117,19 +117,21 @@ public final class MemoryManager {
 
   private static Stream<Path> getCombinedResults(List<List<Path>> paths, List<File> files) {
 
-    if (paths.isEmpty()) {
-      paths = Collections.emptyList();
-//      throw new IllegalArgumentException("whoops");
+    // We don't want to assign to incoming params in method bodies. So copy to local variable.
+    List<List<Path>> _paths = paths;
+
+    if (_paths.isEmpty()) {
+      _paths = Collections.emptyList();
+      // throw new IllegalArgumentException("whoops");
     }
 
     // Gather the in-memory partitions and the partitions which are written to disk
     return PhysicalLibrary.union(
-        paths.stream()
+        _paths.stream()
             .flatMap(list -> list.stream()),
         files.stream()
             .map(MemoryManager::readPartition)
             .flatMap(list -> list.stream()));
-
   }
 
   private static Stream<Path> getCombinedResults(long id) {

@@ -18,11 +18,10 @@ import static java.util.Collections.emptyList;
  * PathPrefix model At the moment, we just extend PathPrefix from PathDB:
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java
  */
-
 public class PathPrefix extends AbstractPath {
   public final int length;
   public final List<Node> nodes;
-  final int prefixLength;
+  protected final int prefixLength;
 
   public PathPrefix(long pathId) {
     // We have to use numberOfEdges + 1, since PathDB uses the number of nodes.

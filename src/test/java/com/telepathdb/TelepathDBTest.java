@@ -39,9 +39,9 @@ public class TelepathDBTest {
     System.setErr(null);
   }
 
-  @Test
-  public void mainMethodPrintsUpAndRunningString() throws IOException {
-  }
+  // @Test
+  // public void mainMethodPrintsUpAndRunningString() throws IOException {
+  // }
 
   public void testScanner() {
     // Inspiration: http://stackoverflow.com/a/34139918/3238444
