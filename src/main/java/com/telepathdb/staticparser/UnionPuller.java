@@ -66,8 +66,8 @@ final public class UnionPuller {
         // Recursively remove the first UNION we find doing a pre-order treewalk.
         // Replace the UNION node with its left child in the original tree, and with the
         // right child in the clone of the original tree.
-        RemoveFirstUnion(tree, 0);
-        RemoveFirstUnion(clone, 1);
+        removeFirstUnion(tree, 0);
+        removeFirstUnion(clone, 1);
 
         Logger.debug("UNIONNNN");
         ParseTreePrinter.printParseTree(tree);
@@ -89,7 +89,7 @@ final public class UnionPuller {
    * @param childChooserIndex Define if we have to replace the UNION node with its right or left child.
    * @return Boolean indicating if we've replaced a UNION node.
    */
-  private static boolean RemoveFirstUnion(ParseTree tree, int childChooserIndex) {
+  private static boolean removeFirstUnion(ParseTree tree, int childChooserIndex) {
 
     // Return if we've reached a leaf
     if (tree.isLeaf()) {
@@ -109,7 +109,7 @@ final public class UnionPuller {
 
     // Traverse to the left child if we haven't found a UNION node already
     for (ParseTree child : tree.getChildren()) {
-      if (RemoveFirstUnion(child, childChooserIndex)) {
+      if (removeFirstUnion(child, childChooserIndex)) {
         return true;
       }
     }
