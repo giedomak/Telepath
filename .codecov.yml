@@ -1,0 +1,2 @@
+ignore:
+  - '**/staticparser/rpq/antlr/*'  # ignore the ANTLR generated classes
