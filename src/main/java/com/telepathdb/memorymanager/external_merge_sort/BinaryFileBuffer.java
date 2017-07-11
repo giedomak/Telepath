@@ -15,6 +15,10 @@ import java.io.IOException;
  * the last line in memory.
  */
 final class BinaryFileBuffer {
+
+  public BufferedReader fbr;
+  private String cache;
+
   public BinaryFileBuffer(BufferedReader r) throws IOException {
     this.fbr = r;
     reload();
@@ -41,9 +45,4 @@ final class BinaryFileBuffer {
   private void reload() throws IOException {
     this.cache = this.fbr.readLine();
   }
-
-  public BufferedReader fbr;
-
-  private String cache;
-
 }

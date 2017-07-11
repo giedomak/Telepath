@@ -59,7 +59,7 @@ public class AbstractPath implements Comparable<AbstractPath>, Serializable {
   }
 
   private int comparePathPrefixToPathPrefix(PathPrefix a, PathPrefix b) {
-    if (a == b) {
+    if (a.equals(b)) {
       return 0;
     }
     if (a.pathId != b.pathId) {
@@ -80,7 +80,7 @@ public class AbstractPath implements Comparable<AbstractPath>, Serializable {
   }
 
   private int comparePathToPath(Path a, Path b) {
-    if (a == b) {
+    if (a.equals(b)) {
       return 0;
     }
     if (a.pathId != b.pathId) {
