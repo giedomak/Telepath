@@ -10,13 +10,13 @@ package com.telepathdb.datamodels;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by giedomak on 22/02/2017.
@@ -58,27 +58,39 @@ public class PathTest {
   // ---------- EQUALS ---------
 
   @Test
-  public void equalsToSameObject() {
-    Path path = new Path(3, createNodeList(2));
+  public void samePathsEqualEachOtherTest()
+  {
+    // given
+    Path a = new Path( 42, equalNodes( 4, 42 ) );
+    Path b = new Path( 42, equalNodes( 4, 42 ) );
 
-    assertTrue("should return true for the same object", path.equals(path));
+    // then
+    assertEquals( a, a );
+    assertEquals( a, b );
   }
 
   @Test
-  public void equalsFalseForOtherObject() {
-    Path path = new Path(3, createNodeList(2));
+  public void differentPathsAreNotEqualsTest()
+  {
+    // given
+    Path a = new Path( 42, equalNodes( 4, 42 ) );
+    Path b = new Path( 42, equalNodes( 4, 24 ) );
+    Path c = new Path( 42, equalNodes( 3, 42 ) );
 
-    assertFalse("should return false for an object from another class", path.equals(new Node(3)));
-    assertFalse("should return false for null", path.equals(null)); // NOPMD - We've overridden this method, so test with null
-  }
+    List<Node> differentNodes = equalNodes( 3, 42 );
+    differentNodes.remove( differentNodes.size() - 1 );
+    differentNodes.add( new Node( 43 ) );
 
-  @Test
-  public void equalsTrueForPathWithSameCharacteristics() {
-    List<Node> nodes = createNodeList(2);
-    Path path1 = new Path(3, nodes);
-    Path path2 = new Path(3, nodes);
+    Path d = new Path( 42, differentNodes );
 
-    assertTrue("should return true for a Path with the same characteristics", path1.equals(path2));
+    // then
+    assertFalse( a.equals( b ) );
+    assertFalse( b.equals( a ) );
+    assertFalse( a.equals( c ) );
+    assertFalse( c.equals( a ) );
+    assertFalse( c.equals( d ) );
+    assertFalse( d.equals( c ) );
+    assertFalse( d.equals( null ) ); // NOPMD - We've overridden this method, so test with null
   }
 
   // TODO: another nodes list, but with nodes with the same characteristics
@@ -91,6 +103,13 @@ public class PathTest {
         .limit(size)
         .forEach(random -> nodes.add(new Node(random)));
 
+    return nodes;
+  }
+
+  private List<Node> equalNodes( int count, long id )
+  {
+    List<Node> nodes = new LinkedList<>();
+    IntStream.range( 0, count ).forEach( ( i ) -> nodes.add( new Node( id ) ) );
     return nodes;
   }
 }
