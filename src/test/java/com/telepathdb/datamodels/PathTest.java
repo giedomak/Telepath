@@ -45,14 +45,14 @@ public class PathTest {
   public void returnsFirstNode() {
     List<Node> nodes = createNodeList(3);
     Path path = new Path(3, nodes);
-    assertEquals("should return the first node of the nodes array", nodes.get(0), path.firstNode());
+    assertEquals("should return the first node of the nodes list", nodes.get(0), path.firstNode());
   }
 
   @Test
   public void returnsLastNode() {
     List<Node> nodes = createNodeList(3);
     Path path = new Path(3, nodes);
-    assertEquals("should return the last node of the nodes array", nodes.get(2), path.lastNode());
+    assertEquals("should return the last node of the nodes list", nodes.get(2), path.lastNode());
   }
 
   // ---------- EQUALS ---------
@@ -69,7 +69,7 @@ public class PathTest {
     Path path = new Path(3, createNodeList(2));
 
     assertFalse("should return false for an object from another class", path.equals(new Node(3)));
-    assertFalse("should return false for null", path.equals(null));
+    assertFalse("should return false for null", path.equals(null)); // NOPMD - We've overridden this method, so test with null
   }
 
   @Test
