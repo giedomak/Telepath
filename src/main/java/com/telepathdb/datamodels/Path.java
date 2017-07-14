@@ -50,9 +50,7 @@ public class Path extends AbstractPath implements Serializable {
       return false;
     }
     Path that = (Path) o;
-    return pathId == that.pathId &&
-        length == that.length &&
-        Objects.equals(nodes, that.nodes);
+    return pathId == that.pathId && length == that.length && Objects.equals(nodes, that.nodes);
   }
 
   @Override
