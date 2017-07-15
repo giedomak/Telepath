@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -95,6 +96,31 @@ public class PathTest {
 
   // TODO: another nodes list, but with nodes with the same characteristics
 
+  // ---------- METHODS ---------
+
+  @Test
+  public void generatesHashCode()
+  {
+    // given
+    Path a = new Path( 42, equalNodes( 4, 42 ) );
+    Path b = new Path( 42, equalNodes( 4, 42 ) );
+
+    // then
+    assertEquals( a.hashCode(), Objects.hash(4, a.nodes));
+    assertEquals( a.hashCode(), b.hashCode() );
+  }
+
+  @Test
+  public void outputsToString()
+  {
+    // given
+    Path a = new Path( 42, equalNodes( 4, 42 ) );
+    String output = "Path{" + "pathId=" + a.pathId + ", edges=" + (a.nodes.size() - 1) + ", nodes=" + a.nodes.size() + ", nodes=" + a.nodes + "}";
+
+    // then
+    assertEquals( a.toString(), output);
+  }
+
   // ---------- HELPERS ---------
 
   private List<Node> createNodeList(int size) {
@@ -106,10 +132,17 @@ public class PathTest {
     return nodes;
   }
 
+  /**
+   * Generate a list of nodes which all have the same ID.
+   *
+   * @param count Number of nodes to generate.
+   * @param id ID the nodes will be given.
+   * @return List of nodes with the same ID.
+   */
   private List<Node> equalNodes( int count, long id )
   {
     List<Node> nodes = new LinkedList<>();
-    IntStream.range( 0, count ).forEach( ( i ) -> nodes.add( new Node( id ) ) );
+    IntStream.range( 0, count ).forEach(i -> nodes.add( new Node( id )));
     return nodes;
   }
 }
