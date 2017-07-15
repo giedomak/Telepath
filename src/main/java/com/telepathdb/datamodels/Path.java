@@ -33,13 +33,13 @@ public class Path extends AbstractPath implements Serializable {
 
   }
 
-  public Node lastNode() {
-    return (Node) nodes.get(nodes.size() - 1);
+  // Return the first node of the nodes list
+  public Node firstNode() {
+    return nodes.get(0);
   }
 
-  public Node firstNode() {
-    return (Node) nodes.get(0);
-  }
+  // Return the last node of the nodes list
+  public Node lastNode() { return nodes.get(nodes.size() - 1); }
 
   @Override
   public boolean equals(Object o) {
@@ -50,9 +50,7 @@ public class Path extends AbstractPath implements Serializable {
       return false;
     }
     Path that = (Path) o;
-    return pathId == that.pathId &&
-        length == that.length &&
-        Objects.equals(nodes, that.nodes);
+    return pathId == that.pathId && length == that.length && Objects.equals(nodes, that.nodes);
   }
 
   @Override
