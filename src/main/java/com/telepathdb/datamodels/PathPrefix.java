@@ -35,7 +35,7 @@ public class PathPrefix extends AbstractPath {
     this.prefixLength = 0;
   }
 
-  private PathPrefix(long pathId, int length, List<Node> nodes) {
+  protected PathPrefix(long pathId, int length, List<Node> nodes) {
     super(pathId);
     this.length = length;
     this.nodes = nodes;

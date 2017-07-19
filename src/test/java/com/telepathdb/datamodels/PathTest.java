@@ -139,7 +139,7 @@ public class PathTest {
    * @param id ID the nodes will be given.
    * @return List of nodes with the same ID.
    */
-  private List<Node> equalNodes( int count, long id )
+  protected static List<Node> equalNodes( int count, long id )
   {
     List<Node> nodes = new LinkedList<>();
     IntStream.range( 0, count ).forEach(i -> nodes.add( new Node( id )));
