@@ -14,7 +14,6 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
 import static com.telepathdb.datamodels.PathTest.equalNodes;
 import static junit.framework.TestCase.assertFalse;
@@ -26,8 +25,6 @@ import static org.junit.Assert.assertNotEquals;
  * Created by giedomak on 17/07/2017.
  */
 public class PathPrefixTest {
-
-    private static final Random random = new Random();
 
     @Test
     public void samePathPrefixPrefixesEqualEachOtherTest() throws Exception
