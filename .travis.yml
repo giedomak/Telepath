@@ -7,8 +7,18 @@ jdk:
 notifications:
   email: false
 
+env:
+  global:
+    - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
+    - secure: msioFKsb0Sn+yAO3RcwdZh+OrYYY/NfRKP/Y3YGTgH7Mjo/4x5J/Y5FO9O75Eu5sa/+eT/2gw0pHcoswbBBwdYWBFeR7zPECX9cB/3D+9OLFQOmrWbHlfJXipNEVZF8HIxU5lUG9X9TGsTM09Y6d7jX6/1P6SHRxpxnqAeVPLv9n9rxpCUidAP68GedmHnFPkwIOCZWrGayxsgJtZcfSyVVHHLgKaMmI1wBxH4QX2choc4EVxbikILr2jh3HfSpxSASNBlY1xo05KG+NB/VmhLXsX13F2pbiQOh5BLXTN+rwz3X5kLQ8ZqiPa40Z3iELblDqgsljINDIpvR3Ei9VIw/CmdXk+A4EkMYNOQbgngJFbFTvUb/TqnXAl03MMi3MVyYPbHRkKF3SV4L/UQ44We3o24VjvnVCOk07xlqgyhUZ3DxSiCZddep+WlbjcEcOdPFH1RjzsMg72sbgDXzbhyH9+UMP+oQYSN8UH6zrTt5iHZEd+Z4pNLmxrQN8HFBEg72A4osMDfHev/eANzxg/jbctlw/2cbExQuqX74oi9/oh3yd7ZOR0bD/69UEIDJlvVLUtFZZxGtlRkynu72jv7bAZ9J1ZbAT0viEITvmTRonOwjuY7GGEjM0EV0174rfQ6k4zs8wfTzBwz5CSR/cn4SmAJUlNCQ5fIK8UZ1KDGA=
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+
 before_install:
   - pip install --user codecov # Codecov -> nice and smooth
 
 after_success:
   - codecov # Codecov -> aight
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
