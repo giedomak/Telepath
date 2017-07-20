@@ -9,24 +9,9 @@ package com.telepathdb.memorymanager.external_merge_sort;
 
 import com.telepathdb.datamodels.Path;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.Deflater;
@@ -35,22 +20,22 @@ import java.util.zip.GZIPOutputStream;
 
 /**
  * Goal: offer a generic external-memory sorting program in Java.
- *
+ * <p>
  * It must be : - hackable (easy to adapt) - scalable to large files - sensibly
  * efficient.
- *
+ * <p>
  * This software is in the public domain.
- *
+ * <p>
  * Usage: java com/google/code/externalsorting/ExternalSort somefile.txt out.txt
- *
+ * <p>
  * You can change the default maximal number of temporary files with the -t
  * flag: java com/google/code/externalsorting/ExternalSort somefile.txt out.txt
  * -t 3
- *
+ * <p>
  * For very large files, you might want to use an appropriate flag to allocate
  * more memory to the Java VM: java -Xms2G
  * com/google/code/externalsorting/ExternalSort somefile.txt out.txt
- *
+ * <p>
  * By (in alphabetical order) Philippe Beaudoin, Eleftherios Chetzakis, Jon
  * Elsas, Christan Grant, Daniel Haran, Daniel Lemire, Sugumaran Harikrishnan,
  * Amit Jain, Thomas Mueller, Jerry Yang, First published: April 2010 originally posted at
@@ -58,6 +43,20 @@ import java.util.zip.GZIPOutputStream;
  */
 public class MemoryManager {
 
+
+  /**
+   * Default maximal number of temporary files allowed.
+   */
+  public static final int DEFAULTMAXTEMPFILES = 1024;
+  /**
+   * default comparator between strings.
+   */
+  public static Comparator<String> defaultcomparator = new Comparator<String>() {
+    @Override
+    public int compare(String r1, String r2) {
+      return r1.compareTo(r2);
+    }
+  };
 
   private static void displayUsage() {
     System.out
@@ -216,7 +215,7 @@ public class MemoryManager {
     });
 
     for (Iterable<Path> pathIterator : pathIterators) {
-        pq.add(pathIterator);
+      pq.add(pathIterator);
     }
     return pq.stream();
   }
@@ -797,20 +796,5 @@ public class MemoryManager {
         estimateAvailableMemory(), cs, tmpdirectory, distinct,
         numHeader, usegzip, parallel);
   }
-
-  /**
-   * default comparator between strings.
-   */
-  public static Comparator<String> defaultcomparator = new Comparator<String>() {
-    @Override
-    public int compare(String r1, String r2) {
-      return r1.compareTo(r2);
-    }
-  };
-
-  /**
-   * Default maximal number of temporary files allowed.
-   */
-  public static final int DEFAULTMAXTEMPFILES = 1024;
 
 }

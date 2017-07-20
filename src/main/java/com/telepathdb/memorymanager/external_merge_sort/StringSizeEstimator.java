@@ -20,12 +20,6 @@ public final class StringSizeEstimator {
   private static boolean IS_64_BIT_JVM;
 
   /**
-   * Private constructor to prevent instantiation.
-   */
-  private StringSizeEstimator() {
-  }
-
-  /**
    * Class initializations.
    */
   static {
@@ -57,15 +51,21 @@ public final class StringSizeEstimator {
   }
 
   /**
+   * Private constructor to prevent instantiation.
+   */
+  private StringSizeEstimator() {
+  }
+
+  /**
    * Estimates the size of a {@link String} object in bytes.
-   *
+   * <p>
    * This function was designed with the following goals in mind (in order of importance) :
-   *
+   * <p>
    * First goal is speed: this function is called repeatedly and it should
    * execute in not much more than a nanosecond.
-   *
+   * <p>
    * Second goal is to never underestimate (as it would lead to memory shortage and a crash).
-   *
+   * <p>
    * Third goal is to never overestimate too much (say within a factor of two), as it would
    * mean that we are leaving much of the RAM underutilized.
    *

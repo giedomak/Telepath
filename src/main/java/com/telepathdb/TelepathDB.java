@@ -83,7 +83,7 @@ class TelepathDB {
           .map(Planner::generate)
           .collect(Collectors.toList());
 
-      for(int i = 0; i < parseTrees.size(); i++) {
+      for (int i = 0; i < parseTrees.size(); i++) {
         Logger.debug("ParseTree " + i);
         ParseTreePrinter.printParseTree(parseTrees.get(i));
         Logger.debug("PhysicalPlan " + i);

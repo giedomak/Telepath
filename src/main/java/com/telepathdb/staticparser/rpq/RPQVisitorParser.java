@@ -11,7 +11,6 @@ import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.staticparser.rpq.antlr.RPQBaseVisitor;
 import com.telepathdb.staticparser.rpq.antlr.RPQLexer;
 import com.telepathdb.staticparser.rpq.antlr.RPQParser;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.NotNull;

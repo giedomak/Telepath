@@ -27,7 +27,7 @@ public final class GMarkImport {
 
   /**
    * Imports a gMark file
-   *
+   * <p>
    * Assumes the format of the file resembles: node_id; edge_label; node_id
    * For example: 42 4 6
    * Meaning a (directed) edge from node 42 to node 6, with edgelabel 4.

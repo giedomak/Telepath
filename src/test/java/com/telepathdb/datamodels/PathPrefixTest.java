@@ -8,7 +8,6 @@
 package com.telepathdb.datamodels;
 
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
-
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -26,67 +25,63 @@ import static org.junit.Assert.assertNotEquals;
  */
 public class PathPrefixTest {
 
-    @Test
-    public void samePathPrefixPrefixesEqualEachOtherTest() throws Exception
-    {
-      // given
-      long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
-      PathPrefix a = new PathPrefix(pathId, 6, equalNodes( 4, 42 ) );
-      PathPrefix b = new PathPrefix(pathId, 6, equalNodes( 4, 42 ) );
+  @Test
+  public void samePathPrefixPrefixesEqualEachOtherTest() throws Exception {
+    // given
+    long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
+    PathPrefix a = new PathPrefix(pathId, 6, equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(pathId, 6, equalNodes(4, 42));
 
-      // then
-      assertEquals( a, a );
-      assertEquals( a, b );
-    }
+    // then
+    assertEquals(a, a);
+    assertEquals(a, b);
+  }
 
-    @Test
-    public void differentPathPrefixPrefixesAreNotEqualsTest() throws Exception
-    {
-      // given
-      PathPrefix a = new PathPrefix(42, 6, equalNodes( 4, 42 ) );
-      PathPrefix b = new PathPrefix(42, 6, equalNodes( 4, 24 ) );
-      PathPrefix c = new PathPrefix(42, 6, equalNodes( 3, 42 ) );
+  @Test
+  public void differentPathPrefixPrefixesAreNotEqualsTest() throws Exception {
+    // given
+    PathPrefix a = new PathPrefix(42, 6, equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(42, 6, equalNodes(4, 24));
+    PathPrefix c = new PathPrefix(42, 6, equalNodes(3, 42));
 
-      List<Node> differentNodes = equalNodes( 3, 42 );
-      differentNodes.remove( differentNodes.size() - 1 );
-      differentNodes.add( new Node( 43 ) );
+    List<Node> differentNodes = equalNodes(3, 42);
+    differentNodes.remove(differentNodes.size() - 1);
+    differentNodes.add(new Node(43));
 
-      PathPrefix d = new PathPrefix(42, 6, differentNodes );
+    PathPrefix d = new PathPrefix(42, 6, differentNodes);
 
-      // then
-      assertFalse( a.equals( b ) );
-      assertFalse( b.equals( a ) );
-      assertFalse( a.equals( c ) );
-      assertFalse( c.equals( a ) );
-      assertFalse( c.equals( d ) );
-      assertFalse( d.equals( c ) );
-    }
+    // then
+    assertFalse(a.equals(b));
+    assertFalse(b.equals(a));
+    assertFalse(a.equals(c));
+    assertFalse(c.equals(a));
+    assertFalse(c.equals(d));
+    assertFalse(d.equals(c));
+  }
 
   // ---------- METHODS ---------
 
   @Test
-  public void generatesHashCode()
-  {
+  public void generatesHashCode() {
     // given
-    PathPrefix a = new PathPrefix(42, 6, equalNodes( 4, 42 ) );
-    PathPrefix b = new PathPrefix(42, 6, equalNodes( 4, 42 ) );
-    PathPrefix c = new PathPrefix(42, 6, equalNodes( 4, 24 ) );
+    PathPrefix a = new PathPrefix(42, 6, equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(42, 6, equalNodes(4, 42));
+    PathPrefix c = new PathPrefix(42, 6, equalNodes(4, 24));
 
     // then
-    assertEquals( a.hashCode(), Objects.hash(42, 6, a.nodes));
-    assertEquals( a.hashCode(), b.hashCode() );
-    assertNotEquals( a.hashCode(), c.hashCode() );
+    assertEquals(a.hashCode(), Objects.hash(42, 6, a.nodes));
+    assertEquals(a.hashCode(), b.hashCode());
+    assertNotEquals(a.hashCode(), c.hashCode());
   }
 
   @Test
-  public void outputsToString()
-  {
+  public void outputsToString() {
     // given
     long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
-    PathPrefix a = new PathPrefix(pathId );
+    PathPrefix a = new PathPrefix(pathId);
     String output = "PathPrefix{" + "pathId=" + a.pathId + ", length=" + a.length + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + a.nodes + "}";
 
     // then
-    assertEquals( a.toString(), output);
+    assertEquals(a.toString(), output);
   }
 }
