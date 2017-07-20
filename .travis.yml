@@ -19,4 +19,4 @@ before_install:
 
 after_success:
   - codecov # Codecov -> aight
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build -t jacoco -p /home/travis/build/giedomak/TelepathDB/src/site/jacoco --exit-code $TRAVIS_TEST_RESULT; fi
