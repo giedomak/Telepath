@@ -18,8 +18,8 @@ import java.util.Objects;
 public class Path extends AbstractPath implements Serializable {
 
   public final int length;
-  public List<Node> nodes;
   private final int numberOfEdges;
+  public List<Node> nodes;
 
   public Path(long pathId, List<Node> nodes) {
     super(pathId);
@@ -39,7 +39,9 @@ public class Path extends AbstractPath implements Serializable {
   }
 
   // Return the last node of the nodes list
-  public Node lastNode() { return nodes.get(nodes.size() - 1); }
+  public Node lastNode() {
+    return nodes.get(nodes.size() - 1);
+  }
 
   @Override
   public boolean equals(Object o) {

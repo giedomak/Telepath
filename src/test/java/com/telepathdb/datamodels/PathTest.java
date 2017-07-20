@@ -24,6 +24,19 @@ import static org.junit.Assert.assertEquals;
  */
 public class PathTest {
 
+  /**
+   * Generate a list of nodes which all have the same ID.
+   *
+   * @param count Number of nodes to generate.
+   * @param id    ID the nodes will be given.
+   * @return List of nodes with the same ID.
+   */
+  protected static List<Node> equalNodes(int count, long id) {
+    List<Node> nodes = new LinkedList<>();
+    IntStream.range(0, count).forEach(i -> nodes.add(new Node(id)));
+    return nodes;
+  }
+
   // Path invalid because should have at least two nodes --> throw error
   @Test(expected = java.lang.IllegalArgumentException.class)
   public void throwsErrorWithEmptyNodesList() {
@@ -49,6 +62,8 @@ public class PathTest {
     assertEquals("should return the first node of the nodes list", nodes.get(0), path.firstNode());
   }
 
+  // ---------- EQUALS ---------
+
   @Test
   public void returnsLastNode() {
     List<Node> nodes = createNodeList(3);
@@ -56,42 +71,15 @@ public class PathTest {
     assertEquals("should return the last node of the nodes list", nodes.get(2), path.lastNode());
   }
 
-  // ---------- EQUALS ---------
-
   @Test
-  public void samePathsEqualEachOtherTest()
-  {
+  public void samePathsEqualEachOtherTest() {
     // given
-    Path a = new Path( 42, equalNodes( 4, 42 ) );
-    Path b = new Path( 42, equalNodes( 4, 42 ) );
+    Path a = new Path(42, equalNodes(4, 42));
+    Path b = new Path(42, equalNodes(4, 42));
 
     // then
-    assertEquals( a, a );
-    assertEquals( a, b );
-  }
-
-  @Test
-  public void differentPathsAreNotEqualsTest()
-  {
-    // given
-    Path a = new Path( 42, equalNodes( 4, 42 ) );
-    Path b = new Path( 42, equalNodes( 4, 24 ) );
-    Path c = new Path( 42, equalNodes( 3, 42 ) );
-
-    List<Node> differentNodes = equalNodes( 3, 42 );
-    differentNodes.remove( differentNodes.size() - 1 );
-    differentNodes.add( new Node( 43 ) );
-
-    Path d = new Path( 42, differentNodes );
-
-    // then
-    assertFalse( a.equals( b ) );
-    assertFalse( b.equals( a ) );
-    assertFalse( a.equals( c ) );
-    assertFalse( c.equals( a ) );
-    assertFalse( c.equals( d ) );
-    assertFalse( d.equals( c ) );
-    assertFalse( d.equals( null ) ); // NOPMD - We've overridden this method, so test with null
+    assertEquals(a, a);
+    assertEquals(a, b);
   }
 
   // TODO: another nodes list, but with nodes with the same characteristics
@@ -99,29 +87,50 @@ public class PathTest {
   // ---------- METHODS ---------
 
   @Test
-  public void generatesHashCode()
-  {
+  public void differentPathsAreNotEqualsTest() {
     // given
-    Path a = new Path( 42, equalNodes( 4, 42 ) );
-    Path b = new Path( 42, equalNodes( 4, 42 ) );
+    Path a = new Path(42, equalNodes(4, 42));
+    Path b = new Path(42, equalNodes(4, 24));
+    Path c = new Path(42, equalNodes(3, 42));
+
+    List<Node> differentNodes = equalNodes(3, 42);
+    differentNodes.remove(differentNodes.size() - 1);
+    differentNodes.add(new Node(43));
+
+    Path d = new Path(42, differentNodes);
 
     // then
-    assertEquals( a.hashCode(), Objects.hash(4, a.nodes));
-    assertEquals( a.hashCode(), b.hashCode() );
+    assertFalse(a.equals(b));
+    assertFalse(b.equals(a));
+    assertFalse(a.equals(c));
+    assertFalse(c.equals(a));
+    assertFalse(c.equals(d));
+    assertFalse(d.equals(c));
+    assertFalse(d.equals(null)); // NOPMD - We've overridden this method, so test with null
   }
 
   @Test
-  public void outputsToString()
-  {
+  public void generatesHashCode() {
     // given
-    Path a = new Path( 42, equalNodes( 4, 42 ) );
-    String output = "Path{" + "pathId=" + a.pathId + ", edges=" + (a.nodes.size() - 1) + ", nodes=" + a.nodes.size() + ", nodes=" + a.nodes + "}";
+    Path a = new Path(42, equalNodes(4, 42));
+    Path b = new Path(42, equalNodes(4, 42));
 
     // then
-    assertEquals( a.toString(), output);
+    assertEquals(a.hashCode(), Objects.hash(4, a.nodes));
+    assertEquals(a.hashCode(), b.hashCode());
   }
 
   // ---------- HELPERS ---------
+
+  @Test
+  public void outputsToString() {
+    // given
+    Path a = new Path(42, equalNodes(4, 42));
+    String output = "Path{" + "pathId=" + a.pathId + ", edges=" + (a.nodes.size() - 1) + ", nodes=" + a.nodes.size() + ", nodes=" + a.nodes + "}";
+
+    // then
+    assertEquals(a.toString(), output);
+  }
 
   private List<Node> createNodeList(int size) {
     List<Node> nodes = new ArrayList<>(size);
@@ -129,20 +138,6 @@ public class PathTest {
         .limit(size)
         .forEach(random -> nodes.add(new Node(random)));
 
-    return nodes;
-  }
-
-  /**
-   * Generate a list of nodes which all have the same ID.
-   *
-   * @param count Number of nodes to generate.
-   * @param id ID the nodes will be given.
-   * @return List of nodes with the same ID.
-   */
-  protected static List<Node> equalNodes( int count, long id )
-  {
-    List<Node> nodes = new LinkedList<>();
-    IntStream.range( 0, count ).forEach(i -> nodes.add( new Node( id )));
     return nodes;
   }
 }

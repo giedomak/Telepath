@@ -44,7 +44,7 @@ public final class Logger {
   /**
    * This wil log a statement to the console for now
    *
-   * @param text The text to print
+   * @param text    The text to print
    * @param println Boolean indicating if we want to print on a newline or not
    */
   private static void log(String text, boolean println) {
@@ -82,7 +82,7 @@ public final class Logger {
    * Pad a String with spaces on the right
    *
    * @param string The String to pad
-   * @param n Number of total chars
+   * @param n      Number of total chars
    * @return The padded String
    */
   private static String padRight(String string, int n) {
@@ -93,7 +93,7 @@ public final class Logger {
    * Pad a String with spaces from the left
    *
    * @param string The String to pad
-   * @param n Number of total chars
+   * @param n      Number of total chars
    * @return The padded String
    */
   private static String padLeft(String string, int n) {

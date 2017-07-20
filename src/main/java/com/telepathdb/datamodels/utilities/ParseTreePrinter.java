@@ -15,31 +15,31 @@ import java.util.List;
 
 /**
  * Class to print ParseTrees
- *
+ * <p>
  * Example:
- *
+ * <p>
  * Your input: a/(b+|c)|d
- *
- *                UNION
- *               / \
- *              /   \
- *             /     \
- *            /       \
- *           /         \
- *          /           \
- *         /             \
- *        /               \
- *        CONCATENATION               d
- *       / \
- *      /   \
- *     /     \
- *    /       \
- *    a       UNION
- *           / \
- *          /   \
- *          PLUS   c
- *         /
- *         b
+ * <p>
+ * UNION
+ * / \
+ * /   \
+ * /     \
+ * /       \
+ * /         \
+ * /           \
+ * /             \
+ * /               \
+ * CONCATENATION               d
+ * / \
+ * /   \
+ * /     \
+ * /       \
+ * a       UNION
+ * / \
+ * /   \
+ * PLUS   c
+ * /
+ * b
  */
 public class ParseTreePrinter {
 
@@ -137,7 +137,7 @@ public class ParseTreePrinter {
       return 1;
 
     List<Integer> childLevels = new ArrayList<>();
-    for(ParseTree child : node.getChildren()) {
+    for (ParseTree child : node.getChildren()) {
       childLevels.add(ParseTreePrinter.maxLevel(child));
     }
 

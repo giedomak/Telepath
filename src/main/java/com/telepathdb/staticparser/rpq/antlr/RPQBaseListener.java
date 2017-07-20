@@ -18,101 +18,147 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * of the available methods.
  */
 public class RPQBaseListener implements RPQListener {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBinaryExpression(RPQParser.BinaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBinaryExpression(RPQParser.BinaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLeaf(RPQParser.LeafContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLeaf(RPQParser.LeafContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnaryExpression(RPQParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryExpression(RPQParser.UnaryExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterParenthesis(RPQParser.ParenthesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitParenthesis(RPQParser.ParenthesisContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnaryOperator(RPQParser.UnaryOperatorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnaryOperator(RPQParser.UnaryOperatorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBinaryOperator(RPQParser.BinaryOperatorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBinaryOperator(RPQParser.BinaryOperatorContext ctx) { }
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterBinaryExpression(RPQParser.BinaryExpressionContext ctx) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitEveryRule(ParserRuleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitTerminal(TerminalNode node) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void visitErrorNode(ErrorNode node) { }
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitBinaryExpression(RPQParser.BinaryExpressionContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterLeaf(RPQParser.LeafContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitLeaf(RPQParser.LeafContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterUnaryExpression(RPQParser.UnaryExpressionContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitUnaryExpression(RPQParser.UnaryExpressionContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterParenthesis(RPQParser.ParenthesisContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitParenthesis(RPQParser.ParenthesisContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterUnaryOperator(RPQParser.UnaryOperatorContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitUnaryOperator(RPQParser.UnaryOperatorContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterBinaryOperator(RPQParser.BinaryOperatorContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitBinaryOperator(RPQParser.BinaryOperatorContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void enterEveryRule(ParserRuleContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void exitEveryRule(ParserRuleContext ctx) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void visitTerminal(TerminalNode node) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * <p>The default implementation does nothing.</p>
+   */
+  @Override
+  public void visitErrorNode(ErrorNode node) {
+  }
 }

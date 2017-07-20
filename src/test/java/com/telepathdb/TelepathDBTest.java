@@ -9,10 +9,8 @@ package com.telepathdb;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 
 public class TelepathDBTest {
@@ -20,12 +18,6 @@ public class TelepathDBTest {
   // Need to test console output (System.out)
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
   private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-
-  // We are using this exception to break out of a while(true) loop
-  // Inspired by: http://stackoverflow.com/a/30059971/3238444
-  @SuppressWarnings("serial")
-  private class TestException extends RuntimeException {
-  }
 
   @Before
   public void setUpStreams() {
@@ -39,11 +31,17 @@ public class TelepathDBTest {
     System.setErr(null);
   }
 
+  public void testScanner() {
+    // Inspiration: http://stackoverflow.com/a/34139918/3238444
+  }
+
   // @Test
   // public void mainMethodPrintsUpAndRunningString() throws IOException {
   // }
 
-  public void testScanner() {
-    // Inspiration: http://stackoverflow.com/a/34139918/3238444
+  // We are using this exception to break out of a while(true) loop
+  // Inspired by: http://stackoverflow.com/a/30059971/3238444
+  @SuppressWarnings("serial")
+  private class TestException extends RuntimeException {
   }
 }

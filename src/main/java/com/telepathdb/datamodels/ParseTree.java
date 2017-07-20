@@ -26,20 +26,15 @@ public class ParseTree implements Cloneable {
   private static final String[] SYMBOLIC_NAMES = {
       null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF", "LOOKUP"
   };
-
+  static private long maxid = 1;
+  final private long id;
   // Can be one of above constants if this node is an internal node
   private int operator;
-
   // The payload when this node is a leaf
   private String leaf;
   private Edge edge;
-
   private boolean root = false;
-
   private List<ParseTree> children;
-
-  final private long id;
-  static private long maxid = 1;
 
   public ParseTree() {
     this.children = new ArrayList<ParseTree>();
@@ -54,6 +49,35 @@ public class ParseTree implements Cloneable {
   //
   // ---------------- METHODS ----------------
   //
+
+  static public ParseTree createLookupTree(long pathId) {
+
+    List<Edge> edges = PathIdentifierStore.getEdgeSet(pathId);
+
+    ParseTree tree = new ParseTree(true);
+
+    tree.setOperator(LOOKUP);
+
+    edges.stream().map(edge -> {
+      ParseTree child = new ParseTree();
+      child.setLeaf(edge);
+      return child;
+    }).forEach(tree.children::add);
+
+    return tree;
+  }
+
+  static public ParseTree createConcatenationTree(ParseTree p1, ParseTree p2) {
+
+    ParseTree tree = new ParseTree(true);
+
+    tree.setOperator(CONCATENATION);
+
+    tree.setChild(0, p1);
+    tree.setChild(1, p2);
+
+    return tree;
+  }
 
   public String getLeaf() {
     return leaf;
@@ -70,12 +94,6 @@ public class ParseTree implements Cloneable {
     this.leaf = leaf;
     this.operator = 0;
     this.edge = null;
-  }
-
-  public void setLeaf(Edge edge) {
-    this.edge = edge;
-    this.operator = 0;
-    this.leaf = null;
   }
 
   public int getOperator() {
@@ -146,16 +164,22 @@ public class ParseTree implements Cloneable {
     return leaf != null || edge != null;
   }
 
+  public void setLeaf(Edge edge) {
+    this.edge = edge;
+    this.operator = 0;
+    this.leaf = null;
+  }
+
   public long getId() {
     return id;
   }
 
-  public void setRoot(boolean isRoot) {
-    this.root = isRoot;
-  }
-
   public boolean isRoot() {
     return root;
+  }
+
+  public void setRoot(boolean isRoot) {
+    this.root = isRoot;
   }
 
   /**
@@ -205,35 +229,6 @@ public class ParseTree implements Cloneable {
    */
   public boolean containsOperator(int operator) {
     return postOrderTreeWalk().anyMatch(t -> t.getOperator() == operator);
-  }
-
-  static public ParseTree createLookupTree(long pathId) {
-
-    List<Edge> edges = PathIdentifierStore.getEdgeSet(pathId);
-
-    ParseTree tree = new ParseTree(true);
-
-    tree.setOperator(LOOKUP);
-
-    edges.stream().map(edge -> {
-      ParseTree child = new ParseTree();
-      child.setLeaf(edge);
-      return child;
-    }).forEach(tree.children::add);
-
-    return tree;
-  }
-
-  static public ParseTree createConcatenationTree(ParseTree p1, ParseTree p2) {
-
-    ParseTree tree = new ParseTree(true);
-
-    tree.setOperator(CONCATENATION);
-
-    tree.setChild(0, p1);
-    tree.setChild(1, p2);
-
-    return tree;
   }
 
   public int level() {

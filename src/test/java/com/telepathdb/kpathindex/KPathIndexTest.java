@@ -9,7 +9,6 @@ package com.telepathdb.kpathindex;
 
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;

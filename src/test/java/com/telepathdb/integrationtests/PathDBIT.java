@@ -12,7 +12,6 @@ import com.pathdb.pathIndex.Path;
 import com.pathdb.pathIndex.PathIndex;
 import com.pathdb.pathIndex.PathPrefix;
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory;
-
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -12,15 +12,10 @@ import com.telepathdb.datamodels.Node;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.PathPrefix;
 import com.telepathdb.datamodels.utilities.Logger;
-
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,11 +23,10 @@ import java.util.stream.Collectors;
  */
 final public class PathIdentifierStore {
 
+  static public HashMap<Long, String> pathIdentifierStore = new HashMap<Long, String>();
   // Let's say we have 3 edges along a path with EdgeIds 3, 6 and 33.
   // We will get the String "3,6,33" as the key for this hashmap for that path.
   static private HashMap<String, Long> pathEdgeSerializationStore = new HashMap<String, Long>();
-  static public HashMap<Long, String> pathIdentifierStore = new HashMap<Long, String>();
-
   // key: k, value: List of pathIdentifiers which have k number of edges
   static private HashMap<Integer, List<Long>> kPathIdentifierStore = new HashMap<Integer, List<Long>>();
 

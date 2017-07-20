@@ -23,7 +23,7 @@ final public class UnionPuller {
 
   /**
    * Removes the UNION operator from a ParseTree.
-   *
+   * <p>
    * Simply duplicate the tree and on the position of the UNION operator, the first tree
    * gets the left-child and the other tree gets the right-child.
    *
@@ -85,7 +85,7 @@ final public class UnionPuller {
    * Recusively replace UNION nodes of parsetrees with its child, chosen by the param childChooser.
    * We use a pre-order tree walk and return after we've replaced the first UNION with its child.
    *
-   * @param tree The tree we have to traverse finding the first occurence of a UNION operator.
+   * @param tree              The tree we have to traverse finding the first occurence of a UNION operator.
    * @param childChooserIndex Define if we have to replace the UNION node with its right or left child.
    * @return Boolean indicating if we've replaced a UNION node.
    */

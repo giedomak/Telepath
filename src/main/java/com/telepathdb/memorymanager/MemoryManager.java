@@ -10,21 +10,11 @@ package com.telepathdb.memorymanager;
 import com.telepathdb.datamodels.Path;
 import com.telepathdb.datamodels.utilities.Logger;
 import com.telepathdb.physicallibrary.PhysicalLibrary;
-
 import org.apache.commons.lang3.SerializationUtils;
 import org.parboiled.common.Tuple2;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -104,6 +94,12 @@ public final class MemoryManager {
     return maxId;
   }
 
+  private static void setMaxId(long id) {
+    // Set the MaxId to the current id if greater
+    if (id > maxId)
+      maxId = id;
+  }
+
   private static boolean storeInCacheWhenPossible(long id, List<List<Path>> paths, List<File> files) {
 
     if (paths.size() * PARTITION_SIZE + files.size() * PARTITION_SIZE < CACHE_BUDGET) {
@@ -175,12 +171,6 @@ public final class MemoryManager {
 
   private static void increaseMemoryUsed(int size) {
     memoryUsed += size;
-  }
-
-  private static void setMaxId(long id) {
-    // Set the MaxId to the current id if greater
-    if (id > maxId)
-      maxId = id;
   }
 
   /**
