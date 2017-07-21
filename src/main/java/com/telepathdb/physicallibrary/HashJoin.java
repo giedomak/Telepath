@@ -19,7 +19,14 @@ import java.util.stream.Stream;
  */
 public class HashJoin {
 
-  static Stream<Path> run(Stream<Path> stream1, Stream<Path> stream2) {
+  /**
+   * Join two streams of Paths following the HashJoin algorithm and by using our MemoryManager.
+   *
+   * @param stream1 First stream of paths we'll join on its lastNode()
+   * @param stream2 Second stream of paths we'll join on its firstNode()
+   * @return A stream with the concatenated paths of stream1 and stream2
+   */
+  public static Stream<Path> run(Stream<Path> stream1, Stream<Path> stream2) {
 
     // Make sure we get a free slot in the MemoryManager
     long offset = MemoryManager.getMaxId() + 1;

@@ -40,13 +40,13 @@ public class PathTest {
   // Path invalid because should have at least two nodes --> throw error
   @Test(expected = java.lang.IllegalArgumentException.class)
   public void throwsErrorWithEmptyNodesList() {
-    Path path = new Path(3, new ArrayList<Node>());
+    new Path(3, new ArrayList<Node>());
   }
 
   // Path invalid because should have at least two nodes --> throw error
   @Test(expected = java.lang.IllegalArgumentException.class)
   public void throwsErrorWithOneNode() {
-    Path path = new Path(3, createNodeList(1));
+    new Path(3, createNodeList(1));
   }
 
   @Test
