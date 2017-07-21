@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  */
 public class HashJoin {
 
-  static Stream<Path> run(Stream<Path> stream1, Stream<Path> stream2) {
+  public static Stream<Path> run(Stream<Path> stream1, Stream<Path> stream2) {
 
     // Make sure we get a free slot in the MemoryManager
     long offset = MemoryManager.getMaxId() + 1;

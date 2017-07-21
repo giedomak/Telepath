@@ -79,17 +79,6 @@ public final class Logger {
   }
 
   /**
-   * Pad a String with spaces on the right
-   *
-   * @param string The String to pad
-   * @param n      Number of total chars
-   * @return The padded String
-   */
-  private static String padRight(String string, int n) {
-    return String.format("%1$-" + n + "s", string);
-  }
-
-  /**
    * Pad a String with spaces from the left
    *
    * @param string The String to pad
