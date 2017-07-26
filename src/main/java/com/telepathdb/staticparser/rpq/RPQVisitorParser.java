@@ -8,15 +8,14 @@
 package com.telepathdb.staticparser.rpq;
 
 import com.telepathdb.datamodels.ParseTree;
-
-// Auto-generated antlr files are stored in target/generated-sources/antlr4
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.NotNull;
 import rpq.RPQBaseVisitor;
 import rpq.RPQLexer;
 import rpq.RPQParser;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.misc.NotNull;
+// Auto-generated antlr files are stored in target/generated-sources/antlr4
 
 /**
  * Parse the RPQ ANTLR4 AST into our internal ParseTree model

@@ -18,7 +18,6 @@ import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by giedomak on 22/02/2017.
