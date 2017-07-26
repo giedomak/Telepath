@@ -11,6 +11,7 @@ engines:
 ratings:
   paths:
     - '**.java'
+    - '**.kt'
 exclude_paths:
   - 'tests/'
   - 'spec/'
