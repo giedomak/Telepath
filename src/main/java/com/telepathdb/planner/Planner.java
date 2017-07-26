@@ -26,7 +26,7 @@ final public class Planner {
     // e.g. ['knows', 'worksFor', 'loves']
     List<String> labelPath = tree.postOrderTreeWalk()
         .filter(t -> t.isLeaf())
-        .map(ParseTree::getLeaf)
+        .map(ParseTree::getLeafOrOperator)
         .collect(Collectors.toList());
 
     int n = labelPath.size();
@@ -40,7 +40,7 @@ final public class Planner {
           long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(label);
           bestPlans.put(
               pathId,
-              ParseTree.createLookupTree(pathId)
+              ParseTree.Companion.createLookupTree(pathId)
           );
         }
     );
@@ -53,7 +53,7 @@ final public class Planner {
         long LsubId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Lsub);
 
         if (size <= k && !bestPlans.containsKey(LsubId)) {
-          bestPlans.put(LsubId, ParseTree.createLookupTree(LsubId));
+          bestPlans.put(LsubId, ParseTree.Companion.createLookupTree(LsubId));
         }
 
         if (bestPlans.containsKey(LsubId)) {
@@ -70,7 +70,7 @@ final public class Planner {
 
           ParseTree p1 = bestPlans.get(L1Id);
           ParseTree p2 = bestPlans.get(L2Id);
-          ParseTree currPlan = ParseTree.createConcatenationTree(p1, p2);
+          ParseTree currPlan = ParseTree.Companion.createConcatenationTree(p1, p2);
 
           if (!bestPlans.containsKey(LsubId) ||
               CostModel.cost(currPlan) < CostModel.cost(bestPlans.get(LsubId))) {

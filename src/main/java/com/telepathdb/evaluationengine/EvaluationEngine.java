@@ -45,7 +45,7 @@ public class EvaluationEngine {
     Stream<Path> results = Stream.empty();
 
     // Perform the Operations
-    switch (parseTree.getOperator()) {
+    switch (parseTree.getOperatorId()) {
 
       case ParseTree.LOOKUP:
         // Collect results from the leafs and put them in the intermediateResults HashMap
@@ -64,7 +64,7 @@ public class EvaluationEngine {
         break;
 
       default:
-        throw new IllegalArgumentException("EvaluationEngine: operator not yet implemented for " + parseTree.getLeafOrOperator() + "!");
+        throw new IllegalArgumentException("EvaluationEngine: operatorId not yet implemented for " + parseTree.getLeafOrOperator() + "!");
 
     }
 

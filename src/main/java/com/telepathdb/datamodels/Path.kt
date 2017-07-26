@@ -8,7 +8,6 @@
 package com.telepathdb.datamodels
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * Path model
@@ -20,7 +19,7 @@ data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId),
 
     init {
         // Validations
-        if (nodes.size < 2)
+        if (length < 2)
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
 

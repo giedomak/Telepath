@@ -66,7 +66,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
         result.setOperator(ParseTree.KLEENE_STAR);
       }
 
-      // Recurse on the left-side for which this operator was intended
+      // Recurse on the left-side for which this operatorId was intended
       result.setChild(0, visit(ctx.query()));
 
       return result;
@@ -85,7 +85,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
         result.setOperator(ParseTree.CONCATENATION);
       }
 
-      // Recurse on the left-side and the right-side for which this operator was intended
+      // Recurse on the left-side and the right-side for which this operatorId was intended
       result.setChild(0, visit(ctx.query(0))); // First occurence of query
       result.setChild(1, visit(ctx.query(1))); // Second occurence of query
 
