@@ -93,14 +93,14 @@ public class PathTest {
     Path a = new Path(42, equalNodes(3, 42));
     Path b = new Path(42, equalNodes(4, 24));
 
-    assertEquals(3, a.length());
-    assertEquals(4, b.length());
+    assertEquals(3, a.getLength());
+    assertEquals(4, b.getLength());
 
     // modify
     a.setNodes(equalNodes(6, 33));
 
     // then
-    assertEquals(6, a.length());
+    assertEquals(6, a.getLength());
   }
 
   @Test
