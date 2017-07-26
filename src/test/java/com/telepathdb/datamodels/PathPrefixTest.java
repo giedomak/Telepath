@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static com.telepathdb.datamodels.PathTest.equalNodes;
 import static junit.framework.TestCase.assertFalse;

@@ -1,9 +1,9 @@
 package com.telepathdb.datamodels
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.stream.Collectors
 import java.util.stream.IntStream
-import org.junit.Assert.assertEquals
 
 class ParseTreeTest {
 

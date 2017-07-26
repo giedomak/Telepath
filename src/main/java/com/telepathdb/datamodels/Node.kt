@@ -8,7 +8,6 @@
 package com.telepathdb.datamodels
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * Node model
