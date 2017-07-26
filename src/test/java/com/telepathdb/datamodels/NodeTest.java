@@ -15,27 +15,27 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Created by giedomak on 26/07/2017.
  */
-public class EdgeTest {
+public class NodeTest {
 
   @Test
   public void outputsToString() {
     // given
-    Edge edge = new Edge("GMack");
-    String output = "Edge(" + "label=" + edge.getLabel() + ")";
+    Node node = new Node(33);
+    String expected = "Node(" + "id=" + node.getId() + ")";
 
     // then
-    assertEquals(output, edge.toString());
+    assertEquals(expected, node.toString());
   }
 
   @Test
   public void generatesSameHashCode() {
     // given
-    Edge edge1 = new Edge("Beast");
-    Edge edge2 = new Edge("Beast");
-    Edge edge3 = new Edge("Barbie");
+    Node node1 = new Node(42);
+    Node node2 = new Node(42);
+    Node node3 = new Node(46);
 
     // then
-    assertEquals(edge1.hashCode(), edge2.hashCode());
-    assertNotEquals(edge1.hashCode(), edge3.hashCode());
+    assertEquals(node1.hashCode(), node2.hashCode());
+    assertNotEquals(node1.hashCode(), node3.hashCode());
   }
 }

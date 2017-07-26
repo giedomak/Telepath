@@ -33,9 +33,4 @@ data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId),
     fun lastNode(): Node {
         return nodes[nodes.size - 1]
     }
-
-    // We want control over our own hashcode
-    override fun hashCode(): Int {
-        return Objects.hash(length, nodes)
-    }
 }

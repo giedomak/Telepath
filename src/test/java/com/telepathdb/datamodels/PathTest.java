@@ -12,12 +12,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by giedomak on 22/02/2017.
@@ -126,14 +126,17 @@ public class PathTest {
   }
 
   @Test
-  public void generatesHashCode() {
+  public void generatesSameHashCode() {
     // given
-    Path a = new Path(42, equalNodes(4, 42));
-    Path b = new Path(42, equalNodes(4, 42));
+    Path path1 = new Path(42, equalNodes(4, 42));
+    Path path2 = new Path(42, equalNodes(4, 42));
+    Path path3 = new Path(42, equalNodes(4, 44));
+    Path path4 = new Path(43, equalNodes(4, 44));
 
     // then
-    assertEquals(a.hashCode(), Objects.hash(4, a.getNodes()));
-    assertEquals(a.hashCode(), b.hashCode());
+    assertEquals(path1.hashCode(), path2.hashCode());
+    assertNotEquals(path1.hashCode(), path3.hashCode());
+    assertNotEquals(path1.hashCode(), path4.hashCode());
   }
 
   // ---------- HELPERS ---------
