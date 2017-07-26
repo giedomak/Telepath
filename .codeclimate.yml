@@ -5,6 +5,15 @@ engines:
   checkstyle:
     enabled: true
     channel: 'beta'
+    checks:
+      com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck:
+        enabled: false # I've got a big screen yo
+      com.puppycrawl.tools.checkstyle.checks.imports.CustomImportOrderCheck:
+        enabled: false # who cares
+      com.puppycrawl.tools.checkstyle.checks.naming.AbbreviationAsWordInNameCheck:
+        enabled: false # we've got abbreviations like RPQ
+      com.puppycrawl.tools.checkstyle.checks.naming.LocalVariableNameCheck:
+        enabled: false # our specs create a lot of variables, a and b should be possible
   pmd:
     enabled: true
     channel: 'beta'
