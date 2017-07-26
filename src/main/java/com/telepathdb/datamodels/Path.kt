@@ -8,18 +8,19 @@
 package com.telepathdb.datamodels
 
 import java.io.Serializable
+import java.util.*
 
 /**
  * Path model
  * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Path.java
  */
-data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId), Serializable {
+class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializable {
 
     val length: Int get() = nodes.size
 
     init {
         // Validations
-        if (length < 2)
+        if (nodes.size < 2)
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
 
@@ -31,5 +32,28 @@ data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId),
     // Return the last node of the nodes list
     fun lastNode(): Node {
         return nodes[nodes.size - 1]
+    }
+
+    /**
+     * --------- HASHCODE & EQUALS & TO-STRING ---------
+     */
+
+    override fun hashCode(): Int {
+        return Objects.hash(length, nodes)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as Path
+
+        if (nodes != other.nodes) return false
+
+        return true
+    }
+
+    override fun toString(): String {
+        return "Path(pathId=$pathId, nodes=$nodes)"
     }
 }

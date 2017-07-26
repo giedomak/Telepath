@@ -69,7 +69,6 @@ public class PathPrefixTest {
     PathPrefix c = new PathPrefix(42, 6, equalNodes(4, 24));
 
     // then
-    assertEquals(a.hashCode(), Objects.hash(42, 6, a.nodes));
     assertEquals(a.hashCode(), b.hashCode());
     assertNotEquals(a.hashCode(), c.hashCode());
   }
@@ -79,7 +78,7 @@ public class PathPrefixTest {
     // given
     long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
     PathPrefix a = new PathPrefix(pathId);
-    String output = "PathPrefix{" + "pathId=" + a.pathId + ", length=" + a.length + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + a.nodes + "}";
+    String output = "PathPrefix(" + "pathId=" + a.getPathId() + ", length=" + a.getLength() + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + a.getNodes() + ")";
 
     // then
     assertEquals(a.toString(), output);

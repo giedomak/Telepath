@@ -28,7 +28,7 @@ public final class PathDBWrapper {
   }
 
   public static PathPrefix toPathPrefix(com.telepathdb.datamodels.PathPrefix pathPrefix) {
-    return new PathPrefix(pathPrefix.pathId, pathPrefix.length, toNodeList(pathPrefix.nodes));
+    return new PathPrefix(pathPrefix.getPathId(), pathPrefix.getLength(), toNodeList(pathPrefix.getNodes()));
   }
 
   public static Node toNode(com.telepathdb.datamodels.Node node) {
