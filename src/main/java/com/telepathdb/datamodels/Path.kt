@@ -16,13 +16,14 @@ import java.util.*
  */
 data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId), Serializable {
 
-    val length: Int = nodes.size
-
     init {
         // Validations
         if (nodes.size < 2)
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
+
+    // Return the length of this path, i.e. the number of nodes
+    fun length(): Int = nodes.size
 
     // Return the first node of the nodes list
     fun firstNode(): Node {
@@ -36,6 +37,6 @@ data class Path(val pathId: Long, var nodes: List<Node>) : AbstractPath(pathId),
 
     // We want control over our own hashcode
     override fun hashCode(): Int {
-        return Objects.hash(length, nodes)
+        return Objects.hash(length(), nodes)
     }
 }

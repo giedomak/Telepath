@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by giedomak on 22/02/2017.
@@ -85,6 +86,22 @@ public class PathTest {
   // TODO: another nodes list, but with nodes with the same characteristics
 
   // ---------- METHODS ---------
+
+  @Test
+  public void lengthReturnsNodesSize() {
+    // given
+    Path a = new Path(42, equalNodes(3, 42));
+    Path b = new Path(42, equalNodes(4, 24));
+
+    assertEquals(3, a.length());
+    assertEquals(4, b.length());
+
+    // modify
+    a.setNodes(equalNodes(6, 33));
+
+    // then
+    assertEquals(6, a.length());
+  }
 
   @Test
   public void differentPathsAreNotEqualsTest() {
