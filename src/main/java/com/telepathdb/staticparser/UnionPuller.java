@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 final public class UnionPuller {
 
   /**
-   * Removes the UNION operator from a ParseTree.
+   * Removes the UNION operatorId from a ParseTree.
    * <p>
-   * Simply duplicate the tree and on the position of the UNION operator, the first tree
+   * Simply duplicate the tree and on the position of the UNION operatorId, the first tree
    * gets the left-child and the other tree gets the right-child.
    *
    * @param parseTree The ParseTree to parse.
-   * @return List of ParseTrees each not containing the UNION operator.
+   * @return List of ParseTrees each not containing the UNION operatorId.
    */
   public static List<ParseTree> parse(ParseTree parseTree) {
 
@@ -41,14 +41,14 @@ final public class UnionPuller {
     // List to hold the ParseTrees which UNIONS in them
     List<ParseTree> unionTrees;
 
-    // Collect the ParseTrees which contain the UNION operator
+    // Collect the ParseTrees which contain the UNION operatorId
     while ((unionTrees = parseTrees.stream().filter(t -> t.containsOperator(ParseTree.UNION)).collect(Collectors.toList())).size() > 0) {
 
-      // For each of those trees with the UNION operator in them
+      // For each of those trees with the UNION operatorId in them
       for (ParseTree tree : unionTrees) {
 
-        // Split them immediately when the Root is the UNION operator
-        if (tree.isRoot() && tree.getOperator() == ParseTree.UNION) {
+        // Split them immediately when the Root is the UNION operatorId
+        if (tree.isRoot() && tree.getOperatorId() == ParseTree.UNION) {
 
           // Remove the current tree from the list, and add its children to our parseTrees var
           parseTrees.remove(tree);
@@ -85,7 +85,7 @@ final public class UnionPuller {
    * Recusively replace UNION nodes of parsetrees with its child, chosen by the param childChooser.
    * We use a pre-order tree walk and return after we've replaced the first UNION with its child.
    *
-   * @param tree              The tree we have to traverse finding the first occurence of a UNION operator.
+   * @param tree              The tree we have to traverse finding the first occurence of a UNION operatorId.
    * @param childChooserIndex Define if we have to replace the UNION node with its right or left child.
    * @return Boolean indicating if we've replaced a UNION node.
    */
@@ -100,7 +100,7 @@ final public class UnionPuller {
     for (int i = 0; i < tree.getChildren().size(); i++) {
       ParseTree child = tree.getChild(i);
       // Check if our child is a UNION node. If so, replace it with the childChooserIndex of our child.
-      if (child.getOperator() == ParseTree.UNION) {
+      if (child.getOperatorId() == ParseTree.UNION) {
         tree.setChild(i, child.getChild(childChooserIndex));
         // Return if we've found one, breaking the recursive call
         return true;

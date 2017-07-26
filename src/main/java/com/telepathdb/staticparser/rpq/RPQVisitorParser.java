@@ -8,12 +8,14 @@
 package com.telepathdb.staticparser.rpq;
 
 import com.telepathdb.datamodels.ParseTree;
-import com.telepathdb.staticparser.rpq.antlr.RPQBaseVisitor;
-import com.telepathdb.staticparser.rpq.antlr.RPQLexer;
-import com.telepathdb.staticparser.rpq.antlr.RPQParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.misc.NotNull;
+import rpq.RPQBaseVisitor;
+import rpq.RPQLexer;
+import rpq.RPQParser;
+
+// Auto-generated antlr files are stored in target/generated-sources/antlr4
 
 /**
  * Parse the RPQ ANTLR4 AST into our internal ParseTree model
@@ -64,7 +66,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
         result.setOperator(ParseTree.KLEENE_STAR);
       }
 
-      // Recurse on the left-side for which this operator was intended
+      // Recurse on the left-side for which this operatorId was intended
       result.setChild(0, visit(ctx.query()));
 
       return result;
@@ -83,7 +85,7 @@ public class RPQVisitorParser extends RPQBaseVisitor<ParseTree> {
         result.setOperator(ParseTree.CONCATENATION);
       }
 
-      // Recurse on the left-side and the right-side for which this operator was intended
+      // Recurse on the left-side and the right-side for which this operatorId was intended
       result.setChild(0, visit(ctx.query(0))); // First occurence of query
       result.setChild(1, visit(ctx.query(1))); // Second occurence of query
 

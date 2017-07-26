@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public final class PathDBWrapper {
 
   public static Path toPath(com.telepathdb.datamodels.Path path) {
-    return new Path(path.pathId, toNodeList(path.nodes));
+    return new Path(path.getPathId(), toNodeList(path.getNodes()));
   }
 
   public static com.telepathdb.datamodels.Path fromPath(Path path) {
@@ -28,7 +28,7 @@ public final class PathDBWrapper {
   }
 
   public static PathPrefix toPathPrefix(com.telepathdb.datamodels.PathPrefix pathPrefix) {
-    return new PathPrefix(pathPrefix.pathId, pathPrefix.length, toNodeList(pathPrefix.nodes));
+    return new PathPrefix(pathPrefix.getPathId(), pathPrefix.getLength(), toNodeList(pathPrefix.getNodes()));
   }
 
   public static Node toNode(com.telepathdb.datamodels.Node node) {

@@ -5,25 +5,12 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.telepathdb.datamodels;
+package com.telepathdb.datamodels
+
+import java.io.Serializable
 
 /**
- * Created by giedomak on 06/02/2017.
+ * Node model
+ * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java
  */
-public class Edge {
-
-  private String label;
-
-  public Edge(String label) {
-    this.label = label;
-  }
-
-  public String getLabel() {
-    return label;
-  }
-
-  public String toString() {
-    return "Edge{label=" + this.label + '}';
-  }
-
-}
+data class Node(val id: Long) : Serializable

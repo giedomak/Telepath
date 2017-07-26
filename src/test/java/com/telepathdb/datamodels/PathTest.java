@@ -12,12 +12,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Created by giedomak on 22/02/2017.
@@ -52,7 +52,7 @@ public class PathTest {
   @Test
   public void createsPath() {
     Path path = new Path(3, createNodeList(2));
-    assertEquals("Should have created the path with the same id", 3, path.pathId);
+    assertEquals("Should have created the path with the same id", 3, path.getPathId());
   }
 
   @Test
@@ -87,6 +87,17 @@ public class PathTest {
   // ---------- METHODS ---------
 
   @Test
+  public void lengthReturnsNodesSize() {
+    // given
+    Path a = new Path(42, equalNodes(3, 42));
+    Path b = new Path(42, equalNodes(4, 24));
+
+    // then
+    assertEquals(3, a.getLength());
+    assertEquals(4, b.getLength());
+  }
+
+  @Test
   public void differentPathsAreNotEqualsTest() {
     // given
     Path a = new Path(42, equalNodes(4, 42));
@@ -110,14 +121,17 @@ public class PathTest {
   }
 
   @Test
-  public void generatesHashCode() {
+  public void generatesSameHashCode() {
     // given
-    Path a = new Path(42, equalNodes(4, 42));
-    Path b = new Path(42, equalNodes(4, 42));
+    Path path1 = new Path(42, equalNodes(4, 42));
+    Path path2 = new Path(42, equalNodes(4, 42));
+    Path path3 = new Path(42, equalNodes(4, 44));
+    Path path4 = new Path(43, equalNodes(4, 44));
 
     // then
-    assertEquals(a.hashCode(), Objects.hash(4, a.nodes));
-    assertEquals(a.hashCode(), b.hashCode());
+    assertEquals(path1.hashCode(), path2.hashCode());
+    assertNotEquals(path1.hashCode(), path3.hashCode());
+    assertNotEquals(path1.hashCode(), path4.hashCode());
   }
 
   // ---------- HELPERS ---------
@@ -126,10 +140,10 @@ public class PathTest {
   public void outputsToString() {
     // given
     Path a = new Path(42, equalNodes(4, 42));
-    String output = "Path{" + "pathId=" + a.pathId + ", edges=" + (a.nodes.size() - 1) + ", nodes=" + a.nodes.size() + ", nodes=" + a.nodes + "}";
+    String output = "Path(" + "pathId=" + a.getPathId() + ", nodes=" + a.getNodes() + ")";
 
     // then
-    assertEquals(a.toString(), output);
+    assertEquals(output, a.toString());
   }
 
   private List<Node> createNodeList(int size) {
