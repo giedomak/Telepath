@@ -8,6 +8,7 @@
 package com.telepathdb.datamodels
 
 import com.telepathdb.datamodels.stores.PathIdentifierStore
+import com.telepathdb.datamodels.utilities.ParseTreePrinter
 import java.util.*
 import java.util.stream.Stream
 
@@ -25,7 +26,7 @@ class ParseTree() : Cloneable {
 
     init {
         this.children = ArrayList<ParseTree>()
-        this.id = maxid++
+        this.id = maxId++
     }
 
     constructor(isRoot: Boolean) : this() {
@@ -36,8 +37,8 @@ class ParseTree() : Cloneable {
      * Set the leaf and reset the operatorId; we can either be a leaf OR an internal node
      */
     fun setLeaf(leaf: String) {
+        this.operatorId = LEAF
         this.leaf = leaf
-        this.operatorId = 0
         this.edge = null
     }
 
@@ -68,7 +69,6 @@ class ParseTree() : Cloneable {
         } catch (e: IndexOutOfBoundsException) {
             this.children!!.add(index, tree)
         }
-
     }
 
     /**
@@ -166,9 +166,43 @@ class ParseTree() : Cloneable {
         return Collections.max(childLevels) + 1
     }
 
-    //
-    // ---------------- COMPANION ----------------
-    //
+    /**
+     * ---------------- EQUALS & HASHCODE & TO-STRING ----------------
+     */
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as ParseTree
+
+        if (operatorId != other.operatorId) return false
+        if (leaf != other.leaf) return false
+        if (edge != other.edge) return false
+        if (isRoot != other.isRoot) return false
+        if (children != other.children) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = operatorId
+        result = 31 * result + (leaf?.hashCode() ?: 0)
+        result = 31 * result + (edge?.hashCode() ?: 0)
+        result = 31 * result + isRoot.hashCode()
+        result = 31 * result + (children?.hashCode() ?: 0)
+        return result
+    }
+
+    override fun toString(): String {
+        ParseTreePrinter.printParseTree(this)
+        return super.toString()
+    }
+
+
+    /**
+     * ---------------- COMPANION ----------------
+     */
 
     companion object {
 
@@ -181,7 +215,7 @@ class ParseTree() : Cloneable {
         const val LOOKUP = 6
 
         private val SYMBOLIC_NAMES = arrayOf<String?>(null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF", "LOOKUP")
-        private var maxid: Long = 1
+        private var maxId: Long = 1
 
         //
         // ---------------- METHODS ----------------
@@ -220,5 +254,4 @@ class ParseTree() : Cloneable {
             return tree
         }
     }
-
 }

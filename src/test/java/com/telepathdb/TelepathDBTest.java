@@ -7,11 +7,20 @@
 
 package com.telepathdb;
 
+import com.telepathdb.datamodels.utilities.Logger;
+import com.telepathdb.memorymanager.MemoryManager;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.notNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 
 public class TelepathDBTest {
 
@@ -35,9 +44,20 @@ public class TelepathDBTest {
     // Inspiration: http://stackoverflow.com/a/34139918/3238444
   }
 
-  // @Test
-  // public void mainMethodPrintsUpAndRunningString() throws IOException {
-  // }
+//   @Test
+//   public void mainMethodPrintsUpAndRunningString() {
+//     TelepathDB telepathDB = mock( TelepathDB.class );
+//     MemoryManager memoryManager = mock( MemoryManager.class );
+//     Logger logger = mock( Logger.class);
+//
+//     doNothing().doThrow(new TestException()).when( logger ).info(notNull());
+//
+//     try {
+//       telepathDB.main(null);
+//     } catch(TestException e) {}
+//
+//     assertEquals(outContent, "yay");
+//   }
 
   // We are using this exception to break out of a while(true) loop
   // Inspired by: http://stackoverflow.com/a/30059971/3238444
