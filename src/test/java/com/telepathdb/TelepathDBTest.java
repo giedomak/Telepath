@@ -35,9 +35,20 @@ public class TelepathDBTest {
     // Inspiration: http://stackoverflow.com/a/34139918/3238444
   }
 
-  // @Test
-  // public void mainMethodPrintsUpAndRunningString() throws IOException {
-  // }
+//   @Test
+//   public void mainMethodPrintsUpAndRunningString() {
+//     TelepathDB telepathDB = mock( TelepathDB.class );
+//     MemoryManager memoryManager = mock( MemoryManager.class );
+//     Logger logger = mock( Logger.class);
+//
+//     doNothing().doThrow(new TestException()).when( logger ).info(notNull());
+//
+//     try {
+//       telepathDB.main(null);
+//     } catch(TestException e) {}
+//
+//     assertEquals(outContent, "yay");
+//   }
 
   // We are using this exception to break out of a while(true) loop
   // Inspired by: http://stackoverflow.com/a/30059971/3238444
