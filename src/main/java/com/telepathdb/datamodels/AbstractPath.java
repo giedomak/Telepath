@@ -41,19 +41,19 @@ public class AbstractPath implements Comparable<AbstractPath>, Serializable {
   }
 
   private int comparePathPrefixToPath(PathPrefix a, Path b) {
-    if (a.pathId != b.pathId) {
-      return a.pathId > b.pathId ? 1 : -1;
+    if (a.pathId != b.getPathId()) {
+      return a.pathId > b.getPathId() ? 1 : -1;
     }
-    if (a.length != b.length) {
-      return a.length - b.length;
+    if (a.length != b.getLength()) {
+      return a.length - b.getLength();
     }
     for (int i = 0; i < a.prefixLength; i++) {
-      if (a.nodes.get(i).getId() - b.nodes.get(i).getId() != 0) {
-        return Long.compare(a.nodes.get(i).getId(), b.nodes.get(i).getId());
+      if (a.nodes.get(i).getId() - b.getNodes().get(i).getId() != 0) {
+        return Long.compare(a.nodes.get(i).getId(), b.getNodes().get(i).getId());
       }
     }
-    if (a.prefixLength != b.length) {
-      return a.prefixLength - b.length;
+    if (a.prefixLength != b.getLength()) {
+      return a.prefixLength - b.getLength();
     }
     return 0;
   }
@@ -83,15 +83,15 @@ public class AbstractPath implements Comparable<AbstractPath>, Serializable {
     if (a.equals(b)) {
       return 0;
     }
-    if (a.pathId != b.pathId) {
-      return a.pathId > b.pathId ? 1 : -1;
+    if (a.getPathId() != b.getPathId()) {
+      return a.getPathId() > b.getPathId() ? 1 : -1;
     }
-    if (a.length != b.length) {
-      return a.length - b.length;
+    if (a.getLength() != b.getLength()) {
+      return a.getLength() - b.getLength();
     }
-    for (int i = 0; i < a.length; i++) {
-      if (a.nodes.get(i).getId() - b.nodes.get(i).getId() != 0) {
-        return Long.compare(a.nodes.get(i).getId(), b.nodes.get(i).getId());
+    for (int i = 0; i < a.getLength(); i++) {
+      if (a.getNodes().get(i).getId() - b.getNodes().get(i).getId() != 0) {
+        return Long.compare(a.getNodes().get(i).getId(), b.getNodes().get(i).getId());
       }
     }
     return 0;

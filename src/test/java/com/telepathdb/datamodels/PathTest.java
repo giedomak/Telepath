@@ -52,7 +52,7 @@ public class PathTest {
   @Test
   public void createsPath() {
     Path path = new Path(3, createNodeList(2));
-    assertEquals("Should have created the path with the same id", 3, path.pathId);
+    assertEquals("Should have created the path with the same id", 3, path.getPathId());
   }
 
   @Test
@@ -116,7 +116,7 @@ public class PathTest {
     Path b = new Path(42, equalNodes(4, 42));
 
     // then
-    assertEquals(a.hashCode(), Objects.hash(4, a.nodes));
+    assertEquals(a.hashCode(), Objects.hash(4, a.getNodes()));
     assertEquals(a.hashCode(), b.hashCode());
   }
 
@@ -126,10 +126,10 @@ public class PathTest {
   public void outputsToString() {
     // given
     Path a = new Path(42, equalNodes(4, 42));
-    String output = "Path{" + "pathId=" + a.pathId + ", edges=" + (a.nodes.size() - 1) + ", nodes=" + a.nodes.size() + ", nodes=" + a.nodes + "}";
+    String output = "Path(" + "pathId=" + a.getPathId() + ", nodes=" + a.getNodes() + ")";
 
     // then
-    assertEquals(a.toString(), output);
+    assertEquals(output, a.toString());
   }
 
   private List<Node> createNodeList(int size) {

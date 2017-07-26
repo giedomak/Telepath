@@ -84,13 +84,13 @@ final public class PathIdentifierStore {
   }
 
   static public Path concatenatePathsAndStore(Path path1, Path path2) {
-    List<Edge> edges = ListUtils.union(getEdgeSet(path1.pathId), getEdgeSet(path2.pathId));
-    List<Node> sliced = new ArrayList<Node>((List<Node>) (List<?>) path2.nodes); // Some typecasting
+    List<Edge> edges = ListUtils.union(getEdgeSet(path1.getPathId()), getEdgeSet(path2.getPathId()));
+    List<Node> sliced = new ArrayList<Node>((List<Node>) (List<?>) path2.getNodes()); // Some typecasting
 
     // Remove the first node from the second path, otherwise we have a duplicate
     sliced.remove(0);
 
-    List<Node> nodes = ListUtils.union(path1.nodes, sliced);
+    List<Node> nodes = ListUtils.union(path1.getNodes(), sliced);
     return new Path(getPathIdentifierByEdgeSet(edges), nodes);
   }
 
