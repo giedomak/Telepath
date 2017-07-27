@@ -9,10 +9,8 @@ com.telepathdb.datamodels.utilities
 com.telepathdb.evaluationengine
 com.telepathdb.kpathindex
 com.telepathdb.kpathindex.utilities
-com.telepathdb.memorymanager
 com.telepathdb.memorymanager.external_merge_sort
 com.telepathdb.memorymanager.spliterator
 com.telepathdb.physicallibrary
-com.telepathdb.planner
 com.telepathdb.staticparser
 com.telepathdb.staticparser.rpq

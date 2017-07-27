@@ -99,13 +99,6 @@
 </tr>
 <tr>
 <td>
-<a href="../com.telepathdb.memorymanager/-memory-manager/index.html">com.telepathdb.memorymanager.MemoryManager</a></td>
-<td>
-<p>Created by giedomak</p>
-</td>
-</tr>
-<tr>
-<td>
 <a href="../com.telepathdb.physicallibrary/-nested-loop-join/index.html">com.telepathdb.physicallibrary.NestedLoopJoin</a></td>
 <td>
 <p>Created by giedomak on 03/03/2017.</p>
@@ -123,7 +116,24 @@ https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIn
 <td>
 <a href="../com.telepathdb.datamodels/-parse-tree/index.html">com.telepathdb.datamodels.ParseTree</a></td>
 <td>
-<p>Our internal representation of a query; how we can parse the user-input.</p>
+<p>Data-structure to represent the given user input, and physical plans.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.telepathdb.datamodels.utilities/-parse-tree-printer/index.html">com.telepathdb.datamodels.utilities.ParseTreePrinter</a></td>
+<td>
+<p>Class to print ParseTrees 
+<p> Example: </p>
+<p> Your input: a/(b+|c)|d </p>
+<p> . UNION . / \ . / \ . / \ . / \ . / \ . / \ . / \ . / \ .CONCATENATION d . / \ . / \ . / \ . / \ . a UNION . / \ . / \ . PLUS c . / . b</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.telepathdb.memorymanager.spliterator/-partitioning-spliterator/index.html">com.telepathdb.memorymanager.spliterator.PartitioningSpliterator</a></td>
+<td>
 </td>
 </tr>
 <tr>
@@ -157,13 +167,6 @@ https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIn
 </tr>
 <tr>
 <td>
-<a href="../com.telepathdb.planner/-planner/index.html">com.telepathdb.planner.Planner</a></td>
-<td>
-<p>Generate the best physical plan for a given ParseTree</p>
-</td>
-</tr>
-<tr>
-<td>
 <a href="../com.telepathdb.staticparser.rpq/-r-p-q-visitor-parser/index.html">com.telepathdb.staticparser.rpq.RPQVisitorParser</a></td>
 <td>
 <p>Parse the RPQ ANTLR4 AST into our internal ParseTree model We use the Visitor approach instead of the Listener approach Inspiration: http://jakubdziworski.github.io/java/2016/04/01/antlr_visitor_vs_listener.html</p>
@@ -174,13 +177,6 @@ https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIn
 <a href="../com.telepathdb.staticparser/-static-parser/index.html">com.telepathdb.staticparser.StaticParser</a></td>
 <td>
 <p>Parse the query language into an internal representation</p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="../com.telepathdb.staticparser/-static-parser-r-p-q/index.html">com.telepathdb.staticparser.StaticParserRPQ</a></td>
-<td>
-<p>RPQ query language</p>
 </td>
 </tr>
 <tr>

@@ -9,6 +9,14 @@
 <br/>
 <h1>createLookupTree</h1>
 <a name="com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)"></a>
-<code><span class="keyword">fun </span><span class="identifier">createLookupTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">ParseTree</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/datamodels/ParseTree.kt#L222">(source)</a>
+<code><span class="keyword">fun </span><span class="identifier">createLookupTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="index.html"><span class="identifier">ParseTree</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/datamodels/ParseTree.kt#L284">(source)</a>
+<p>Creates a LOOKUP parseTree given a <a href="create-lookup-tree.html#com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</a>.</p>
+<p>This function creates a parseTree where the root has the operator <a href="-l-o-o-k-u-p.html">LOOKUP</a> and where
+it has only one level of children. Each edge along the <a href="create-lookup-tree.html#com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</a> will be a leaf child from this root.</p>
+<h3>Parameters</h3>
+<p><a name="pathId"></a>
+<code>pathId</code> - The ID indicating a path from which we will get the list of edges.</p>
+<p><strong>Return</strong><br/>
+A ParseTree with depth 2, where the root is the operator <a href="-l-o-o-k-u-p.html">LOOKUP</a> and its children are leafs with the edge labels from the <a href="create-lookup-tree.html#com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</a>.</p>
 </BODY>
 </HTML>

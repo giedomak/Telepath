@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ParseTreePrinter - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.datamodels.utilities</a>&nbsp;/&nbsp;<a href=".">ParseTreePrinter</a><br/>
+<br/>
+<h1>ParseTreePrinter</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ParseTreePrinter</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/datamodels/utilities/ParseTreePrinter.java#L44">(source)</a>
+<p>Class to print ParseTrees 
+<p> Example: </p>
+<p> Your input: a/(b+|c)|d </p>
+<p> . UNION . / \ . / \ . / \ . / \ . / \ . / \ . / \ . / \ .CONCATENATION d . / \ . / \ . / \ . / \ . a UNION . / \ . / \ . PLUS c . / . b</p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ParseTreePrinter</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Class to print ParseTrees 
+<p> Example: </p>
+<p> Your input: a/(b+|c)|d </p>
+<p> . UNION . / \ . / \ . / \ . / \ . / \ . / \ . / \ . / \ .CONCATENATION d . / \ . / \ . / \ . / \ . a UNION . / \ . / \ . PLUS c . / . b</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="print-parse-tree.html">printParseTree</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">printParseTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.utilities.ParseTreePrinter$printParseTree(com.telepathdb.datamodels.ParseTree)/root">root</span><span class="symbol">:</span>&nbsp;<a href="../../com.telepathdb.datamodels/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Static method we should call with the root parseTree as parameter in order to print it.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
