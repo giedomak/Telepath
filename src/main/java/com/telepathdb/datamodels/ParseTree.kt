@@ -166,9 +166,9 @@ class ParseTree() : Cloneable {
         return Collections.max(childLevels) + 1
     }
 
-    /**
-     * ---------------- EQUALS & HASHCODE & TO-STRING ----------------
-     */
+    //
+    // ---------------- EQUALS & HASHCODE & TO-STRING ----------------
+    //
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -198,9 +198,9 @@ class ParseTree() : Cloneable {
     }
 
 
-    /**
-     * ---------------- COMPANION ----------------
-     */
+    //
+    // ---------------- COMPANION ----------------
+    //
 
     companion object {
 

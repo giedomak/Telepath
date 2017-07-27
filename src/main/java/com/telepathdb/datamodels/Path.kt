@@ -11,8 +11,27 @@ import java.io.Serializable
 import java.util.*
 
 /**
- * Path model
- * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Path.java
+ * Path data model.
+ *
+ * A path is basically an ordered set of nodes and edges we encounter along a path through the graph.
+ * Let's say we've got this path: `Tim - likes - Stef - loves - Bregt`.
+ * Tim, Stef and Bregt are [nodes][Node], likes and loves are [edge labels][Edge].
+ *
+ * Our Path data model has two properties to maintain the nodes we encounter, and the edges we encounter.
+ * The list of edges is hidden inside the [PathIdentifierStore][com.telepathdb.datamodels.stores.PathIdentifierStore], where we can
+ * retrieve the list of edges by using our [pathId].
+ *
+ * In our example, our path instance holds a [pathId] which points to a list with `['likes', 'loves']`. Our path instance
+ * holds a list of [nodes] with `['Tim', 'Stef', 'Bregt']` for simplicity.
+ *
+ * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Path.java for the
+ * Path data class used in PathDB.
+ *
+ * @property pathId The ID given to a specific Path. We can use the [PathIdentifierStore][com.telepathdb.datamodels.stores.PathIdentifierStore]
+ * to get the list of [edges][Edge].
+ * @property nodes The ordered list of nodes along this [Path].
+ * @property length Getter for the size of our [nodes] list.
+ * @constructor Creates a Path with an ID and a list of nodes. The list of nodes should have at least two nodes.
  */
 class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializable {
 
@@ -24,19 +43,27 @@ class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializ
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
 
-    // Return the first node of the nodes list
+    /**
+     * Return the first node of the nodes list.
+     *
+     * @return The first Node of our nodes list.
+     */
     fun firstNode(): Node {
         return nodes[0]
     }
 
-    // Return the last node of the nodes list
+    /**
+     * Return the last node of the nodes list.
+     *
+     * @return The last Node of our nodes list.
+     */
     fun lastNode(): Node {
         return nodes[nodes.size - 1]
     }
 
-    /**
-     * --------- HASHCODE & EQUALS & TO-STRING ---------
-     */
+    //
+    // --------- HASHCODE & EQUALS & TO-STRING ---------
+    //
 
     override fun hashCode(): Int {
         return Objects.hash(length, nodes)
