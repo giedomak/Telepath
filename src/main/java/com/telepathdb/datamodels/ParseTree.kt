@@ -103,7 +103,7 @@ class ParseTree() : Cloneable {
 
     fun setLeaf(edge: Edge) {
         this.edge = edge
-        this.operatorId = 0
+        this.operatorId = LEAF
         this.leaf = null
     }
 
@@ -177,8 +177,8 @@ class ParseTree() : Cloneable {
         other as ParseTree
 
         if (operatorId != other.operatorId) return false
-        if (leaf != other.leaf) return false
-        if (edge != other.edge) return false
+        // leafOrOperator will check for edge or leaf
+        if (leafOrOperator != other.leafOrOperator) return false
         if (isRoot != other.isRoot) return false
         if (children != other.children) return false
 
@@ -187,16 +187,14 @@ class ParseTree() : Cloneable {
 
     override fun hashCode(): Int {
         var result = operatorId
-        result = 31 * result + (leaf?.hashCode() ?: 0)
-        result = 31 * result + (edge?.hashCode() ?: 0)
+        result = 31 * result + leafOrOperator.hashCode()
         result = 31 * result + isRoot.hashCode()
         result = 31 * result + (children?.hashCode() ?: 0)
         return result
     }
 
     override fun toString(): String {
-        ParseTreePrinter.printParseTree(this)
-        return super.toString()
+        return "ParseTree(id=$id, operator=" + SYMBOLIC_NAMES[operatorId] + ", leaf=$leaf, edge=$edge, isRoot=$isRoot, children=$children)"
     }
 
 
@@ -231,13 +229,11 @@ class ParseTree() : Cloneable {
 
             edges.stream()
                     .map {
-                        var parseTree = ParseTree()
+                        val parseTree = ParseTree()
                         parseTree.setLeaf(it)
                         parseTree
                     }
                     .forEach { tree.children!!.add(it) }
-
-            tree.children!!.add(ParseTree())
 
             return tree
         }
