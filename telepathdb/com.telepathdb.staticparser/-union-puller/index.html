@@ -1,0 +1,44 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UnionPuller - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.staticparser</a>&nbsp;/&nbsp;<a href=".">UnionPuller</a><br/>
+<br/>
+<h1>UnionPuller</h1>
+<code><span class="keyword">class </span><span class="identifier">UnionPuller</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/staticparser/UnionPuller.java#L22">(source)</a>
+<p>Split a ParseTree on Union into multiple ParseTrees Illustrative example: 'a/(b|c)/d' becomes ['a/b/d', 'a/c/d']</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">UnionPuller</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Split a ParseTree on Union into multiple ParseTrees Illustrative example: 'a/(b|c)/d' becomes ['a/b/d', 'a/c/d']</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="parse.html">parse</a></p>
+</td>
+<td>
+<code><span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">parse</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.staticparser.UnionPuller$parse(com.telepathdb.datamodels.ParseTree)/parseTree">parseTree</span><span class="symbol">:</span>&nbsp;<a href="../../com.telepathdb.datamodels/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../../com.telepathdb.datamodels/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">&gt;</span></code>
+<p>Removes the UNION operatorId from a ParseTree. 
+<p> Simply duplicate the tree and on the position of the UNION operatorId, the first tree gets the left-child and the other tree gets the right-child.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

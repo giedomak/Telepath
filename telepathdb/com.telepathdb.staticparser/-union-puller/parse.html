@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UnionPuller.parse - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.staticparser</a>&nbsp;/&nbsp;<a href="index.html">UnionPuller</a>&nbsp;/&nbsp;<a href=".">parse</a><br/>
+<br/>
+<h1>parse</h1>
+<a name="com.telepathdb.staticparser.UnionPuller$parse(com.telepathdb.datamodels.ParseTree)"></a>
+<code><span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">parse</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.staticparser.UnionPuller$parse(com.telepathdb.datamodels.ParseTree)/parseTree">parseTree</span><span class="symbol">:</span>&nbsp;<a href="../../com.telepathdb.datamodels/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../../com.telepathdb.datamodels/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/staticparser/UnionPuller.java#L33">(source)</a>
+<p>Removes the UNION operatorId from a ParseTree. 
+<p> Simply duplicate the tree and on the position of the UNION operatorId, the first tree gets the left-child and the other tree gets the right-child.</p>
+</p>
+<h3>Parameters</h3>
+<p><a name="parseTree"></a>
+<code>parseTree</code> - The ParseTree to parse.</p>
+<p><strong>Return</strong><br/>
+List of ParseTrees each not containing the UNION operatorId.</p>
+</BODY>
+</HTML>

@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.telepathdb.datamodels - telepathdb</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">telepathdb</a>&nbsp;/&nbsp;<a href=".">com.telepathdb.datamodels</a><br/>
+<br/>
+<h2>Package com.telepathdb.datamodels</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-abstract-path/index.html">AbstractPath</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AbstractPath</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><a href="-abstract-path/index.html"><span class="identifier">AbstractPath</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Exists for abstracting this comparision logic between path-prefixes and paths.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-edge/index.html">Edge</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Edge</span></code>
+<p>Created by giedomak on 06/02/2017.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-node/index.html">Node</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Node</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Node model
+https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-parse-tree/index.html">ParseTree</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">ParseTree</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code>
+<p>Our internal representation of a query; how we can parse the user-input.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-path/index.html">Path</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Path</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-path/index.html"><span class="identifier">AbstractPath</span></a><span class="symbol">, </span><a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Path data model.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-path-prefix/index.html">PathPrefix</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PathPrefix</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-abstract-path/index.html"><span class="identifier">AbstractPath</span></a></code>
+<p>PathPrefix model At the moment, we just extend PathPrefix from PathDB:
+https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

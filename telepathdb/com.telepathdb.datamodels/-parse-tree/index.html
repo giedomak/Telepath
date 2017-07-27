@@ -1,0 +1,249 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ParseTree - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.datamodels</a>&nbsp;/&nbsp;<a href=".">ParseTree</a><br/>
+<br/>
+<h1>ParseTree</h1>
+<code><span class="keyword">class </span><span class="identifier">ParseTree</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/datamodels/ParseTree.kt#L18">(source)</a>
+<p>Our internal representation of a query; how we can parse the user-input.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$<init>(kotlin.Boolean)/isRoot">isRoot</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code><code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Our internal representation of a query; how we can parse the user-input.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">ParseTree</span><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="edge.html">edge</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">edge</span><span class="symbol">: </span><a href="../-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="id.html">id</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-leaf.html">isLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isLeaf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-root.html">isRoot</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">isRoot</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="leaf-or-operator.html">leafOrOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">leafOrOperator</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Get the correct value of this node when it is a leaf or a internal node.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="operator-id.html">operatorId</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">operatorId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="clone.html">clone</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">clone</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code>
+<p>Deep clone the current parsetree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="contains-operator.html">containsOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">containsOperator</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$containsOperator(kotlin.Int)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if the current tree contains a given operatorId.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="equals.html">equals</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-child.html">getChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getChild</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$getChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="has-child.html">hasChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hasChild</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$hasChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="hash-code.html">hashCode</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="level.html">level</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">level</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="post-order-tree-walk.html">postOrderTreeWalk</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">postOrderTreeWalk</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Stream</span><span class="symbol">&lt;</span><span class="identifier">ParseTree</span><span class="symbol">&gt;</span></code>
+<p>Post-order treewalk</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-child.html">setChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setChild</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$setChild(kotlin.Int, com.telepathdb.datamodels.ParseTree)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$setChild(kotlin.Int, com.telepathdb.datamodels.ParseTree)/tree">tree</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-leaf.html">setLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$setLeaf(kotlin.String)/leaf">leaf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the leaf and reset the operatorId; we can either be a leaf OR an internal node</p>
+<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$setLeaf(com.telepathdb.datamodels.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-operator.html">setOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setOperator</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$setOperator(kotlin.Int)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the operatorId and reset the leaf; we can either be a leaf OR an internal node</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-c-o-n-c-a-t-e-n-a-t-i-o-n.html">CONCATENATION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CONCATENATION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-k-l-e-e-n-e_-s-t-a-r.html">KLEENE_STAR</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">KLEENE_STAR</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-e-a-f.html">LEAF</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LEAF</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-o-o-k-u-p.html">LOOKUP</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LOOKUP</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-l-u-s.html">PLUS</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">PLUS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-n-i-o-n.html">UNION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">UNION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="create-concatenation-tree.html">createConcatenationTree</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createConcatenationTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree.Companion$createConcatenationTree(com.telepathdb.datamodels.ParseTree, com.telepathdb.datamodels.ParseTree)/p1">p1</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">, </span><span class="identifier" id="com.telepathdb.datamodels.ParseTree.Companion$createConcatenationTree(com.telepathdb.datamodels.ParseTree, com.telepathdb.datamodels.ParseTree)/p2">p2</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="create-lookup-tree.html">createLookupTree</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createLookupTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
