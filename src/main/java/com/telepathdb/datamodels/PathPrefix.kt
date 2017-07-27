@@ -26,9 +26,9 @@ class PathPrefix(pathId: Long) : AbstractPath(pathId) {
         this.nodes = nodes
     }
 
-    /**
-     * --------- HASHCODE & EQUALS & TO-STRING ---------
-     */
+    //
+    // --------- HASHCODE & EQUALS & TO-STRING ---------
+    //
 
     override fun hashCode(): Int {
         return Objects.hash(pathId, length, nodes)
