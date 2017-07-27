@@ -150,7 +150,9 @@ class ParseTree() : Cloneable {
         get() = SYMBOLIC_NAMES[operatorId]
 
     /**
-     * @return Boolean value indicating if this node is a leaf
+     * Boolean value indicating if this parseTree is a leaf.
+     *
+     * @return Boolean value indicating if this node is a leaf.
      */
     val isLeaf: Boolean
         get() = leaf != null || edge != null
