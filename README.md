@@ -5,6 +5,12 @@ TelepathDB
 [![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/giedomak/TelepathDB)
 
+## Documentation
+
+The documentation can be found [here](https://giedomak.github.io/TelepathDB/telepathdb).
+
+## Architecture
+
 Schematic overview of the architecture:
 
 ![](src/main/resources/pathdb.png?raw=true)

@@ -7,19 +7,34 @@
 
 package com.telepathdb.datamodels
 
+import com.telepathdb.datamodels.ParseTree.Companion
 import com.telepathdb.datamodels.stores.PathIdentifierStore
-import com.telepathdb.datamodels.utilities.ParseTreePrinter
 import java.util.*
 import java.util.stream.Stream
 
 /**
- * Our internal representation of a query; how we can parse the user-input.
+ * Data-structure to represent the given user input, and physical plans.
+ *
+ * This data-structure is used for both representing the user input, and for physical plans.
+ * It basically is a binary-tree. Meaning its children are in turn also ParseTrees.
+ *
+ * User input will get parsed through ANTLR into a parseTree by the [StaticParserRPQ][com.telepathdb.staticparser.StaticParserRPQ].
+ *
+ * The [Planner][com.telepathdb.planner.Planner] will parse such a parseTree from user input, into a physical plan.
+ * These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.
+ *
+ * @property id An ID given to a parseTree in order to make the life of the [MemoryManager][com.telepathdb.memorymanager.MemoryManager] easier.
+ * @property operatorId An [Int] representing the operator. See our [Companion] for these constants.
+ * @property leaf The payload when this parseTree is a leaf. Can also be set in the property [edge].
+ * @property edge The payload when this parseTree is a leaf. Can also be set in the property [leaf].
+ * @property isRoot Boolean value indicating if this parseTree is the root of the binary-tree.
+ * @property children Ordered list with the children of this parseTree, which are also parseTrees.
  */
 class ParseTree() : Cloneable {
 
     val id: Long
-    var operatorId: Int = 0 // Can be one of above constants if this node is an internal node
-    private var leaf: String? = null // The payload when this node is a leaf
+    var operatorId: Int = 0
+    private var leaf: String? = null
     var edge: Edge? = null
     var isRoot = false
     var children: MutableList<ParseTree>? = null
@@ -34,7 +49,11 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Set the leaf and reset the operatorId; we can either be a leaf OR an internal node
+     * Set the leaf and set the operatorId; we can either be a leaf OR an internal node.
+     *
+     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [edge] property.
+     *
+     * @param leaf Payload of the leaf.
      */
     fun setLeaf(leaf: String) {
         this.operatorId = LEAF
@@ -43,7 +62,22 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Set the operatorId and reset the leaf; we can either be a leaf OR an internal node
+     * Set the leaf and set the operatorId; we can either be a leaf OR an internal node.
+     *
+     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [edge] property.
+     *
+     * @param edge Payload of the leaf
+     */
+    fun setLeaf(edge: Edge) {
+        this.edge = edge
+        this.operatorId = LEAF
+        this.leaf = null
+    }
+
+    /**
+     * Set the operatorId and reset the leaf; we can either be a leaf OR an internal node.
+     *
+     * @param operator The [Int] indicating our operator. Should be the index of [SYMBOLIC_NAMES].
      */
     fun setOperator(operator: Int) {
         this.operatorId = operator
@@ -51,10 +85,22 @@ class ParseTree() : Cloneable {
         this.edge = null
     }
 
+    /**
+     * Check if a child exists with [index] in our [children] list.
+     *
+     * @param index Index of the child we want to check.
+     * @return Boolean value indicating if a child exists at the given [index].
+     */
     fun hasChild(index: Int): Boolean {
         return getChild(index) != null
     }
 
+    /**
+     * Return the child at a given index or null when not existent.
+     *
+     * @param index Index of the child
+     * @return Child at the given index from our [children] list.
+     */
     fun getChild(index: Int): ParseTree? {
         if (children!!.size > index) {
             return children!![index]
@@ -62,6 +108,13 @@ class ParseTree() : Cloneable {
         return null
     }
 
+    /**
+     * Set a child at a given index in our [children] list.
+     * We'll replace or add when needed.
+     *
+     * @param index Index of the child.
+     * @param tree ParseTree we will be setting as our child.
+     */
     fun setChild(index: Int, tree: ParseTree) {
         tree.isRoot = false
         try {
@@ -72,7 +125,7 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Get the correct value of this node when it is a leaf or a internal node.
+     * Get the correct value of this node when it is a leaf or an internal node.
      *
      * @return String with the value of the Leaf or the Symbolic name of the operatorId
      */
@@ -83,6 +136,7 @@ class ParseTree() : Cloneable {
             } else if (edge != null) {
                 return edge!!.label
             } else {
+                // This will show something like `LOOKUP[2]` if we have 2 children.
                 return symbolicName + "[" + children!!.size + "]"
             }
         }
@@ -96,16 +150,12 @@ class ParseTree() : Cloneable {
         get() = SYMBOLIC_NAMES[operatorId]
 
     /**
-     * @return Boolean value indicating if this node is a leaf
+     * Boolean value indicating if this parseTree is a leaf.
+     *
+     * @return Boolean value indicating if this node is a leaf.
      */
     val isLeaf: Boolean
         get() = leaf != null || edge != null
-
-    fun setLeaf(edge: Edge) {
-        this.edge = edge
-        this.operatorId = LEAF
-        this.leaf = null
-    }
 
     /**
      * Deep clone the current parsetree.
@@ -156,6 +206,11 @@ class ParseTree() : Cloneable {
         return postOrderTreeWalk().anyMatch { t -> t.operatorId == operator }
     }
 
+    /**
+     * Recursive function calculating the depth of the parseTree rooted at ourselves.
+     *
+     * @return The depth of this parseTree.
+     */
     fun level(): Int {
         if (isLeaf)
             return 1
@@ -166,9 +221,9 @@ class ParseTree() : Cloneable {
         return Collections.max(childLevels) + 1
     }
 
-    /**
-     * ---------------- EQUALS & HASHCODE & TO-STRING ----------------
-     */
+    //
+    // ---------------- EQUALS & HASHCODE & TO-STRING ----------------
+    //
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -198,9 +253,9 @@ class ParseTree() : Cloneable {
     }
 
 
-    /**
-     * ---------------- COMPANION ----------------
-     */
+    //
+    // ---------------- COMPANION ----------------
+    //
 
     companion object {
 
@@ -219,14 +274,25 @@ class ParseTree() : Cloneable {
         // ---------------- METHODS ----------------
         //
 
+        /**
+         * Creates a LOOKUP parseTree given a [pathId].
+         *
+         * This function creates a parseTree where the root has the operator [LOOKUP] and where
+         * it has only one level of children. Each edge along the [pathId] will be a leaf child from this root.
+         *
+         * @param pathId The ID indicating a path from which we will get the list of edges.
+         * @return A ParseTree with depth 2, where the root is the operator [LOOKUP] and its children are leafs with the edge labels from the [pathId].
+         */
         fun createLookupTree(pathId: Long): ParseTree {
 
+            // Get the list of edges from the PathIdentifierStore
             val edges = PathIdentifierStore.getEdgeSet(pathId)
 
+            // Create the root of our new ParseTree
             val tree = ParseTree(true)
-
             tree.setOperator(LOOKUP)
 
+            // Create a child leaf for each edge
             edges.stream()
                     .map {
                         val parseTree = ParseTree()
@@ -238,12 +304,20 @@ class ParseTree() : Cloneable {
             return tree
         }
 
+        /**
+         * Create a ParseTree concatenating two given parseTrees.
+         *
+         * @param p1 The to-be left child of our new parseTree.
+         * @param p2 The to-be right child of our new parseTree.
+         * @return A new parseTree with the [CONCATENATION] operator, and the given parseTrees set as child.
+         */
         fun createConcatenationTree(p1: ParseTree, p2: ParseTree): ParseTree {
 
+            // Create the root of our new ParseTree
             val tree = ParseTree(true)
-
             tree.setOperator(CONCATENATION)
 
+            // Set the given params as the children
             tree.setChild(0, p1)
             tree.setChild(1, p2)
 

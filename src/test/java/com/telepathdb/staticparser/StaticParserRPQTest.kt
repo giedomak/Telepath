@@ -62,9 +62,9 @@ class StaticParserRPQTest {
         assertNotEquals(d, actual)
     }
 
-    /**
-     * ----------- COMPANION  -----------
-     */
+    //
+    // ----------- COMPANION  -----------
+    //
 
     companion object {
 

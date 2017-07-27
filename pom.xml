@@ -324,6 +324,23 @@
                 <groupId>org.jetbrains.dokka</groupId>
                 <artifactId>dokka-maven-plugin</artifactId>
                 <version>${dokka.version}</version>
+                <configuration>
+                    <!-- Specifies the location of the project source code on the Web. If provided, Dokka generates "source" links for each declaration. -->
+                    <sourceLinks>
+                        <link>
+                            <!-- Source directory -->
+                            <dir>${project.basedir}</dir>
+                            <!-- URL showing where the source code can be accessed through the web browser -->
+                            <url>https://github.com/giedomak/TelepathDB/tree/master</url>
+                            <!--Suffix which is used to append the line number to the URL. Use #L for GitHub -->
+                            <urlSuffix>#L</urlSuffix>
+                        </link>
+                    </sourceLinks>
+                    <!-- List of '.md' files with package and module docs -->
+                    <includes>
+                        <file>${project.basedir}/src/main/resources/packages.md</file>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
