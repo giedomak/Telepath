@@ -1,7 +1,9 @@
 package com.telepathdb.datamodels
 
+import com.telepathdb.staticparser.StaticParserRPQTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.util.*
 import java.util.stream.Collectors
 import java.util.stream.IntStream
 
@@ -24,11 +26,21 @@ class ParseTreeTest {
         //        5   6
 
         // We expect the post-order tree-walk to report 2, 5, 6, 3, 4, 1
-        val expected = listOf(2, 5, 6, 3, 4, 1).toString()
+        val offset = root.id - 1 // since these ids are auto-generated, we might have an offset in this test.
+        val expected = listOf(2, 5, 6, 3, 4, 1).map { it + offset }.toString()
         val actual = root.postOrderTreeWalk().map { it.id }.collect(Collectors.toList()).toString()
 
         // then
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun outputsToString() {
+        val actual = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
+        val expected = "ParseTree(id=1, operator=CONCATENATION, leaf=null, edge=null, isRoot=true, children=" + actual.children.toString() + ")"
+
+        // then
+        assertEquals(expected, actual.toString())
     }
 
 }

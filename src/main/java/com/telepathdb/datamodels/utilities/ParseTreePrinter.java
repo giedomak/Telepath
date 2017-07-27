@@ -20,26 +20,26 @@ import java.util.List;
  * <p>
  * Your input: a/(b+|c)|d
  * <p>
- * UNION
- * / \
- * /   \
- * /     \
- * /       \
- * /         \
- * /           \
- * /             \
- * /               \
- * CONCATENATION               d
- * / \
- * /   \
- * /     \
- * /       \
- * a       UNION
- * / \
- * /   \
- * PLUS   c
- * /
- * b
+ * .            UNION
+ * .             / \
+ * .            /   \
+ * .           /     \
+ * .          /       \
+ * .         /         \
+ * .        /           \
+ * .       /             \
+ * .      /               \
+ * .CONCATENATION          d
+ * .     / \
+ * .    /   \
+ * .   /     \
+ * .  /       \
+ * . a       UNION
+ * .          / \
+ * .         /   \
+ * .       PLUS   c
+ * .        /
+ * .       b
  */
 public class ParseTreePrinter {
 
