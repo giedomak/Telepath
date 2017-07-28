@@ -150,7 +150,7 @@ final public class PathIdentifierStore {
     // Get the ids as string
     List<String> ids = new ArrayList<String>();
     for (Edge edge : edges) {
-      Long edgeId = EdgeIdentifierStore.getEdgeIdentifier(edge);
+      Long edgeId = EdgeIdentifierStore.INSTANCE.getEdgeIdentifier(edge);
       ids.add(Long.toString(edgeId));
     }
 
@@ -168,7 +168,7 @@ final public class PathIdentifierStore {
     String[] edgeIds = serializedEdgeSet.split(";");
     List<Edge> edges = new ArrayList<>();
     for (String edgeId : edgeIds) {
-      edges.add(EdgeIdentifierStore.getEdge(Long.parseLong(edgeId)));
+      edges.add(EdgeIdentifierStore.INSTANCE.getEdge(Long.parseLong(edgeId)));
     }
     return edges;
   }

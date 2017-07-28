@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.antlr</groupId>
             <artifactId>antlr4-runtime</artifactId>
-            <version>4.7</version>
+            <version>4.5</version>
         </dependency>
 
         <!-- TESTING -->
@@ -99,7 +99,7 @@
             <plugin>
                 <groupId>org.antlr</groupId>
                 <artifactId>antlr4-maven-plugin</artifactId>
-                <version>4.7</version>
+                <version>4.5</version>
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/resources/antlr4</sourceDirectory>
                     <visitor>true</visitor>
