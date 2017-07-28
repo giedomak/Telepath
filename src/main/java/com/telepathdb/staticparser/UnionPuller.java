@@ -69,7 +69,7 @@ final public class UnionPuller {
         removeFirstUnion(tree, 0);
         removeFirstUnion(clone, 1);
 
-        Logger.debug("UNIONNNN");
+        Logger.INSTANCE.debug("UNIONNNN");
         ParseTreePrinter.printParseTree(tree);
         ParseTreePrinter.printParseTree(clone);
 

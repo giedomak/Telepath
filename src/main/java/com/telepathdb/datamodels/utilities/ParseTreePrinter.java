@@ -51,9 +51,9 @@ public class ParseTreePrinter {
   public static void printParseTree(ParseTree root) {
     int maxLevel = ParseTreePrinter.maxLevel(root);
 
-    Logger.debug("", false);
+    Logger.INSTANCE.debug("", false);
     printNodeInternal(Collections.singletonList(root), 1, maxLevel);
-    Logger.debug("", true);
+    Logger.INSTANCE.debug("", true);
 
   }
 
@@ -85,7 +85,7 @@ public class ParseTreePrinter {
     }
 
     System.out.println("");
-    Logger.debug("", false);
+    Logger.INSTANCE.debug("", false);
 
     for (int i = 1; i <= endgeLines; i++) {
       for (int j = 0; j < nodes.size(); j++) {
@@ -118,7 +118,7 @@ public class ParseTreePrinter {
       }
 
       System.out.println("");
-      Logger.debug("", false);
+      Logger.INSTANCE.debug("", false);
     }
 
     printNodeInternal(newNodes, level + 1, maxLevel);

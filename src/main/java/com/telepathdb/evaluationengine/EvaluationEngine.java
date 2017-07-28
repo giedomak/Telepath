@@ -72,7 +72,7 @@ public class EvaluationEngine {
       // Make sure we return the stream when this node was the root
       return results;
     } else {
-      Logger.debug("Itermediateresult: " + parseTree.getLeafOrOperator());
+      Logger.INSTANCE.debug("Itermediateresult: " + parseTree.getLeafOrOperator());
       MemoryManager.put(parseTree.getId(), results);
     }
 

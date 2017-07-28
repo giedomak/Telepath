@@ -28,7 +28,7 @@ public final class KExtender {
     // Return if our kPathIndex is already of size k
     if (kPathIndex.getK() >= k) return 0;
 
-    Logger.debug("Current k: " + kPathIndex.getK() + ", target: " + k);
+    Logger.INSTANCE.debug("Current k: " + kPathIndex.getK() + ", target: " + k);
 
     // Current K of kPathIndex
     // FlatMaps the Stream of Streams<Path> into one 'flattened' Stream<Path>
@@ -43,7 +43,7 @@ public final class KExtender {
 
     // Concatenate the current K paths, with the K=1 paths so we get the K=K+1 paths
     List<Path> paths = PhysicalLibrary.concatenation(source_k, k1).collect(Collectors.toList());
-    Logger.debug("Concatenation done: " + paths.size());
+    Logger.INSTANCE.debug("Concatenation done: " + paths.size());
 
     // Make sure we insert after we collected the results, otherwise we get a concurrency exception
     // because we are inserting while we haven't consumed the whole stream yet.

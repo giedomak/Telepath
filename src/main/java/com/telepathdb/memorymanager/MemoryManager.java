@@ -201,11 +201,11 @@ public final class MemoryManager {
         oos.flush();
 
         // Done
-        Logger.debug("Partition written to: " + temp.getAbsolutePath());
+        Logger.INSTANCE.debug("Partition written to: " + temp.getAbsolutePath());
       }
 
     } catch (Exception e) {
-      Logger.error("Problem serializing: " + e);
+      Logger.INSTANCE.error("Problem serializing: " + e);
     }
   }
 
@@ -223,8 +223,8 @@ public final class MemoryManager {
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
       return (List<Path>) deserialize((byte[]) ois.readObject());
     } catch (Exception e) {
-      Logger.error("Problem deserializing: " + e);
-      Logger.error("File: " + file.getAbsolutePath());
+      Logger.INSTANCE.error("Problem deserializing: " + e);
+      Logger.INSTANCE.error("File: " + file.getAbsolutePath());
     }
     return null;
   }

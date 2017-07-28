@@ -59,7 +59,7 @@ class TelepathDB {
     while (true) {
 
       // Print which parser we are using
-      Logger.info("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
+      Logger.INSTANCE.info("We are using " + staticParser.getClass().getSimpleName() + ", enter your query and finish with the keyword END on a newline:");
 
       // Retrieve input from the user until we retrieve 'END'
       String input = "";
@@ -77,16 +77,16 @@ class TelepathDB {
       // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
       List<ParseTree> parseTrees = UnionPuller.parse(parseTree);
 
-      Logger.debug("UNION-less parsetrees:");
+      Logger.INSTANCE.debug("UNION-less parsetrees:");
 
       List<ParseTree> physicalPlans = parseTrees.stream()
           .map(Planner::generate)
           .collect(Collectors.toList());
 
       for (int i = 0; i < parseTrees.size(); i++) {
-        Logger.debug("ParseTree " + i);
+        Logger.INSTANCE.debug("ParseTree " + i);
         ParseTreePrinter.printParseTree(parseTrees.get(i));
-        Logger.debug("PhysicalPlan " + i);
+        Logger.INSTANCE.debug("PhysicalPlan " + i);
         ParseTreePrinter.printParseTree(physicalPlans.get(i));
       }
 
@@ -99,15 +99,15 @@ class TelepathDB {
       List<Path> collectedResults = results.stream().flatMap(t -> t).collect(Collectors.toList());
       long endTime = System.currentTimeMillis();
 
-      Logger.info(">>>>> Results:");
+      Logger.INSTANCE.info(">>>>> Results:");
 
-      collectedResults.stream().limit(10).forEach(Logger::info);
+      collectedResults.stream().limit(10).forEach(Logger.INSTANCE::info);
       if (collectedResults.size() > 10) {
-        Logger.info("And " + (collectedResults.size() - 10) + " more......");
+        Logger.INSTANCE.info("And " + (collectedResults.size() - 10) + " more......");
       }
 
-      Logger.info("Number of results: " + collectedResults.size() + ", after " + (endTime - startTime) + " ms");
-      Logger.info("----------------------------");
+      Logger.INSTANCE.info("Number of results: " + collectedResults.size() + ", after " + (endTime - startTime) + " ms");
+      Logger.INSTANCE.info("----------------------------");
 
       // Clear the intermediate results in our memory and cache
       MemoryManager.clear();
@@ -129,8 +129,8 @@ class TelepathDB {
 
     // We're alive!
     long endTime = System.currentTimeMillis();
-    Logger.debug("----------------------------");
-    Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms");
+    Logger.INSTANCE.debug("----------------------------");
+    Logger.INSTANCE.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms");
 
   }
 
