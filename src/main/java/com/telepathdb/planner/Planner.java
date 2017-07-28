@@ -8,6 +8,7 @@
 package com.telepathdb.planner;
 
 import com.telepathdb.costmodel.CostModel;
+import com.telepathdb.costmodel.SimpleCostModel;
 import com.telepathdb.datamodels.ParseTree;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 
@@ -73,7 +74,7 @@ final public class Planner {
           ParseTree currPlan = ParseTree.Companion.createConcatenationTree(p1, p2);
 
           if (!bestPlans.containsKey(LsubId) ||
-              CostModel.cost(currPlan) < CostModel.cost(bestPlans.get(LsubId))) {
+              SimpleCostModel.INSTANCE.cost(currPlan) < SimpleCostModel.INSTANCE.cost(bestPlans.get(LsubId))) {
             bestPlans.put(LsubId, currPlan);
           }
         }
