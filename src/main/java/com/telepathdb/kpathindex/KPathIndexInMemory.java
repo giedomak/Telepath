@@ -47,8 +47,8 @@ public class KPathIndexInMemory implements KPathIndex {
       return StreamSupport.stream(
           new FixedBatchSpliterator<>(
               pathIndex.getPaths(
-                  PathDBWrapper.toPathPrefix(pathPrefix)).spliterator()), true
-      ).map(PathDBWrapper::fromPath);
+                  PathDBWrapper.INSTANCE.toPathPrefix(pathPrefix)).spliterator()), true
+      ).map(PathDBWrapper.INSTANCE::fromPath);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -62,7 +62,7 @@ public class KPathIndexInMemory implements KPathIndex {
    */
   @Override
   public void insert(Path path) {
-    pathIndex.insert(PathDBWrapper.toPath(path));
+    pathIndex.insert(PathDBWrapper.INSTANCE.toPath(path));
   }
 
   public int getK() {
