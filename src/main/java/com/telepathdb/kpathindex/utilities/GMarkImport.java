@@ -58,7 +58,7 @@ public final class GMarkImport {
         nodes.add(new Node(endNodeID));
 
         // Get the path identifier from the pathIdentifierStore
-        long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeLabel(edgeLabel);
+        long pathIdentifier = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(edgeLabel);
 
         // Insert into the kpathindex
         kPathIndex.insert(new Path(pathIdentifier, nodes));

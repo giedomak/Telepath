@@ -37,7 +37,7 @@ final public class Planner {
     // Init the BestPlan for all sub-paths of size 1
     labelPath.stream().forEach(
         label -> {
-          long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(label);
+          long pathId = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(label);
           bestPlans.put(
               pathId,
               ParseTree.Companion.createLookupTree(pathId)
@@ -50,7 +50,7 @@ final public class Planner {
       for (int offset = 0; offset <= (n - size); offset++) {
 
         List<String> Lsub = labelPath.subList(offset, offset + size);
-        long LsubId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Lsub);
+        long LsubId = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(Lsub);
 
         if (size <= k && !bestPlans.containsKey(LsubId)) {
           bestPlans.put(LsubId, ParseTree.Companion.createLookupTree(LsubId));
@@ -63,10 +63,10 @@ final public class Planner {
         for (int split = 1; split < size; split++) {
 
           List<String> L1 = labelPath.subList(offset, offset + split);
-          long L1Id = PathIdentifierStore.getPathIdentifierByEdgeLabel(L1);
+          long L1Id = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(L1);
 
           List<String> L2 = labelPath.subList(offset + split, offset + size);
-          long L2Id = PathIdentifierStore.getPathIdentifierByEdgeLabel(L2);
+          long L2Id = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(L2);
 
           ParseTree p1 = bestPlans.get(L1Id);
           ParseTree p2 = bestPlans.get(L2Id);
@@ -80,6 +80,6 @@ final public class Planner {
       }
     }
 
-    return bestPlans.get(PathIdentifierStore.getPathIdentifierByEdgeLabel(labelPath));
+    return bestPlans.get(PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(labelPath));
   }
 }

@@ -38,7 +38,7 @@ public class HashJoin {
 
     // Get all Paths from the HashMap which have the fristNode() as key, and concatenate
     return stream2.flatMap(v2 -> MemoryManager.get(offset + v2.firstNode().getId())
-        .map(v1 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2)));
+        .map(v1 -> PathIdentifierStore.INSTANCE.concatenatePaths(v1, v2)));
 
   }
 }

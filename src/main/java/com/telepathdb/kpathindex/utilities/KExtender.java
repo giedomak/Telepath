@@ -32,12 +32,12 @@ public final class KExtender {
 
     // Current K of kPathIndex
     // FlatMaps the Stream of Streams<Path> into one 'flattened' Stream<Path>
-    Stream<Path> source_k = PathIdentifierStore.getPathIdentifiers(kPathIndex.getK())
+    Stream<Path> source_k = PathIdentifierStore.INSTANCE.getPathIds(kPathIndex.getK())
         .stream()
         .flatMap(id -> kPathIndex.search(new PathPrefix(id)));
 
     // K = 1
-    Stream<Path> k1 = PathIdentifierStore.getPathIdentifiers(1)
+    Stream<Path> k1 = PathIdentifierStore.INSTANCE.getPathIds(1)
         .stream()
         .flatMap(id -> kPathIndex.search(new PathPrefix(id)));
 
