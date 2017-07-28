@@ -5,6 +5,12 @@ TelepathDB
 [![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/giedomak/TelepathDB)
 
+Massive graph-structured data collections are ubiquitous in contemporary data management scenarios such as social networks, linked open data, and chemical compound databases. 
+
+The selection and manipulation of paths forms the core of querying graph datasets. Path indexing techniques can speed up this core functionality of querying graph datasets.
+
+We propose a path-index based graph database engine.
+
 ## Documentation
 
 The documentation can be found [here](https://giedomak.github.io/TelepathDB/telepathdb).
