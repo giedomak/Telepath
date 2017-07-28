@@ -1,0 +1,21 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ParseTree.<init> - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.datamodels</a>&nbsp;/&nbsp;<a href="index.html">ParseTree</a>&nbsp;/&nbsp;<a href=".">&lt;init&gt;</a><br/>
+<br/>
+<h1>&lt;init&gt;</h1>
+<a name="com.telepathdb.datamodels.ParseTree$&lt;init&gt;(kotlin.Boolean)"></a>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.datamodels.ParseTree$<init>(kotlin.Boolean)/isRoot">isRoot</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code><a name="com.telepathdb.datamodels.ParseTree$&lt;init&gt;()"></a>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Data-structure to represent the given user input, and physical plans.</p>
+<p>This data-structure is used for both representing the user input, and for physical plans.
+It basically is a binary-tree. Meaning its children are in turn also ParseTrees.</p>
+<p>User input will get parsed through ANTLR into a parseTree by the <a href="#">StaticParserRPQ</a>.</p>
+<p>The <a href="#">Planner</a> will parse such a parseTree from user input, into a physical plan.
+These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.</p>
+</BODY>
+</HTML>

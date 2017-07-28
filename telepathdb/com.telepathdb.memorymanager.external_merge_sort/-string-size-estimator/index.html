@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>StringSizeEstimator - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.telepathdb.memorymanager.external_merge_sort</a>&nbsp;/&nbsp;<a href=".">StringSizeEstimator</a><br/>
+<br/>
+<h1>StringSizeEstimator</h1>
+<code><span class="keyword">class </span><span class="identifier">StringSizeEstimator</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/telepathdb/memorymanager/external_merge_sort/StringSizeEstimator.java#L13">(source)</a>
+<p>Simple class used to estimate memory usage.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="estimated-size-of.html">estimatedSizeOf</a></p>
+</td>
+<td>
+<code><span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">estimatedSizeOf</span><span class="symbol">(</span><span class="identifier" id="com.telepathdb.memorymanager.external_merge_sort.StringSizeEstimator$estimatedSizeOf(kotlin.String)/s">s</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Estimates the size of a String object in bytes. 
+<p> This function was designed with the following goals in mind (in order of importance) : </p>
+<p> First goal is speed: this function is called repeatedly and it should execute in not much more than a nanosecond. </p>
+<p> Second goal is to never underestimate (as it would lead to memory shortage and a crash). </p>
+<p> Third goal is to never overestimate too much (say within a factor of two), as it would mean that we are leaving much of the RAM underutilized.</p>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
