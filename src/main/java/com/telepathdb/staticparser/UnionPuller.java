@@ -36,7 +36,7 @@ final public class UnionPuller {
     parseTrees.add(parseTree);
 
     // Print the parsed ParseTree
-    ParseTreePrinter.printParseTree(parseTree);
+    ParseTreePrinter.INSTANCE.printParseTree(parseTree);
 
     // List to hold the ParseTrees which UNIONS in them
     List<ParseTree> unionTrees;
@@ -70,8 +70,8 @@ final public class UnionPuller {
         removeFirstUnion(clone, 1);
 
         Logger.INSTANCE.debug("UNIONNNN");
-        ParseTreePrinter.printParseTree(tree);
-        ParseTreePrinter.printParseTree(clone);
+        ParseTreePrinter.INSTANCE.printParseTree(tree);
+        ParseTreePrinter.INSTANCE.printParseTree(clone);
 
         // We still have to add the clone to the list
         parseTrees.add(clone);

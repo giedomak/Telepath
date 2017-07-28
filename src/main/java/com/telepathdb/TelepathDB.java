@@ -85,9 +85,9 @@ class TelepathDB {
 
       for (int i = 0; i < parseTrees.size(); i++) {
         Logger.INSTANCE.debug("ParseTree " + i);
-        ParseTreePrinter.printParseTree(parseTrees.get(i));
+        ParseTreePrinter.INSTANCE.printParseTree(parseTrees.get(i));
         Logger.INSTANCE.debug("PhysicalPlan " + i);
-        ParseTreePrinter.printParseTree(physicalPlans.get(i));
+        ParseTreePrinter.INSTANCE.printParseTree(physicalPlans.get(i));
       }
 
       // Evaluate the physical plan

@@ -26,7 +26,7 @@ public class StaticParserRPQ implements StaticParser {
     ParseTree parseTree = rpqVisitorParser.parse(input);
 
     // Print the parsed ParseTree
-    ParseTreePrinter.printParseTree(parseTree);
+    ParseTreePrinter.INSTANCE.printParseTree(parseTree);
 
     return parseTree;
 
