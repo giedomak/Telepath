@@ -11,22 +11,33 @@ import com.telepathdb.datamodels.Edge
 import com.telepathdb.datamodels.Node
 import com.telepathdb.datamodels.Path
 import com.telepathdb.datamodels.PathPrefix
+import com.telepathdb.datamodels.stores.PathIdentifierStore.kPathIdentifierStore
+import com.telepathdb.datamodels.stores.PathIdentifierStore.maxId
+import com.telepathdb.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore
+import com.telepathdb.datamodels.stores.PathIdentifierStore.pathIdentifierStore
 import com.telepathdb.datamodels.utilities.Logger
 import org.apache.commons.collections.ListUtils
 import org.apache.commons.lang3.StringUtils
 import java.util.stream.Collectors
 
 /**
- * Create a Path with its identifier from a set of edges and store them in a hashmap.
+ * Singleton class which stores the mapping from a list of edges to IDs.
+ *
+ * Let's say we have 3 edges along a path with edge IDs 6, 3 and 33.
+ * We serialize these edge IDs into the String `"6,3,33"`.
+ * This serialized String will be the key in our [pathEdgeSerializationStore] HashMap. And it will be the value
+ * in our [pathIdentifierStore] HashMap. We map this String to a generated ID.
+ *
+ * @property pathIdentifierStore HashMap which maps path IDs to serialized Strings of edge IDs.
+ * @property pathEdgeSerializationStore HashMap which maps serialized Strings of edge IDs to path IDs.
+ * @property kPathIdentifierStore HashMap which has key: k, value: List of path IDs which have k number of edges.
+ * @property maxId Counter to keep track of the maximum path ID we have stored so far.
  */
 object PathIdentifierStore {
 
-    val pathIdentifierStore = hashMapOf<Long, String>()
-    // Let's say we have 3 edges along a path with EdgeIds 3, 6 and 33.
-    // We will get the String "3,6,33" as the key for this hashmap for that path.
+    private val pathIdentifierStore = hashMapOf<Long, String>()
     private val pathEdgeSerializationStore = hashMapOf<String, Long>()
-    // key: k, value: List of pathIdentifiers which have k number of edges
-    private val kPathIdentifierStore = mutableMapOf<Int, List<Long>>()
+    private val kPathIdentifierStore = hashMapOf<Int, List<Long>>()
     private var maxId: Long = 1
 
     /**
