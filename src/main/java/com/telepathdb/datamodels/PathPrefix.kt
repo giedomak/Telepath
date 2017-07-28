@@ -12,8 +12,26 @@ import java.util.*
 import java.util.Collections.emptyList
 
 /**
- * PathPrefix model At the moment, we just extend PathPrefix from PathDB:
- * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java
+ * This model is used for defining a search-query.
+ *
+ * It needs at least a [pathId] to know the edge labels along the path we are querying. It also has a constructor
+ * where nodes can be given as params. These [nodes] will be a prefix of the path, and don't need to have the same
+ * length as the edges plus one.
+ *
+ * Example: `Luuk - knows - Giedo - drinksWith - Schaap`.
+ * We have a [pathId] which corresponds to the array `["knows", "drinksWith"]`.
+ * If our pathPrefix only has this [pathId], it will query for all tuples which are connected through these two edges.
+ * When we have `["Luuk"]` as the [nodes] property. It will query only for tuples which have `"Luuk"` as its first element.
+ *
+ * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java for
+ * the implementation in PathDB.
+ *
+ * @property pathId The ID given to a specific Path. We can use the [PathIdentifierStore][com.telepathdb.datamodels.stores.PathIdentifierStore]
+ * to get the list of [edges][Edge].
+ * @property length The length of our path, i.e. the number of edges + 1.
+ * @property nodes Ordered list of nodes along the path we want to restrict our query with.
+ * @property prefixLength Getter for the size of our [nodes] list.
+ * @constructor Creates a PathPrefix with only the list of edges known through the [pathId].
  */
 class PathPrefix(pathId: Long) : AbstractPath(pathId) {
 
@@ -21,6 +39,12 @@ class PathPrefix(pathId: Long) : AbstractPath(pathId) {
     var nodes: List<Node> = emptyList<Node>()
     val prefixLength: Int get() = nodes.size
 
+    /**
+     * @constructor Creates a PathPrefix where we also want to restrict our query with a [nodes] list.
+     * @param pathId The ID representing the edge labels along a path.
+     * @param length The length of the path, i.e. the number of edges + 1.
+     * @param nodes List of nodes restricting our query to.
+     */
     constructor(pathId: Long, length: Int, nodes: List<Node>) : this(pathId) {
         this.length = length
         this.nodes = nodes

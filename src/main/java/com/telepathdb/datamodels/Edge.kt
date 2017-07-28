@@ -8,6 +8,6 @@
 package com.telepathdb.datamodels
 
 /**
- * Created by giedomak on 06/02/2017.
+ * Data class for our Edge model.
  */
 data class Edge(val label: String)

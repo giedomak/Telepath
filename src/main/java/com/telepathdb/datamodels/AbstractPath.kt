@@ -10,7 +10,7 @@ package com.telepathdb.datamodels
 import java.io.Serializable
 
 /**
- * Exists for abstracting this comparision logic between path-prefixes and paths.
+ * Exists for abstracting the comparision logic between path-prefixes and paths.
  */
 open class AbstractPath internal constructor(val pathId: Long) : Comparable<AbstractPath>, Serializable {
 

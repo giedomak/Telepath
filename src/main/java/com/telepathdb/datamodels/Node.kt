@@ -10,7 +10,9 @@ package com.telepathdb.datamodels
 import java.io.Serializable
 
 /**
- * Node model
- * https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java
+ * Data class for our Node model.
+ *
+ * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java for the
+ * implementation in PathDB.
  */
 data class Node(val id: Long) : Serializable

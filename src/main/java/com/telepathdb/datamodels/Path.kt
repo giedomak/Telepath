@@ -11,7 +11,7 @@ import java.io.Serializable
 import java.util.*
 
 /**
- * Path data model.
+ * The Path model contains a list of edges, as well as a list of nodes to represent a specific path.
  *
  * A path is basically an ordered set of nodes and edges we encounter along a path through the graph.
  * Let's say we've got this path: `Tim - likes - Stef - loves - Bregt`.
