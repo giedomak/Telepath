@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class PlannerTest {
 
   @Test
-  public void generateSimplePhysicalPlan() {
+  public void generatesSimplePhysicalPlan() {
     // Generate the actual ParseTree
     ParseTree input = StaticParserRPQTest.Companion.create1LevelParseTree(
         ParseTree.CONCATENATION, Arrays.asList("a", "b"));
@@ -27,6 +27,33 @@ public class PlannerTest {
     // Generate the expected ParseTree
     ParseTree expected = StaticParserRPQTest.Companion.create1LevelParseTree(
         ParseTree.LOOKUP, Arrays.asList("a", "b"));
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void generatesMultiLevelPhysicalPlan() {
+    // Input:
+    //       CONCATENATION
+    //        /      \
+    //       a   CONCATENATION
+    //              /   \
+    //             b     c
+    ParseTree child = StaticParserRPQTest.Companion.create1LevelParseTree(
+        ParseTree.CONCATENATION, Arrays.asList("b", "c"));
+    ParseTree root = StaticParserRPQTest.Companion.create1LevelParseTree(
+        ParseTree.CONCATENATION, Arrays.asList("a"));
+    root.setChild(1, child);
+
+    // Parse the input
+    ParseTree actual = Planner.INSTANCE.generate(root);
+
+    // Generate the expected ParseTree
+    //         LOOKUP
+    //        /  |  \
+    //       a   b   c
+    ParseTree expected = StaticParserRPQTest.Companion.create1LevelParseTree(
+        ParseTree.LOOKUP, Arrays.asList("a", "b", "c"));
 
     assertEquals(expected, actual);
   }
