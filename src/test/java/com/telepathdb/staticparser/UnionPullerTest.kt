@@ -41,6 +41,24 @@ class UnionPullerTest {
         assertEquals(listOf(root1, root2), actual)
     }
 
+    @Test
+    fun splitsParseTreesWhenRootIsUnion() {
+
+        // Given:
+        //     UNION
+        //      / \
+        //     a   b
+        val input = StaticParserRPQTest.create1LevelParseTree(
+                ParseTree.UNION, Arrays.asList("a", "b"))
+        val actual = UnionPuller.parse(input)
+
+        // Generate expected
+        val a = StaticParserRPQTest.createSimpleParseTree("a")
+        val b = StaticParserRPQTest.createSimpleParseTree("b")
+
+        assertEquals(listOf(a, b), actual)
+    }
+
     private fun exampleUnionParseTree(): ParseTree {
         
         // Your input: a/(b|c)/d
