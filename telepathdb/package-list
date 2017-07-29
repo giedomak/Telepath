@@ -1,0 +1,17 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.telepathdb.costmodel
+com.telepathdb.datamodels
+com.telepathdb.datamodels.integrations
+com.telepathdb.datamodels.stores
+com.telepathdb.datamodels.utilities
+com.telepathdb.evaluationengine
+com.telepathdb.kpathindex
+com.telepathdb.kpathindex.utilities
+com.telepathdb.memorymanager.external_merge_sort
+com.telepathdb.memorymanager.spliterator
+com.telepathdb.physicallibrary
+com.telepathdb.planner
+com.telepathdb.staticparser
+com.telepathdb.staticparser.rpq
