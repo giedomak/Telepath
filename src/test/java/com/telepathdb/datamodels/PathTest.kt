@@ -147,9 +147,7 @@ class PathTest {
          * @return List of nodes with the same ID.
          */
         fun equalNodes(count: Int, id: Long): MutableList<Node> {
-            val nodes = mutableListOf<Node>()
-            IntStream.range(0, count).forEach { nodes.add(Node(id)) }
-            return nodes
+            return (1..count).mapTo(mutableListOf()) { Node(id) }
         }
 
         fun simplePath(pathID: Long, length: Int, value: Long?): Path {

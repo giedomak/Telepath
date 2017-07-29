@@ -14,7 +14,7 @@ import org.junit.Test
 import java.util.*
 
 class StaticParserRPQTest {
-    
+
     @Test
     fun inputBecomesAParseTree() {
         // Parse the input into a ParseTree
