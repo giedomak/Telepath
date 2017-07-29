@@ -1,7 +1,7 @@
 package com.telepathdb.datamodels
 
 import com.telepathdb.datamodels.PathPrefixTest.simplePathPrefix
-import com.telepathdb.datamodels.PathTest.simplePath
+import com.telepathdb.datamodels.PathTest.Companion.simplePath
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertThat
 import org.junit.Test

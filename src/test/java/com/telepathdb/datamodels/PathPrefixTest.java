@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.telepathdb.datamodels.PathTest.equalNodes;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -29,8 +28,8 @@ public class PathPrefixTest {
   public void samePathPrefixPrefixesEqualEachOtherTest() throws Exception {
     // given
     long pathId = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"));
-    PathPrefix a = new PathPrefix(pathId, 6, equalNodes(4, 42));
-    PathPrefix b = new PathPrefix(pathId, 6, equalNodes(4, 42));
+    PathPrefix a = new PathPrefix(pathId, 6, PathTest.Companion.equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(pathId, 6, PathTest.Companion.equalNodes(4, 42));
 
     // then
     assertEquals(a, a);
@@ -40,11 +39,11 @@ public class PathPrefixTest {
   @Test
   public void differentPathPrefixPrefixesAreNotEqualsTest() throws Exception {
     // given
-    PathPrefix a = new PathPrefix(42, 6, equalNodes(4, 42));
-    PathPrefix b = new PathPrefix(42, 6, equalNodes(4, 24));
-    PathPrefix c = new PathPrefix(42, 6, equalNodes(3, 42));
+    PathPrefix a = new PathPrefix(42, 6, PathTest.Companion.equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(42, 6, PathTest.Companion.equalNodes(4, 24));
+    PathPrefix c = new PathPrefix(42, 6, PathTest.Companion.equalNodes(3, 42));
 
-    List<Node> differentNodes = equalNodes(3, 42);
+    List<Node> differentNodes = PathTest.Companion.equalNodes(3, 42);
     differentNodes.remove(differentNodes.size() - 1);
     differentNodes.add(new Node(43));
 
@@ -64,9 +63,9 @@ public class PathPrefixTest {
   @Test
   public void generatesHashCode() {
     // given
-    PathPrefix a = new PathPrefix(42, 6, equalNodes(4, 42));
-    PathPrefix b = new PathPrefix(42, 6, equalNodes(4, 42));
-    PathPrefix c = new PathPrefix(42, 6, equalNodes(4, 24));
+    PathPrefix a = new PathPrefix(42, 6, PathTest.Companion.equalNodes(4, 42));
+    PathPrefix b = new PathPrefix(42, 6, PathTest.Companion.equalNodes(4, 42));
+    PathPrefix c = new PathPrefix(42, 6, PathTest.Companion.equalNodes(4, 24));
 
     // then
     assertEquals(a.hashCode(), b.hashCode());
@@ -84,15 +83,13 @@ public class PathPrefixTest {
     assertEquals(a.toString(), output);
   }
 
-  public static PathPrefix simplePathPrefix( long pathId, int actualLength, int numberOfNodes, Long value )
-  {
-    List<Node> nodes = new ArrayList<>( numberOfNodes + 1 );
+  public static PathPrefix simplePathPrefix(long pathId, int actualLength, int numberOfNodes, Long value) {
+    List<Node> nodes = new ArrayList<>(numberOfNodes + 1);
 
-    for ( int i = 0; i < numberOfNodes; i++ )
-    {
-      nodes.add( new Node( value ) );
+    for (int i = 0; i < numberOfNodes; i++) {
+      nodes.add(new Node(value));
     }
 
-    return new PathPrefix(pathId, actualLength, nodes );
+    return new PathPrefix(pathId, actualLength, nodes);
   }
 }
