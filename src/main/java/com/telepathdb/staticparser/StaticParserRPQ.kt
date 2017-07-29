@@ -15,7 +15,7 @@ import com.telepathdb.staticparser.rpq.RPQVisitorParser
 /**
  * RPQ query language.
  */
-class StaticParserRPQ : StaticParser {
+object StaticParserRPQ : StaticParser {
 
     override fun parse(input: String): ParseTree {
 
