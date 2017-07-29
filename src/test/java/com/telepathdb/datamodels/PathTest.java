@@ -154,4 +154,16 @@ public class PathTest {
 
     return nodes;
   }
+
+  public static Path simplePath( long pathID, int length, Long value )
+  {
+    List<Node> nodes = new ArrayList<>( length );
+
+    for ( int i = 0; i < length; i++ )
+    {
+      nodes.add( new Node( value ) );
+    }
+
+    return new Path( pathID, nodes );
+  }
 }

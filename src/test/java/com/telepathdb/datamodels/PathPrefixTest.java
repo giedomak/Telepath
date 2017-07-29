@@ -10,6 +10,7 @@ package com.telepathdb.datamodels;
 import com.telepathdb.datamodels.stores.PathIdentifierStore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -81,5 +82,17 @@ public class PathPrefixTest {
 
     // then
     assertEquals(a.toString(), output);
+  }
+
+  public static PathPrefix simplePathPrefix( long pathId, int actualLength, int numberOfNodes, Long value )
+  {
+    List<Node> nodes = new ArrayList<>( numberOfNodes + 1 );
+
+    for ( int i = 0; i < numberOfNodes; i++ )
+    {
+      nodes.add( new Node( value ) );
+    }
+
+    return new PathPrefix(pathId, actualLength, nodes );
   }
 }
