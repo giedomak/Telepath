@@ -18,7 +18,7 @@ import rpq.RPQParser
 /**
  * Parse the RPQ ANTLR4 AST into our internal ParseTree model.
  *
- * Auto-generated antlr files are stored in `target/generated-sources/antlr4`.
+ * Auto-generated ANTLR files are stored in `target/generated-sources/antlr4`.
  *
  * We use the Visitor approach instead of the Listener approach.
  * Inspiration: http://jakubdziworski.github.io/java/2016/04/01/antlr_visitor_vs_listener.html

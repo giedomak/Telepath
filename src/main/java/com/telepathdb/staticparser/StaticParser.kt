@@ -5,14 +5,14 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.telepathdb.staticparser;
+package com.telepathdb.staticparser
 
-import com.telepathdb.datamodels.ParseTree;
+import com.telepathdb.datamodels.ParseTree
 
 /**
- * Parse the query language into an internal representation
+ * Parse the query language into our internal representation, i.e. a [ParseTree].
  */
-public interface StaticParser {
+interface StaticParser {
 
-  ParseTree parse(String input);
+    fun parse(input: String): ParseTree
 }
