@@ -67,15 +67,18 @@ class StaticParserRPQTest {
     companion object {
 
         // ParseTree without children, just a leaf.
-        fun createSimpleParseTree(label: String): ParseTree {
-            val parseTree = ParseTree(true)
+        fun createSimpleParseTree(label: String, isRoot: Boolean = true): ParseTree {
+            val parseTree = ParseTree(isRoot)
             parseTree.setLeaf(label)
             return parseTree
         }
 
+        // Explicit overloading
+        fun create1LevelParseTree(operator: Int, labels: List<String>): ParseTree = create1LevelParseTree(operator, labels, true)
+
         // ParseTree with 1 level of children, root will get the operator param.
-        fun create1LevelParseTree(operator: Int, labels: List<String>): ParseTree {
-            val parseTree = ParseTree(true)
+        fun create1LevelParseTree(operator: Int, labels: List<String>, isRoot: Boolean): ParseTree {
+            val parseTree = ParseTree(isRoot)
             parseTree.setOperator(operator)
 
             // Create the children and add them to the root
