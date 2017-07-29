@@ -80,7 +80,7 @@ class TelepathDB {
       Logger.INSTANCE.debug("UNION-less parsetrees:");
 
       List<ParseTree> physicalPlans = parseTrees.stream()
-          .map(Planner::generate)
+          .map(Planner.INSTANCE::generate)
           .collect(Collectors.toList());
 
       for (int i = 0; i < parseTrees.size(); i++) {

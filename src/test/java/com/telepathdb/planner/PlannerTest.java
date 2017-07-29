@@ -22,7 +22,7 @@ public class PlannerTest {
     // Generate the actual ParseTree
     ParseTree input = StaticParserRPQTest.Companion.create1LevelParseTree(
         ParseTree.CONCATENATION, Arrays.asList("a", "b"));
-    ParseTree actual = Planner.generate(input);
+    ParseTree actual = Planner.INSTANCE.generate(input);
 
     // Generate the expected ParseTree
     ParseTree expected = StaticParserRPQTest.Companion.create1LevelParseTree(
