@@ -20,13 +20,13 @@ public class StaticParserRPQ implements StaticParser {
   @Override
   public ParseTree parse(String input) {
 
-    Logger.info("Your input: " + input);
+    Logger.INSTANCE.info("Your input: " + input);
     RPQVisitorParser rpqVisitorParser = new RPQVisitorParser();
 
     ParseTree parseTree = rpqVisitorParser.parse(input);
 
     // Print the parsed ParseTree
-    ParseTreePrinter.printParseTree(parseTree);
+    ParseTreePrinter.INSTANCE.printParseTree(parseTree);
 
     return parseTree;
 

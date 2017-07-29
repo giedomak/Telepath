@@ -50,7 +50,7 @@ public class EvaluationEngine {
       case ParseTree.LOOKUP:
         // Collect results from the leafs and put them in the intermediateResults HashMap
         List<Edge> edges = parseTree.getChildren().stream().map(ParseTree::getEdge).collect(Collectors.toList());
-        long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeSet(edges);
+        long pathIdentifier = PathIdentifierStore.INSTANCE.getPathIdByEdges(edges);
         PathPrefix search = new PathPrefix(pathIdentifier);
         results = kPathIndex.search(search);
         break;
@@ -72,7 +72,7 @@ public class EvaluationEngine {
       // Make sure we return the stream when this node was the root
       return results;
     } else {
-      Logger.debug("Itermediateresult: " + parseTree.getLeafOrOperator());
+      Logger.INSTANCE.debug("Itermediateresult: " + parseTree.getLeafOrOperator());
       MemoryManager.put(parseTree.getId(), results);
     }
 

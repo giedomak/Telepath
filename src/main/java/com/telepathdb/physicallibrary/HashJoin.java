@@ -34,11 +34,11 @@ public class HashJoin {
     // Put all Paths from stream1 into a HashMap with the lastNode() as key
     stream1.forEach(path -> MemoryManager.put(offset + path.lastNode().getId(), path));
 
-    Logger.debug("Done creating the hashTable, now concatenating");
+    Logger.INSTANCE.debug("Done creating the hashTable, now concatenating");
 
     // Get all Paths from the HashMap which have the fristNode() as key, and concatenate
     return stream2.flatMap(v2 -> MemoryManager.get(offset + v2.firstNode().getId())
-        .map(v1 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2)));
+        .map(v1 -> PathIdentifierStore.INSTANCE.concatenatePaths(v1, v2)));
 
   }
 }

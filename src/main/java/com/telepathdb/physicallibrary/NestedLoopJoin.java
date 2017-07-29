@@ -27,6 +27,6 @@ public class NestedLoopJoin {
     // Basically we are doing a nested loop to do an inner-join and concatentate the paths.
     return stream1.flatMap(v1 -> streamSupplier.get()
         .filter(v2 -> v1.lastNode().equals(v2.firstNode()))
-        .map(v2 -> PathIdentifierStore.concatenatePathsAndStore(v1, v2))).parallel();
+        .map(v2 -> PathIdentifierStore.INSTANCE.concatenatePaths(v1, v2))).parallel();
   }
 }

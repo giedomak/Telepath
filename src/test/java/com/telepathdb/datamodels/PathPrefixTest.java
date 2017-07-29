@@ -27,7 +27,7 @@ public class PathPrefixTest {
   @Test
   public void samePathPrefixPrefixesEqualEachOtherTest() throws Exception {
     // given
-    long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
+    long pathId = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"));
     PathPrefix a = new PathPrefix(pathId, 6, equalNodes(4, 42));
     PathPrefix b = new PathPrefix(pathId, 6, equalNodes(4, 42));
 
@@ -75,9 +75,9 @@ public class PathPrefixTest {
   @Test
   public void outputsToString() {
     // given
-    long pathId = PathIdentifierStore.getPathIdentifierByEdgeLabel(Arrays.asList("a", "b", "c"));
+    long pathId = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"));
     PathPrefix a = new PathPrefix(pathId);
-    String output = "PathPrefix(" + "pathId=" + a.getPathId() + ", length=" + a.getLength() + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + a.getNodes() + ")";
+    String output = "PathPrefix(" + "pathId=" + a.getPathId() + ", length=" + a.getLength() + ", edges=" + PathIdentifierStore.INSTANCE.getEdgeSet(pathId) + ", nodes=" + a.getNodes() + ")";
 
     // then
     assertEquals(a.toString(), output);

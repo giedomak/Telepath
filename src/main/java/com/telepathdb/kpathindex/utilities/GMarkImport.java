@@ -34,7 +34,7 @@ public final class GMarkImport {
    */
   public static long run(KPathIndex kPathIndex, String gMarkFile) throws IOException {
 
-    Logger.info("Importing: " + gMarkFile);
+    Logger.INSTANCE.info("Importing: " + gMarkFile);
 
     long importedLines = 0;
 
@@ -58,7 +58,7 @@ public final class GMarkImport {
         nodes.add(new Node(endNodeID));
 
         // Get the path identifier from the pathIdentifierStore
-        long pathIdentifier = PathIdentifierStore.getPathIdentifierByEdgeLabel(edgeLabel);
+        long pathIdentifier = PathIdentifierStore.INSTANCE.getPathIdByEdgeLabel(edgeLabel);
 
         // Insert into the kpathindex
         kPathIndex.insert(new Path(pathIdentifier, nodes));
@@ -71,7 +71,7 @@ public final class GMarkImport {
     // Set K to 1 for the kPathIndex becuase we only imported paths with 1 edge
     kPathIndex.setK(1);
 
-    Logger.info("Imported paths: " + importedLines);
+    Logger.INSTANCE.info("Imported paths: " + importedLines);
 
     return importedLines;
   }

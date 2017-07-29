@@ -49,7 +49,7 @@ class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializ
      * @return The first Node of our nodes list.
      */
     fun firstNode(): Node {
-        return nodes[0]
+        return nodes.first()
     }
 
     /**
@@ -58,7 +58,7 @@ class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializ
      * @return The last Node of our nodes list.
      */
     fun lastNode(): Node {
-        return nodes[nodes.size - 1]
+        return nodes.last()
     }
 
     //

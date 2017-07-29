@@ -5,14 +5,12 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.telepathdb.costmodel;
+package com.telepathdb.costmodel
 
-import com.telepathdb.datamodels.ParseTree;
+import com.telepathdb.datamodels.ParseTree
 
-final public class CostModel {
+interface CostModel {
 
-  static public int cost(ParseTree tree) {
+    fun cost(tree: ParseTree): Int
 
-    return tree.level();
-  }
 }
