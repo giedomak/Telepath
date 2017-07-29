@@ -75,7 +75,7 @@ class TelepathDB {
       ParseTree parseTree = staticParser.parse(input);
 
       // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
-      List<ParseTree> parseTrees = UnionPuller.parse(parseTree);
+      List<ParseTree> parseTrees = UnionPuller.INSTANCE.parse(parseTree);
 
       Logger.INSTANCE.debug("UNION-less parsetrees:");
 
