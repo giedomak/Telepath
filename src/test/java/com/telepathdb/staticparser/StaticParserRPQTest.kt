@@ -15,12 +15,10 @@ import java.util.*
 
 class StaticParserRPQTest {
 
-    private val staticParserRPQ = StaticParserRPQ()
-
     @Test
     fun inputBecomesAParseTree() {
         // Parse the input into a ParseTree
-        val actual = staticParserRPQ.parse("a")
+        val actual = StaticParserRPQ.parse("a")
 
         // Then
         assertEquals(createSimpleParseTree("a"), actual)
@@ -29,7 +27,7 @@ class StaticParserRPQTest {
     @Test
     fun concatenationInput() {
         // Parse the input into a ParseTree
-        val actual = staticParserRPQ.parse("a/b")
+        val actual = StaticParserRPQ.parse("a/b")
 
         // Create the expected ParseTree
         val a = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
@@ -47,7 +45,7 @@ class StaticParserRPQTest {
     @Test
     fun unionInput() {
         // Parse the input into a ParseTree
-        val actual = staticParserRPQ.parse("a|b")
+        val actual = StaticParserRPQ.parse("a|b")
 
         // Create the expected ParseTree
         val a = create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b"))

@@ -141,7 +141,7 @@ class TelepathDB {
 
     // Setup the staticParser
     // staticParser = new StaticParserSparql();
-    staticParser = new StaticParserRPQ();
+    staticParser = StaticParserRPQ.INSTANCE;
 
     // We want to use the InMemory version of the KPathIndex
     kPathIndex = new KPathIndexInMemory();

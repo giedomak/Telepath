@@ -100,7 +100,6 @@ class PathTest {
         assertFalse(c == a)
         assertFalse(c == d)
         assertFalse(d == c)
-        assertFalse(d == null) // NOPMD - We've overridden this method, so test with null
     }
 
     @Test
@@ -148,9 +147,7 @@ class PathTest {
          * @return List of nodes with the same ID.
          */
         fun equalNodes(count: Int, id: Long): MutableList<Node> {
-            val nodes = LinkedList<Node>()
-            IntStream.range(0, count).forEach { i -> nodes.add(Node(id)) }
-            return nodes
+            return (1..count).mapTo(mutableListOf()) { Node(id) }
         }
 
         fun simplePath(pathID: Long, length: Int, value: Long?): Path {

@@ -37,7 +37,7 @@ object PathIdentifierStore {
 
     private val pathIdentifierStore = hashMapOf<Long, String>()
     private val pathEdgeSerializationStore = hashMapOf<String, Long>()
-    private val kPathIdentifierStore = hashMapOf<Int, List<Long>>()
+    private val kPathIdentifierStore = hashMapOf<Int, MutableList<Long>>()
     private var maxId: Long = 1
 
     /**
@@ -150,8 +150,8 @@ object PathIdentifierStore {
         pathIdentifierStore.put(maxId, serialized)
 
         // Add to the k-store
-        val pathIds = kPathIdentifierStore[edges.size] ?: ArrayList<Long>()
-        kPathIdentifierStore.put(edges.size, pathIds + maxId)
+        val pathIds = kPathIdentifierStore.getOrPut(edges.size, { mutableListOf() })
+        pathIds.add(maxId)
 
         // Print the addition
         Logger.debug("Add: " + PathPrefix(maxId))
@@ -171,14 +171,10 @@ object PathIdentifierStore {
      */
     private fun serializeEdgeSet(edges: List<Edge>): String {
         // Get the ids as string
-        val ids = ArrayList<String>()
-        for (edge in edges) {
-            val edgeId = EdgeIdentifierStore.getEdgeIdentifier(edge)
-            ids.add(java.lang.Long.toString(edgeId))
-        }
+        val edgeIds = edges.map { EdgeIdentifierStore.getEdgeIdentifier(it).toString() }
 
         // Return the joined string with a separator
-        return StringUtils.join(ids, ";")
+        return StringUtils.join(edgeIds, ";")
     }
 
     /**
@@ -189,10 +185,6 @@ object PathIdentifierStore {
      */
     private fun deserializeEdgeSet(serializedEdgeSet: String): List<Edge> {
         val edgeIds = serializedEdgeSet.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val edges = ArrayList<Edge>()
-        for (edgeId in edgeIds) {
-            edges.add(EdgeIdentifierStore.getEdge(java.lang.Long.parseLong(edgeId)))
-        }
-        return edges
+        return edgeIds.map { EdgeIdentifierStore.getEdge(it.toLong()) }
     }
 }
