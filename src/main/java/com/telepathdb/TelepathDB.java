@@ -20,7 +20,7 @@ import com.telepathdb.memorymanager.MemoryManager;
 import com.telepathdb.planner.Planner;
 import com.telepathdb.staticparser.StaticParser;
 import com.telepathdb.staticparser.StaticParserRPQ;
-import com.telepathdb.staticparser.UnionPuller;
+import com.telepathdb.datamodels.utilities.UnionPuller;
 
 import java.io.IOException;
 import java.util.List;

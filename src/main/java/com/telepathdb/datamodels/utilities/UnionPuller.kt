@@ -5,17 +5,15 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.telepathdb.staticparser
+package com.telepathdb.datamodels.utilities
 
 import com.telepathdb.datamodels.ParseTree
-import com.telepathdb.datamodels.utilities.Logger
-import com.telepathdb.datamodels.utilities.ParseTreePrinter
 import java.util.stream.Collectors
 
 /**
- * Split a ParseTree on Union into multiple ParseTrees.
+ * Split a [ParseTree] on Union into multiple ParseTrees.
  *
- * Illustrative example: 'a/(b|c)/d' becomes ['a/b/d', 'a/c/d']
+ * Illustrative example: `"a/(b|c)/d"` becomes `["a/b/d", "a/c/d"]`
  */
 object UnionPuller {
 
