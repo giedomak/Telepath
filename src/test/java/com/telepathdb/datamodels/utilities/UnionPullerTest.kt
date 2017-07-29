@@ -1,8 +1,8 @@
-package com.telepathdb.staticparser
+package com.telepathdb.datamodels.utilities
 
 import com.telepathdb.datamodels.ParseTree
+import com.telepathdb.staticparser.StaticParserRPQTest
 import org.junit.Test
-import java.util.*
 import kotlin.test.assertEquals
 
 class UnionPullerTest {
@@ -20,10 +20,10 @@ class UnionPullerTest {
         //  CONCATENATION  d
         //      /   \
         //     a     b
-        val child1 = StaticParserRPQTest.Companion.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("a", "b"))
-        val root1 = StaticParserRPQTest.Companion.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("d"))
+        val child1 = StaticParserRPQTest.create1LevelParseTree(
+                ParseTree.CONCATENATION, listOf("a", "b"))
+        val root1 = StaticParserRPQTest.create1LevelParseTree(
+                ParseTree.CONCATENATION, listOf("d"))
         root1.children!!.add(0, child1)
 
         // Create expected parseTree
@@ -32,10 +32,10 @@ class UnionPullerTest {
         //  CONCATENATION  d
         //      /   \
         //     a     c
-        val child2 = StaticParserRPQTest.Companion.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("a", "c"))
-        val root2 = StaticParserRPQTest.Companion.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("d"))
+        val child2 = StaticParserRPQTest.create1LevelParseTree(
+                ParseTree.CONCATENATION, listOf("a", "c"))
+        val root2 = StaticParserRPQTest.create1LevelParseTree(
+                ParseTree.CONCATENATION, listOf("d"))
         root2.children!!.add(0, child2)
 
         assertEquals(listOf(root1, root2), actual)
@@ -49,7 +49,7 @@ class UnionPullerTest {
         //      / \
         //     a   b
         val input = StaticParserRPQTest.create1LevelParseTree(
-                ParseTree.UNION, Arrays.asList("a", "b"))
+                ParseTree.UNION, listOf("a", "b"))
         val actual = UnionPuller.parse(input)
 
         // Generate expected
@@ -60,7 +60,7 @@ class UnionPullerTest {
     }
 
     private fun exampleUnionParseTree(): ParseTree {
-        
+
         // Your input: a/(b|c)/d
         //
         //        CONCATENATION[2]
@@ -75,13 +75,13 @@ class UnionPullerTest {
         //       / \
         //       b c
         val child2 = StaticParserRPQTest.create1LevelParseTree(
-                ParseTree.UNION, Arrays.asList("b", "c"))
+                ParseTree.UNION, listOf("b", "c"))
         val child1 = StaticParserRPQTest.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("a"))
+                ParseTree.CONCATENATION, listOf("a"))
         child1.setChild(1, child2)
 
         val root = StaticParserRPQTest.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("d"))
+                ParseTree.CONCATENATION, listOf("d"))
         root.children!!.add(0, child1)
 
         return root
