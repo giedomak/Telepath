@@ -17,17 +17,17 @@ object ParseTreeFlattener {
 
         var offset = 0
 
-        for (index in parseTree.children!!.indices) {
+        for (index in parseTree.children.indices) {
 
-            val child = parseTree.children!![index + offset]
+            val child = parseTree.children[index + offset]
             val flattenedChild = flatten(child)
 
             if (child.operatorId == parseTree.operatorId) {
 
-                parseTree.children!!.removeAt(index + offset)
-                parseTree.children!!.addAll(index + offset, flattenedChild.children!!)
+                parseTree.children.removeAt(index + offset)
+                parseTree.children.addAll(index + offset, flattenedChild.children)
 
-                offset += flattenedChild.children!!.size - 1
+                offset += flattenedChild.children.size - 1
             }
         }
 

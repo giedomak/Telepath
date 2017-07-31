@@ -53,7 +53,7 @@ object UnionPuller {
 
                     // Remove the current tree from the list, and add its children to our parseTrees var
                     parseTrees.remove(tree)
-                    for (child in tree.children!!) {
+                    for (child in tree.children) {
                         val cloned = child.clone()
                         cloned.isRoot = true // This cloned tree is now a root
                         parseTrees.add(cloned)
@@ -99,10 +99,10 @@ object UnionPuller {
         }
 
         // Check each child for a UNION node.
-        for (child in tree.children!!) {
+        for (child in tree.children) {
             // Check if our child is a UNION node. If so, replace it with the childChooserIndex of our child.
             if (child.operatorId == ParseTree.UNION) {
-                val index = tree.children!!.indexOf(child)
+                val index = tree.children.indexOf(child)
                 tree.setChild(index, child.getChild(childChooserIndex)!!)
                 // Return if we've found one, breaking the recursive call
                 return true
@@ -110,7 +110,7 @@ object UnionPuller {
         }
 
         // Traverse to the left child if we haven't found a UNION node already
-        for (child in tree.children!!) {
+        for (child in tree.children) {
             if (removeFirstUnion(child, childChooserIndex)) {
                 return true
             }

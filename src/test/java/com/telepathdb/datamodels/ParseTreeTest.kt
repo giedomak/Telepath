@@ -14,10 +14,10 @@ class ParseTreeTest {
         // given
         // Root has id 1, its three children will have ids 2, 3 and 4.
         val root = ParseTree(true)
-        IntStream.range(0, 3).forEach { root.children!!.add(ParseTree()) }
+        IntStream.range(0, 3).forEach { root.children.add(ParseTree()) }
 
         // The middle child will get two more childs with ids 5 and 6
-        IntStream.range(0, 2).forEach { root.getChild(1)!!.children!!.add(ParseTree()) }
+        IntStream.range(0, 2).forEach { root.getChild(1)!!.children.add(ParseTree()) }
 
         //          1
         //        / | \
