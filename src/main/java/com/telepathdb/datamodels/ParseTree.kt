@@ -37,10 +37,9 @@ class ParseTree() : Cloneable {
     private var leaf: String? = null
     var edge: Edge? = null
     var isRoot = false
-    var children: MutableList<ParseTree>? = null
+    var children = mutableListOf<ParseTree>()
 
     init {
-        this.children = ArrayList<ParseTree>()
         this.id = maxId++
     }
 
@@ -102,10 +101,7 @@ class ParseTree() : Cloneable {
      * @return Child at the given index from our [children] list.
      */
     fun getChild(index: Int): ParseTree? {
-        if (children!!.size > index) {
-            return children!![index]
-        }
-        return null
+        return children.getOrNull(index)
     }
 
     /**
@@ -117,10 +113,10 @@ class ParseTree() : Cloneable {
      */
     fun setChild(index: Int, tree: ParseTree) {
         tree.isRoot = false
-        try {
-            this.children!![index] = tree
-        } catch (e: IndexOutOfBoundsException) {
-            this.children!!.add(index, tree)
+        if (hasChild(index)) {
+            this.children[index] = tree
+        } else {
+            this.children.add(index, tree)
         }
     }
 
@@ -137,7 +133,7 @@ class ParseTree() : Cloneable {
                 return edge!!.label
             } else {
                 // This will show something like `LOOKUP[2]` if we have 2 children.
-                return symbolicName + "[" + children!!.size + "]"
+                return symbolicName + "[" + children.size + "]"
             }
         }
 
@@ -164,22 +160,11 @@ class ParseTree() : Cloneable {
      */
     public override fun clone(): ParseTree {
 
-        var clonedTree: ParseTree? = null
-
         // make a clone of the current tree
-        try {
-            clonedTree = super.clone() as ParseTree
-        } catch (e: CloneNotSupportedException) {
-            e.printStackTrace()
-        }
+        val clonedTree = super.clone() as ParseTree
 
-        // reset our children
-        clonedTree!!.children = ArrayList<ParseTree>()
-
-        // recusively clone the left and right childs (parsetrees) so that we don't keep references to the same objects
-        for (child in this.children!!) {
-            clonedTree.children!!.add(child.clone())
-        }
+        // recursively clone the children so that we don't keep references to the same objects
+        clonedTree.children = this.children.mapTo(mutableListOf(), { it.clone() })
 
         return clonedTree
     }
@@ -191,7 +176,7 @@ class ParseTree() : Cloneable {
      */
     fun postOrderTreeWalk(): Stream<ParseTree> {
         return Stream.concat(
-                children!!.stream()
+                children.stream()
                         .flatMap<ParseTree> { it.postOrderTreeWalk() }, Stream.of(this)
         )
     }
@@ -216,7 +201,7 @@ class ParseTree() : Cloneable {
             return 1
 
         val childLevels = ArrayList<Int>()
-        children!!.forEach { childLevels.add(it.level()) }
+        children.forEach { childLevels.add(it.level()) }
 
         return Collections.max(childLevels) + 1
     }
@@ -244,7 +229,7 @@ class ParseTree() : Cloneable {
         var result = operatorId
         result = 31 * result + leafOrOperator.hashCode()
         result = 31 * result + isRoot.hashCode()
-        result = 31 * result + (children?.hashCode() ?: 0)
+        result = 31 * result + children.hashCode()
         return result
     }
 
@@ -299,7 +284,7 @@ class ParseTree() : Cloneable {
                         parseTree.setLeaf(it)
                         parseTree
                     }
-                    .forEach { tree.children!!.add(it) }
+                    .forEach { tree.children.add(it) }
 
             return tree
         }

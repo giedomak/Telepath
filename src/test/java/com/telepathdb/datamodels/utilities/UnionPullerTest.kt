@@ -24,7 +24,7 @@ class UnionPullerTest {
                 ParseTree.CONCATENATION, listOf("a", "b"), false)
         val root1 = StaticParserRPQTest.create1LevelParseTree(
                 ParseTree.CONCATENATION, listOf("d"))
-        root1.children!!.add(0, child1)
+        root1.children.add(0, child1)
 
         // Create expected parseTree
         //       CONCATENATION
@@ -36,7 +36,7 @@ class UnionPullerTest {
                 ParseTree.CONCATENATION, listOf("a", "c"), false)
         val root2 = StaticParserRPQTest.create1LevelParseTree(
                 ParseTree.CONCATENATION, listOf("d"))
-        root2.children!!.add(0, child2)
+        root2.children.add(0, child2)
 
         assertEquals(listOf(root1, root2), actual)
     }
@@ -80,7 +80,7 @@ class UnionPullerTest {
         child1.setChild(1, child2)
 
         val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"))
-        root.children!!.add(0, child1)
+        root.children.add(0, child1)
 
         return root
     }

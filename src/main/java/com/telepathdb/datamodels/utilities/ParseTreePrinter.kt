@@ -130,10 +130,7 @@ object ParseTreePrinter {
         if (node.isLeaf)
             return 1
 
-        val childLevels = ArrayList<Int>()
-        for (child in node.children!!) {
-            childLevels.add(ParseTreePrinter.maxLevel(child))
-        }
+        val childLevels = node.children.map { ParseTreePrinter.maxLevel(it) }
 
         return Collections.max(childLevels) + 1
     }
