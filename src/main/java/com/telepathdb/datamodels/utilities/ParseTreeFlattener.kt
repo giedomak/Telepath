@@ -15,7 +15,7 @@ import com.telepathdb.datamodels.ParseTree
  * We escalate the children from a node to its parent if both the node and its parent have the same operator.
  *
  * Example input:
- * <pre>
+ *
  *            CONCATENATION
  *          /       |        \
  *         a  CONCATENATION   f
@@ -25,16 +25,14 @@ import com.telepathdb.datamodels.ParseTree
  *        b    UNION
  *             /  \
  *            c    d
- * </pre>
  *
  * Output:
- * <pre>
+ * 
  *        CONCATENATION
  *        /   |    |  \
  *       a  UNION  e   f
  *          / | \
  *         b  c  d
- * </pre>
  */
 object ParseTreeFlattener {
 
