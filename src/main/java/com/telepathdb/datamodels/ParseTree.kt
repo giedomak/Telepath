@@ -176,7 +176,7 @@ class ParseTree() : Cloneable {
         // reset our children
         clonedTree!!.children = ArrayList<ParseTree>()
 
-        // recusively clone the left and right childs (parsetrees) so that we don't keep references to the same objects
+        // recursively clone the children so that we don't keep references to the same objects
         for (child in this.children!!) {
             clonedTree.children!!.add(child.clone())
         }

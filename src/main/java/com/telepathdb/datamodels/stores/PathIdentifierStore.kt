@@ -51,11 +51,7 @@ object PathIdentifierStore {
         val serialized = serializeEdgeSet(edges)
 
         // Access the store or generate a key
-        if (pathEdgeSerializationStore.containsKey(serialized)) {
-            return pathEdgeSerializationStore[serialized] ?: -1
-        } else {
-            return generatePathId(edges)
-        }
+        return pathEdgeSerializationStore[serialized] ?: generatePathId(edges)
     }
 
     /**
