@@ -29,7 +29,7 @@ object Planner {
         val n = labelPath.size
         val k = 3
 
-        val bestPlans = HashMap<Long, ParseTree>()
+        val bestPlans = hashMapOf<Long, ParseTree>()
 
         // Init the BestPlan for all sub-paths of size 1
         labelPath.stream().forEach { label ->

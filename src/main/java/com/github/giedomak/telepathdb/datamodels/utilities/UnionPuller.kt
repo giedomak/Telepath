@@ -28,7 +28,7 @@ object UnionPuller {
      */
     fun parse(parseTree: ParseTree): List<ParseTree> {
 
-        val parseTrees = ArrayList<ParseTree>()
+        val parseTrees = mutableListOf<ParseTree>()
         parseTrees.add(parseTree)
 
         // Print the parsed ParseTree
@@ -40,8 +40,8 @@ object UnionPuller {
         // Collect the ParseTrees which contain the UNION operatorId
         while ({
             unionTrees = parseTrees.stream()
-                    .filter { t -> t.containsOperator(ParseTree.UNION) }
-                    .collect(Collectors.toList());
+                    .filter { it.containsOperator(ParseTree.UNION) }
+                    .collect(Collectors.toList())
             unionTrees
         }().isNotEmpty()) {
 

@@ -109,7 +109,7 @@ object PathIdentifierStore {
         ) as List<Edge>
 
         // Get the nodes of the second path
-        val sliced = ArrayList(path2.nodes)
+        val sliced = path2.nodes.toMutableList()
 
         // Remove the first node from the second path, otherwise we have a duplicate
         sliced.removeAt(0)
