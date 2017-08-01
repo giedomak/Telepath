@@ -12,10 +12,12 @@ import com.github.giedomak.telepathdb.datamodels.Path
 import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.datamodels.utilities.Logger
+import com.github.giedomak.telepathdb.datamodels.utilities.ParseTreePrinter
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
 import java.util.stream.Stream
+import kotlin.streams.toList
 
 /**
  * Evaluate a physical-plan in order to get results from the path-index.
@@ -31,7 +33,7 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
             evaluate(child)
         }
 
-        var results: Stream<Path>
+        val results: Stream<Path>
 
         // Perform the Operations
         when (parseTree.operatorId) {

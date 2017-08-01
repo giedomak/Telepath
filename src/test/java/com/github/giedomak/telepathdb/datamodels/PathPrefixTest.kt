@@ -34,20 +34,23 @@ class PathPrefixTest {
         val a = PathPrefix(42, 6, PathTest.equalNodes(4, 42))
         val b = PathPrefix(42, 6, PathTest.equalNodes(4, 24))
         val c = PathPrefix(42, 6, PathTest.equalNodes(3, 42))
+        val d = PathPrefix(43, 6, PathTest.equalNodes(3, 42))
 
         val differentNodes = PathTest.equalNodes(3, 42)
         differentNodes.removeAt(differentNodes.size - 1)
         differentNodes.add(Node(43))
 
-        val d = PathPrefix(42, 6, differentNodes)
+        val e = PathPrefix(42, 6, differentNodes)
 
         // then
-        assertFalse(a == b)
-        assertFalse(b == a)
-        assertFalse(a == c)
-        assertFalse(c == a)
-        assertFalse(c == d)
-        assertFalse(d == c)
+        assertNotEquals(a, b)
+        assertNotEquals(a, d)
+        assertNotEquals(c, d)
+        assertNotEquals(b, a)
+        assertNotEquals(a, c)
+        assertNotEquals(c, a)
+        assertNotEquals(c, e)
+        assertNotEquals(e, c)
     }
 
     // ---------- METHODS ---------
@@ -60,8 +63,8 @@ class PathPrefixTest {
         val c = PathPrefix(42, 6, PathTest.equalNodes(4, 24))
 
         // then
-        assertEquals(a.hashCode().toLong(), b.hashCode().toLong())
-        assertNotEquals(a.hashCode().toLong(), c.hashCode().toLong())
+        assertEquals(a.hashCode(), b.hashCode())
+        assertNotEquals(a.hashCode(), c.hashCode())
     }
 
     @Test

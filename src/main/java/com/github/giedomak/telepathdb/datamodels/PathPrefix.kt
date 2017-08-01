@@ -64,6 +64,7 @@ class PathPrefix(pathId: Long) : AbstractPath(pathId) {
 
         other as PathPrefix
 
+        if (pathId != other.pathId) return false
         if (length != other.length) return false
         if (nodes != other.nodes) return false
 

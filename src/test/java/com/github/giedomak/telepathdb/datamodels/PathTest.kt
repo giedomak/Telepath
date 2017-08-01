@@ -159,5 +159,9 @@ class PathTest {
 
             return Path(pathID, nodes)
         }
+
+        fun increasingNodes(count: Int, startingId: Long): List<Node> {
+            return (startingId..(startingId + count - 1)).map { Node(it) }
+        }
     }
 }
