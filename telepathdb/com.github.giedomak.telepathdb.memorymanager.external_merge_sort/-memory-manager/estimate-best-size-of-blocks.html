@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MemoryManager.estimateBestSizeOfBlocks - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.memorymanager.external_merge_sort</a>&nbsp;/&nbsp;<a href="index.html">MemoryManager</a>&nbsp;/&nbsp;<a href=".">estimateBestSizeOfBlocks</a><br/>
+<br/>
+<h1>estimateBestSizeOfBlocks</h1>
+<a name="com.github.giedomak.telepathdb.memorymanager.external_merge_sort.MemoryManager$estimateBestSizeOfBlocks(kotlin.Long, kotlin.Int, kotlin.Long)"></a>
+<code><span class="keyword">open</span> <span class="keyword">static</span> <span class="keyword">fun </span><span class="identifier">estimateBestSizeOfBlocks</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.memorymanager.external_merge_sort.MemoryManager$estimateBestSizeOfBlocks(kotlin.Long, kotlin.Int, kotlin.Long)/sizeoffile">sizeoffile</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.memorymanager.external_merge_sort.MemoryManager$estimateBestSizeOfBlocks(kotlin.Long, kotlin.Int, kotlin.Long)/maxtmpfiles">maxtmpfiles</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.memorymanager.external_merge_sort.MemoryManager$estimateBestSizeOfBlocks(kotlin.Long, kotlin.Int, kotlin.Long)/maxMemory">maxMemory</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/external_merge_sort/MemoryManager.java#L106">(source)</a>
+<p>we divide the file into small blocks. If the blocks are too small, we shall create too many temporary files. If they are too big, we shall be using too much memory.</p>
+<h3>Parameters</h3>
+<p><a name="sizeoffile"></a>
+<code>sizeoffile</code> - how much data (in bytes) can we expect</p>
+<p><a name="maxtmpfiles"></a>
+<code>maxtmpfiles</code> - how many temporary files can we create (e.g., 1024)</p>
+<p><a name="maxMemory"></a>
+<code>maxMemory</code> - Maximum memory to use (in bytes)</p>
+<p><strong>Return</strong><br/>
+the estimate</p>
+</BODY>
+</HTML>

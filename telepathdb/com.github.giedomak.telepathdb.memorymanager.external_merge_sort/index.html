@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.github.giedomak.telepathdb.memorymanager.external_merge_sort - telepathdb</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">telepathdb</a>&nbsp;/&nbsp;<a href=".">com.github.giedomak.telepathdb.memorymanager.external_merge_sort</a><br/>
+<br/>
+<h2>Package com.github.giedomak.telepathdb.memorymanager.external_merge_sort</h2>
+<p>Deprecated package holding some external merge sort logic.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-memory-manager/index.html">MemoryManager</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">MemoryManager</span></code>
+<p>Goal: offer a generic external-memory sorting program in Java. 
+<p> It must be : - hackable (easy to adapt) - scalable to large files - sensibly efficient. </p>
+<p> This software is in the public domain. </p>
+<p> Usage: java com/google/code/externalsorting/ExternalSort somefile.txt out.txt </p>
+<p> You can change the default maximal number of temporary files with the -t flag: java com/google/code/externalsorting/ExternalSort somefile.txt out.txt -t 3 </p>
+<p> For very large files, you might want to use an appropriate flag to allocate more memory to the Java VM: java -Xms2G com/google/code/externalsorting/ExternalSort somefile.txt out.txt </p>
+<p> By (in alphabetical order) Philippe Beaudoin, Eleftherios Chetzakis, Jon Elsas, Christan Grant, Daniel Haran, Daniel Lemire, Sugumaran Harikrishnan, Amit Jain, Thomas Mueller, Jerry Yang, First published: April 2010 originally posted at http://lemire.me/blog/archives/2010/04/01/external-memory-sorting-in-java/</p>
+</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-string-size-estimator/index.html">StringSizeEstimator</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">StringSizeEstimator</span></code>
+<p>Simple class used to estimate memory usage.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

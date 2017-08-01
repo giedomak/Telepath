@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AbstractPath - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels</a>&nbsp;/&nbsp;<a href=".">AbstractPath</a><br/>
+<br/>
+<h1>AbstractPath</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AbstractPath</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html"><span class="identifier">Comparable</span></a><span class="symbol">&lt;</span><span class="identifier">AbstractPath</span><span class="symbol">&gt;</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/AbstractPath.kt#L15">(source)</a>
+<p>Exists for abstracting the comparision logic between path-prefixes and paths.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="path-id.html">pathId</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pathId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="compare-to.html">compareTo</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">compareTo</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.AbstractPath$compareTo(com.github.giedomak.telepathdb.datamodels.AbstractPath)/other">other</span><span class="symbol">:</span>&nbsp;<span class="identifier">AbstractPath</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-path/index.html">Path</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Path</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractPath</span><span class="symbol">, </span><a href="http://docs.oracle.com/javase/8/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>The Path model contains a list of edges, as well as a list of nodes to represent a specific path.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-path-prefix/index.html">PathPrefix</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PathPrefix</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractPath</span></code>
+<p>This model is used for defining a search-query.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
