@@ -379,6 +379,7 @@
 
     <scm>
         <url>https://github.com/giedomak/TelepathDB</url>
+        <connection>scm:git:https://github.com/giedomak/TelepathDB.git</connection>
     </scm>
 
     <developers>
