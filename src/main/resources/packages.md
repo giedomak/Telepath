@@ -1,4 +1,4 @@
-# Package com.telepathdb.datamodels
+# Package com.github.giedomak.telepathdb.datamodels
 
 Bundle all the data classes we will be using throughout the TelepathDB module.
 
