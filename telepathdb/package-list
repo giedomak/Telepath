@@ -9,7 +9,6 @@ com.github.giedomak.telepathdb.datamodels.utilities
 com.github.giedomak.telepathdb.evaluationengine
 com.github.giedomak.telepathdb.kpathindex
 com.github.giedomak.telepathdb.kpathindex.utilities
-com.github.giedomak.telepathdb.memorymanager
 com.github.giedomak.telepathdb.memorymanager.external_merge_sort
 com.github.giedomak.telepathdb.memorymanager.spliterator
 com.github.giedomak.telepathdb.physicallibrary
