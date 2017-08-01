@@ -38,6 +38,31 @@ class ParseTreeFlattenerTest {
     }
 
     @Test
+    fun flattensMultipleConcatenation() {
+
+        // Given:
+        //                      CONCATENATION
+        //          /        /       |      \          \
+        //         a  CONCATENATION  d  CONCATENATION   g
+        //                 /    \         /   \
+        //                b      c       e     f
+        val child1 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
+        val child2 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"), false)
+        val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "d", "g"))
+        root.children.add(1, child1)
+        root.children.add(3, child2)
+
+        // Expected:
+        //          CONCATENATION
+        //          /  / | | | \ \
+        //         a  b  c d e  f g
+        val expected = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f", "g"))
+
+        // Then
+        assertEquals(expected, ParseTreeFlattener.flatten(root))
+    }
+
+    @Test
     fun flattensComplexConcatenation() {
 
         // Given:
