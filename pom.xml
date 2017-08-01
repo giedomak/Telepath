@@ -339,10 +339,11 @@
         </plugins>
     </build>
 
-    <!-- Sign our releases with GPG -->
+    <!-- Sign our releases with GPG only if we enable the release profile -->
+    <!-- Release with `mvn clean deploy -P release` -->
     <profiles>
         <profile>
-            <id>release-sign-artifacts</id>
+            <id>release</id>
             <activation>
                 <property>
                     <name>performRelease</name>
