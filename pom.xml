@@ -67,7 +67,7 @@
         <!-- We use Mockito to mock objects -->
         <dependency>
             <groupId>com.nhaarman</groupId>
-            <artifactId>mockito-kotlin</artifactId>
+            <artifactId>mockito-kotlin-kt1.1</artifactId>
             <version>1.5.0</version>
         </dependency>
         <!-- KOTLIN! YAY! -->
