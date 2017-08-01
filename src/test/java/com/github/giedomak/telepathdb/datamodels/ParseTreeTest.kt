@@ -37,7 +37,7 @@ class ParseTreeTest {
     @Test
     fun outputsToString() {
         val actual = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
-        val expected = "ParseTree(id=1, operator=CONCATENATION, leaf=null, edge=null, isRoot=true, children=" + actual.children.toString() + ")"
+        val expected = "ParseTree(id=" + actual.id + ", operator=CONCATENATION, leaf=null, edge=null, isRoot=true, children=" + actual.children.toString() + ")"
 
         // then
         assertEquals(expected, actual.toString())
