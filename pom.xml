@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.giedomak.telepathdb</groupId>
+    <groupId>com.github.giedomak</groupId>
     <artifactId>telepathdb</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>TelepathDB</name>
-    <description>A fully-fledged graph database which uses path indexing to speed-up regular path queries.</description>
+    <description>We propose a path-index based graph database engine.</description>
     <url>https://github.com/giedomak/TelepathDB</url>
 
     <properties>
@@ -317,6 +317,8 @@
 
     <!-- Sign our releases with GPG only if we enable the release profile -->
     <!-- Release with `mvn clean deploy -P release` -->
+    <!-- For the ioctl error, see: https://github.com/keybase/keybase-issues/issues/1712#issuecomment-141226705 -->
+    <!-- `export GPG_TTY=$(tty)` -->
     <profiles>
         <profile>
             <id>release</id>
@@ -420,7 +422,7 @@
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
 </project>
