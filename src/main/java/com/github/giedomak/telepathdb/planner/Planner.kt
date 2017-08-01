@@ -29,7 +29,7 @@ object Planner {
         val n = labelPath.size
         val k = 3
 
-        val bestPlans = HashMap<Long, ParseTree>()
+        val bestPlans = hashMapOf<Long, ParseTree>()
 
         // Init the BestPlan for all sub-paths of size 1
         labelPath.stream().forEach { label ->
@@ -63,11 +63,11 @@ object Planner {
                     val L2 = labelPath.subList(offset + split, offset + size)
                     val L2Id = PathIdentifierStore.getPathIdByEdgeLabel(L2)
 
-                    val p1 = bestPlans.getValue(L1Id)
-                    val p2 = bestPlans.getValue(L2Id)
+                    val p1 = bestPlans[L1Id]!!
+                    val p2 = bestPlans[L2Id]!!
                     val currPlan = ParseTree.createConcatenationTree(p1, p2)
 
-                    if (!bestPlans.containsKey(LsubId) || SimpleCostModel.cost(currPlan) < SimpleCostModel.cost(bestPlans.getValue(LsubId))) {
+                    if (!bestPlans.containsKey(LsubId) || SimpleCostModel.cost(currPlan) < SimpleCostModel.cost(bestPlans[LsubId]!!)) {
                         bestPlans.put(LsubId, currPlan)
                     }
                 }
@@ -75,6 +75,6 @@ object Planner {
         }
 
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(labelPath)
-        return bestPlans.getValue(pathId)
+        return bestPlans[pathId]!!
     }
 }
