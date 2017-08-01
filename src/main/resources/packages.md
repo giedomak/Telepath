@@ -40,6 +40,10 @@ Wrapper for the path index from the PathDB module.
 
 Utilities regarding the path index. A GMark importer for example.
 
+# Package com.github.giedomak.telepathdb.memorymanager
+
+We should have control over our data and caching mechanism.
+
 # Package com.github.giedomak.telepathdb.memorymanager.external_merge_sort
 
 Deprecated package holding some external merge sort logic.
