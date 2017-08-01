@@ -5,7 +5,7 @@
 
     <groupId>com.telepathdb</groupId>
     <artifactId>telepathdb</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>TelepathDB</name>
@@ -31,17 +31,17 @@
         </dependency>
 
         <!-- Max Sumrall's PathDB through Github -->
-        <dependency>
-            <groupId>com.github.maxsumrall</groupId>
-            <artifactId>PathDB</artifactId>
-            <version>master</version> <!-- branch -->
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.maxsumrall</groupId>-->
+            <!--<artifactId>PathDB</artifactId>-->
+            <!--<version>master</version> &lt;!&ndash; branch &ndash;&gt;-->
+        <!--</dependency>-->
         <!-- Or through local maven repository -->
-        <!-- <dependency>
+        <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency> -->
+            <version>0.1.0</version>
+        </dependency>
 
         <!-- Language recognition; needed for parsing regular path queries -->
         <dependency>
@@ -179,20 +179,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
-            <!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
 
             <!-- Set currentYear variable, which we need for adding licenses to files -->
             <plugin>
@@ -350,6 +336,22 @@
                     <jdkVersion>8</jdkVersion>
                 </configuration>
             </plugin>
+
+            <!-- Sign our releases with GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -375,13 +377,13 @@
         </developer>
     </developers>
 
-    <!-- We need this in order to specify github dependencies -->
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+    <!-- We need this in order to specify github dependencies (PathDB) -->
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>jitpack.io</id>-->
+            <!--<url>https://jitpack.io</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <!-- This is for Dokka, the Kotlin documentation generator-->
     <pluginRepositories>
@@ -391,4 +393,16 @@
             <url>https://jcenter.bintray.com/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <!-- Distribute to OSSRH -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>

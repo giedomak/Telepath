@@ -27,7 +27,7 @@ import com.telepathdb.datamodels.ParseTree
  *            c    d
  *
  * Output:
- * 
+ *
  *        CONCATENATION
  *        /   |    |  \
  *       a  UNION  e   f
