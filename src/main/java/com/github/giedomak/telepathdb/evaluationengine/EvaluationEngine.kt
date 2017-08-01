@@ -44,13 +44,6 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
                 results = kPathIndex.search(search)
             }
 
-            ParseTree.LEAF -> {
-                // Collect results from the leafs and put them in the intermediateResults HashMap
-                val pathIdentifier = PathIdentifierStore.getPathIdByEdges(listOf(parseTree.edge!!))
-                val search = PathPrefix(pathIdentifier)
-                results = kPathIndex.search(search)
-            }
-
             ParseTree.UNION -> results = PhysicalLibrary.union(getChild(parseTree, 0), getChild(parseTree, 1))
 
             ParseTree.CONCATENATION -> results = PhysicalLibrary.concatenation(getChild(parseTree, 0), getChild(parseTree, 1))
