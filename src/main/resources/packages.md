@@ -6,34 +6,34 @@ The selection and manipulation of paths forms the core of querying graph dataset
 
 We propose a path-index based graph database engine.
 
-# Package com.telepathdb.costmodel
+# Package com.github.giedomak.telepathdb.costmodel
 
-# Package com.telepathdb.datamodels
+# Package com.github.giedomak.telepathdb.datamodels
 
 Bundle all the data classes we will be using throughout the TelepathDB module.
 
 This package contains data classes for nodes, edges and paths for example.
 
-# Package com.telepathdb.datamodels.integrations
+# Package com.github.giedomak.telepathdb.datamodels.integrations
 
-# Package com.telepathdb.datamodels.stores
+# Package com.github.giedomak.telepathdb.datamodels.stores
 
-# Package com.telepathdb.datamodels.utilities
+# Package com.github.giedomak.telepathdb.datamodels.utilities
 
-# Package com.telepathdb.evaluationengine
+# Package com.github.giedomak.telepathdb.evaluationengine
 
-# Package com.telepathdb.kpathindex
+# Package com.github.giedomak.telepathdb.kpathindex
 
-# Package com.telepathdb.kpathindex.utilities
+# Package com.github.giedomak.telepathdb.kpathindex.utilities
 
-# Package com.telepathdb.memorymanager.external_merge_sort
+# Package com.github.giedomak.telepathdb.memorymanager.external_merge_sort
 
-# Package com.telepathdb.memorymanager.spliterator
+# Package com.github.giedomak.telepathdb.memorymanager.spliterator
 
-# Package com.telepathdb.physicallibrary
+# Package com.github.giedomak.telepathdb.physicallibrary
 
-# Package com.telepathdb.planner
+# Package com.github.giedomak.telepathdb.planner
 
-# Package com.telepathdb.staticparser
+# Package com.github.giedomak.telepathdb.staticparser
 
-# Package com.telepathdb.staticparser.rpq
+# Package com.github.giedomak.telepathdb.staticparser.rpq

@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.telepathdb</groupId>
+    <groupId>com.github.giedomak</groupId>
     <artifactId>telepathdb</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>TelepathDB</name>
-    <description>A fully-fledged graph database which uses path indexing to speed-up regular path queries.</description>
+    <description>We propose a path-index based graph database engine.</description>
     <url>https://github.com/giedomak/TelepathDB</url>
 
     <properties>
@@ -31,17 +31,17 @@
         </dependency>
 
         <!-- Max Sumrall's PathDB through Github -->
-        <dependency>
-            <groupId>com.github.maxsumrall</groupId>
-            <artifactId>PathDB</artifactId>
-            <version>master</version> <!-- branch -->
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.github.maxsumrall</groupId>-->
+            <!--<artifactId>PathDB</artifactId>-->
+            <!--<version>master</version> &lt;!&ndash; branch &ndash;&gt;-->
+        <!--</dependency>-->
         <!-- Or through local maven repository -->
-        <!-- <dependency>
+        <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency> -->
+            <version>0.1.0</version>
+        </dependency>
 
         <!-- Language recognition; needed for parsing regular path queries -->
         <dependency>
@@ -155,44 +155,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Assembly plugin to create fat jars -->
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.telepathdb.TelepathDB</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <!-- <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
 
             <!-- Set currentYear variable, which we need for adding licenses to files -->
             <plugin>
@@ -353,6 +315,65 @@
         </plugins>
     </build>
 
+    <!-- Sign our releases with GPG only if we enable the release profile -->
+    <!-- Release with `mvn clean deploy -P release` -->
+    <!-- For the ioctl error, see: https://github.com/keybase/keybase-issues/issues/1712#issuecomment-141226705 -->
+    <!-- `export GPG_TTY=$(tty)` -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Sign artifacts with our GPG key -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Assembly plugin to create fat jars -->
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>com.github.giedomak.telepathdb.TelepathDB</mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                                <phase>package</phase> <!-- bind to the packaging phase -->
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <licenses>
         <license>
             <name>GNU General Public License (GPL)</name>
@@ -362,6 +383,7 @@
 
     <scm>
         <url>https://github.com/giedomak/TelepathDB</url>
+        <connection>scm:git:https://github.com/giedomak/TelepathDB.git</connection>
     </scm>
 
     <developers>
@@ -375,13 +397,13 @@
         </developer>
     </developers>
 
-    <!-- We need this in order to specify github dependencies -->
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+    <!-- We need this in order to specify github dependencies (PathDB) -->
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>jitpack.io</id>-->
+            <!--<url>https://jitpack.io</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <!-- This is for Dokka, the Kotlin documentation generator-->
     <pluginRepositories>
@@ -391,4 +413,16 @@
             <url>https://jcenter.bintray.com/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <!-- Distribute to OSSRH -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 </project>
