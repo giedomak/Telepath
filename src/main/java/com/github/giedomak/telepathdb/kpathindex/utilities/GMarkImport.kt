@@ -49,19 +49,19 @@ object GMarkImport {
                 val split = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
                 // split[0] is the starting node id
-                val startNodeID = java.lang.Long.parseLong(split[0])
+                val startNodeID = split[0].toLong()
                 // split[1] is the edge label
                 val edgeLabel = split[1]
                 // split[2] is the end node id
-                val endNodeID = java.lang.Long.parseLong(split[2])
+                val endNodeID = split[2].toLong()
 
-                // Put them into an array
+                // Put them into a list
                 val nodes = listOf(Node(startNodeID), Node(endNodeID))
 
                 // Get the path identifier from the pathIdentifierStore
                 val pathIdentifier = PathIdentifierStore.getPathIdByEdgeLabel(edgeLabel)
 
-                // Insert into the kpathindex
+                // Insert into the index
                 kPathIndex.insert(Path(pathIdentifier, nodes))
 
                 // Yay, we've inserted one
