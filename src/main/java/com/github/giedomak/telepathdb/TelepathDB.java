@@ -163,6 +163,6 @@ class TelepathDB {
     }
 
     // Extend from k=1 to k
-    KExtender.run(kPathIndex, k);
+    KExtender.INSTANCE.run(kPathIndex, k);
   }
 }
