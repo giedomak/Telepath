@@ -8,8 +8,8 @@
 <a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.kpathindex</a>&nbsp;/&nbsp;<a href=".">KPathIndexInMemory</a><br/>
 <br/>
 <h1>KPathIndexInMemory</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">KPathIndexInMemory</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">KPathIndex</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/kpathindex/KPathIndexInMemory.java#L24">(source)</a>
-<p>InMemory implementation of the KPathIndex</p>
+<code><span class="keyword">class </span><span class="identifier">KPathIndexInMemory</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-k-path-index/index.html"><span class="identifier">KPathIndex</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/kpathindex/KPathIndexInMemory.kt#L22">(source)</a>
+<p>InMemory implementation of the KPathIndex.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -19,7 +19,21 @@
 </td>
 <td>
 <code><span class="identifier">KPathIndexInMemory</span><span class="symbol">(</span><span class="symbol">)</span></code>
-<p>Constructor which populates our pathIndex variable with the InMemoryIndex obtained from the InMemoryIndexFactory from the com.pathdb package</p>
+<p>InMemory implementation of the KPathIndex.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="k.html">k</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">k</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Getter for K.</p>
 </td>
 </tr>
 </tbody>
@@ -29,18 +43,11 @@
 <tbody>
 <tr>
 <td>
-<p><a href="get-k.html">getK</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getK</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
-</tr>
-<tr>
-<td>
 <p><a href="insert.html">insert</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory$insert(com.github.giedomak.telepathdb.datamodels.Path)/path">path</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-path/index.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Insert method to insert a Path into the KPathIndex</p>
+<code><span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory$insert(com.github.giedomak.telepathdb.datamodels.Path)/path">path</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-path/index.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Insert method to insert a Path into the KPathIndex.</p>
 </td>
 </tr>
 <tr>
@@ -48,16 +55,9 @@
 <p><a href="search.html">search</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">search</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory$search(com.github.giedomak.telepathdb.datamodels.PathPrefix)/pathPrefix">pathPrefix</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-path-prefix/index.html"><span class="identifier">PathPrefix</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels/-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code>
-<p>Search method to lookup paths in the KPathIndex</p>
+<code><span class="keyword">fun </span><span class="identifier">search</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory$search(com.github.giedomak.telepathdb.datamodels.PathPrefix)/pathPrefix">pathPrefix</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-path-prefix/index.html"><span class="identifier">PathPrefix</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels/-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code>
+<p>Search method to lookup paths in the KPathIndex.</p>
 </td>
-</tr>
-<tr>
-<td>
-<p><a href="set-k.html">setK</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setK</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory$setK(kotlin.Int)/k">k</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 </tbody>
 </table>

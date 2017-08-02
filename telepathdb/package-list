@@ -12,6 +12,7 @@ com.github.giedomak.telepathdb.kpathindex.utilities
 com.github.giedomak.telepathdb.memorymanager.external_merge_sort
 com.github.giedomak.telepathdb.memorymanager.spliterator
 com.github.giedomak.telepathdb.physicallibrary
+com.github.giedomak.telepathdb.physicallibrary.joins
 com.github.giedomak.telepathdb.planner
 com.github.giedomak.telepathdb.staticparser
 com.github.giedomak.telepathdb.staticparser.rpq
