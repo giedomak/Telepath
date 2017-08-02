@@ -23,7 +23,7 @@ object EdgeIdentifierStore {
      * Get or create an Edge ID for a given Edge.
 
      * @param edge The Edge for which we want to generate or find an ID.
-     * @return The ID generated for the given edge
+     * @return The ID generated for the given edge.
      */
     fun getEdgeIdentifier(edge: Edge): Long {
         // Access the store or generate a key

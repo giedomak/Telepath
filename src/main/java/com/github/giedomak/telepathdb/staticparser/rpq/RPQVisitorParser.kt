@@ -63,10 +63,10 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
 
             if (ctx.unaryOperator().PLUS() != null) {
                 // PLUS
-                result.setOperator(ParseTree.PLUS)
+                result.operatorId = ParseTree.PLUS
             } else if (ctx.unaryOperator().KLEENE_STAR() != null) {
                 // KLEENE STAR
-                result.setOperator(ParseTree.KLEENE_STAR)
+                result.operatorId = ParseTree.KLEENE_STAR
             }
 
             // Recurse on the left-side for which this operatorId was intended
@@ -81,10 +81,10 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
 
             if (ctx.binaryOperator().UNION() != null) {
                 // UNION
-                result.setOperator(ParseTree.UNION)
+                result.operatorId = ParseTree.UNION
             } else if (ctx.binaryOperator().CONJUNCTION() != null) {
                 // CONCATENATION
-                result.setOperator(ParseTree.CONCATENATION)
+                result.operatorId = ParseTree.CONCATENATION
             }
 
             // Recurse on the left-side and the right-side for which this operatorId was intended
@@ -97,7 +97,7 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
         override fun visitLeaf(@NotNull ctx: RPQParser.LeafContext): ParseTree {
 
             val result = ParseTree()
-            result.setOperator(ParseTree.LEAF)
+            result.operatorId = ParseTree.LEAF
             result.setLeaf(ctx.LABEL().text)
 
             return result

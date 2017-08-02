@@ -7,14 +7,10 @@
 
 package com.github.giedomak.telepathdb.evaluationengine
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
-import com.github.giedomak.telepathdb.datamodels.PathTest
+import com.github.giedomak.telepathdb.datamodels.*
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.planner.Planner
-import com.github.giedomak.telepathdb.staticparser.StaticParserRPQTest
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
@@ -44,7 +40,7 @@ class EvaluationEngineTest {
         //       CONCATENATION
         //          /   \
         //         a     b
-        val input = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
+        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
 
         // Our physical-plan:
         //        LOOKUP
@@ -86,7 +82,7 @@ class EvaluationEngineTest {
         //       CONCATENATION
         //        / | | | \
         //       a  b c d  e
-        val input = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e"))
+        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e"))
 
         // Our physical-plan:
         //     CONCATENATION

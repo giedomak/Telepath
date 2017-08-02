@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.datamodels.utilities
 
 import com.github.giedomak.telepathdb.datamodels.ParseTree
-import com.github.giedomak.telepathdb.staticparser.StaticParserRPQTest
+import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -23,15 +23,15 @@ class ParseTreeFlattenerTest {
         //         a    CONCATENATION
         //                 /    \
         //                b      c
-        val child = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
+        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
         root.setChild(1, child)
 
         // Expected:
         //       CONCATENATION
         //          /  |  \
         //         a   b   c
-        val expected = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c"))
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c"))
 
         // Then
         assertEquals(expected, ParseTreeFlattener.flatten(root))
@@ -46,9 +46,9 @@ class ParseTreeFlattenerTest {
         //         a  CONCATENATION  d  CONCATENATION
         //                 /    \         /   \
         //                b      c       e     f
-        val child1 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val child2 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"), false)
-        val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "d"))
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"), false)
+        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "d"))
         root.children.add(1, child1)
         root.children.add(3, child2)
 
@@ -56,7 +56,7 @@ class ParseTreeFlattenerTest {
         //          CONCATENATION
         //          /  / | | | \
         //         a  b  c d e  f
-        val expected = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
 
         // Then
         assertEquals(expected, ParseTreeFlattener.flatten(root))
@@ -73,17 +73,17 @@ class ParseTreeFlattenerTest {
         //        CONCATENATION    d
         //           /    \
         //          b      c
-        val child1 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val child2 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"), false)
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"), false)
         child2.children.add(0, child1)
-        val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
+        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
         root.setChild(1, child2)
 
         // Expected:
         //        CONCATENATION
         //          /  |  |  \
         //         a   b  c   c
-        val expected = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d"))
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d"))
 
         // Then
         assertEquals(expected, ParseTreeFlattener.flatten(root))
@@ -102,12 +102,12 @@ class ParseTreeFlattenerTest {
         //        b    UNION
         //             /  \
         //            c    d
-        val child1 = StaticParserRPQTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
-        val child2 = StaticParserRPQTest.create1LevelParseTree(ParseTree.UNION, listOf("b"), false)
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b"), false)
         child2.children.add(child1)
-        val child3 = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e"), false)
+        val child3 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e"), false)
         child3.children.add(0, child2)
-        val root = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "f"))
+        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "f"))
         root.children.add(1, child3)
 
         // Expected:
@@ -116,8 +116,8 @@ class ParseTreeFlattenerTest {
         //       a  UNION  e   f
         //          / | \
         //         b  c  d
-        val child = StaticParserRPQTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"), false)
-        val expected = StaticParserRPQTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f"))
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"), false)
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f"))
         expected.children.add(1, child)
 
         // Then
