@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.planner;
 
 import com.github.giedomak.telepathdb.datamodels.ParseTree;
-import com.github.giedomak.telepathdb.staticparser.StaticParserRPQTest;
+import com.github.giedomak.telepathdb.datamodels.ParseTreeTest;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -20,12 +20,12 @@ public class PlannerTest {
   @Test
   public void generatesSimplePhysicalPlan() {
     // Generate the actual ParseTree
-    ParseTree input = StaticParserRPQTest.Companion.create1LevelParseTree(
+    ParseTree input = ParseTreeTest.Companion.create1LevelParseTree(
         ParseTree.CONCATENATION, Arrays.asList("a", "b"));
     ParseTree actual = Planner.INSTANCE.generate(input);
 
     // Generate the expected ParseTree
-    ParseTree expected = StaticParserRPQTest.Companion.create1LevelParseTree(
+    ParseTree expected = ParseTreeTest.Companion.create1LevelParseTree(
         ParseTree.LOOKUP, Arrays.asList("a", "b"));
 
     assertEquals(expected, actual);
@@ -39,9 +39,9 @@ public class PlannerTest {
     //       a   CONCATENATION
     //              /   \
     //             b     c
-    ParseTree child = StaticParserRPQTest.Companion.create1LevelParseTree(
+    ParseTree child = ParseTreeTest.Companion.create1LevelParseTree(
         ParseTree.CONCATENATION, Arrays.asList("b", "c"));
-    ParseTree root = StaticParserRPQTest.Companion.create1LevelParseTree(
+    ParseTree root = ParseTreeTest.Companion.create1LevelParseTree(
         ParseTree.CONCATENATION, Arrays.asList("a"));
     root.setChild(1, child);
 
@@ -52,7 +52,7 @@ public class PlannerTest {
     //         LOOKUP
     //        /  |  \
     //       a   b   c
-    ParseTree expected = StaticParserRPQTest.Companion.create1LevelParseTree(
+    ParseTree expected = ParseTreeTest.Companion.create1LevelParseTree(
         ParseTree.LOOKUP, Arrays.asList("a", "b", "c"));
 
     assertEquals(expected, actual);

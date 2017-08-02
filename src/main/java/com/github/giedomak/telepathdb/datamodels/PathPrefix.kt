@@ -74,5 +74,4 @@ class PathPrefix(pathId: Long) : AbstractPath(pathId) {
     override fun toString(): String {
         return "PathPrefix(pathId=$pathId, length=$length, edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=$nodes)"
     }
-
 }

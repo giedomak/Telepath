@@ -9,7 +9,6 @@ package com.github.giedomak.telepathdb.datamodels
 
 import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import java.util.*
 import java.util.stream.Stream
 
 /**
@@ -25,19 +24,32 @@ import java.util.stream.Stream
  *
  * @property id An ID given to a parseTree in order to make the life of the [MemoryManager][com.telepathdb.memorymanager.MemoryManager] easier.
  * @property operatorId An [Int] representing the operator. See our [Companion] for these constants.
- * @property leaf The payload when this parseTree is a leaf. Can also be set in the property [edge].
- * @property edge The payload when this parseTree is a leaf. Can also be set in the property [leaf].
+ * @property leaf The payload when this parseTree is a leaf, given as an [Edge].
  * @property isRoot Boolean value indicating if this parseTree is the root of the binary-tree.
  * @property children Ordered list with the children of this parseTree, which are also parseTrees.
  */
 class ParseTree() : Cloneable {
 
     val id: Long
-    var operatorId: Int = 0
-    private var leaf: String? = null
-    var edge: Edge? = null
     var isRoot = false
     var children = mutableListOf<ParseTree>()
+    var operatorId: Int = 0
+
+    // Make sure we set the operatorId to LEAF if we set a (correct) value.
+    var leaf: Edge? = null
+        set(value) {
+            if (value != null) operatorId = LEAF
+            field = value
+        }
+
+    // Boolean value indicating if this parseTree is a leaf.
+    val isLeaf get() = (operatorId == LEAF)
+
+    // Convert the operatorId identifier back to its symbolic name.
+    private val symbolicName get() = SYMBOLIC_NAMES[operatorId]
+
+    // Get a String representing the leaf or operator. I.e. `a` or `CONCATENATION[3]`
+    val leafOrOperator get() = (leaf?.label ?: symbolicName + "[" + children.size + "]")
 
     init {
         this.id = maxId++
@@ -47,41 +59,19 @@ class ParseTree() : Cloneable {
         this.isRoot = isRoot
     }
 
+    constructor(leaf: Edge) : this() {
+        this.leaf = leaf
+    }
+
     /**
      * Set the leaf and set the operatorId; we can either be a leaf OR an internal node.
      *
-     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [edge] property.
+     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [leaf] property.
      *
      * @param leaf Payload of the leaf.
      */
-    fun setLeaf(leaf: String) {
-        this.operatorId = LEAF
-        this.leaf = leaf
-        this.edge = null
-    }
-
-    /**
-     * Set the leaf and set the operatorId; we can either be a leaf OR an internal node.
-     *
-     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [edge] property.
-     *
-     * @param edge Payload of the leaf
-     */
-    fun setLeaf(edge: Edge) {
-        this.edge = edge
-        this.operatorId = LEAF
-        this.leaf = null
-    }
-
-    /**
-     * Set the operatorId and reset the leaf; we can either be a leaf OR an internal node.
-     *
-     * @param operator The [Int] indicating our operator. Should be the index of [SYMBOLIC_NAMES].
-     */
-    fun setOperator(operator: Int) {
-        this.operatorId = operator
-        this.leaf = null
-        this.edge = null
+    fun setLeaf(label: String) {
+        this.leaf = Edge(label)
     }
 
     /**
@@ -119,39 +109,6 @@ class ParseTree() : Cloneable {
             this.children.add(index, tree)
         }
     }
-
-    /**
-     * Get the correct value of this node when it is a leaf or an internal node.
-     *
-     * @return String with the value of the Leaf or the Symbolic name of the operatorId
-     */
-    val leafOrOperator: String
-        get() {
-            if (leaf != null) {
-                return leaf!!
-            } else if (edge != null) {
-                return edge!!.label
-            } else {
-                // This will show something like `LOOKUP[2]` if we have 2 children.
-                return symbolicName + "[" + children.size + "]"
-            }
-        }
-
-    /**
-     * Convert the operatorId identifier back to its symbolic name.
-     *
-     * @return String with the Symbolic name of the operatorId
-     */
-    private val symbolicName: String?
-        get() = SYMBOLIC_NAMES[operatorId]
-
-    /**
-     * Boolean value indicating if this parseTree is a leaf.
-     *
-     * @return Boolean value indicating if this node is a leaf.
-     */
-    val isLeaf: Boolean
-        get() = leaf != null || edge != null
 
     /**
      * Deep clone the current parsetree.
@@ -197,13 +154,8 @@ class ParseTree() : Cloneable {
      * @return The depth of this parseTree.
      */
     fun level(): Int {
-        if (isLeaf)
-            return 1
-
-        val childLevels = ArrayList<Int>()
-        children.forEach { childLevels.add(it.level()) }
-
-        return Collections.max(childLevels) + 1
+        if (isLeaf) return 1
+        return children.map { it.level() }.max()!! + 1
     }
 
     //
@@ -217,8 +169,7 @@ class ParseTree() : Cloneable {
         other as ParseTree
 
         if (operatorId != other.operatorId) return false
-        // leafOrOperator will check for edge or leaf
-        if (leafOrOperator != other.leafOrOperator) return false
+        if (leaf != other.leaf) return false
         if (isRoot != other.isRoot) return false
         if (children != other.children) return false
 
@@ -227,14 +178,14 @@ class ParseTree() : Cloneable {
 
     override fun hashCode(): Int {
         var result = operatorId
-        result = 31 * result + leafOrOperator.hashCode()
+        result = 31 * result + (leaf?.hashCode() ?: 0)
         result = 31 * result + isRoot.hashCode()
         result = 31 * result + children.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "ParseTree(id=$id, operator=" + SYMBOLIC_NAMES[operatorId] + ", leaf=$leaf, edge=$edge, isRoot=$isRoot, children=$children)"
+        return "ParseTree(id=$id, operator=" + SYMBOLIC_NAMES[operatorId] + ", leaf=$leaf, isRoot=$isRoot, children=$children)"
     }
 
 
@@ -252,7 +203,7 @@ class ParseTree() : Cloneable {
         const val LEAF = 5
         const val LOOKUP = 6
 
-        private val SYMBOLIC_NAMES = arrayOf<String?>(null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF", "LOOKUP")
+        private val SYMBOLIC_NAMES = arrayOf(null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION", "LEAF", "LOOKUP")
         private var maxId: Long = 1
 
         //
@@ -275,16 +226,10 @@ class ParseTree() : Cloneable {
 
             // Create the root of our new ParseTree
             val tree = ParseTree(true)
-            tree.setOperator(LOOKUP)
+            tree.operatorId = LOOKUP
 
             // Create a child leaf for each edge
-            edges.stream()
-                    .map {
-                        val parseTree = ParseTree()
-                        parseTree.setLeaf(it)
-                        parseTree
-                    }
-                    .forEach { tree.children.add(it) }
+            edges.map { ParseTree(it) }.forEach { tree.children.add(it) }
 
             return tree
         }
@@ -300,7 +245,7 @@ class ParseTree() : Cloneable {
 
             // Create the root of our new ParseTree
             val tree = ParseTree(true)
-            tree.setOperator(CONCATENATION)
+            tree.operatorId = CONCATENATION
 
             // Set the given params as the children
             tree.setChild(0, p1)

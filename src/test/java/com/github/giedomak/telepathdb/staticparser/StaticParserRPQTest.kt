@@ -8,6 +8,7 @@
 package com.github.giedomak.telepathdb.staticparser
 
 import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -21,7 +22,7 @@ class StaticParserRPQTest {
         val actual = StaticParserRPQ.parse("a")
 
         // Then
-        assertEquals(createSimpleParseTree("a"), actual)
+        assertEquals(ParseTreeTest.createSimpleParseTree("a"), actual)
     }
 
     @Test
@@ -30,10 +31,10 @@ class StaticParserRPQTest {
         val actual = StaticParserRPQ.parse("a/b")
 
         // Create the expected ParseTree
-        val a = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
-        val b = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "c"))
-        val c = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("b", "b"))
-        val d = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b", "c"))
+        val a = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
+        val b = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "c"))
+        val c = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("b", "b"))
+        val d = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b", "c"))
 
         // Then
         assertEquals(a, actual)
@@ -48,47 +49,15 @@ class StaticParserRPQTest {
         val actual = StaticParserRPQ.parse("a|b")
 
         // Create the expected ParseTree
-        val a = create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b"))
-        val b = create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "c"))
-        val c = create1LevelParseTree(ParseTree.UNION, Arrays.asList("b", "b"))
-        val d = create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b", "c"))
+        val a = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b"))
+        val b = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "c"))
+        val c = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("b", "b"))
+        val d = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b", "c"))
 
         // Then
         assertEquals(a, actual)
         assertNotEquals(b, actual)
         assertNotEquals(c, actual)
         assertNotEquals(d, actual)
-    }
-
-    //
-    // ----------- COMPANION  -----------
-    //
-
-    companion object {
-
-        // ParseTree without children, just a leaf.
-        fun createSimpleParseTree(label: String, isRoot: Boolean = true): ParseTree {
-            val parseTree = ParseTree(isRoot)
-            parseTree.setLeaf(label)
-            return parseTree
-        }
-
-        // Explicit overloading
-        fun create1LevelParseTree(operator: Int, labels: List<String>): ParseTree = create1LevelParseTree(operator, labels, true)
-
-        // ParseTree with 1 level of children, root will get the operator param.
-        fun create1LevelParseTree(operator: Int, labels: List<String>, isRoot: Boolean): ParseTree {
-            val parseTree = ParseTree(isRoot)
-            parseTree.setOperator(operator)
-
-            // Create the children and add them to the root
-            for (i in labels.indices) {
-                val child = ParseTree()
-                child.setLeaf(labels[i])
-                parseTree.setChild(i, child)
-            }
-
-            return parseTree
-        }
     }
 }
