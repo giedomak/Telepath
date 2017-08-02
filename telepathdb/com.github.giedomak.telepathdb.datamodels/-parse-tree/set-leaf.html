@@ -9,18 +9,10 @@
 <br/>
 <h1>setLeaf</h1>
 <a name="com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(kotlin.String)"></a>
-<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(kotlin.String)/leaf">leaf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/ParseTree.kt#L57">(source)</a>
-<p>Set the leaf and set the operatorId; we can either be a leaf OR an internal node.</p>
-<p>A leaf can either be stored as a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> in the <a href="set-leaf.html#com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(kotlin.String)/leaf">leaf</a> property, or as an <a href="../-edge/index.html">Edge</a> in the <a href="edge.html">edge</a> property.</p>
+<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(kotlin.String)/label">label</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/ParseTree.kt#L80">(source)</a>
+<p>Set the leaf by giving in a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> which we'll convert to an <a href="../-edge/index.html">Edge</a>.</p>
 <h3>Parameters</h3>
-<p><a name="leaf"></a>
-<code>leaf</code> - Payload of the leaf.</p>
-<a name="com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(com.github.giedomak.telepathdb.datamodels.Edge)"></a>
-<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(com.github.giedomak.telepathdb.datamodels.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/ParseTree.kt#L70">(source)</a>
-<p>Set the leaf and set the operatorId; we can either be a leaf OR an internal node.</p>
-<p>A leaf can either be stored as a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> in the <a href="#">leaf</a> property, or as an <a href="../-edge/index.html">Edge</a> in the <a href="set-leaf.html#com.github.giedomak.telepathdb.datamodels.ParseTree$setLeaf(com.github.giedomak.telepathdb.datamodels.Edge)/edge">edge</a> property.</p>
-<h3>Parameters</h3>
-<p><a name="edge"></a>
-<code>edge</code> - Payload of the leaf</p>
+<p><a name="label"></a>
+<code>label</code> - The String for which we create an <a href="../-edge/index.html">Edge</a> and set it as leaf in this ParseTree.</p>
 </BODY>
 </HTML>
