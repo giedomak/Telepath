@@ -72,7 +72,7 @@ object GMarkImport {
             }
         }
 
-        // Set K to 1 for the kPathIndex becuase we only imported paths with 1 edge
+        // Set K to 1 for the kPathIndex because we only imported paths with 1 edge
         kPathIndex.k = 1
 
         Logger.info("Imported paths: " + importedLines)
