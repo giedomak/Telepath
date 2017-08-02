@@ -157,7 +157,7 @@ class TelepathDB {
 
     try {
       // Import test dataset
-      GMarkImport.run(kPathIndex, gMarkFile);
+      GMarkImport.INSTANCE.run(kPathIndex, gMarkFile);
     } catch (IOException e) {
       e.printStackTrace();
     }
