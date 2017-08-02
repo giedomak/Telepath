@@ -165,6 +165,50 @@ class ParseTree() : Cloneable {
         return children.map { it.level() }.max()!! + 1
     }
 
+    fun getSize(): Int {
+        if (isLeaf) return 1
+        return children.sumBy { it.getSize() }
+    }
+
+    fun subtreesOfSize(targetSize: Int): List<ParseTree> {
+
+        val size = getSize()
+
+
+        if (size == targetSize) return listOf(this)
+
+        val subtrees = mutableListOf<ParseTree>()
+
+        for (index in children.indices) {
+
+            val child = children[index]
+            var accuSize = child.getSize()
+
+            // Create sparse trees from our children
+            if (accuSize < targetSize) {
+
+                for (toIndex in (index + 1)..(children.size - 1)) {
+
+                    val extraChild = children[toIndex]
+                    accuSize += extraChild.getSize()
+
+                    if (accuSize > targetSize) break
+
+                    if (accuSize == targetSize) {
+                        // Create sparse tree
+                        val clone = clone()
+                        clone.children = clone.children.subList(index, toIndex + 1)
+                        subtrees.add(clone)
+                    }
+                }
+            } else {
+                // Recurse
+                subtrees.addAll(child.subtreesOfSize(targetSize))
+            }
+        }
+        return subtrees
+    }
+
     //
     // ---------------- EQUALS & HASHCODE & TO-STRING ----------------
     //
