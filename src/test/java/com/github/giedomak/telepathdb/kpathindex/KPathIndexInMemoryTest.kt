@@ -18,7 +18,7 @@ import kotlin.streams.toList
 import kotlin.test.assertEquals
 
 class KPathIndexInMemoryTest {
-    
+
     private val expected = listOf(
             Path(42, PathTest.equalNodes(3, 42)),
             Path(43, PathTest.equalNodes(2, 48))
@@ -31,7 +31,7 @@ class KPathIndexInMemoryTest {
 
     @Test
     fun searchMethod() {
-        val actual = kPathIndex!!.search(PathPrefix(42)).toList()
+        val actual = kPathIndex.search(PathPrefix(42)).toList()
 
         assertEquals(expected, actual)
     }
@@ -41,8 +41,8 @@ class KPathIndexInMemoryTest {
     @Test
     fun insertMethod() {
         val path = mock<Path>()
-        kPathIndex!!.insert(path)
+        kPathIndex.insert(path)
         // Make sure the insert method was called with the right argument
-        verify(kPathIndex!!).insert(path)
+        verify(kPathIndex).insert(path)
     }
 }
