@@ -8,6 +8,7 @@
 package com.github.giedomak.telepathdb.datamodels
 
 import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion
+import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion.CONCATENATION
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.util.stream.Stream
 
@@ -23,10 +24,13 @@ import java.util.stream.Stream
  * These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.
  *
  * @property id An ID given to a parseTree in order to make the life of the [MemoryManager][com.telepathdb.memorymanager.MemoryManager] easier.
- * @property operatorId An [Int] representing the operator. See our [Companion] for these constants.
- * @property leaf The payload when this parseTree is a leaf, given as an [Edge].
  * @property isRoot Boolean value indicating if this parseTree is the root of the binary-tree.
  * @property children Ordered list with the children of this parseTree, which are also parseTrees.
+ * @property operatorId An [Int] representing the operator. See our [Companion] for these constants, i.e. [CONCATENATION].
+ * @property isLeaf Boolean value indicating if this parseTree is a leaf.
+ * @property leafOrOperator Get a String representing the leaf or operator. I.e. `a` or `CONCATENATION[3]`.
+ * @property leaf The payload when this parseTree is a leaf, given as an [Edge].
+ * @constructor Create a non-root empty ParseTree.
  */
 class ParseTree() : Cloneable {
 
@@ -34,6 +38,10 @@ class ParseTree() : Cloneable {
     var isRoot = false
     var children = mutableListOf<ParseTree>()
     var operatorId: Int = 0
+    val isLeaf get() = (operatorId == LEAF)
+    val leafOrOperator get() = (leaf?.label ?: symbolicName + "[" + children.size + "]")
+    // Convert the operatorId identifier back to its symbolic name.
+    private val symbolicName get() = SYMBOLIC_NAMES[operatorId]
 
     // Make sure we set the operatorId to LEAF if we set a (correct) value.
     var leaf: Edge? = null
@@ -42,33 +50,32 @@ class ParseTree() : Cloneable {
             field = value
         }
 
-    // Boolean value indicating if this parseTree is a leaf.
-    val isLeaf get() = (operatorId == LEAF)
-
-    // Convert the operatorId identifier back to its symbolic name.
-    private val symbolicName get() = SYMBOLIC_NAMES[operatorId]
-
-    // Get a String representing the leaf or operator. I.e. `a` or `CONCATENATION[3]`
-    val leafOrOperator get() = (leaf?.label ?: symbolicName + "[" + children.size + "]")
-
     init {
         this.id = maxId++
     }
 
+    /**
+     * Construct a ParseTree with the [isRoot] property set to the given param.
+     *
+     * @param isRoot Boolean value indicating if this new ParseTree should be a root node or not.
+     */
     constructor(isRoot: Boolean) : this() {
         this.isRoot = isRoot
     }
 
+    /**
+     * Directly construct a non-root ParseTree for the given [leaf].
+     *
+     * @param leaf The [Edge] which will be the leaf of this ParseTree.
+     */
     constructor(leaf: Edge) : this() {
         this.leaf = leaf
     }
 
     /**
-     * Set the leaf and set the operatorId; we can either be a leaf OR an internal node.
+     * Set the leaf by giving in a [String] which we'll convert to an [Edge].
      *
-     * A leaf can either be stored as a [String] in the [leaf] property, or as an [Edge] in the [leaf] property.
-     *
-     * @param leaf Payload of the leaf.
+     * @param label The String for which we create an [Edge] and set it as leaf in this ParseTree.
      */
     fun setLeaf(label: String) {
         this.leaf = Edge(label)
@@ -127,7 +134,7 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Post-order treewalk
+     * Post-order treewalk.
      *
      * @return Stream of ParseTrees
      */
@@ -141,11 +148,11 @@ class ParseTree() : Cloneable {
     /**
      * Check if the current tree contains a given operatorId.
      *
-     * @param operator The operatorId constant (e.g. ParseTree.UNION) to check for containment in the tree.
+     * @param operatorId The operatorId constant (e.g. ParseTree.UNION) to check for containment in the tree.
      * @return Boolean indicating if the tree contains the operatorId.
      */
-    fun containsOperator(operator: Int): Boolean {
-        return postOrderTreeWalk().anyMatch { t -> t.operatorId == operator }
+    fun contains(operatorId: Int): Boolean {
+        return postOrderTreeWalk().anyMatch { it.operatorId == operatorId }
     }
 
     /**

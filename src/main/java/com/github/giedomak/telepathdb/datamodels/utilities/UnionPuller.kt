@@ -40,7 +40,7 @@ object UnionPuller {
         // Collect the ParseTrees which contain the UNION operatorId
         while ({
             unionTrees = parseTrees.stream()
-                    .filter { it.containsOperator(ParseTree.UNION) }
+                    .filter { it.contains(ParseTree.UNION) }
                     .collect(Collectors.toList())
             unionTrees
         }().isNotEmpty()) {
