@@ -88,11 +88,8 @@ class ParseTreeTest {
             return parseTree
         }
 
-        // Explicit overloading
-        fun create1LevelParseTree(operator: Int, labels: List<String>): ParseTree = create1LevelParseTree(operator, labels, true)
-
         // ParseTree with 1 level of children, root will get the operator param.
-        fun create1LevelParseTree(operator: Int, labels: List<String>, isRoot: Boolean): ParseTree {
+        @JvmOverloads fun create1LevelParseTree(operator: Int, labels: List<String>, isRoot: Boolean = true): ParseTree {
             val parseTree = ParseTree(isRoot)
             parseTree.operatorId = operator
 

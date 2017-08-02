@@ -122,7 +122,7 @@ public final class MemoryManager {
     }
 
     // Gather the in-memory partitions and the partitions which are written to disk
-    return PhysicalLibrary.union(
+    return PhysicalLibrary.INSTANCE.union(
         _paths.stream()
             .flatMap(list -> list.stream()),
         files.stream()
