@@ -51,6 +51,22 @@ class ParseTreeTest {
     }
 
     @Test
+    fun hashCodeParseTrees() {
+        val a = create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b")).hashCode()
+        val b = create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b")).hashCode()
+        val c = create1LevelParseTree(ParseTree.UNION, listOf("a", "b")).hashCode()
+        val d = create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c")).hashCode()
+        val e = create1LevelParseTree(ParseTree.UNION, listOf("a", "b", "c")).hashCode()
+
+        assertEquals(a, b)
+        assertNotEquals(a, c)
+        assertNotEquals(a, d)
+        assertNotEquals(a, e)
+        assertNotEquals(c, e)
+        assertNotEquals(d, e)
+    }
+
+    @Test
     fun outputsToString() {
         val actual = create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
         val expected = "ParseTree(id=" + actual.id + ", operator=CONCATENATION, leaf=null, isRoot=true, children=" + actual.children.toString() + ")"
