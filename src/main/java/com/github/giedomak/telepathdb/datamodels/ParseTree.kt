@@ -165,44 +165,66 @@ class ParseTree() : Cloneable {
         return children.map { it.level() }.max()!! + 1
     }
 
-    fun getSize(): Int {
-        if (isLeaf) return 1
-        return children.sumBy { it.getSize() }
+    /**
+     * Get the size of this parsetree. This recurses through its children, we should augment our tree --> time is money.
+     */
+    private fun getSize(): Int {
+
+        // Switch case on operatorId
+        return when (operatorId) {
+
+            LEAF -> 1
+            KLEENE_STAR -> children.sumBy { it.getSize() } + 1
+
+            else -> children.sumBy { it.getSize() }
+        }
     }
 
+    /**
+     * Find all subtrees of a given [targetSize].
+     */
     fun subtreesOfSize(targetSize: Int): List<ParseTree> {
 
+        // Cache our size
         val size = getSize()
 
-
+        // Break recursion if we are the targetSize
         if (size == targetSize) return listOf(this)
 
+        // Init our results list
         val subtrees = mutableListOf<ParseTree>()
 
-        for (index in children.indices) {
+        for ((index, child) in children.withIndex()) {
 
-            val child = children[index]
-            var accuSize = child.getSize()
+            // Cache the size of this child
+            var accumulatedSize = child.getSize()
 
-            // Create sparse trees from our children
-            if (accuSize < targetSize) {
+            // If the size of this child is smaller than the targetSize, we'll try to concatenate with our
+            // brothers and sisters. We'll traverse increasingly linearly.
+            if (accumulatedSize < targetSize) {
 
+                // Trying to find a subList of our children which together have the targetSize.
                 for (toIndex in (index + 1)..(children.size - 1)) {
 
-                    val extraChild = children[toIndex]
-                    accuSize += extraChild.getSize()
+                    // Add the size of our brother to the accumulatedSize
+                    accumulatedSize += children[toIndex].getSize()
 
-                    if (accuSize > targetSize) break
+                    // If we've jumped over our targetSize, we'll just try again with our brother as starting child.
+                    if (accumulatedSize > targetSize) break
 
-                    if (accuSize == targetSize) {
-                        // Create sparse tree
+                    // Yay, we've found a subList which has our beloved targetSize.
+                    if (accumulatedSize == targetSize) {
+                        // Clone our tree since we are modifying it, and set the subList.
                         val clone = clone()
                         clone.children = clone.children.subList(index, toIndex + 1)
+                        // Add to the results, and we're done here
                         subtrees.add(clone)
+                        break
                     }
                 }
             } else {
-                // Recurse
+                // So while searching for a subList, our starting child already exceeded the given targetSize.
+                // Try to find some matches in that subtree.
                 subtrees.addAll(child.subtreesOfSize(targetSize))
             }
         }
