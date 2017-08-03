@@ -49,7 +49,7 @@ class ParseTreeTest {
         // Expected:
         //   CONCATENATION   UNION
         //       /  \         / \
-        //      a    b       b   c
+        //      a    b       c   d
         val expected = listOf(
                 ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), true),
                 ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
