@@ -135,19 +135,23 @@ object MemoryManager {
             return
 
         // Check if we have enough memory left, or if we need to write to disk
-        if (memoryUsed + partition.size > MEMORY_BUDGET) {
-            // Save the files
-            MemoryManager.writePartition(id, partition)
-
-        } else {
+        if (fitsIntoMemory(partition)) {
             // Save the lists
             val paths = pathHashMap.getOrPut(id, { mutableListOf() })
             paths.add(partition)
 
             memoryUsed += partition.size
+
+        } else {
+            // Save the files
+            MemoryManager.writePartition(id, partition)
         }
 
         maxId = id
+    }
+
+    fun fitsIntoMemory(partition: List<Path>): Boolean {
+        return memoryUsed + partition.size <= MEMORY_BUDGET
     }
 
     /**
@@ -156,7 +160,7 @@ object MemoryManager {
      * @param id        The intermediate result identifier (might consist out of multiple partitions).
      * @param partition The List<Path> partition we need to store on disk.
      */
-    private fun writePartition(id: Long, partition: List<Path>) {
+    fun writePartition(id: Long, partition: List<Path>) {
 
         if (partition.isEmpty())
             return
