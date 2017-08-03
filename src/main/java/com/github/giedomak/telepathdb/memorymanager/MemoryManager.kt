@@ -51,16 +51,16 @@ object MemoryManager {
         maxId = 0L
     }
 
-    fun put(stream: Stream<Path>): Long {
-        return put(++maxId, stream)
+    fun add(stream: Stream<Path>): Long {
+        return set(++maxId, stream)
     }
 
-    fun put(id: Long, path: Path): Long {
+    operator fun set(id: Long, path: Path): Long {
         collectPartition(id, listOf(path))
         return id
     }
 
-    fun put(id: Long, stream: Stream<Path>): Long {
+    operator fun set(id: Long, stream: Stream<Path>): Long {
 
         // Partition the existingStream into a stream with Lists of Paths
         val partitioned = partition(stream, PARTITION_SIZE, BATCH_SIZE)
@@ -71,17 +71,13 @@ object MemoryManager {
         return id
     }
 
-    operator fun get(id: Int): Stream<Path> {
-        return get(id.toLong())
-    }
-
     operator fun get(id: Long): Stream<Path> {
         // Returns the combined results from our in-memory collection, and from what is stored on disk
         return getCombinedResults(id)
     }
 
     fun streamSupplier(stream: Stream<Path>): Supplier<Stream<Path>> {
-        val id = put(stream)
+        val id = add(stream)
         return Supplier { get(id) }
     }
 

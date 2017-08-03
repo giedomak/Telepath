@@ -32,7 +32,7 @@ object HashJoin {
         val offset = MemoryManager.maxId + 1
 
         // Put all Paths from stream1 into a HashMap with the lastNode() as key
-        stream1.forEach { MemoryManager.put(offset + it.lastNode().id, it) }
+        stream1.forEach { MemoryManager[offset + it.lastNode().id] = it }
 
         Logger.debug("Done creating the hashTable, now concatenating")
 

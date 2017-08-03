@@ -37,7 +37,7 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
         when (parseTree.operatorId) {
 
             ParseTree.LOOKUP -> {
-                // Collect results from the leafs and put them in the intermediateResults HashMap
+                // Collect results from the leafs and add them in the intermediateResults HashMap
                 val edges = parseTree.children.map { it.leaf!! }
                 val pathIdentifier = PathIdentifierStore.getPathIdByEdges(edges)
                 val search = PathPrefix(pathIdentifier)
@@ -56,7 +56,7 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
             return results
         } else {
             Logger.debug("Itermediateresult: " + parseTree.leafOrOperator)
-            MemoryManager.put(parseTree.id, results)
+            MemoryManager[parseTree.id] = results
         }
 
         return Stream.empty()
