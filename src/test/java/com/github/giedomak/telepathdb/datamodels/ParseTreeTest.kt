@@ -35,7 +35,7 @@ class ParseTreeTest {
     }
 
     @Test
-    fun subtreesOfSize() {
+    fun subtreesOfSize2() {
         // Input:
         //       CONCATENATION
         //        /   |   \
@@ -56,6 +56,35 @@ class ParseTreeTest {
         )
 
         val actual = input.subtreesOfSize(2)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun subtreesOfSize3() {
+        // Input:
+        //        CONCATENATION
+        //        /  |    |   \
+        //       a   b  UNION  d
+        //               / \
+        //              c   d
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
+        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "d"))
+        input.children.add(2, child)
+
+        // Expected:
+        //      CONCATENATION    CONCATENATION
+        //         /   \             /   \
+        //        b   UNION       UNION   d
+        //             / \         / \
+        //            c   d       c   d
+        val expected1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b"), true)
+        expected1.children.add(child)
+        val expected2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"), true)
+        expected2.children.add(0, child)
+        val expected = listOf( expected1, expected2 )
+
+        val actual = input.subtreesOfSize(3)
 
         assertEquals(expected, actual)
     }
