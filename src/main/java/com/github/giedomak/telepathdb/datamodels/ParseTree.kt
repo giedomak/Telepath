@@ -192,9 +192,8 @@ class ParseTree() : Cloneable {
     }
 
     override fun toString(): String {
-        return "ParseTree(id=$id, operator=" + SYMBOLIC_NAMES[operatorId] + ", leaf=$leaf, isRoot=$isRoot, children=$children)"
+        return "ParseTree(id=$id, operator=$symbolicName, leaf=$leaf, isRoot=$isRoot, children=$children)"
     }
-
 
     //
     // ---------------- COMPANION ----------------
