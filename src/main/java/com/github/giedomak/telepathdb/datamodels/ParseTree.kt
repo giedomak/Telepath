@@ -181,15 +181,30 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Find all subtrees of a given [targetSize].
+     * Find all (partial) subtrees of a given [targetSize].
+     *
+     * We use a sliding window to try and find a subList of a nodes' children which does match the given [targetSize].
+     *
+     * Example input:
+     *
+     *         CONCATENATION
+     *        /  |     |  |  \
+     *       a  UNION  e  f   g
+     *          / | \
+     *         b  c  d
+     *
+     * subtreesOfSize(2):
+     *
+     *     UNION   UNION    CONCATENATION    CONCATENATION
+     *      / \     / \         /   \            /   \
+     *     b   c   c   d       e     f          f     g
+     *
+     * @param targetSize We are looking for all (partial) subtrees of this size.
      */
     fun subtreesOfSize(targetSize: Int): List<ParseTree> {
 
-        // Cache our size
-        val size = getSize()
-
         // Break recursion if we are the targetSize
-        if (size == targetSize) return listOf(this)
+        if (getSize() == targetSize) return listOf(this)
 
         // Init our results list
         val subtrees = mutableListOf<ParseTree>()
@@ -214,10 +229,10 @@ class ParseTree() : Cloneable {
 
                     // Yay, we've found a subList which has our beloved targetSize.
                     if (accumulatedSize == targetSize) {
-                        // Clone our tree since we are modifying it, and set the subList.
+                        // Clone our tree since we are modifying it, and set the subList as its children.
                         val clone = clone()
                         clone.children = clone.children.subList(index, toIndex + 1)
-                        // Add to the results, and we're done here
+                        // Add to the results, and we're done for this window.
                         subtrees.add(clone)
                         break
                     }
