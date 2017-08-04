@@ -9,7 +9,7 @@ package com.github.giedomak.telepathdb.memorymanager
 
 import com.github.giedomak.telepathdb.datamodels.Path
 import com.github.giedomak.telepathdb.datamodels.utilities.Logger
-import com.github.giedomak.telepathdb.memorymanager.spliterator.PartitioningSpliterator.partition
+import com.github.giedomak.telepathdb.memorymanager.spliterator.PartitioningSpliterator.Companion.partition
 import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
 import org.apache.commons.lang3.SerializationUtils
 import org.parboiled.common.Tuple2
