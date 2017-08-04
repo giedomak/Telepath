@@ -25,9 +25,9 @@ import kotlin.streams.toList
 
 internal object TelepathDB {
 
-    private var staticParser: StaticParser? = null
+    var staticParser: StaticParser? = null
+    var evaluationEngine: EvaluationEngine? = null
     private var kPathIndex: KPathIndex? = null
-    private var evaluationEngine: EvaluationEngine? = null
 
     private val scanner = Scanner(System.`in`)
 
@@ -37,7 +37,7 @@ internal object TelepathDB {
      * @param args Not needed.
      * @throws IOException
      */
-    @JvmStatic fun main(args: Array<String>) {
+    @JvmStatic fun main(args: Array<String>?) {
 
         // Setup our environment
         setup()
@@ -49,7 +49,7 @@ internal object TelepathDB {
     /**
      * Listen for query input and gather results.
      */
-    private fun start() {
+    fun start() {
 
         while (true) {
 
@@ -58,8 +58,12 @@ internal object TelepathDB {
 
             val startTime = System.currentTimeMillis()
 
+            Logger.debug("yay")
+
             // Parse the input
             val parseTree = staticParser!!.parse(input)
+
+            Logger.debug("yay")
 
             // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
             val parseTrees = UnionPuller.parse(parseTree)
@@ -104,7 +108,7 @@ internal object TelepathDB {
     /**
      * Retrieve input from the user until we retrieve 'END'.
      */
-    private fun getUserInput(scanner: Scanner): String {
+    fun getUserInput(scanner: Scanner): String {
 
         // Print which parser we are using
         Logger.info("We are using " + staticParser!!.javaClass.simpleName + ", enter your query and finish with the keyword END on a newline:")
