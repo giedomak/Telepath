@@ -18,13 +18,11 @@ class PlannerTest {
     @Test
     fun generatesSimplePhysicalPlan() {
         // Generate the actual ParseTree
-        val input = ParseTreeTest.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("a", "b"))
+        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
         val actual = Planner.generate(input)
 
         // Generate the expected ParseTree
-        val expected = ParseTreeTest.create1LevelParseTree(
-                ParseTree.LOOKUP, Arrays.asList("a", "b"))
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.LOOKUP, listOf("a", "b"))
 
         assertEquals(expected, actual)
     }
@@ -37,10 +35,8 @@ class PlannerTest {
         //       a   CONCATENATION
         //              /   \
         //             b     c
-        val child = ParseTreeTest.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("b", "c"))
-        val root = ParseTreeTest.create1LevelParseTree(
-                ParseTree.CONCATENATION, Arrays.asList("a"))
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
+        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
         root.setChild(1, child)
 
         // Parse the input
@@ -50,8 +46,7 @@ class PlannerTest {
         //         LOOKUP
         //        /  |  \
         //       a   b   c
-        val expected = ParseTreeTest.create1LevelParseTree(
-                ParseTree.LOOKUP, Arrays.asList("a", "b", "c"))
+        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.LOOKUP, listOf("a", "b", "c"))
 
         assertEquals(expected, actual)
     }
