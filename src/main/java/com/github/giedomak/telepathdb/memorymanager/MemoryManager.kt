@@ -150,6 +150,11 @@ object MemoryManager {
         maxId = id
     }
 
+    /**
+     * Boolean value indicating of our new partition will fit into memory.
+     *
+     * This has to be public in order for out specs to mock it... :(
+     */
     fun fitsIntoMemory(partition: List<Path>): Boolean {
         return memoryUsed + partition.size <= MEMORY_BUDGET
     }
@@ -160,7 +165,7 @@ object MemoryManager {
      * @param id        The intermediate result identifier (might consist out of multiple partitions).
      * @param partition The List<Path> partition we need to store on disk.
      */
-    fun writePartition(id: Long, partition: List<Path>) {
+    private fun writePartition(id: Long, partition: List<Path>) {
 
         if (partition.isEmpty())
             return
@@ -187,7 +192,6 @@ object MemoryManager {
         } catch (e: Exception) {
             Logger.error("Problem serializing: " + e)
         }
-
     }
 
     /**
