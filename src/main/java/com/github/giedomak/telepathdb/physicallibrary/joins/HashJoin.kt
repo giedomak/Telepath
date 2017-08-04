@@ -29,10 +29,10 @@ object HashJoin {
     fun run(stream1: Stream<Path>, stream2: Stream<Path>): Stream<Path> {
 
         // Make sure we get a free slot in the MemoryManager
-        val offset = MemoryManager.getMaxId() + 1
+        val offset = MemoryManager.maxId + 1
 
         // Put all Paths from stream1 into a HashMap with the lastNode() as key
-        stream1.forEach { MemoryManager.put(offset + it.lastNode().id, it) }
+        stream1.forEach { MemoryManager[offset + it.lastNode().id] = it }
 
         Logger.debug("Done creating the hashTable, now concatenating")
 

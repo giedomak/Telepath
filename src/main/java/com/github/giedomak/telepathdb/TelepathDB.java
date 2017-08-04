@@ -110,7 +110,7 @@ class TelepathDB {
       Logger.INSTANCE.info("----------------------------");
 
       // Clear the intermediate results in our memory and cache
-      MemoryManager.clear();
+      MemoryManager.INSTANCE.clear();
     }
 
   }
