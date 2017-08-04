@@ -59,4 +59,26 @@ class MemoryManagerTest {
 
         assertEquals(expected, actual)
     }
+
+    @Test
+    fun clearsTheMemory() {
+
+        val memoryManager = spy<MemoryManager>()
+
+        val expected = listOf(
+                PathTest.simplePath(42, 3, 44),
+                PathTest.simplePath(47, 4, 40)
+        )
+
+        // Add our expected path to the MemoryManager, this should write it to disk since it does not fitsIntoMemory.
+        val id = memoryManager.add(expected.stream())
+
+        // Verify the memory manager holds our records
+        assertEquals(expected, memoryManager[id].toList())
+
+        memoryManager.clear()
+
+        // Verify the memory manager does not holds our records
+        assertEquals(emptyList(), memoryManager[id].toList())
+    }
 }
