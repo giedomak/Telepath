@@ -30,13 +30,7 @@
             <version>22.0</version>
         </dependency>
 
-        <!-- Max Sumrall's PathDB through Github -->
-        <!--<dependency>-->
-            <!--<groupId>com.github.maxsumrall</groupId>-->
-            <!--<artifactId>PathDB</artifactId>-->
-            <!--<version>master</version> &lt;!&ndash; branch &ndash;&gt;-->
-        <!--</dependency>-->
-        <!-- Or through local maven repository -->
+        <!-- Max Sumrall's PathDB -->
         <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
@@ -396,14 +390,6 @@
             </roles>
         </developer>
     </developers>
-
-    <!-- We need this in order to specify github dependencies (PathDB) -->
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>jitpack.io</id>-->
-            <!--<url>https://jitpack.io</url>-->
-        <!--</repository>-->
-    <!--</repositories>-->
 
     <!-- This is for Dokka, the Kotlin documentation generator-->
     <pluginRepositories>

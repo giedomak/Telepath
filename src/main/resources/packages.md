@@ -56,6 +56,10 @@ Spliterator extension for Java streams.
 
 Physcial operators like hash-join, union, nested-loop-join for example.
 
+# Package com.github.giedomak.telepathdb.physicallibrary.joins
+
+Collection of our join algorithms.
+
 # Package com.github.giedomak.telepathdb.planner
 
 Enumerate and find the best physical-plan to give to the evaluation engine.
