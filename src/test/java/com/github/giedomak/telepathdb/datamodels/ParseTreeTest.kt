@@ -1,5 +1,6 @@
 package com.github.giedomak.telepathdb.datamodels
 
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*

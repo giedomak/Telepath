@@ -7,8 +7,9 @@
 
 package com.github.giedomak.telepathdb.datamodels.utilities
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeFlattener
 import org.junit.Test
 import kotlin.test.assertEquals
 

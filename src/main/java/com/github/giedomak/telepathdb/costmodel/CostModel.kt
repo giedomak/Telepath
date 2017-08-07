@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.costmodel
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 
 interface CostModel {
 

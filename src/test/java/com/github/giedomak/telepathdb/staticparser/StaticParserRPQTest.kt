@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.staticparser
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
