@@ -4,6 +4,7 @@ $dokka.linkExtension:html
 com.github.giedomak.telepathdb.costmodel
 com.github.giedomak.telepathdb.datamodels
 com.github.giedomak.telepathdb.datamodels.integrations
+com.github.giedomak.telepathdb.datamodels.parsetree
 com.github.giedomak.telepathdb.datamodels.stores
 com.github.giedomak.telepathdb.datamodels.utilities
 com.github.giedomak.telepathdb.evaluationengine

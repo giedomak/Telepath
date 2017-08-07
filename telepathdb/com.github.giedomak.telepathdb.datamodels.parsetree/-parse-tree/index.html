@@ -1,0 +1,301 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ParseTree - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.parsetree</a>&nbsp;/&nbsp;<a href=".">ParseTree</a><br/>
+<br/>
+<h1>ParseTree</h1>
+<code><span class="keyword">class </span><span class="identifier">ParseTree</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/parsetree/ParseTree.kt#L36">(source)</a>
+<p>Data-structure to represent the given user input, and physical plans.</p>
+<p>This data-structure is used for both representing the user input, and for physical plans.
+It basically is a binary-tree. Meaning its children are in turn also ParseTrees.</p>
+<p>User input will get parsed through ANTLR into a parseTree by the <a href="#">StaticParserRPQ</a>.</p>
+<p>The <a href="#">Planner</a> will parse such a parseTree from user input, into a physical plan.
+These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$<init>(kotlin.Boolean)/isRoot">isRoot</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span></code>
+<p>Construct a ParseTree with the <a href="-init-.html#com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$<init>(kotlin.Boolean)/isRoot">isRoot</a> property set to the given param.</p>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$<init>(com.github.giedomak.telepathdb.datamodels.Edge)/leaf">leaf</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span></code>
+<p>Directly construct a non-root ParseTree for the given <a href="-init-.html#com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$<init>(com.github.giedomak.telepathdb.datamodels.Edge)/leaf">leaf</a>.</p>
+<code><span class="identifier">ParseTree</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Create a non-root empty ParseTree.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">ParseTree</span><span class="symbol">&gt;</span></code>
+<p>Ordered list with the children of this parseTree, which are also parseTrees.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="id.html">id</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>An ID given to a parseTree in order to make the life of the <a href="#">MemoryManager</a> easier.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-leaf.html">isLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isLeaf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Boolean value indicating if this parseTree is a leaf.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-root.html">isRoot</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">isRoot</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Boolean value indicating if this parseTree is the root of the binary-tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="leaf.html">leaf</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">leaf</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">?</span></code>
+<p>The payload when this parseTree is a leaf, given as an <a href="../../com.github.giedomak.telepathdb.datamodels/-edge/index.html">Edge</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="leaf-or-operator.html">leafOrOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">leafOrOperator</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Get a String representing the leaf or operator. I.e. <code>a</code> or <code>CONCATENATION[3]</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="operator-id.html">operatorId</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">operatorId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>An <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> representing the operator. See our <a href="#">Companion</a> for these constants, i.e. <a href="-c-o-n-c-a-t-e-n-a-t-i-o-n.html">CONCATENATION</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="clone.html">clone</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">clone</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code>
+<p>Deep clone the current parsetree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="contains.html">contains</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">contains</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$contains(kotlin.Int)/operatorId">operatorId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if the current tree contains a given operatorId.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="equals.html">equals</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="flatten.html">flatten</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">flatten</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Delegate parse-tree-flattening to our <a href="../-parse-tree-flattener/index.html">ParseTreeFlattener</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-child.html">getChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$getChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span><span class="symbol">?</span></code>
+<p>Return the child at a given index or null when not existent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="has-child.html">hasChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hasChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$hasChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if a child exists with <a href="has-child.html#com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$hasChild(kotlin.Int)/index">index</a> in our <a href="children.html">children</a> list.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="hash-code.html">hashCode</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="level.html">level</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">level</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Recursive function calculating the depth of the parseTree rooted at ourselves.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="post-order-tree-walk.html">postOrderTreeWalk</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">postOrderTreeWalk</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><span class="identifier">ParseTree</span><span class="symbol">&gt;</span></code>
+<p>Post-order treewalk.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="print.html">print</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">print</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Delegate parse-tree-printing to our <a href="#">ParseTreePrinter</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pull-unions.html">pullUnions</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">pullUnions</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">ParseTree</span><span class="symbol">&gt;</span></code>
+<p>Delegate parse-tree-union-pulling to our <a href="../-parse-tree-union-puller/index.html">ParseTreeUnionPuller</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-child.html">setChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$setChild(kotlin.Int, com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$setChild(kotlin.Int, com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree)/tree">tree</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a child at a given index in our <a href="children.html">children</a> list.
+We'll replace or add when needed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-leaf.html">setLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree$setLeaf(kotlin.String)/label">label</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the leaf by giving in a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> which we'll convert to an <a href="../../com.github.giedomak.telepathdb.datamodels/-edge/index.html">Edge</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-c-o-n-c-a-t-e-n-a-t-i-o-n.html">CONCATENATION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CONCATENATION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-k-l-e-e-n-e_-s-t-a-r.html">KLEENE_STAR</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">KLEENE_STAR</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-e-a-f.html">LEAF</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LEAF</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-o-o-k-u-p.html">LOOKUP</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LOOKUP</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-l-u-s.html">PLUS</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">PLUS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-n-i-o-n.html">UNION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">UNION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="create-concatenation-tree.html">createConcatenationTree</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createConcatenationTree</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion$createConcatenationTree(com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree, com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree)/p1">p1</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion$createConcatenationTree(com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree, com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree)/p2">p2</span><span class="symbol">:</span>&nbsp;<span class="identifier">ParseTree</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code>
+<p>Create a ParseTree concatenating two given parseTrees.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-lookup-tree.html">createLookupTree</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createLookupTree</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ParseTree</span></code>
+<p>Creates a LOOKUP parseTree given a <a href="create-lookup-tree.html#com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion$createLookupTree(kotlin.Long)/pathId">pathId</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
