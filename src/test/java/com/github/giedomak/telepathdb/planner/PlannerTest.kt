@@ -7,11 +7,10 @@
 
 package com.github.giedomak.telepathdb.planner
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.util.*
 
 class PlannerTest {
 

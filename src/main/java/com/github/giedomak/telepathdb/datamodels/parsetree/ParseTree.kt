@@ -5,10 +5,11 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion
-import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion.CONCATENATION
+import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.CONCATENATION
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.util.stream.Stream
 
@@ -163,6 +164,27 @@ class ParseTree() : Cloneable {
     fun level(): Int {
         if (isLeaf) return 1
         return children.map { it.level() }.max()!! + 1
+    }
+
+    /**
+     * Delegate parse-tree-printing to our [ParseTreePrinter].
+     */
+    fun print() {
+        ParseTreePrinter.printParseTree(this)
+    }
+
+    /**
+     * Delegate parse-tree-flattening to our [ParseTreeFlattener].
+     */
+    fun flatten() {
+        ParseTreeFlattener.flatten(this)
+    }
+
+    /**
+     * Delegate parse-tree-union-pulling to our [ParseTreeUnionPuller].
+     */
+    fun pullUnions(): List<ParseTree> {
+        return ParseTreeUnionPuller.parse(this)
     }
 
     //

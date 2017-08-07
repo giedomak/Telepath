@@ -5,9 +5,7 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
-
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
 /**
  * Flatten ParseTrees into multi-trees.

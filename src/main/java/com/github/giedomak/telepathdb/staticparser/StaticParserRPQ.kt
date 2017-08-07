@@ -7,9 +7,9 @@
 
 package com.github.giedomak.telepathdb.staticparser
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.utilities.Logger
-import com.github.giedomak.telepathdb.datamodels.utilities.ParseTreePrinter
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreePrinter
 import com.github.giedomak.telepathdb.staticparser.rpq.RPQVisitorParser
 
 /**
@@ -25,7 +25,7 @@ object StaticParserRPQ : StaticParser {
         val parseTree = rpqVisitorParser.parse(input)
 
         // Print the parsed ParseTree
-        ParseTreePrinter.printParseTree(parseTree)
+        parseTree.print()
 
         return parseTree
     }

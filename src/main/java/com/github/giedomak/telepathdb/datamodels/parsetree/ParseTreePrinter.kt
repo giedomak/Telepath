@@ -5,40 +5,38 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.utilities.Logger
 import java.util.*
 
 /**
- * Class to print [parse-trees][ParseTree].
+ * Class to print a [ParseTree].
  *
  * Example: your input: `a/(b+|c)|d`
  *
- * <pre>
- *             UNION
- *              / \
- *             /   \
- *            /     \
- *           /       \
- *          /         \
- *         /           \
- *        /             \
- *       /               \
- * CONCATENATION          d
- *      / \
- *     /   \
- *    /     \
- *   /       \
- *  a       UNION
- *           / \
- *          /   \
- *        PLUS   c
- *         /
- *        b
- * </pre>
+ *              UNION
+ *               / \
+ *              /   \
+ *             /     \
+ *            /       \
+ *           /         \
+ *          /           \
+ *         /             \
+ *        /               \
+ *  CONCATENATION          d
+ *       / \
+ *      /   \
+ *     /     \
+ *    /       \
+ *   a       UNION
+ *            / \
+ *           /   \
+ *         PLUS   c
+ *          /
+ *         b
  */
-object ParseTreePrinter {
+internal object ParseTreePrinter {
 
     /**
      * Static method we should call with the root parseTree as parameter in order to print it.
@@ -46,7 +44,7 @@ object ParseTreePrinter {
      * @param root The root of the ParseTree we want to print
      */
     fun printParseTree(root: ParseTree) {
-        val maxLevel = ParseTreePrinter.maxLevel(root)
+        val maxLevel = maxLevel(root)
 
         Logger.debug("", false)
         printNodeInternal(listOf(root), 1, maxLevel)
@@ -55,7 +53,7 @@ object ParseTreePrinter {
     }
 
     private fun printNodeInternal(nodes: List<ParseTree?>, level: Int, maxLevel: Int) {
-        if (nodes.isEmpty() || ParseTreePrinter.isAllElementsNull(nodes))
+        if (nodes.isEmpty() || isAllElementsNull(nodes))
             return
 
         val floor = maxLevel - level
@@ -63,7 +61,7 @@ object ParseTreePrinter {
         val firstSpaces = Math.pow(2.0, floor.toDouble()).toInt() - 1
         val betweenSpaces = Math.pow(2.0, (floor + 1).toDouble()).toInt() - 1
 
-        ParseTreePrinter.printWhitespaces(firstSpaces)
+        printWhitespaces(firstSpaces)
 
         val newNodes = ArrayList<ParseTree?>()
         for (node in nodes) {
@@ -78,7 +76,7 @@ object ParseTreePrinter {
                 print(" ")
             }
 
-            ParseTreePrinter.printWhitespaces(betweenSpaces)
+            printWhitespaces(betweenSpaces)
         }
 
         println("")
@@ -86,32 +84,32 @@ object ParseTreePrinter {
 
         for (i in 1..endgeLines) {
             for (j in nodes.indices) {
-                ParseTreePrinter.printWhitespaces(firstSpaces - i)
+                printWhitespaces(firstSpaces - i)
                 if (nodes[j] == null) {
-                    ParseTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1)
+                    printWhitespaces(endgeLines + endgeLines + i + 1)
                     continue
                 }
 
                 if (nodes[j]!!.hasChild(0))
                     print("/")
                 else
-                    ParseTreePrinter.printWhitespaces(1)
+                    printWhitespaces(1)
 
-                ParseTreePrinter.printWhitespaces(i + i - 1)
+                printWhitespaces(i + i - 1)
 
                 if (nodes[j]!!.hasChild(1))
                     print("\\")
                 else
-                    ParseTreePrinter.printWhitespaces(1)
+                    printWhitespaces(1)
 
-                ParseTreePrinter.printWhitespaces(i + i - 1)
+                printWhitespaces(i + i - 1)
 
                 if (nodes[j]!!.hasChild(2))
                     print("\\")
                 else
-                    ParseTreePrinter.printWhitespaces(1)
+                    printWhitespaces(1)
 
-                ParseTreePrinter.printWhitespaces(endgeLines + endgeLines - i)
+                printWhitespaces(endgeLines + endgeLines - i)
             }
 
             println("")
@@ -130,7 +128,7 @@ object ParseTreePrinter {
         if (node.isLeaf)
             return 1
 
-        val childLevels = node.children.map { ParseTreePrinter.maxLevel(it) }
+        val childLevels = node.children.map { maxLevel(it) }
 
         return Collections.max(childLevels) + 1
     }

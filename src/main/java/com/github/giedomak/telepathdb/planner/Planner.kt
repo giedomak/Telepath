@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.costmodel.SimpleCostModel
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.util.stream.Collectors
 

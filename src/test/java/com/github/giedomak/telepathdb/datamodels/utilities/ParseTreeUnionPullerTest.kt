@@ -1,18 +1,19 @@
 package com.github.giedomak.telepathdb.datamodels.utilities
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeUnionPuller
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class UnionPullerTest {
+class ParseTreeUnionPullerTest {
 
     @Test
     fun pullsOutUnionsIntoMultipleParseTrees() {
 
         // Given
         val input = exampleUnionParseTree()
-        val actual = UnionPuller.parse(input)
+        val actual = ParseTreeUnionPuller.parse(input)
 
         // Create expected parseTree
         //       CONCATENATION
@@ -49,7 +50,7 @@ class UnionPullerTest {
         //      / \
         //     a   b
         val input = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("a", "b"))
-        val actual = UnionPuller.parse(input)
+        val actual = ParseTreeUnionPuller.parse(input)
 
         // Generate expected
         val a = ParseTreeTest.createSimpleParseTree("a")
