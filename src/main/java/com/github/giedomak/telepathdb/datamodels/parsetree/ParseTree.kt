@@ -5,10 +5,11 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion
-import com.github.giedomak.telepathdb.datamodels.ParseTree.Companion.CONCATENATION
+import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.CONCATENATION
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.util.stream.Stream
 
@@ -166,84 +167,31 @@ class ParseTree() : Cloneable {
     }
 
     /**
-     * Get the size of this parsetree. This recurses through its children, we should augment our tree --> time is money.
+     * Delegate parse-tree-printing to our [ParseTreePrinter].
      */
-    private fun getSize(): Int {
-
-        // Switch case on operatorId
-        return when (operatorId) {
-
-            LEAF -> 1
-            KLEENE_STAR -> children.sumBy { it.getSize() } + 1
-
-            else -> children.sumBy { it.getSize() }
-        }
+    fun print() {
+        ParseTreePrinter.printParseTree(this)
     }
 
     /**
-     * Find all (partial) subtrees of a given [targetSize].
-     *
-     * We use a sliding window to try and find a subList of a nodes' children which does match the given [targetSize].
-     *
-     * Example input:
-     *
-     *         CONCATENATION
-     *        /  |     |  |  \
-     *       a  UNION  e  f   g
-     *          / | \
-     *         b  c  d
-     *
-     * subtreesOfSize(2):
-     *
-     *     UNION   UNION    CONCATENATION    CONCATENATION
-     *      / \     / \         /   \            /   \
-     *     b   c   c   d       e     f          f     g
-     *
-     * @param targetSize We are looking for all (partial) subtrees of this size.
+     * Delegate parse-tree-flattening to our [ParseTreeFlattener].
+     */
+    fun flatten() {
+        ParseTreeFlattener.flatten(this)
+    }
+
+    /**
+     * Delegate parse-tree-union-pulling to our [ParseTreeUnionPuller].
+     */
+    fun pullUnions(): List<ParseTree> {
+        return ParseTreeUnionPuller.parse(this)
+    }
+
+    /**
+     * Delegate parse-tree-sizing to our [ParseTreeSizes].
      */
     fun subtreesOfSize(targetSize: Int): List<ParseTree> {
-
-        // Break recursion if we are the targetSize
-        if (getSize() == targetSize) return listOf(this)
-
-        // Init our results list
-        val subtrees = mutableListOf<ParseTree>()
-
-        for ((index, child) in children.withIndex()) {
-
-            // Cache the size of this child
-            var accumulatedSize = child.getSize()
-
-            // If the size of this child is smaller than the targetSize, we'll try to concatenate with our
-            // brothers and sisters. We'll traverse increasingly linearly.
-            if (accumulatedSize < targetSize) {
-
-                // Trying to find a subList of our children which together have the targetSize.
-                for (toIndex in (index + 1)..(children.size - 1)) {
-
-                    // Add the size of our brother to the accumulatedSize
-                    accumulatedSize += children[toIndex].getSize()
-
-                    // If we've jumped over our targetSize, we'll just try again with our brother as starting child.
-                    if (accumulatedSize > targetSize) break
-
-                    // Yay, we've found a subList which has our beloved targetSize.
-                    if (accumulatedSize == targetSize) {
-                        // Clone our tree since we are modifying it, and set the subList as its children.
-                        val clone = clone()
-                        clone.children = clone.children.subList(index, toIndex + 1)
-                        // Add to the results, and we're done for this window.
-                        subtrees.add(clone)
-                        break
-                    }
-                }
-            } else {
-                // So while searching for a subList, our starting child already exceeded the given targetSize.
-                // Try to find some matches in that subtree.
-                subtrees.addAll(child.subtreesOfSize(targetSize))
-            }
-        }
-        return subtrees
+        return ParseTreeSizes.subtreesOfSize(this, targetSize)
     }
 
     //

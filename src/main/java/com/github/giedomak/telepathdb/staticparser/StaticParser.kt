@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.staticparser
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 
 /**
  * Parse the query language into our internal representation, i.e. a [ParseTree].

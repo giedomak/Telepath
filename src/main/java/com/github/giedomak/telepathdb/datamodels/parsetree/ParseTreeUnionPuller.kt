@@ -5,9 +5,9 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.ParseTree
+import com.github.giedomak.telepathdb.datamodels.utilities.Logger
 import java.util.stream.Collectors
 
 /**
@@ -15,7 +15,7 @@ import java.util.stream.Collectors
  *
  * Illustrative example: `"a/(b|c)/d"` becomes `["a/b/d", "a/c/d"]`
  */
-object UnionPuller {
+object ParseTreeUnionPuller {
 
     /**
      * Removes the UNION operatorId from a ParseTree.
@@ -32,7 +32,7 @@ object UnionPuller {
         parseTrees.add(parseTree)
 
         // Print the parsed ParseTree
-        ParseTreePrinter.printParseTree(parseTree)
+        parseTree.print()
 
         // List to hold the ParseTrees which UNIONS in them
         var unionTrees = emptyList<ParseTree>()
@@ -71,8 +71,8 @@ object UnionPuller {
                 removeFirstUnion(clone, 1)
 
                 Logger.debug("UNIONNNN")
-                ParseTreePrinter.printParseTree(tree)
-                ParseTreePrinter.printParseTree(clone)
+                tree.print()
+                clone.print()
 
                 // We still have to add the clone to the list
                 parseTrees.add(clone)

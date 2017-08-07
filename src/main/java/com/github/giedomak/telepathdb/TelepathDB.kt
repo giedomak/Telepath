@@ -8,8 +8,6 @@
 package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.datamodels.utilities.Logger
-import com.github.giedomak.telepathdb.datamodels.utilities.ParseTreePrinter
-import com.github.giedomak.telepathdb.datamodels.utilities.UnionPuller
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
@@ -66,7 +64,7 @@ internal object TelepathDB {
             Logger.debug("yay")
 
             // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
-            val parseTrees = UnionPuller.parse(parseTree)
+            val parseTrees = parseTree.pullUnions()
 
             Logger.debug("UNION-less parsetrees:")
 
@@ -76,9 +74,9 @@ internal object TelepathDB {
 
             for ((index, origParseTree) in parseTrees.withIndex()) {
                 Logger.debug("ParseTree " + index)
-                ParseTreePrinter.printParseTree(origParseTree)
+                origParseTree.print()
                 Logger.debug("PhysicalPlan " + index)
-                ParseTreePrinter.printParseTree(physicalPlans[index])
+                physicalPlans[index].print()
             }
 
             // Evaluate the physical plan
