@@ -5,11 +5,8 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeFlattener
 import org.junit.Test
 import kotlin.test.assertEquals
 

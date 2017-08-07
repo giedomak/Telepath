@@ -9,6 +9,7 @@ package com.github.giedomak.telepathdb.evaluationengine
 
 import com.github.giedomak.telepathdb.datamodels.*
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.planner.Planner
