@@ -9,23 +9,21 @@ package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.datamodels.utilities.Logger
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
-import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.planner.Planner
-import com.github.giedomak.telepathdb.staticparser.StaticParser
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import java.io.IOException
 import java.util.*
 import kotlin.streams.toList
 
-internal object TelepathDB {
+object TelepathDB {
 
-    var staticParser: StaticParser? = null
-    var evaluationEngine: EvaluationEngine? = null
-    private var kPathIndex: KPathIndex? = null
+    var staticParser = StaticParserRPQ
+    private val kPathIndex = KPathIndexInMemory()
+    var evaluationEngine = EvaluationEngine(kPathIndex)
 
     private val scanner = Scanner(System.`in`)
 
@@ -56,12 +54,8 @@ internal object TelepathDB {
 
             val startTime = System.currentTimeMillis()
 
-            Logger.debug("yay")
-
             // Parse the input
-            val parseTree = staticParser!!.parse(input)
-
-            Logger.debug("yay")
+            val parseTree = staticParser.parse(input)
 
             // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
             val parseTrees = parseTree.pullUnions()
@@ -81,7 +75,7 @@ internal object TelepathDB {
 
             // Evaluate the physical plan
             val results = physicalPlans.stream()
-                    .map { evaluationEngine!!.evaluate(it) }
+                    .map { evaluationEngine.evaluate(it) }
                     .toList()
 
             // Print the results
@@ -109,7 +103,7 @@ internal object TelepathDB {
     fun getUserInput(scanner: Scanner): String {
 
         // Print which parser we are using
-        Logger.info("We are using " + staticParser!!.javaClass.simpleName + ", enter your query and finish with the keyword END on a newline:")
+        Logger.info("We are using " + staticParser.javaClass.simpleName + ", enter your query and finish with the keyword END on a newline:")
 
         var input = ""
         var value = scanner.nextLine()
@@ -128,32 +122,12 @@ internal object TelepathDB {
 
         val startTime = System.currentTimeMillis()
 
-        // Init everything we need
-        setupModules()
-
         setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph10k.txt", 3)
 
         // We're alive!
         val endTime = System.currentTimeMillis()
         Logger.debug("----------------------------")
         Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms")
-
-    }
-
-    /**
-     * Setup modules with the implementation of the interfaces we choose.
-     */
-    private fun setupModules() {
-
-        // Setup the staticParser
-        // staticParser = new StaticParserSparql();
-        staticParser = StaticParserRPQ
-
-        // We want to use the InMemory version of the KPathIndex
-        kPathIndex = KPathIndexInMemory()
-
-        // Setup the Evaluation Engine with the kPathIndex
-        evaluationEngine = EvaluationEngine(kPathIndex!!)
     }
 
     /**
@@ -163,12 +137,12 @@ internal object TelepathDB {
 
         try {
             // Import test dataset
-            GMarkImport.run(kPathIndex!!, gMarkFile)
+            GMarkImport.run(kPathIndex, gMarkFile)
         } catch (e: IOException) {
             e.printStackTrace()
         }
 
         // Extend from k=1 to k
-        KExtender.run(kPathIndex!!, k)
+        KExtender.run(kPathIndex, k)
     }
 }

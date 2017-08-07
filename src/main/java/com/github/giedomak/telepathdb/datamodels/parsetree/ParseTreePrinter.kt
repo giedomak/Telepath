@@ -36,7 +36,7 @@ import java.util.*
  *          /
  *         b
  */
-internal object ParseTreePrinter {
+object ParseTreePrinter {
 
     /**
      * Static method we should call with the root parseTree as parameter in order to print it.
