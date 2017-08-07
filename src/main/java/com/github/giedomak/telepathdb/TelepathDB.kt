@@ -19,7 +19,7 @@ import java.io.IOException
 import java.util.*
 import kotlin.streams.toList
 
-internal object TelepathDB {
+object TelepathDB {
 
     var staticParser = StaticParserRPQ
     private val kPathIndex = KPathIndexInMemory()
