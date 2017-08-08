@@ -7,7 +7,6 @@ com.github.giedomak.telepathdb.datamodels
 com.github.giedomak.telepathdb.datamodels.integrations
 com.github.giedomak.telepathdb.datamodels.parsetree
 com.github.giedomak.telepathdb.datamodels.stores
-com.github.giedomak.telepathdb.datamodels.utilities
 com.github.giedomak.telepathdb.evaluationengine
 com.github.giedomak.telepathdb.kpathindex
 com.github.giedomak.telepathdb.kpathindex.utilities
@@ -18,3 +17,4 @@ com.github.giedomak.telepathdb.physicallibrary.joins
 com.github.giedomak.telepathdb.planner
 com.github.giedomak.telepathdb.staticparser
 com.github.giedomak.telepathdb.staticparser.rpq
+com.github.giedomak.telepathdb.utilities
