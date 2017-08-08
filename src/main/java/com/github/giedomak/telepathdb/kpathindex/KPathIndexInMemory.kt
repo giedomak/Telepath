@@ -12,6 +12,7 @@ import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.integrations.PathDBWrapper
 import com.github.giedomak.telepathdb.memorymanager.spliterator.FixedBatchSpliterator
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory
+import com.pathdb.statistics.StatisticsStoreReader
 import java.io.IOException
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
@@ -55,5 +56,12 @@ class KPathIndexInMemory : KPathIndex {
      */
     override fun insert(path: Path) {
         pathIndex.insert(PathDBWrapper.toPath(path))
+    }
+
+    /**
+     * Delegate the statisticsStore to PathDB.
+     */
+    fun getStatisticsStore(): StatisticsStoreReader {
+        return pathIndex.statisticsStore
     }
 }
