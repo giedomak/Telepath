@@ -32,7 +32,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -57,7 +57,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -84,7 +84,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -119,6 +119,6 @@ class ParseTreeFlattenerTest {
         expected.children.add(1, child)
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 }
