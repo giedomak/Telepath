@@ -8,8 +8,7 @@
 package com.github.giedomak.telepathdb.staticparser
 
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.utilities.Logger
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreePrinter
+import com.github.giedomak.telepathdb.utilities.Logger
 import com.github.giedomak.telepathdb.staticparser.rpq.RPQVisitorParser
 
 /**
