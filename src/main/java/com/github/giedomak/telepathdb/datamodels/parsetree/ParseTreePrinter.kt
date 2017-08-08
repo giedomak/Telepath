@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.utilities.Logger
+import com.github.giedomak.telepathdb.utilities.Logger
 import java.util.*
 
 /**

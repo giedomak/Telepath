@@ -15,7 +15,7 @@ import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.kPat
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.maxId
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathIdentifierStore
-import com.github.giedomak.telepathdb.datamodels.utilities.Logger
+import com.github.giedomak.telepathdb.utilities.Logger
 import org.apache.commons.collections.ListUtils
 import org.apache.commons.lang3.StringUtils
 import java.util.stream.Collectors

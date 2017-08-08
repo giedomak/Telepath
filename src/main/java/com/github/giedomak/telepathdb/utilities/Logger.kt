@@ -5,18 +5,14 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
+package com.github.giedomak.telepathdb.utilities
 
 /**
  * Log messages with the following five levels: debug, info, warning, error and fatal.
  */
 object Logger {
 
-    fun debug(message: Any) {
-        log(message.toString())
-    }
-
-    fun debug(message: Any, println: Boolean) {
+    fun debug(message: Any, println: Boolean = true) {
         log(message.toString(), println)
     }
 
