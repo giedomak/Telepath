@@ -9,7 +9,7 @@ package com.github.giedomak.telepathdb.physicallibrary.joins
 
 import com.github.giedomak.telepathdb.datamodels.Path
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.datamodels.utilities.Logger
+import com.github.giedomak.telepathdb.utilities.Logger
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 
 import java.util.stream.Stream

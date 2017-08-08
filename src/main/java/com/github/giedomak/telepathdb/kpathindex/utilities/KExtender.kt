@@ -9,7 +9,7 @@ package com.github.giedomak.telepathdb.kpathindex.utilities
 
 import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.datamodels.utilities.Logger
+import com.github.giedomak.telepathdb.utilities.Logger
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
 import kotlin.streams.toList
