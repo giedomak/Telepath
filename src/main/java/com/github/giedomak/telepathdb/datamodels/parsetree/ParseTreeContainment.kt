@@ -39,7 +39,7 @@ object ParseTreeContainment {
         val subtrees = mutableListOf<ParseTree>()
 
         // If we are dealing with a subtree that is rooted with the same operator as the one we will be checking,
-        // we have to only consider its children.
+        // we only have to consider its children.
         for (subtree in listOf(s1, s2)) {
             if (subtree.operatorId == operatorId) subtrees.addAll(subtree.children) else subtrees.add(subtree)
         }
@@ -48,17 +48,17 @@ object ParseTreeContainment {
         // directly contained in its children and its indices are next to each other.
         return root.postOrderTreeWalk()
                 .filter { it.operatorId == operatorId }
-                .anyMatch { containsSublistOfChildren(it, subtrees) }
+                .anyMatch { containsSublistOfChildren(it.children, subtrees) }
     }
 
     /**
-     * Given a ParseTree, check if a sliding window over its children equals a given list of subtrees.
+     * Given a list of ParseTrees, check with a sliding window if any sublist equals a given list of subtrees.
      */
-    private fun containsSublistOfChildren(tree: ParseTree, subtrees: List<ParseTree>): Boolean {
+    private fun containsSublistOfChildren(children: List<ParseTree>, subtrees: List<ParseTree>): Boolean {
 
         // We move a sliding window over the children of the given tree, and check for sublist equality.
-        return 0.rangeTo(tree.children.size - subtrees.size).any {
-            tree.children.subList(it, it + subtrees.size) == subtrees
+        return 0.rangeTo(children.size - subtrees.size).any {
+            children.subList(it, it + subtrees.size) == subtrees
         }
     }
 }
