@@ -5,11 +5,8 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.utilities
+package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeFlattener
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -35,7 +32,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -60,7 +57,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -87,7 +84,7 @@ class ParseTreeFlattenerTest {
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d"))
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 
     @Test
@@ -122,6 +119,6 @@ class ParseTreeFlattenerTest {
         expected.children.add(1, child)
 
         // Then
-        assertEquals(expected, ParseTreeFlattener.flatten(root))
+        assertEquals(expected, root.flatten())
     }
 }

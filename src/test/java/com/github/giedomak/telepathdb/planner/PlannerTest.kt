@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

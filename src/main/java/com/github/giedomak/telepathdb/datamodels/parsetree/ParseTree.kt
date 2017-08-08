@@ -176,8 +176,8 @@ class ParseTree() : Cloneable {
     /**
      * Delegate parse-tree-flattening to our [ParseTreeFlattener].
      */
-    fun flatten() {
-        ParseTreeFlattener.flatten(this)
+    fun flatten(): ParseTree {
+        return ParseTreeFlattener.flatten(this)
     }
 
     /**

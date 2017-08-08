@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
