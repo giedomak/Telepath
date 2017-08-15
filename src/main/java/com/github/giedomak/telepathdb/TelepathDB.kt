@@ -22,7 +22,7 @@ import kotlin.streams.toList
 object TelepathDB {
 
     var staticParser = StaticParserRPQ
-    private val kPathIndex = KPathIndexInMemory()
+    val kPathIndex = KPathIndexInMemory()
     var evaluationEngine = EvaluationEngine(kPathIndex)
 
     private val scanner = Scanner(System.`in`)
