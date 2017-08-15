@@ -188,6 +188,13 @@ class ParseTree() : Cloneable {
     }
 
     /**
+     * Delegate parse-tree-sizing to our [ParseTreeSizes].
+     */
+    fun subtreesOfSize(targetSize: Int): List<ParseTree> {
+        return ParseTreeSizes.subtreesOfSize(this, targetSize)
+    }
+  
+    /**
      * Delegate parse-tree-containment to our [ParseTreeContainment].
      */
     fun containsSubtreesThroughOperator(s1: ParseTree, s2: ParseTree, operatorId: Int): Boolean {
