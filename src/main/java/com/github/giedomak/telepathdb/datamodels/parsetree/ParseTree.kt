@@ -83,33 +83,10 @@ class ParseTree(
     }
 
     fun mergeAndFlatten(tree: ParseTree, operator: Int): ParseTree {
-        val root = ParseTree(true, operator)
+        val root = ParseTree(false, operator)
         root.children.add(this.clone())
         root.children.add(tree.clone())
         return root.flatten() as ParseTree
-    }
-
-    //
-    // ---------------- EQUALS & HASHCODE & TO-STRING ----------------
-    //
-
-    override fun equals(other: Any?): Boolean {
-
-        if (!super.equals(other)) return false
-
-        other as ParseTree
-
-        if (operator != other.operator) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = operator
-        result = 31 * result + (leaf?.hashCode() ?: 0)
-        result = 31 * result + isRoot.hashCode()
-        result = 31 * result + children.hashCode()
-        return result
     }
 
     //

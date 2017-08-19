@@ -3,19 +3,14 @@ package com.github.giedomak.telepathdb.datamodels.parsetree
 import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.Edge
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.physicallibrary.IndexLookup
-import com.github.giedomak.telepathdb.physicallibrary.PhysicalOperator
-import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
-import com.github.giedomak.telepathdb.physicallibrary.joins.NestedLoopJoin
 
 class PhysicalPlan(
         isRoot: Boolean,
         override var operator: Int = 0
 ) : MultiTree(isRoot) {
 
-    override val operatorName get() = SYMBOLIC_NAMES[operator]!!
+    override val operatorName get() = SYMBOLIC_NAMES[operator]
 
     var memoryManagerId = -1L
 
@@ -49,30 +44,6 @@ class PhysicalPlan(
         root.children.add(tree.clone())
         return root
     }
-
-    //
-    // ---------------- EQUALS & HASHCODE & TO-STRING ----------------
-    //
-
-    override fun equals(other: Any?): Boolean {
-
-        if (!super.equals(other)) return false
-
-        other as PhysicalPlan
-
-        if (operator != other.operator) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = operator.hashCode()
-        result = 31 * result + (leaf?.hashCode() ?: 0)
-        result = 31 * result + isRoot.hashCode()
-        result = 31 * result + children.hashCode()
-        return result
-    }
-
 
     companion object {
 

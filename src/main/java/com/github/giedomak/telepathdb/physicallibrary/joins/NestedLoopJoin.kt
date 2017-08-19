@@ -39,7 +39,8 @@ class NestedLoopJoin(
     companion object : BinaryPhysicalOperator {
 
         override fun cost(cardinality1: Long, cardinality2: Long): Long {
-            return Math.pow(cardinality2.toDouble(), cardinality1.toDouble()).toLong()
+//            return Math.pow(cardinality2.toDouble(), cardinality1.toDouble()).toLong()
+            return Long.MAX_VALUE
         }
     }
 }

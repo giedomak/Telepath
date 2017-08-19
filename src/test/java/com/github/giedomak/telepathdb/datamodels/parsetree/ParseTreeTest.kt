@@ -69,7 +69,7 @@ class ParseTreeTest {
     @Test
     fun outputsToString() {
         val actual = create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
-        val expected = "ParseTree(operator=CONCATENATION, leaf=null, isRoot=true, children=" + actual.children.toString() + ")"
+        val expected = "ParseTree(operator=CONCATENATION, leaf=null, children=" + actual.children.toString() + ")"
 
         // then
         assertEquals(expected, actual.toString())

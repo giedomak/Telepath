@@ -21,7 +21,7 @@ object CardinalityEstimation {
         return try {
             statisticsStore.getCardinality(pathId)
         } catch (e: NullPointerException) {
-            0
+            1
         }
     }
 

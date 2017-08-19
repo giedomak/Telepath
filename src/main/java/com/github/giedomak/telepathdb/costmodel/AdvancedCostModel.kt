@@ -1,5 +1,6 @@
 package com.github.giedomak.telepathdb.costmodel
 
+import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 import com.github.giedomak.telepathdb.physicallibrary.IndexLookup
 import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
@@ -30,5 +31,4 @@ object AdvancedCostModel : CostModel {
             else -> TODO("NOOOOO")
         }
     }
-
 }

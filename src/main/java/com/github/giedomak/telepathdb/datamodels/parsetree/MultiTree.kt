@@ -123,16 +123,21 @@ abstract class MultiTree(
         other as MultiTree
 
         if (leaf != other.leaf) return false
-        if (isRoot != other.isRoot) return false
+        if (operator != other.operator) return false
         if (children != other.children) return false
 
         return true
     }
 
-    abstract override fun hashCode(): Int
+    override fun hashCode(): Int {
+        var result = operator
+        result = 31 * result + (leaf?.hashCode() ?: 0)
+        result = 31 * result + children.hashCode()
+        return result
+    }
 
     override fun toString(): String {
-        return this.javaClass.simpleName + "(operator=$operatorName, leaf=$leaf, isRoot=$isRoot, children=$children)"
+        return this.javaClass.simpleName + "(operator=$operatorName, leaf=$leaf, children=$children)"
     }
 
 }

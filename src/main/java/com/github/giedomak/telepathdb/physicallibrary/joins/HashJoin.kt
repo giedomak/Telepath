@@ -20,8 +20,8 @@ import java.util.stream.Stream
  * Hash-join.
  */
 class HashJoin(
-        private val stream1: PathStream? = null,
-        private val stream2: PathStream? = null
+        private val stream1: PathStream,
+        private val stream2: PathStream
 ) : PhysicalOperator {
 
     /**
@@ -37,12 +37,12 @@ class HashJoin(
         val offset = MemoryManager.maxId + 1
 
         // Put all Paths from stream1 into a HashMap with the lastNode() as key
-        stream1!!.paths.forEach { MemoryManager[offset + it.nodes.last().id] = it }
+        stream1.paths.forEach { MemoryManager[offset + it.nodes.last().id] = it }
 
         Logger.debug("Done creating the hashTable, now concatenating")
 
         // Get all Paths from the HashMap which have the firstNode() as key, and concatenate
-        return stream2!!.paths.flatMap { v2 ->
+        return stream2.paths.flatMap { v2 ->
             MemoryManager[offset + v2.nodes.first().id]
                     .map { v1 -> PathIdentifierStore.concatenatePaths(v1, v2) }
         }
