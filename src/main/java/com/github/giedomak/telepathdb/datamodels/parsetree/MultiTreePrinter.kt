@@ -36,14 +36,14 @@ import java.util.*
  *          /
  *         b
  */
-object ParseTreePrinter {
+object MultiTreePrinter {
 
     /**
      * Static method we should call with the root parseTree as parameter in order to print it.
      *
      * @param root The root of the ParseTree we want to print
      */
-    fun printParseTree(root: ParseTree) {
+    fun printMultiTree(root: MultiTree) {
         val maxLevel = maxLevel(root)
 
         Logger.debug("", false)
@@ -52,7 +52,7 @@ object ParseTreePrinter {
 
     }
 
-    private fun printNodeInternal(nodes: List<ParseTree?>, level: Int, maxLevel: Int) {
+    private fun printNodeInternal(nodes: List<MultiTree?>, level: Int, maxLevel: Int) {
         if (nodes.isEmpty() || isAllElementsNull(nodes))
             return
 
@@ -63,10 +63,10 @@ object ParseTreePrinter {
 
         printWhitespaces(firstSpaces)
 
-        val newNodes = ArrayList<ParseTree?>()
+        val newNodes = ArrayList<MultiTree?>()
         for (node in nodes) {
             if (node != null) {
-                print(node.leafOrOperator)
+                print(node.nodeRepresentation)
                 newNodes.add(node.getChild(0))
                 newNodes.add(node.getChild(1))
                 newNodes.add(node.getChild(2))
@@ -124,7 +124,7 @@ object ParseTreePrinter {
             print(" ")
     }
 
-    private fun maxLevel(node: ParseTree): Int {
+    private fun maxLevel(node: MultiTree): Int {
         if (node.isLeaf)
             return 1
 

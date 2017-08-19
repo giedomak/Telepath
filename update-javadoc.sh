@@ -17,10 +17,10 @@ echo '--> add remote repo'
 git remote add dokka git@github.com:giedomak/TelepathDB.git
 echo '--> fetch the remote gh-pages branch'
 git fetch --depth=1 dokka gh-pages
-echo '--> commit and merge our changes'
+echo '--> commit and mergeAndFlatten our changes'
 git add --all
 git commit -m 'update dokka'
-git merge --no-edit -s ours --allow-unrelated-histories remotes/dokka/gh-pages
+git mergeAndFlatten --no-edit -s ours --allow-unrelated-histories remotes/dokka/gh-pages
 echo '--> push our changes'
 git push dokka master:gh-pages
 echo '--> cd back to our project'

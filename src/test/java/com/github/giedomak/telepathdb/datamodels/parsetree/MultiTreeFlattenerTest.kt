@@ -10,7 +10,7 @@ package com.github.giedomak.telepathdb.datamodels.parsetree
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class ParseTreeFlattenerTest {
+class MultiTreeFlattenerTest {
 
     @Test
     fun flattensConcatenation() {

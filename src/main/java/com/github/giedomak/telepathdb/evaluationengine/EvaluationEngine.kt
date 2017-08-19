@@ -7,14 +7,14 @@
 
 package com.github.giedomak.telepathdb.evaluationengine
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.Path
 import com.github.giedomak.telepathdb.datamodels.PathPrefix
-import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.utilities.Logger
+import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
+import com.github.giedomak.telepathdb.utilities.Logger
 import java.util.stream.Stream
 
 /**
@@ -22,47 +22,43 @@ import java.util.stream.Stream
  */
 class EvaluationEngine(private val kPathIndex: KPathIndex) {
 
-    fun evaluate(parseTree: ParseTree): Stream<Path> {
+    fun evaluate(physicalPlan: PhysicalPlan): Stream<Path> {
 
-        if (parseTree.isLeaf) return Stream.empty()
+        if (physicalPlan.isLeaf) return Stream.empty()
 
         // Make sure we do an Postorder treewalk, this way we gather all the information from the leafs first
-        for (child in parseTree.children) {
-            evaluate(child)
+        for (child in physicalPlan.children) {
+            evaluate(child as PhysicalPlan)
         }
-
-        val results: Stream<Path>
 
         // Perform the Operations
-        when (parseTree.operatorId) {
+        val results = when (physicalPlan.operator) {
 
-            ParseTree.LOOKUP -> {
+            PhysicalPlan.LOOKUP -> {
                 // Collect results from the leafs and add them in the intermediateResults HashMap
-                val edges = parseTree.children.map { it.leaf!! }
-                val pathIdentifier = PathIdentifierStore.getPathIdByEdges(edges)
-                val search = PathPrefix(pathIdentifier)
-                results = kPathIndex.search(search)
+                val search = PathPrefix(physicalPlan.pathIdOfLookup())
+                kPathIndex.search(search)
             }
 
-            ParseTree.UNION -> results = PhysicalLibrary.union(getChild(parseTree, 0), getChild(parseTree, 1))
+            ParseTree.UNION -> PhysicalLibrary.union(getChild(physicalPlan, 0), getChild(physicalPlan, 1))
 
-            ParseTree.CONCATENATION -> results = PhysicalLibrary.concatenation(getChild(parseTree, 0), getChild(parseTree, 1))
+//            ParseTree.CONCATENATION -> results = PhysicalLibrary.concatenation(getChild(physicalPlan, 0), getChild(physicalPlan, 1))
 
-            else -> throw IllegalArgumentException("EvaluationEngine: operatorId not yet implemented for " + parseTree.leafOrOperator + "!")
+            else -> throw IllegalArgumentException("EvaluationEngine: operator not yet implemented for " + physicalPlan.nodeRepresentation + "!")
         }
 
-        if (parseTree.isRoot) {
+        if (physicalPlan.isRoot) {
             // Make sure we return the stream when this node was the root
             return results
         } else {
-            Logger.debug("Itermediateresult: " + parseTree.leafOrOperator)
-            MemoryManager[parseTree.id] = results
+            Logger.debug("Itermediateresult: " + physicalPlan.nodeRepresentation)
+            physicalPlan.memoryManagerId = MemoryManager.add(results)
         }
 
         return Stream.empty()
     }
 
-    private fun getChild(parseTree: ParseTree, index: Int): Stream<Path> {
-        return MemoryManager.get(parseTree.getChild(index)!!.id)
+    private fun getChild(physicalPlan: PhysicalPlan, index: Int): Stream<Path> {
+        return MemoryManager[(physicalPlan.getChild(index)!! as PhysicalPlan).memoryManagerId]
     }
 }

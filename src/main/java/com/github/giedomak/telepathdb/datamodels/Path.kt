@@ -43,24 +43,6 @@ class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializ
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
 
-    /**
-     * Return the first node of the nodes list.
-     *
-     * @return The first Node of our nodes list.
-     */
-    fun firstNode(): Node {
-        return nodes.first()
-    }
-
-    /**
-     * Return the last node of the nodes list.
-     *
-     * @return The last Node of our nodes list.
-     */
-    fun lastNode(): Node {
-        return nodes.last()
-    }
-
     //
     // --------- HASHCODE & EQUALS & TO-STRING ---------
     //

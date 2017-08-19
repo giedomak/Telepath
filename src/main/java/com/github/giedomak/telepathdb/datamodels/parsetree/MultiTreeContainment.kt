@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels.parsetree
 
-object ParseTreeContainment {
+object MultiTreeContainment {
 
     /**
      * Given a root [ParseTree], check if [s1] and [s2] are contained as subtrees in [root] through the given [operatorId].
@@ -31,30 +31,30 @@ object ParseTreeContainment {
      * @param root The root ParseTree we'll be using to check containment of given subtrees.
      * @param s1 The first subtree.
      * @param s2 The second subtree.
-     * @param operatorId The operatorId through which [s1] and [s2] are connected.
+     * @param operatorId The operator through which [s1] and [s2] are connected.
      * @return True if [s1] and [s2] are connected through [operatorId] and contained in [root].
      */
     fun containsSubtreesThroughOperator(root: ParseTree, s1: ParseTree, s2: ParseTree, operatorId: Int): Boolean {
 
-        val subtrees = mutableListOf<ParseTree>()
+        val subtrees = mutableListOf<MultiTree>()
 
         // If we are dealing with a subtree that is rooted with the same operator as the one we will be checking,
         // we only have to consider its children.
         for (subtree in listOf(s1, s2)) {
-            if (subtree.operatorId == operatorId) subtrees.addAll(subtree.children) else subtrees.add(subtree)
+            if (subtree.operator == operatorId) subtrees.addAll(subtree.children) else subtrees.add(subtree)
         }
 
-        // Check for each node which is equal to our operatorId, if our subtrees list is
+        // Check for each node which is equal to our operator, if our subtrees list is
         // directly contained in its children and its indices are next to each other.
-        return root.postOrderTreeWalk()
-                .filter { it.operatorId == operatorId }
-                .anyMatch { containsSublistOfChildren(it.children, subtrees) }
+        return root.postOrderTreeWalk<MultiTree>()
+                .filter { it.operator == operatorId }
+                .any { containsSublistOfChildren(it.children, subtrees) }
     }
 
     /**
      * Given a list of ParseTrees, check with a sliding window if any sublist equals a given list of subtrees.
      */
-    private fun containsSublistOfChildren(children: List<ParseTree>, subtrees: List<ParseTree>): Boolean {
+    private fun containsSublistOfChildren(children: List<MultiTree>, subtrees: List<MultiTree>): Boolean {
 
         // We move a sliding window over the children of the given tree, and check for sublist equality.
         return 0.rangeTo(children.size - subtrees.size).any {

@@ -8,6 +8,7 @@
 package com.github.giedomak.telepathdb.cardinalityestimation
 
 import com.github.giedomak.telepathdb.TelepathDB
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 
 object CardinalityEstimation {
 
@@ -21,6 +22,30 @@ object CardinalityEstimation {
             statisticsStore.getCardinality(pathId)
         } catch (e: NullPointerException) {
             0
+        }
+    }
+
+    fun getCardinality(physicalPlan: PhysicalPlan): Long {
+
+        return when (physicalPlan.operator) {
+
+            PhysicalPlan.LOOKUP -> getCardinality(physicalPlan.pathIdOfLookup())
+
+            PhysicalPlan.HASHJOIN -> {
+                val d1 = getCardinality(physicalPlan.children.first() as PhysicalPlan)
+                val d2 = getCardinality(physicalPlan.children.last() as PhysicalPlan)
+                val selectivity = 1 / (Math.max(d1, d2))
+                d1 * d2 * selectivity
+            }
+
+            PhysicalPlan.NESTEDLOOPJOIN -> {
+                val d1 = getCardinality(physicalPlan.children.first() as PhysicalPlan)
+                val d2 = getCardinality(physicalPlan.children.last() as PhysicalPlan)
+                val selectivity = 1 / (Math.max(d1, d2))
+                d1 * d2 * selectivity
+            }
+
+            else -> TODO("Whoooops")
         }
     }
 }

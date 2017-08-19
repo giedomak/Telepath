@@ -46,7 +46,7 @@ We should have control over our data and caching mechanism.
 
 # Package com.github.giedomak.telepathdb.memorymanager.external_merge_sort
 
-Deprecated package holding some external merge sort logic.
+Deprecated package holding some external mergeAndFlatten sort logic.
 
 # Package com.github.giedomak.telepathdb.memorymanager.spliterator
 

@@ -18,13 +18,13 @@ import java.util.stream.Collectors
 object ParseTreeUnionPuller {
 
     /**
-     * Removes the UNION operatorId from a ParseTree.
+     * Removes the UNION operator from a ParseTree.
      *
-     * Simply duplicate the tree and on the position of the UNION operatorId, the first tree
+     * Simply duplicate the tree and on the position of the UNION operator, the first tree
      * gets the left-child and the other tree gets the right-child.
      *
      * @param parseTree The ParseTree to parse.
-     * @return List of ParseTrees each not containing the UNION operatorId.
+     * @return List of ParseTrees each not containing the UNION operator.
      */
     fun parse(parseTree: ParseTree): List<ParseTree> {
 
@@ -37,7 +37,7 @@ object ParseTreeUnionPuller {
         // List to hold the ParseTrees which UNIONS in them
         var unionTrees = emptyList<ParseTree>()
 
-        // Collect the ParseTrees which contain the UNION operatorId
+        // Collect the ParseTrees which contain the UNION operator
         while ({
             unionTrees = parseTrees.stream()
                     .filter { it.contains(ParseTree.UNION) }
@@ -45,16 +45,16 @@ object ParseTreeUnionPuller {
             unionTrees
         }().isNotEmpty()) {
 
-            // For each of those trees with the UNION operatorId in them
+            // For each of those trees with the UNION operator in them
             for (tree in unionTrees) {
 
-                // Split them immediately when the Root is the UNION operatorId
-                if (tree.isRoot && tree.operatorId == ParseTree.UNION) {
+                // Split them immediately when the Root is the UNION operator
+                if (tree.isRoot && tree.operator == ParseTree.UNION) {
 
                     // Remove the current tree from the list, and add its children to our parseTrees var
                     parseTrees.remove(tree)
                     for (child in tree.children) {
-                        val cloned = child.clone()
+                        val cloned = child.clone() as ParseTree
                         cloned.isRoot = true // This cloned tree is now a root
                         parseTrees.add(cloned)
                     }
@@ -62,7 +62,7 @@ object ParseTreeUnionPuller {
                 }
 
                 // Deep clone the current tree
-                val clone = tree.clone()
+                val clone = tree.clone() as ParseTree
 
                 // Recursively remove the first UNION we find doing a pre-order treewalk.
                 // Replace the UNION node with its left child in the original tree, and with the
@@ -87,7 +87,7 @@ object ParseTreeUnionPuller {
      *
      * We use a pre-order tree walk and return after we've replaced the first UNION with its child.
      *
-     * @param tree              The tree we have to traverse finding the first occurrence of a UNION operatorId.
+     * @param tree              The tree we have to traverse finding the first occurrence of a UNION operator.
      * @param childChooserIndex Define if we have to replace the UNION node with its right or left child.
      * @return Boolean indicating if we've replaced a UNION node.
      */
@@ -101,9 +101,9 @@ object ParseTreeUnionPuller {
         // Check each child for a UNION node.
         for (child in tree.children) {
             // Check if our child is a UNION node. If so, replace it with the childChooserIndex of our child.
-            if (child.operatorId == ParseTree.UNION) {
+            if (child.operator == ParseTree.UNION) {
                 val index = tree.children.indexOf(child)
-                tree.setChild(index, child.getChild(childChooserIndex)!!)
+                tree.setChild(index, child.getChild(childChooserIndex)!! as ParseTree)
                 // Return if we've found one, breaking the recursive call
                 return true
             }
@@ -111,7 +111,7 @@ object ParseTreeUnionPuller {
 
         // Traverse to the left child if we haven't found a UNION node already
         for (child in tree.children) {
-            if (removeFirstUnion(child, childChooserIndex)) {
+            if (removeFirstUnion(child as ParseTree, childChooserIndex)) {
                 return true
             }
         }

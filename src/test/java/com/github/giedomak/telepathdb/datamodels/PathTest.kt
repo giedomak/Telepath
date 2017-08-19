@@ -38,21 +38,7 @@ class PathTest {
         assertEquals("Should have created the path with the same id", 3, path.pathId)
     }
 
-    @Test
-    fun returnsFirstNode() {
-        val nodes = createNodeList(3)
-        val path = Path(3, nodes)
-        assertEquals("should return the first node of the nodes list", nodes[0], path.firstNode())
-    }
-
     // ---------- EQUALS ---------
-
-    @Test
-    fun returnsLastNode() {
-        val nodes = createNodeList(3)
-        val path = Path(3, nodes)
-        assertEquals("should return the last node of the nodes list", nodes[2], path.lastNode())
-    }
 
     @Test
     fun samePathsEqualEachOtherTest() {

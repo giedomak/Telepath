@@ -8,7 +8,9 @@
 package com.github.giedomak.telepathdb.physicallibrary
 
 import com.github.giedomak.telepathdb.datamodels.Path
+import com.github.giedomak.telepathdb.datamodels.PathStream
 import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
+import com.github.giedomak.telepathdb.physicallibrary.joins.NestedLoopJoin
 import java.util.stream.Stream
 
 /**
@@ -24,7 +26,8 @@ object PhysicalLibrary {
         return union(list1.stream(), list2.stream(), DEFAULT_DISTINCT)
     }
 
-    @JvmOverloads fun union(stream1: Stream<Path>, stream2: Stream<Path>, distinct: Boolean = DEFAULT_DISTINCT): Stream<Path> {
+    @JvmOverloads
+    fun union(stream1: Stream<Path>, stream2: Stream<Path>, distinct: Boolean = DEFAULT_DISTINCT): Stream<Path> {
         // Out-of-the-box Java 8 Streams
         if (distinct) {
             return Stream.concat(stream1, stream2).distinct().parallel()
@@ -36,6 +39,7 @@ object PhysicalLibrary {
     // ------------- CONCATENATION ---------------
 
     fun concatenation(stream1: Stream<Path>, stream2: Stream<Path>): Stream<Path> {
-        return HashJoin.run(stream1, stream2)
+        return HashJoin(PathStream(stream1), PathStream(stream2)).evaluate()
     }
+
 }

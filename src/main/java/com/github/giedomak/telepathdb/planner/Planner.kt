@@ -7,74 +7,80 @@
 
 package com.github.giedomak.telepathdb.planner
 
-import com.github.giedomak.telepathdb.costmodel.SimpleCostModel
+import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import java.util.stream.Collectors
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 
 /**
  * Generate the best physical plan for a given [ParseTree].
  */
 object Planner {
 
-    fun generate(tree: ParseTree): ParseTree {
+    fun enumeratePhysicalPlans(operator: Int, tree1: PhysicalPlan, tree2: PhysicalPlan): List<PhysicalPlan> {
 
-        // Get an array of labels forming the label path
-        // e.g. ['knows', 'worksFor', 'loves']
-        val labelPath = tree.postOrderTreeWalk()
-                .filter { t -> t.isLeaf }
-                .map { it.leafOrOperator }
-                .collect(Collectors.toList())
+        // Switch case on operator
+        return when (operator) {
 
-        val n = labelPath.size
-        val k = 3
+            ParseTree.CONCATENATION -> enumerateConcatenation(tree1, tree2)
 
-        val bestPlans = hashMapOf<Long, ParseTree>()
+            else -> TODO("Work in progress")
+        }
+    }
+
+    private fun enumerateConcatenation(tree1: PhysicalPlan, tree2: PhysicalPlan): List<PhysicalPlan> {
+
+        val physicalPlans = mutableListOf<PhysicalPlan>()
+
+        // Check if an IndexLookup is applicable
+        val plan = tree1.merge(tree2, PhysicalPlan.LOOKUP).flatten() as PhysicalPlan
+
+        if (plan.level() == 2 && plan.children.size <= TelepathDB.kPathIndex.k) {
+            physicalPlans.add(plan)
+        }
+
+        physicalPlans.add(tree1.merge(tree2, PhysicalPlan.HASHJOIN))
+        physicalPlans.add(tree1.merge(tree2, PhysicalPlan.NESTEDLOOPJOIN))
+
+        return physicalPlans
+    }
+
+
+    fun generate(tree: ParseTree): PhysicalPlan {
+
+        val n = tree.getSize()
+
+        val bestPlans = hashMapOf<ParseTree, PhysicalPlan>()
 
         // Init the BestPlan for all sub-paths of size 1
-        labelPath.stream().forEach { label ->
-            val pathId = PathIdentifierStore.getPathIdByEdgeLabel(label)
-            bestPlans.put(
-                    pathId,
-                    ParseTree.createLookupTree(pathId)
-            )
-        }
+        tree.subtreesOfSize(1).forEach { bestPlans.put(it, PhysicalPlan(it.leaf!!)) }
 
         for (size in 2..n) {
 
-            for (offset in 0..n - size) {
+            val i = 1
+            val j = size - i
 
-                val Lsub = labelPath.subList(offset, offset + size)
-                val LsubId = PathIdentifierStore.getPathIdByEdgeLabel(Lsub)
+            for (s1 in tree.subtreesOfSize(i)) {
 
-                if (size <= k && !bestPlans.containsKey(LsubId)) {
-                    bestPlans.put(LsubId, ParseTree.createLookupTree(LsubId))
-                }
+                for (s2 in tree.subtreesOfSize(j)) {
 
-                if (bestPlans.containsKey(LsubId)) {
-                    continue
-                }
+                    val p1 = bestPlans.getValue(s1)
+                    val p2 = bestPlans.getValue(s2)
 
-                for (split in 1..size - 1) {
+                    if (tree.containsSubtreesThroughOperator(s1, s2, ParseTree.CONCATENATION)) {
 
-                    val L1 = labelPath.subList(offset, offset + split)
-                    val L1Id = PathIdentifierStore.getPathIdByEdgeLabel(L1)
+                        val subtree = s1.mergeAndFlatten(s2, ParseTree.CONCATENATION)
 
-                    val L2 = labelPath.subList(offset + split, offset + size)
-                    val L2Id = PathIdentifierStore.getPathIdByEdgeLabel(L2)
+                        val newPlan = enumerateConcatenation(p1, p2).sortedBy { it.cost() }.first()
 
-                    val p1 = bestPlans.getValue(L1Id)
-                    val p2 = bestPlans.getValue(L2Id)
-                    val currPlan = ParseTree.createConcatenationTree(p1, p2)
+                        val bestPlan = bestPlans.getOrPut(subtree, { newPlan })
 
-                    if (!bestPlans.containsKey(LsubId) || SimpleCostModel.cost(currPlan) < SimpleCostModel.cost(bestPlans.getValue(LsubId))) {
-                        bestPlans.put(LsubId, currPlan)
+                        if (newPlan.cost() < bestPlan.cost()) {
+                            bestPlans.put(subtree, newPlan)
+                        }
                     }
                 }
             }
         }
-
-        val pathId = PathIdentifierStore.getPathIdByEdgeLabel(labelPath)
-        return bestPlans.getValue(pathId)
+        return bestPlans.getValue(tree)
     }
 }

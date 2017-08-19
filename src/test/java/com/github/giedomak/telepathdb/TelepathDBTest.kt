@@ -10,6 +10,8 @@ package com.github.giedomak.telepathdb
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
@@ -46,7 +48,7 @@ class TelepathDBTest {
         //           /   \
         //          a     b
         val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
-        val physicalPlan = ParseTreeTest.create1LevelParseTree(ParseTree.LOOKUP, listOf("a", "b"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.LOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
 

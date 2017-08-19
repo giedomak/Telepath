@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb
 
+import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.utilities.Logger
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
@@ -24,6 +25,7 @@ object TelepathDB {
     var staticParser = StaticParserRPQ
     val kPathIndex = KPathIndexInMemory()
     var evaluationEngine = EvaluationEngine(kPathIndex)
+    val costModel = AdvancedCostModel
 
     private val scanner = Scanner(System.`in`)
 

@@ -7,10 +7,10 @@
 
 package com.github.giedomak.telepathdb.costmodel
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 
 interface CostModel {
 
-    fun cost(tree: ParseTree): Int
+    fun cost(physicalPlan: PhysicalPlan): Long
 
 }

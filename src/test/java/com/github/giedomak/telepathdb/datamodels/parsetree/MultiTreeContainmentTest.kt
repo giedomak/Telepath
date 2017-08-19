@@ -12,7 +12,7 @@ import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class ParseTreeContainmentTest {
+class MultiTreeContainmentTest {
 
     @Test
     fun fullChildContainmentCheck() {
