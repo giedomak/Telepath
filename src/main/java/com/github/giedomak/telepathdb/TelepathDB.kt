@@ -7,7 +7,9 @@
 
 package com.github.giedomak.telepathdb
 
+import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
@@ -26,6 +28,8 @@ object TelepathDB {
     val kPathIndex = KPathIndexInMemory()
     var evaluationEngine = EvaluationEngine(kPathIndex)
     val costModel = AdvancedCostModel
+    var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
+    val planner = Planner
 
     private val scanner = Scanner(System.`in`)
 
@@ -53,36 +57,21 @@ object TelepathDB {
         while (true) {
 
             // Retrieve input from the user until we retrieve 'END'
-            val input = getUserInput(scanner)
+            val query = Query(this, getUserInput(scanner))
 
             val startTime = System.currentTimeMillis()
 
             // Parse the input
-            val parseTree = staticParser.parse(input)
+            query.parseInput()
 
-            // Pull unions out and split the parsetree into an array of multiple UNION-less parsetrees
-            val parseTrees = parseTree.pullUnions()
-
-            Logger.debug("UNION-less parsetrees:")
-
-            val physicalPlans = parseTrees.stream()
-                    .map { Planner.generate(it) }
-                    .toList()
-
-            for ((index, origParseTree) in parseTrees.withIndex()) {
-                Logger.debug("ParseTree " + index)
-                origParseTree.print()
-                Logger.debug("PhysicalPlan " + index)
-                physicalPlans[index].print()
-            }
+            // Generate the physical plan
+            query.generatePhysicalPlan()
 
             // Evaluate the physical plan
-            val results = physicalPlans.stream()
-                    .map { evaluationEngine.evaluate(it) }
-                    .toList()
+            query.evaluate()
 
             // Print the results
-            val collectedResults = results.stream().flatMap { it }.toList()
+            val collectedResults = query.stream().paths.toList()
             val endTime = System.currentTimeMillis()
 
             Logger.info(">>>>> Results:")

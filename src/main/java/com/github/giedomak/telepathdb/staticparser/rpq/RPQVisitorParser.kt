@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb.staticparser.rpq
 
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
@@ -33,17 +34,15 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
      * @param RPQSourceCode The complete RPQ formatted as a String
      * @return ParseTree The complete ParseTree after recursively traversing the complete ANTLR AST.
      */
-    fun parse(RPQSourceCode: String): ParseTree {
+    fun parse(query: Query): ParseTree {
 
         // Setup the lexer and parser
-        val lexer = RPQLexer(ANTLRInputStream(RPQSourceCode))
+        val lexer = RPQLexer(ANTLRInputStream(query.input))
         val parser = RPQParser(CommonTokenStream(lexer))
 
         // Here we define to start parsing our query with the query() rule
-        val RPQQueryVisitor = RPQQueryVisitor()
-        val parseTree = RPQQueryVisitor.visit(parser.query())
-        parseTree.isRoot = true
-        return parseTree
+        val RPQQueryVisitor = RPQQueryVisitor(query)
+        return RPQQueryVisitor.visit(parser.query())
     }
 
     /**
@@ -55,11 +54,11 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
      * RPQBaseVisitor allow us to check if we are dealing with unary operators like Kleene star or
      * Plus, or binary operators like Union or Concatenation for example.
      */
-    private class RPQQueryVisitor : RPQBaseVisitor<ParseTree>() {
+    private class RPQQueryVisitor(val query: Query) : RPQBaseVisitor<ParseTree>() {
 
         override fun visitUnaryExpression(@NotNull ctx: RPQParser.UnaryExpressionContext): ParseTree {
 
-            val result = ParseTree()
+            val result = ParseTree(query)
 
             if (ctx.unaryOperator().PLUS() != null) {
                 // PLUS
@@ -77,7 +76,7 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
 
         override fun visitBinaryExpression(@NotNull ctx: RPQParser.BinaryExpressionContext): ParseTree {
 
-            val result = ParseTree()
+            val result = ParseTree(query)
 
             if (ctx.binaryOperator().UNION() != null) {
                 // UNION
@@ -96,8 +95,7 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
 
         override fun visitLeaf(@NotNull ctx: RPQParser.LeafContext): ParseTree {
 
-            val result = ParseTree()
-            result.operator = ParseTree.LEAF
+            val result = ParseTree(query, ParseTree.LEAF)
             result.setLeaf(ctx.LABEL().text)
 
             return result

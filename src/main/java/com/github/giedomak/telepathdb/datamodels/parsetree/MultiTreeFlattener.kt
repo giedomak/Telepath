@@ -40,7 +40,7 @@ object MultiTreeFlattener {
      * @param tree The given input ParseTree.
      * @return A flattened ParseTree from the given input.
      */
-    fun flatten(tree: MultiTree): MultiTree {
+    fun <ImplementingTree : MultiTree<ImplementingTree>> flatten(tree: ImplementingTree): ImplementingTree {
 
         // Break recursion once we've found a leaf.
         if (tree.isLeaf) return tree

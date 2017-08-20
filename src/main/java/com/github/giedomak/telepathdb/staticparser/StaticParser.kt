@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb.staticparser
 
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 
 /**
@@ -14,5 +15,6 @@ import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
  */
 interface StaticParser {
 
-    fun parse(input: String): ParseTree
+    fun parse(query: Query): ParseTree
+
 }

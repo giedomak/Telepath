@@ -8,6 +8,8 @@
 package com.github.giedomak.telepathdb.datamodels.parsetree;
 
 import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.Query
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -28,8 +30,8 @@ class MultiTreeContainmentTest {
         //   CONCATENATION   CONCATENATION
         //       /   \          /     \
         //      a     b        c       d
-        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), false)
-        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("c", "d"), false)
+        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
+        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("c", "d"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, emptyList())
         root.children.addAll(listOf(s1, s2))
 
@@ -52,8 +54,8 @@ class MultiTreeContainmentTest {
         //  CONCATENATION  c  CONCATENATION
         //       /   \          /     \
         //      a     b        d       e
-        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), false)
-        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d", "e"), false)
+        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
+        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d", "e"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c"))
         root.children.add(0, s1)
         root.children.add(s2)
@@ -75,8 +77,8 @@ class MultiTreeContainmentTest {
         //            CONCATENATION
         //            /  |  |  |  \
         //           a   b  c  d   e
-        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d", "e"), false)
+        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
+        val s2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d", "e"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e"))
 
         assertTrue(root.containsSubtreesThroughOperator(s1, s2, ParseTree.CONCATENATION))
@@ -99,8 +101,8 @@ class MultiTreeContainmentTest {
         //       CONCATENATION  c
         //          /    \
         //         a      b
-        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), false)
-        val s2 = ParseTree(Edge("c"))
+        val s1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
+        val s2 = ParseTree(mock<Query>(), ParseTree.LEAF, Edge("c"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("c"))
         root.children.add(0, s1)
 

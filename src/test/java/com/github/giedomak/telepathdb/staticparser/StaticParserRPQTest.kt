@@ -7,8 +7,10 @@
 
 package com.github.giedomak.telepathdb.staticparser
 
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
+import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -19,7 +21,7 @@ class StaticParserRPQTest {
     @Test
     fun inputBecomesAParseTree() {
         // Parse the input into a ParseTree
-        val actual = StaticParserRPQ.parse("a")
+        val actual = StaticParserRPQ.parse(Query(mock(), "a"))
 
         // Then
         assertEquals(ParseTreeTest.createSimpleParseTree("a"), actual)
@@ -28,7 +30,7 @@ class StaticParserRPQTest {
     @Test
     fun concatenationInput() {
         // Parse the input into a ParseTree
-        val actual = StaticParserRPQ.parse("a/b")
+        val actual = StaticParserRPQ.parse(Query(mock(), "a/b"))
 
         // Create the expected ParseTree
         val a = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
@@ -46,7 +48,7 @@ class StaticParserRPQTest {
     @Test
     fun unionInput() {
         // Parse the input into a ParseTree
-        val actual = StaticParserRPQ.parse("a|b")
+        val actual = StaticParserRPQ.parse(Query(mock(), "a|b"))
 
         // Create the expected ParseTree
         val a = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b"))

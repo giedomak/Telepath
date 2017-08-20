@@ -1,6 +1,5 @@
 package com.github.giedomak.telepathdb.costmodel
 
-import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 import com.github.giedomak.telepathdb.physicallibrary.IndexLookup
 import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
@@ -18,15 +17,15 @@ object AdvancedCostModel : CostModel {
 
         return when (physicalPlan.operator) {
 
-            PhysicalPlan.LOOKUP -> IndexLookup.cost(physicalPlan.cardinality())
+            PhysicalPlan.INDEXLOOKUP -> IndexLookup.cost(physicalPlan.cardinality())
 
             PhysicalPlan.HASHJOIN -> HashJoin.cost(
-                    (physicalPlan.children.first() as PhysicalPlan).cardinality(),
-                    (physicalPlan.children.last() as PhysicalPlan).cardinality())
+                    (physicalPlan.children.first()).cardinality(),
+                    (physicalPlan.children.last()).cardinality())
 
             PhysicalPlan.NESTEDLOOPJOIN -> NestedLoopJoin.cost(
-                    (physicalPlan.children.first() as PhysicalPlan).cardinality(),
-                    (physicalPlan.children.last() as PhysicalPlan).cardinality())
+                    (physicalPlan.children.first()).cardinality(),
+                    (physicalPlan.children.last()).cardinality())
 
             else -> TODO("NOOOOO")
         }

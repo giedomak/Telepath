@@ -21,7 +21,7 @@ class MultiTreeFlattenerTest {
         //         a    CONCATENATION
         //                 /    \
         //                b      c
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
         root.setChild(1, child)
 
@@ -44,8 +44,8 @@ class MultiTreeFlattenerTest {
         //         a  CONCATENATION  d  CONCATENATION
         //                 /    \         /   \
         //                b      c       e     f
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"), false)
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"))
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "d"))
         root.children.add(1, child1)
         root.children.add(3, child2)
@@ -71,8 +71,8 @@ class MultiTreeFlattenerTest {
         //        CONCATENATION    d
         //           /    \
         //          b      c
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), false)
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"), false)
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"))
         child2.children.add(0, child1)
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
         root.setChild(1, child2)
@@ -100,10 +100,10 @@ class MultiTreeFlattenerTest {
         //        b    UNION
         //             /  \
         //            c    d
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b"), false)
+        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
+        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b"))
         child2.children.add(child1)
-        val child3 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e"), false)
+        val child3 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e"))
         child3.children.add(0, child2)
         val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "f"))
         root.children.add(1, child3)
@@ -114,7 +114,7 @@ class MultiTreeFlattenerTest {
         //       a  UNION  e   f
         //          / | \
         //         b  c  d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"), false)
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"))
         val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f"))
         expected.children.add(1, child)
 

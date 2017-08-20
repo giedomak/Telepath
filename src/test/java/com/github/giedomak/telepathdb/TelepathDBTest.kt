@@ -7,13 +7,16 @@
 
 package com.github.giedomak.telepathdb
 
+import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.PathTest
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
 import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
+import com.github.giedomak.telepathdb.planner.Planner
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.nhaarman.mockito_kotlin.*
 import org.hamcrest.CoreMatchers.containsString
@@ -43,12 +46,15 @@ class TelepathDBTest {
     @Test
     fun producesResults() {
 
+        // Mock TelepathDB
+        val telepathDB = spy<TelepathDB>()
+
         // Let's do an end-to-end test for:
         //        CONCATENATION
         //           /   \
         //          a     b
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.LOOKUP, listOf("a", "b"))
+        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
 
@@ -60,16 +66,19 @@ class TelepathDBTest {
 
         // Mocking all the modules we'll use
         val staticParser = mock<StaticParserRPQ> {
-            on { parse("a/b") }.doReturn(input)
+            on { parse(any()) }.doReturn(input)
         }
         val evaluationEngine = mock<EvaluationEngine> {
             on { evaluate(physicalPlan) }.doReturn(expectedPaths.stream())
         }
+        val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
+            on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)
+        }
 
-        val telepathDB = spy<TelepathDB>()
         // Set all the mocks
         telepathDB.staticParser = staticParser
         telepathDB.evaluationEngine = evaluationEngine
+        telepathDB.cardinalityEstimation = cardinalityEstimationMock
         // Don't wait for a second user input --> throw exception
         doReturn("a/b").doThrow(IllegalArgumentException()).whenever(telepathDB).getUserInput(any())
 
