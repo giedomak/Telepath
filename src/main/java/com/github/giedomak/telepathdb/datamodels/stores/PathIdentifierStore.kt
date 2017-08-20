@@ -7,10 +7,10 @@
 
 package com.github.giedomak.telepathdb.datamodels.stores
 
-import com.github.giedomak.telepathdb.datamodels.Edge
-import com.github.giedomak.telepathdb.datamodels.Node
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
+import com.github.giedomak.telepathdb.datamodels.graph.Node
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.kPathIdentifierStore
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.maxId
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore

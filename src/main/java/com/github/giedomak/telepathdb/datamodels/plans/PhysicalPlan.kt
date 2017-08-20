@@ -1,17 +1,17 @@
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
 import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan.Companion.HASHJOIN
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan.Companion.HASHJOIN
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 
 /**
  * Representation of the physical plan.
  *
- * This class extends MultiTree and and has physical operators instread of logical operators in comparison
- * to the [ParseTree] class.
+ * This class extends AbstractMultiTree and and has physical operators instread of logical operators in comparison
+ * to the [LogicalPlan] class.
  *
  * @property query We always need a reference to our query which holds all the module implementations we'll need.
  * @property operator An [Int] representing the physical operator. See [HASHJOIN] for an example.
@@ -22,7 +22,7 @@ import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 class PhysicalPlan(
         query: Query,
         override var operator: Int = 0
-) : MultiTree<PhysicalPlan>(query) {
+) : AbstractMultiTree<PhysicalPlan>(query) {
 
     override val operatorName get() = SYMBOLIC_NAMES[operator]
     var memoryManagerId = -1L
@@ -31,7 +31,7 @@ class PhysicalPlan(
      * Directly construct a PhysicalPlan for the given [leaf].
      *
      * @param query We always need a reference to a query.
-     * @param leaf The [Edge] which will be the leaf of this ParseTree.
+     * @param leaf The [Edge] which will be the leaf of this LogicalPlan.
      */
     constructor(query: Query, leaf: Edge) : this(query, INDEXLOOKUP) {
         // Create and set the child-leaf as a child of our INDEXLOOKUP

@@ -8,13 +8,13 @@
 package com.github.giedomak.telepathdb.staticparser
 
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 
 /**
- * Parse the query language into our internal representation, i.e. a [ParseTree].
+ * Parse the query language into our internal representation, i.e. a [LogicalPlan].
  */
 interface StaticParser {
 
-    fun parse(query: Query): ParseTree
+    fun parse(query: Query): LogicalPlan
 
 }

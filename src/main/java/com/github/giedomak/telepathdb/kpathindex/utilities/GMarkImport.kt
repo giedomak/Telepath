@@ -7,12 +7,11 @@
 
 package com.github.giedomak.telepathdb.kpathindex.utilities
 
-import com.github.giedomak.telepathdb.datamodels.Node
-import com.github.giedomak.telepathdb.datamodels.Path
+import com.github.giedomak.telepathdb.datamodels.graph.Node
+import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.utilities.Logger
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
-
+import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException

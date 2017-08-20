@@ -5,13 +5,14 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
 
+import com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.util.*
 
 /**
- * Class to print a [ParseTree].
+ * Class to print a [LogicalPlan].
  *
  * Example: your input: `a/(b+|c)|d`
  *
@@ -41,9 +42,9 @@ object MultiTreePrinter {
     /**
      * Static method we should call with the root parseTree as parameter in order to print it.
      *
-     * @param root The root of the ParseTree we want to print
+     * @param root The root of the LogicalPlan we want to print
      */
-    fun printMultiTree(root: MultiTree<*>) {
+    fun printMultiTree(root: AbstractMultiTree<*>) {
         val maxLevel = maxLevel(root)
 
         Logger.debug("", false)
@@ -52,7 +53,7 @@ object MultiTreePrinter {
 
     }
 
-    private fun printNodeInternal(nodes: List<MultiTree<*>?>, level: Int, maxLevel: Int) {
+    private fun printNodeInternal(nodes: List<AbstractMultiTree<*>?>, level: Int, maxLevel: Int) {
         if (nodes.isEmpty() || isAllElementsNull(nodes))
             return
 
@@ -63,7 +64,7 @@ object MultiTreePrinter {
 
         printWhitespaces(firstSpaces)
 
-        val newNodes = mutableListOf<MultiTree<*>?>()
+        val newNodes = mutableListOf<AbstractMultiTree<*>?>()
         for (node in nodes) {
             if (node != null) {
                 print(node.nodeRepresentation)
@@ -124,7 +125,7 @@ object MultiTreePrinter {
             print(" ")
     }
 
-    private fun maxLevel(node: MultiTree<*>): Int {
+    private fun maxLevel(node: AbstractMultiTree<*>): Int {
         if (node.isLeaf)
             return 1
 

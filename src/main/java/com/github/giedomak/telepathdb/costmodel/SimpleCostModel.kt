@@ -1,6 +1,6 @@
 package com.github.giedomak.telepathdb.costmodel
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 
 object SimpleCostModel : CostModel {
 

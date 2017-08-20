@@ -10,12 +10,12 @@ package com.github.giedomak.telepathdb
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
+import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
-import com.github.giedomak.telepathdb.planner.Planner
+import com.github.giedomak.telepathdb.planner.DynamicProgrammingPlanner
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.IOException
@@ -24,12 +24,14 @@ import kotlin.streams.toList
 
 object TelepathDB {
 
+    // ------ MODULES ------
+
     var staticParser = StaticParserRPQ
     val kPathIndex = KPathIndexInMemory()
-    var evaluationEngine = EvaluationEngine(kPathIndex)
+    var evaluationEngine = SimpleEvaluationEngine(kPathIndex)
     val costModel = AdvancedCostModel
     var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
-    val planner = Planner
+    val planner = DynamicProgrammingPlanner
 
     private val scanner = Scanner(System.`in`)
 

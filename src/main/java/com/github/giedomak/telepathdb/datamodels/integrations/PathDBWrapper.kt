@@ -7,6 +7,9 @@
 
 package com.github.giedomak.telepathdb.datamodels.integrations
 
+import com.github.giedomak.telepathdb.datamodels.graph.Node
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import java.util.stream.Collectors
 
 /**
@@ -14,33 +17,33 @@ import java.util.stream.Collectors
  */
 object PathDBWrapper {
 
-    fun toPath(path: com.github.giedomak.telepathdb.datamodels.Path): com.pathdb.pathIndex.Path {
+    fun toPath(path: Path): com.pathdb.pathIndex.Path {
         return com.pathdb.pathIndex.Path(path.pathId, toNodeList(path.nodes))
     }
 
-    fun fromPath(path: com.pathdb.pathIndex.Path): com.github.giedomak.telepathdb.datamodels.Path {
-        return com.github.giedomak.telepathdb.datamodels.Path(path.pathId, fromNodeList(path.nodes))
+    fun fromPath(path: com.pathdb.pathIndex.Path): Path {
+        return Path(path.pathId, fromNodeList(path.nodes))
     }
 
-    fun toPathPrefix(pathPrefix: com.github.giedomak.telepathdb.datamodels.PathPrefix): com.pathdb.pathIndex.PathPrefix {
+    fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.PathPrefix {
         return com.pathdb.pathIndex.PathPrefix(pathPrefix.pathId, pathPrefix.length, toNodeList(pathPrefix.nodes))
     }
 
-    fun toNode(node: com.github.giedomak.telepathdb.datamodels.Node): com.pathdb.pathIndex.Node {
+    fun toNode(node: Node): com.pathdb.pathIndex.Node {
         return com.pathdb.pathIndex.Node(node.id)
     }
 
-    fun fromNode(node: com.pathdb.pathIndex.Node): com.github.giedomak.telepathdb.datamodels.Node {
-        return com.github.giedomak.telepathdb.datamodels.Node(node.id)
+    fun fromNode(node: com.pathdb.pathIndex.Node): Node {
+        return Node(node.id)
     }
 
-    fun toNodeList(nodes: List<com.github.giedomak.telepathdb.datamodels.Node>): List<com.pathdb.pathIndex.Node> {
+    fun toNodeList(nodes: List<Node>): List<com.pathdb.pathIndex.Node> {
         return nodes.stream()
                 .map { toNode(it) }
                 .collect(Collectors.toList())
     }
 
-    fun fromNodeList(nodes: List<com.pathdb.pathIndex.Node>): List<com.github.giedomak.telepathdb.datamodels.Node> {
+    fun fromNodeList(nodes: List<com.pathdb.pathIndex.Node>): List<Node> {
         return nodes.stream()
                 .map { fromNode(it) }
                 .collect(Collectors.toList())

@@ -7,11 +7,11 @@
 
 package com.github.giedomak.telepathdb.evaluationengine
 
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.PathTest
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.nhaarman.mockito_kotlin.doReturn
@@ -20,7 +20,7 @@ import org.junit.Test
 import kotlin.streams.toList
 import kotlin.test.assertEquals
 
-class EvaluationEngineTest {
+class SimpleEvaluationEngineTest {
 
     @Test
     fun evaluateLookup() {
@@ -45,8 +45,8 @@ class EvaluationEngineTest {
         //        a    b
         val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
 
-        // Gather the actual results from our EvaluationEngine.
-        val actual = EvaluationEngine(kPathIndexMock).evaluate(physicalPlan).toList()
+        // Gather the actual results from our SimpleEvaluationEngine.
+        val actual = SimpleEvaluationEngine(kPathIndexMock).evaluate(physicalPlan).paths.toList()
 
         assertEquals(expected, actual)
     }
@@ -79,7 +79,7 @@ class EvaluationEngineTest {
 //        //       CONCATENATION
 //        //        / | | | \
 //        //       a  b c d  e
-//        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e"))
+//        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c", "d", "e"))
 //
 //        // Our physical-plan:
 //        //       HASHJOIN
@@ -87,10 +87,10 @@ class EvaluationEngineTest {
 //        //    INDEXLOOKUP  INDEXLOOKUP
 //        //     / \    / | \
 //        //    a   b  c  d  e
-//        val physicalPlan = Planner.generate(input)
+//        val physicalPlan = DynamicProgrammingPlanner.generate(input)
 //
-//        // Gather the actual results from our EvaluationEngine.
-//        val actual = EvaluationEngine(mock).evaluate(physicalPlan).toList()
+//        // Gather the actual results from our SimpleEvaluationEngine.
+//        val actual = SimpleEvaluationEngine(mock).evaluate(physicalPlan).toList()
 //
 //        assertEquals(listOf(Path(id3, PathTest.increasingNodes(6, 42))), actual)
 //    }

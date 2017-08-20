@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.kpathindex.utilities
 
-import com.github.giedomak.telepathdb.datamodels.Node
-import com.github.giedomak.telepathdb.datamodels.Path
+import com.github.giedomak.telepathdb.datamodels.graph.Node
+import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.nhaarman.mockito_kotlin.any

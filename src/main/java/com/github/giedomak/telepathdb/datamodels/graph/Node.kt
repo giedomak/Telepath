@@ -5,9 +5,14 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels
+package com.github.giedomak.telepathdb.datamodels.graph
+
+import java.io.Serializable
 
 /**
- * Data class for our Edge model.
+ * Data class for our Node model.
+ *
+ * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java for the
+ * implementation in PathDB.
  */
-data class Edge(val label: String)
+data class Node(val id: Long) : Serializable

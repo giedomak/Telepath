@@ -1,8 +1,8 @@
 package com.github.giedomak.telepathdb.physicallibrary
 
 import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import java.util.stream.Stream
 
 class IndexLookup(

@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.staticparser.rpq
 
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import org.antlr.v4.runtime.ANTLRInputStream
 import org.antlr.v4.runtime.CommonTokenStream
 import org.antlr.v4.runtime.misc.NotNull
@@ -17,14 +17,14 @@ import rpq.RPQLexer
 import rpq.RPQParser
 
 /**
- * Parse the RPQ ANTLR4 AST into our internal ParseTree model.
+ * Parse the RPQ ANTLR4 AST into our internal LogicalPlan model.
  *
  * Auto-generated ANTLR files are stored in `target/generated-sources/antlr4`.
  *
  * We use the Visitor approach instead of the Listener approach.
  * Inspiration: http://jakubdziworski.github.io/java/2016/04/01/antlr_visitor_vs_listener.html
  */
-class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
+class RPQVisitorParser : RPQBaseVisitor<LogicalPlan>() {
 
     /**
      * This is the main method which we need to call if we want to parse a RPQ.
@@ -32,9 +32,9 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
      * Here we define to start parsing the input using the query() rule.
      *
      * @param RPQSourceCode The complete RPQ formatted as a String
-     * @return ParseTree The complete ParseTree after recursively traversing the complete ANTLR AST.
+     * @return LogicalPlan The complete LogicalPlan after recursively traversing the complete ANTLR AST.
      */
-    fun parse(query: Query): ParseTree {
+    fun parse(query: Query): LogicalPlan {
 
         // Setup the lexer and parser
         val lexer = RPQLexer(ANTLRInputStream(query.input))
@@ -50,22 +50,22 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
      *
      * This class extends the RPQBaseVisitor class and contains the
      * appropriate visitor methods, "listeners". These methods will be "fired" if we visit one of the
-     * rules from the RPQ grammar while visiting the ANTLR ParseTree. The overridden methods from
+     * rules from the RPQ grammar while visiting the ANTLR LogicalPlan. The overridden methods from
      * RPQBaseVisitor allow us to check if we are dealing with unary operators like Kleene star or
      * Plus, or binary operators like Union or Concatenation for example.
      */
-    private class RPQQueryVisitor(val query: Query) : RPQBaseVisitor<ParseTree>() {
+    private class RPQQueryVisitor(val query: Query) : RPQBaseVisitor<LogicalPlan>() {
 
-        override fun visitUnaryExpression(@NotNull ctx: RPQParser.UnaryExpressionContext): ParseTree {
+        override fun visitUnaryExpression(@NotNull ctx: RPQParser.UnaryExpressionContext): LogicalPlan {
 
-            val result = ParseTree(query)
+            val result = LogicalPlan(query)
 
             if (ctx.unaryOperator().PLUS() != null) {
                 // PLUS
-                result.operator = ParseTree.PLUS
+                result.operator = LogicalPlan.PLUS
             } else if (ctx.unaryOperator().KLEENE_STAR() != null) {
                 // KLEENE STAR
-                result.operator = ParseTree.KLEENE_STAR
+                result.operator = LogicalPlan.KLEENE_STAR
             }
 
             // Recurse on the left-side for which this operator was intended
@@ -74,16 +74,16 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
             return result
         }
 
-        override fun visitBinaryExpression(@NotNull ctx: RPQParser.BinaryExpressionContext): ParseTree {
+        override fun visitBinaryExpression(@NotNull ctx: RPQParser.BinaryExpressionContext): LogicalPlan {
 
-            val result = ParseTree(query)
+            val result = LogicalPlan(query)
 
             if (ctx.binaryOperator().UNION() != null) {
                 // UNION
-                result.operator = ParseTree.UNION
+                result.operator = LogicalPlan.UNION
             } else if (ctx.binaryOperator().CONJUNCTION() != null) {
                 // CONCATENATION
-                result.operator = ParseTree.CONCATENATION
+                result.operator = LogicalPlan.CONCATENATION
             }
 
             // Recurse on the left-side and the right-side for which this operator was intended
@@ -93,15 +93,15 @@ class RPQVisitorParser : RPQBaseVisitor<ParseTree>() {
             return result
         }
 
-        override fun visitLeaf(@NotNull ctx: RPQParser.LeafContext): ParseTree {
+        override fun visitLeaf(@NotNull ctx: RPQParser.LeafContext): LogicalPlan {
 
-            val result = ParseTree(query, ParseTree.LEAF)
+            val result = LogicalPlan(query, LogicalPlan.LEAF)
             result.setLeaf(ctx.LABEL().text)
 
             return result
         }
 
-        override fun visitParenthesis(@NotNull ctx: RPQParser.ParenthesisContext): ParseTree {
+        override fun visitParenthesis(@NotNull ctx: RPQParser.ParenthesisContext): LogicalPlan {
             return visit(ctx.query())
         }
     }

@@ -5,7 +5,10 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
+
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeSizes.subtreesOfSize
 
 /**
  * Abstract the [subtreesOfSize] functionality into its own class.
@@ -15,13 +18,13 @@ object ParseTreeSizes {
     /**
      * Get the size of this parsetree. This recurses through its children, we should augment our tree --> time is money.
      */
-    fun getSize(tree: ParseTree): Int {
+    fun getSize(tree: LogicalPlan): Int {
 
         // Switch case on operator
         return when (tree.operator) {
 
-            ParseTree.LEAF -> 1
-            ParseTree.KLEENE_STAR -> tree.children.sumBy { getSize(it) } + 1
+            LogicalPlan.LEAF -> 1
+            LogicalPlan.KLEENE_STAR -> tree.children.sumBy { getSize(it) } + 1
 
             else -> tree.children.sumBy { getSize(it) }
         }
@@ -48,13 +51,13 @@ object ParseTreeSizes {
      *
      * @param targetSize We are looking for all (partial) subtrees of this size.
      */
-    fun subtreesOfSize(tree: ParseTree, targetSize: Int): List<ParseTree> {
+    fun subtreesOfSize(tree: LogicalPlan, targetSize: Int): List<LogicalPlan> {
 
         // Break recursion if we are the targetSize
         if (getSize(tree) == targetSize) return listOf(tree)
 
         // Init our results list
-        val subtrees = mutableListOf<ParseTree>()
+        val subtrees = mutableListOf<LogicalPlan>()
 
         for ((index, child) in tree.children.withIndex()) {
 

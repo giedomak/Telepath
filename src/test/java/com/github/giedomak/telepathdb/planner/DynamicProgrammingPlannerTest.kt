@@ -10,17 +10,17 @@ package com.github.giedomak.telepathdb.planner
 import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class PlannerTest {
+class DynamicProgrammingPlannerTest {
 
     // MOCKS
 
@@ -30,7 +30,7 @@ class PlannerTest {
 
     val telepathDBMock = mock<TelepathDB> {
         on { cardinalityEstimation }.doReturn(cardinalityEstimationMock)
-        on { planner }.doReturn(Planner)
+        on { planner }.doReturn(DynamicProgrammingPlanner)
     }
 
     val queryMock = mock<Query> {
@@ -40,8 +40,8 @@ class PlannerTest {
     @Test
     fun generatesSimplePhysicalPlan() {
 
-        // Generate the ParseTree for input
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), queryMock)
+        // Generate the LogicalPlan for input
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), queryMock)
 
         // Generate the physical plan
         val actual = telepathDBMock.planner.generate(input)
@@ -61,8 +61,8 @@ class PlannerTest {
         //       a   CONCATENATION
         //              /   \
         //             b     c
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"), queryMock)
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"), queryMock)
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b", "c"), queryMock)
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a"), queryMock)
         input.setChild(1, child)
 
         // Parse the input

@@ -1,4 +1,4 @@
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
 import com.nhaarman.mockito_kotlin.mock
 
@@ -10,7 +10,7 @@ class PhysicalPlanTest {
 
     companion object {
 
-        // ParseTree with 1 level of children, root will get the operator param.
+        // LogicalPlan with 1 level of children, root will get the operator param.
         fun generatePhysicalPlan(operator: Int, labels: List<String>): PhysicalPlan {
             val physicalPlan = PhysicalPlan(mock(), operator)
 

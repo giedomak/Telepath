@@ -5,12 +5,15 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
+
+import com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 
 object MultiTreeContainment {
 
     /**
-     * Given a root [ParseTree], check if [s1] and [s2] are contained as subtrees in [root] through the given [operatorId].
+     * Given a root [LogicalPlan], check if [s1] and [s2] are contained as subtrees in [root] through the given [operatorId].
      *
      * Since we could be dealing with partial subtrees, we have to flatten again...
      *
@@ -28,15 +31,15 @@ object MultiTreeContainment {
      *
      * containsSublistOfChildren(tree, s1, s2) should equal true.
      *
-     * @param root The root ParseTree we'll be using to check containment of given subtrees.
+     * @param root The root LogicalPlan we'll be using to check containment of given subtrees.
      * @param s1 The first subtree.
      * @param s2 The second subtree.
      * @param operatorId The operator through which [s1] and [s2] are connected.
      * @return True if [s1] and [s2] are connected through [operatorId] and contained in [root].
      */
-    fun containsSubtreesThroughOperator(root: ParseTree, s1: ParseTree, s2: ParseTree, operatorId: Int): Boolean {
+    fun containsSubtreesThroughOperator(root: LogicalPlan, s1: LogicalPlan, s2: LogicalPlan, operatorId: Int): Boolean {
 
-        val subtrees = mutableListOf<MultiTree<*>>()
+        val subtrees = mutableListOf<AbstractMultiTree<*>>()
 
         // If we are dealing with a subtree that is rooted with the same operator as the one we will be checking,
         // we only have to consider its children.
@@ -54,7 +57,7 @@ object MultiTreeContainment {
     /**
      * Given a list of ParseTrees, check with a sliding window if any sublist equals a given list of subtrees.
      */
-    private fun containsSublistOfChildren(children: List<MultiTree<*>>, subtrees: List<MultiTree<*>>): Boolean {
+    private fun containsSublistOfChildren(children: List<AbstractMultiTree<*>>, subtrees: List<AbstractMultiTree<*>>): Boolean {
 
         // We move a sliding window over the children of the given tree, and check for sublist equality.
         return 0.rangeTo(children.size - subtrees.size).any {

@@ -5,7 +5,9 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
+
+import com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree
 
 /**
  * Flatten ParseTrees into multi-trees.
@@ -35,12 +37,12 @@ package com.github.giedomak.telepathdb.datamodels.parsetree
 object MultiTreeFlattener {
 
     /**
-     * Flatten a given ParseTree recursively into a multi-tree.
+     * Flatten a given LogicalPlan recursively into a multi-tree.
      *
-     * @param tree The given input ParseTree.
-     * @return A flattened ParseTree from the given input.
+     * @param tree The given input LogicalPlan.
+     * @return A flattened LogicalPlan from the given input.
      */
-    fun <ImplementingTree : MultiTree<ImplementingTree>> flatten(tree: ImplementingTree): ImplementingTree {
+    fun <ImplementingTree : AbstractMultiTree<ImplementingTree>> flatten(tree: ImplementingTree): ImplementingTree {
 
         // Break recursion once we've found a leaf.
         if (tree.isLeaf) return tree
