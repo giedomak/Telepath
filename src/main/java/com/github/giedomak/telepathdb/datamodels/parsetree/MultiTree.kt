@@ -1,14 +1,15 @@
 package com.github.giedomak.telepathdb.datamodels.parsetree
 
 import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.Query
 
-abstract class MultiTree(
-        var isRoot: Boolean = false,
+abstract class MultiTree<ImplementingTree : MultiTree<ImplementingTree>>(
+        val query: Query,
         var leaf: Edge? = null
 ) : Cloneable {
 
     abstract var operator: Int
-    var children = mutableListOf<MultiTree>()
+    var children = mutableListOf<ImplementingTree>()
     val nodeRepresentation get() = (leaf?.label ?: operatorName + "[" + children.size + "]")
 
     // Convert the operator identifier back to its symbolic name.
@@ -41,7 +42,7 @@ abstract class MultiTree(
      * @param index Index of the child
      * @return Child at the given index from our [children] list.
      */
-    fun getChild(index: Int): MultiTree? {
+    fun getChild(index: Int): ImplementingTree? {
         return children.getOrNull(index)
     }
 
@@ -52,8 +53,7 @@ abstract class MultiTree(
      * @param index Index of the child.
      * @param tree ParseTree we will be setting as our child.
      */
-    fun setChild(index: Int, tree: MultiTree) {
-        tree.isRoot = false
+    fun setChild(index: Int, tree: ImplementingTree) {
         if (hasChild(index)) {
             this.children[index] = tree
         } else {
@@ -62,30 +62,40 @@ abstract class MultiTree(
     }
 
     /**
-     * Deep clone the current parsetree.
+     * Deep clone; also clone its children recusively.
      *
-     * @return A deep clone of the current parsetree.
+     * @return A deep clone of the calling [ImplementingTree].
      */
-    public override fun clone(): MultiTree {
+    public override fun clone(): ImplementingTree {
 
-        // make a clone of the current tree
-        val clonedTree = super.clone() as MultiTree
+        // Make a clone of the current tree; yes yes, we can cast here.
+        @Suppress("UNCHECKED_CAST")
+        val clonedTree = super.clone() as ImplementingTree
 
-        // recursively clone the children so that we don't keep references to the same objects
+        // Recursively clone the children so that we don't keep references to the same objects
         clonedTree.children = this.children.mapTo(mutableListOf(), { it.clone() })
 
         return clonedTree
     }
 
     /**
-     * Post-order treewalk.
+     * Post-order traversal.
      *
-     * @return [Sequence] of ParseTrees
+     * We expect the following tree to report 2, 5, 6, 3, 4, 1.
+     *
+     *          1
+     *        / | \
+     *       2  3  4
+     *         / \
+     *        5   6
+     *
+     * @return [Sequence] of [ImplementingTree] in post-order sequence.
      */
-    fun <T : MultiTree> postOrderTreeWalk(): Sequence<T> {
+    fun postOrderTraversal(): Sequence<ImplementingTree> {
+        @Suppress("UNCHECKED_CAST")
         return children.asSequence()
-                .flatMap { it.postOrderTreeWalk<T>() }
-                .plusElement(this as T)
+                .flatMap { it.postOrderTraversal() }
+                .plusElement(this as ImplementingTree)
     }
 
     /**
@@ -108,8 +118,9 @@ abstract class MultiTree(
     /**
      * Delegate parse-tree-flattening to our [MultiTreeFlattener].
      */
-    fun flatten(): MultiTree {
-        return MultiTreeFlattener.flatten(this)
+    fun flatten(): ImplementingTree {
+        @Suppress("UNCHECKED_CAST")
+        return MultiTreeFlattener.flatten(this as ImplementingTree)
     }
 
     //
@@ -120,7 +131,7 @@ abstract class MultiTree(
         if (this === other) return true
         if (other?.javaClass != javaClass) return false
 
-        other as MultiTree
+        other as MultiTree<*>
 
         if (leaf != other.leaf) return false
         if (operator != other.operator) return false

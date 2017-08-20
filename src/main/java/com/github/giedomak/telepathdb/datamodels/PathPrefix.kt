@@ -7,7 +7,6 @@
 
 package com.github.giedomak.telepathdb.datamodels
 
-import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.util.*
 
@@ -39,7 +38,6 @@ class PathPrefix(pathId: Long) : AbstractPath(pathId) {
     var length = 0
     var nodes = emptyList<Node>()
     val prefixLength get() = nodes.size
-    val cardinality get() = CardinalityEstimation.getCardinality(pathId)
 
     /**
      * @constructor Creates a PathPrefix where we also want to restrict our query with a [nodes] list.

@@ -43,7 +43,7 @@ object MultiTreePrinter {
      *
      * @param root The root of the ParseTree we want to print
      */
-    fun printMultiTree(root: MultiTree) {
+    fun printMultiTree(root: MultiTree<*>) {
         val maxLevel = maxLevel(root)
 
         Logger.debug("", false)
@@ -52,7 +52,7 @@ object MultiTreePrinter {
 
     }
 
-    private fun printNodeInternal(nodes: List<MultiTree?>, level: Int, maxLevel: Int) {
+    private fun printNodeInternal(nodes: List<MultiTree<*>?>, level: Int, maxLevel: Int) {
         if (nodes.isEmpty() || isAllElementsNull(nodes))
             return
 
@@ -63,7 +63,7 @@ object MultiTreePrinter {
 
         printWhitespaces(firstSpaces)
 
-        val newNodes = ArrayList<MultiTree?>()
+        val newNodes = mutableListOf<MultiTree<*>?>()
         for (node in nodes) {
             if (node != null) {
                 print(node.nodeRepresentation)
@@ -124,7 +124,7 @@ object MultiTreePrinter {
             print(" ")
     }
 
-    private fun maxLevel(node: MultiTree): Int {
+    private fun maxLevel(node: MultiTree<*>): Int {
         if (node.isLeaf)
             return 1
 

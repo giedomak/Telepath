@@ -10,11 +10,9 @@ package com.github.giedomak.telepathdb.evaluationengine
 import com.github.giedomak.telepathdb.datamodels.Path
 import com.github.giedomak.telepathdb.datamodels.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.PathStream
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
 import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
-import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
 import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.util.stream.Stream
@@ -30,15 +28,15 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
 
         // Make sure we do an Postorder treewalk, this way we gather all the information from the leafs first
         for (child in physicalPlan.children) {
-            evaluate(child as PhysicalPlan)
+            evaluate(child)
         }
 
         // Perform the Operations
         val results = when (physicalPlan.operator) {
 
-            PhysicalPlan.LOOKUP -> {
+            PhysicalPlan.INDEXLOOKUP -> {
                 // Collect results from the leafs and add them in the intermediateResults HashMap
-                val search = PathPrefix(physicalPlan.pathIdOfLookup())
+                val search = PathPrefix(physicalPlan.pathIdOfChildren())
                 kPathIndex.search(search)
             }
 
@@ -55,6 +53,6 @@ class EvaluationEngine(private val kPathIndex: KPathIndex) {
     }
 
     private fun getChild(physicalPlan: PhysicalPlan, index: Int): PathStream {
-        return PathStream(MemoryManager[(physicalPlan.getChild(index)!! as PhysicalPlan).memoryManagerId])
+        return PathStream(MemoryManager[(physicalPlan.getChild(index)!!).memoryManagerId])
     }
 }

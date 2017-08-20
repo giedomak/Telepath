@@ -20,7 +20,7 @@ class ParseTreeSizesTest {
         //       a    b  UNION
         //                / \
         //               c   d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
         val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
         input.children.add(child)
 
@@ -29,8 +29,8 @@ class ParseTreeSizesTest {
         //       /  \         / \
         //      a    b       c   d
         val expected = listOf(
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), true),
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
+                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b")),
+                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
         )
 
         val actual = input.subtreesOfSize(2)
@@ -46,7 +46,7 @@ class ParseTreeSizesTest {
         //       a  UNION  e  f   g
         //          / | \
         //         b  c  d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"), false)
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"))
         val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f", "g"))
         input.children.add(1, child)
 
@@ -55,10 +55,10 @@ class ParseTreeSizesTest {
         //      / \     / \         /   \            /   \
         //     b   c   c   d       e     f          f     g
         val expected = listOf(
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c"), false),
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false),
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"), true),
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("f", "g"), true)
+                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c")),
+                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d")),
+                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f")),
+                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("f", "g"))
         )
 
         val actual = input.subtreesOfSize(2)
@@ -74,7 +74,7 @@ class ParseTreeSizesTest {
         //       a   b  UNION  d
         //               / \
         //              c   d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"), false)
+        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
         val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "d"))
         input.children.add(2, child)
 
@@ -84,9 +84,9 @@ class ParseTreeSizesTest {
         //        b   UNION       UNION   d
         //             / \         / \
         //            c   d       c   d
-        val expected1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b"), true)
+        val expected1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b"))
         expected1.children.add(child)
-        val expected2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"), true)
+        val expected2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"))
         expected2.children.add(0, child)
         val expected = listOf(expected1, expected2)
 

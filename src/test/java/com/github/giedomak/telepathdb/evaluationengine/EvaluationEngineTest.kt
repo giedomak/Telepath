@@ -7,14 +7,13 @@
 
 package com.github.giedomak.telepathdb.evaluationengine
 
-import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
-import com.github.giedomak.telepathdb.datamodels.*
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.Path
+import com.github.giedomak.telepathdb.datamodels.PathPrefix
+import com.github.giedomak.telepathdb.datamodels.PathTest
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
-import com.github.giedomak.telepathdb.planner.Planner
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
@@ -36,24 +35,18 @@ class EvaluationEngineTest {
         )
 
         // Mock our KPathIndexInMemory in order to return the expected results.
-        val mock = mock<KPathIndexInMemory> {
+        val kPathIndexMock = mock<KPathIndexInMemory> {
             on { search(PathPrefix(id)) }.doReturn(expected.stream())
         }
 
-        // The input:
-        //       CONCATENATION
-        //          /   \
-        //         a     b
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
-
         // Our physical-plan:
-        //        LOOKUP
+        //      INDEXLOOKUP
         //         /  \
         //        a    b
-        val physicalPlan = Planner.generate(input)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
 
         // Gather the actual results from our EvaluationEngine.
-        val actual = EvaluationEngine(mock).evaluate(physicalPlan).toList()
+        val actual = EvaluationEngine(kPathIndexMock).evaluate(physicalPlan).toList()
 
         assertEquals(expected, actual)
     }
@@ -91,7 +84,7 @@ class EvaluationEngineTest {
 //        // Our physical-plan:
 //        //       HASHJOIN
 //        //        /    \
-//        //    LOOKUP  LOOKUP
+//        //    INDEXLOOKUP  INDEXLOOKUP
 //        //     / \    / | \
 //        //    a   b  c  d  e
 //        val physicalPlan = Planner.generate(input)

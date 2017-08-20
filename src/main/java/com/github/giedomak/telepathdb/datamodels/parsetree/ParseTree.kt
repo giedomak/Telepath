@@ -8,6 +8,7 @@
 package com.github.giedomak.telepathdb.datamodels.parsetree
 
 import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion
 import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.CONCATENATION
 
@@ -32,20 +33,12 @@ import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.C
  * @constructor Create a non-root empty ParseTree.
  */
 class ParseTree(
-        isRoot: Boolean = false,
-        override var operator: Int = 0
-) : MultiTree(isRoot) {
+        query: Query,
+        override var operator: Int = 0,
+        leaf: Edge? = null
+) : MultiTree<ParseTree>(query, leaf) {
 
     override val operatorName get() = SYMBOLIC_NAMES[operator]
-
-    /**
-     * Directly construct a non-root ParseTree for the given [leaf].
-     *
-     * @param leaf The [Edge] which will be the leaf of this ParseTree.
-     */
-    constructor(leaf: Edge) : this() {
-        this.leaf = leaf
-    }
 
     /**
      * Delegate parse-tree-union-pulling to our [ParseTreeUnionPuller].
@@ -79,14 +72,14 @@ class ParseTree(
      * @return Boolean indicating if the tree contains the operator.
      */
     fun contains(operatorId: Int): Boolean {
-        return postOrderTreeWalk<ParseTree>().any { it.operator == operatorId }
+        return postOrderTraversal().any { it.operator == operatorId }
     }
 
     fun mergeAndFlatten(tree: ParseTree, operator: Int): ParseTree {
-        val root = ParseTree(false, operator)
+        val root = ParseTree(query, operator)
         root.children.add(this.clone())
         root.children.add(tree.clone())
-        return root.flatten() as ParseTree
+        return root.flatten()
     }
 
     //

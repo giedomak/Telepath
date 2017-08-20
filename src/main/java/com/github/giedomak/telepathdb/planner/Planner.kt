@@ -21,7 +21,7 @@ object Planner {
         val physicalPlans = mutableListOf<PhysicalPlan>()
 
         // Check if an IndexLookup is applicable
-        val plan = tree1.merge(tree2, PhysicalPlan.LOOKUP).flatten() as PhysicalPlan
+        val plan = tree1.merge(tree2, PhysicalPlan.INDEXLOOKUP).flatten()
 
         // TODO: k should be k-index dependent
         if (plan.level() == 2 && plan.children.size <= 3) {
@@ -34,7 +34,6 @@ object Planner {
         return physicalPlans
     }
 
-
     fun generate(tree: ParseTree): PhysicalPlan {
 
         tree.flatten()
@@ -44,7 +43,7 @@ object Planner {
         val bestPlans = hashMapOf<Int, PhysicalPlan>()
 
         // Init the BestPlan for all sub-paths of size 1
-        tree.subtreesOfSize(1).forEach { bestPlans.put(it.hashCode(), PhysicalPlan(it.leaf!!)) }
+        tree.subtreesOfSize(1).forEach { bestPlans.put(it.hashCode(), PhysicalPlan(tree.query, it.leaf!!)) }
 
         for (size in 2..n) {
 

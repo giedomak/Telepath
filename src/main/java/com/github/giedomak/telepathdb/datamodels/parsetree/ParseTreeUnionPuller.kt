@@ -7,9 +7,6 @@
 
 package com.github.giedomak.telepathdb.datamodels.parsetree
 
-import com.github.giedomak.telepathdb.utilities.Logger
-import java.util.stream.Collectors
-
 /**
  * Split a [ParseTree] on Union into multiple ParseTrees.
  *
@@ -29,55 +26,58 @@ object ParseTreeUnionPuller {
     fun parse(parseTree: ParseTree): List<ParseTree> {
 
         val parseTrees = mutableListOf<ParseTree>()
-        parseTrees.add(parseTree)
 
-        // Print the parsed ParseTree
-        parseTree.print()
+        // TODO: Has to be refactored now that a parseTree doesn't have the isRoot property anymore.
 
-        // List to hold the ParseTrees which UNIONS in them
-        var unionTrees = emptyList<ParseTree>()
-
-        // Collect the ParseTrees which contain the UNION operator
-        while ({
-            unionTrees = parseTrees.stream()
-                    .filter { it.contains(ParseTree.UNION) }
-                    .collect(Collectors.toList())
-            unionTrees
-        }().isNotEmpty()) {
-
-            // For each of those trees with the UNION operator in them
-            for (tree in unionTrees) {
-
-                // Split them immediately when the Root is the UNION operator
-                if (tree.isRoot && tree.operator == ParseTree.UNION) {
-
-                    // Remove the current tree from the list, and add its children to our parseTrees var
-                    parseTrees.remove(tree)
-                    for (child in tree.children) {
-                        val cloned = child.clone() as ParseTree
-                        cloned.isRoot = true // This cloned tree is now a root
-                        parseTrees.add(cloned)
-                    }
-                    continue // Continue to the next parsetree containing UNION
-                }
-
-                // Deep clone the current tree
-                val clone = tree.clone() as ParseTree
-
-                // Recursively remove the first UNION we find doing a pre-order treewalk.
-                // Replace the UNION node with its left child in the original tree, and with the
-                // right child in the clone of the original tree.
-                removeFirstUnion(tree, 0)
-                removeFirstUnion(clone, 1)
-
-                Logger.debug("UNIONNNN")
-                tree.print()
-                clone.print()
-
-                // We still have to add the clone to the list
-                parseTrees.add(clone)
-            }
-        }
+//        parseTrees.add(parseTree)
+//
+//        // Print the parsed ParseTree
+//        parseTree.print()
+//
+//        // List to hold the ParseTrees which UNIONS in them
+//        var unionTrees = emptyList<ParseTree>()
+//
+//        // Collect the ParseTrees which contain the UNION operator
+//        while ({
+//            unionTrees = parseTrees.stream()
+//                    .filter { it.contains(ParseTree.UNION) }
+//                    .collect(Collectors.toList())
+//            unionTrees
+//        }().isNotEmpty()) {
+//
+//            // For each of those trees with the UNION operator in them
+//            for (tree in unionTrees) {
+//
+//                // Split them immediately when the Root is the UNION operator
+//                if (tree.isRoot && tree.operator == ParseTree.UNION) {
+//
+//                    // Remove the current tree from the list, and add its children to our parseTrees var
+//                    parseTrees.remove(tree)
+//                    for (child in tree.children) {
+//                        val cloned = child.clone() as ParseTree
+//                        cloned.isRoot = true // This cloned tree is now a root
+//                        parseTrees.add(cloned)
+//                    }
+//                    continue // Continue to the next parsetree containing UNION
+//                }
+//
+//                // Deep clone the current tree
+//                val clone = tree.clone() as ParseTree
+//
+//                // Recursively remove the first UNION we find doing a pre-order treewalk.
+//                // Replace the UNION node with its left child in the original tree, and with the
+//                // right child in the clone of the original tree.
+//                removeFirstUnion(tree, 0)
+//                removeFirstUnion(clone, 1)
+//
+//                Logger.debug("UNIONNNN")
+//                tree.print()
+//                clone.print()
+//
+//                // We still have to add the clone to the list
+//                parseTrees.add(clone)
+//            }
+//        }
 
         return parseTrees
     }
@@ -103,7 +103,7 @@ object ParseTreeUnionPuller {
             // Check if our child is a UNION node. If so, replace it with the childChooserIndex of our child.
             if (child.operator == ParseTree.UNION) {
                 val index = tree.children.indexOf(child)
-                tree.setChild(index, child.getChild(childChooserIndex)!! as ParseTree)
+                tree.setChild(index, child.getChild(childChooserIndex)!!)
                 // Return if we've found one, breaking the recursive call
                 return true
             }
@@ -111,7 +111,7 @@ object ParseTreeUnionPuller {
 
         // Traverse to the left child if we haven't found a UNION node already
         for (child in tree.children) {
-            if (removeFirstUnion(child as ParseTree, childChooserIndex)) {
+            if (removeFirstUnion(child, childChooserIndex)) {
                 return true
             }
         }
