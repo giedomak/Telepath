@@ -1,11 +1,14 @@
 package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan.Companion.HASHJOIN
-import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
+import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
+import com.github.giedomak.telepathdb.physicallibrary.operators.HashJoin
+import com.github.giedomak.telepathdb.physicallibrary.operators.IndexLookup
+import com.github.giedomak.telepathdb.physicallibrary.operators.NestedLoopJoin
+import com.github.giedomak.telepathdb.physicallibrary.operators.PhysicalOperator
 
 /**
  * Representation of the physical plan.
@@ -27,6 +30,8 @@ class PhysicalPlan(
     override val operatorName get() = SYMBOLIC_NAMES[operator]
     var memoryManagerId = -1L
 
+    val physicalOperator get() = PhysicalLibrary.getPhysicalOperator(this)
+
     /**
      * Directly construct a PhysicalPlan for the given [leaf].
      *
@@ -41,7 +46,7 @@ class PhysicalPlan(
     }
 
     fun pathIdOfChildren(): Long {
-        return PathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
+        return query.telepathDB.pathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
     }
 
     fun cardinality(): Long {
@@ -49,7 +54,7 @@ class PhysicalPlan(
     }
 
     fun cost(): Long {
-        return TelepathDB.costModel.cost(this)
+        return query.telepathDB.costModel.cost(this)
     }
 
     fun merge(tree: PhysicalPlan, operator: Int): PhysicalPlan {

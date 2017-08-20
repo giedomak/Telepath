@@ -9,11 +9,13 @@ package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
+import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -31,6 +33,8 @@ class DynamicProgrammingPlannerTest {
     val telepathDBMock = mock<TelepathDB> {
         on { cardinalityEstimation }.doReturn(cardinalityEstimationMock)
         on { planner }.doReturn(DynamicProgrammingPlanner)
+        on { costModel }.doReturn(AdvancedCostModel)
+        on { pathIdentifierStore }.doReturn(PathIdentifierStore)
     }
 
     val queryMock = mock<Query> {

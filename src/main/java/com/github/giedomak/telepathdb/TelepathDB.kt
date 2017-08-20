@@ -10,6 +10,7 @@ package com.github.giedomak.telepathdb
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
@@ -28,10 +29,16 @@ object TelepathDB {
 
     var staticParser = StaticParserRPQ
     val kPathIndex = KPathIndexInMemory()
-    var evaluationEngine = SimpleEvaluationEngine(kPathIndex)
+    var evaluationEngine = SimpleEvaluationEngine
     val costModel = AdvancedCostModel
     var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
     val planner = DynamicProgrammingPlanner
+
+    // ------ STORES -------
+
+    val pathIdentifierStore = PathIdentifierStore
+
+    // ------ PRIVATE ------
 
     private val scanner = Scanner(System.`in`)
 

@@ -7,7 +7,9 @@
 
 package com.github.giedomak.telepathdb.evaluationengine
 
+import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.PathTest
+import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
@@ -39,14 +41,24 @@ class SimpleEvaluationEngineTest {
             on { search(PathPrefix(id)) }.doReturn(expected.stream())
         }
 
+        val telepathDBMock = mock<TelepathDB> {
+            on { evaluationEngine }.doReturn(SimpleEvaluationEngine)
+            on { kPathIndex }.doReturn(kPathIndexMock)
+            on { pathIdentifierStore }.doReturn(PathIdentifierStore)
+        }
+
+        val queryMock = mock<Query> {
+            on { telepathDB }.doReturn(telepathDBMock)
+        }
+
         // Our physical-plan:
         //      INDEXLOOKUP
         //         /  \
         //        a    b
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"), queryMock)
 
         // Gather the actual results from our SimpleEvaluationEngine.
-        val actual = SimpleEvaluationEngine(kPathIndexMock).evaluate(physicalPlan).paths.toList()
+        val actual = SimpleEvaluationEngine.evaluate(physicalPlan).paths.toList()
 
         assertEquals(expected, actual)
     }
@@ -70,9 +82,19 @@ class SimpleEvaluationEngineTest {
         )
 
         // Mock our KPathIndexInMemory in order to return the expected results.
-        val mock = mock<KPathIndexInMemory> {
+        val kPathIndexMock = mock<KPathIndexInMemory> {
             on { search(PathPrefix(id1)) }.doReturn(expected1.stream())
             on { search(PathPrefix(id2)) }.doReturn(expected2.stream())
+        }
+
+        val telepathDBMock = mock<TelepathDB> {
+            on { evaluationEngine }.doReturn(SimpleEvaluationEngine)
+            on { kPathIndex }.doReturn(kPathIndexMock)
+            on { pathIdentifierStore }.doReturn(PathIdentifierStore)
+        }
+
+        val queryMock = mock<Query> {
+            on { telepathDB }.doReturn(telepathDBMock)
         }
 
         // Our physical-plan:
@@ -81,13 +103,13 @@ class SimpleEvaluationEngineTest {
         //  INDEXLOOKUP INDEXLOOKUP
         //      / \      / | \
         //     a   b    c  d  e
-        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
-        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("c", "d", "e"))
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.HASHJOIN, listOf())
+        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"), queryMock)
+        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("c", "d", "e"), queryMock)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.HASHJOIN, listOf(), queryMock)
         physicalPlan.children.addAll(listOf(child1, child2))
 
         // Gather the actual results from our SimpleEvaluationEngine.
-        val actual = SimpleEvaluationEngine(mock).evaluate(physicalPlan).paths.toList()
+        val actual = SimpleEvaluationEngine.evaluate(physicalPlan).paths.toList()
 
         assertEquals(listOf(Path(id3, PathTest.increasingNodes(6, 42))), actual)
     }

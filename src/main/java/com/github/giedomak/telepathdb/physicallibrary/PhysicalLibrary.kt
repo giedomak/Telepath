@@ -9,7 +9,11 @@ package com.github.giedomak.telepathdb.physicallibrary
 
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
-import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.physicallibrary.operators.HashJoin
+import com.github.giedomak.telepathdb.physicallibrary.operators.IndexLookup
+import com.github.giedomak.telepathdb.physicallibrary.operators.NestedLoopJoin
+import com.github.giedomak.telepathdb.physicallibrary.operators.PhysicalOperator
 import java.util.stream.Stream
 
 /**
@@ -35,10 +39,15 @@ object PhysicalLibrary {
         }
     }
 
-    // ------------- CONCATENATION ---------------
+    fun getPhysicalOperator(physicalPlan: PhysicalPlan) : PhysicalOperator {
 
-    fun concatenation(stream1: Stream<Path>, stream2: Stream<Path>): Stream<Path> {
-        return HashJoin(PathStream(stream1), PathStream(stream2)).evaluate()
+        return when (physicalPlan.operator) {
+            PhysicalPlan.INDEXLOOKUP -> IndexLookup(physicalPlan)
+            PhysicalPlan.HASHJOIN -> HashJoin(physicalPlan)
+            PhysicalPlan.NESTEDLOOPJOIN -> NestedLoopJoin(physicalPlan)
+
+            else -> TODO("Gotta catch em all")
+        }
     }
 
 }
