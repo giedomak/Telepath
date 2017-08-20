@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb
 
-import com.github.giedomak.telepathdb.utilities.Logger
+import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
@@ -15,6 +15,7 @@ import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.planner.Planner
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
+import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.IOException
 import java.util.*
 import kotlin.streams.toList
@@ -24,6 +25,7 @@ object TelepathDB {
     var staticParser = StaticParserRPQ
     val kPathIndex = KPathIndexInMemory()
     var evaluationEngine = EvaluationEngine(kPathIndex)
+    val costModel = AdvancedCostModel
 
     private val scanner = Scanner(System.`in`)
 
@@ -33,7 +35,8 @@ object TelepathDB {
      * @param args Not needed.
      * @throws IOException
      */
-    @JvmStatic fun main(args: Array<String>?) {
+    @JvmStatic
+    fun main(args: Array<String>?) {
 
         // Setup our environment
         setup()

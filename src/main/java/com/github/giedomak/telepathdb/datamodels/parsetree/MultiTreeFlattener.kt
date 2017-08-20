@@ -32,40 +32,40 @@ package com.github.giedomak.telepathdb.datamodels.parsetree
  *          / | \
  *         b  c  d
  */
-object ParseTreeFlattener {
+object MultiTreeFlattener {
 
     /**
      * Flatten a given ParseTree recursively into a multi-tree.
      *
-     * @param parseTree The given input ParseTree.
+     * @param tree The given input ParseTree.
      * @return A flattened ParseTree from the given input.
      */
-    fun flatten(parseTree: ParseTree): ParseTree {
+    fun flatten(tree: MultiTree): MultiTree {
 
         // Break recursion once we've found a leaf.
-        if (parseTree.isLeaf) return parseTree
+        if (tree.isLeaf) return tree
 
         // Since we could be escalating multiple children from the same parent, we have to track these escalations.
         var offset = 0
 
-        for (index in parseTree.children.indices) {
+        for (index in tree.children.indices) {
 
             // Flatten each child recursively
-            val child = parseTree.children[index + offset]
+            val child = tree.children[index + offset]
             val flattenedChild = flatten(child)
 
             // The subtree rooted at flattenedChild, should all be flattened now.
             // So escalate its children if the operators match.
-            if (child.operatorId == parseTree.operatorId) {
+            if (child.operator == tree.operator) {
 
-                parseTree.children.removeAt(index + offset)
-                parseTree.children.addAll(index + offset, flattenedChild.children)
+                tree.children.removeAt(index + offset)
+                tree.children.addAll(index + offset, flattenedChild.children)
 
                 offset += flattenedChild.children.size - 1
             }
         }
 
         // We're done
-        return parseTree
+        return tree
     }
 }

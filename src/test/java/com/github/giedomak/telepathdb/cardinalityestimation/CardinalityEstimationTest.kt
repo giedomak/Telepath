@@ -29,7 +29,7 @@ class CardinalityEstimationTest {
         assertEquals(3, PathPrefix(71).cardinality)
         assertEquals(2, PathPrefix(90).cardinality)
         assertEquals(1, PathPrefix(99).cardinality)
-        assertEquals(0, PathPrefix(1039).cardinality, "returns 0 on non-existing pathId")
+        assertEquals(1, PathPrefix(1039).cardinality, "returns 0 on non-existing pathId")
     }
 
     @Before

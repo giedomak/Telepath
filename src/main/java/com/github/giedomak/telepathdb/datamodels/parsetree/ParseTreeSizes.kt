@@ -15,15 +15,15 @@ object ParseTreeSizes {
     /**
      * Get the size of this parsetree. This recurses through its children, we should augment our tree --> time is money.
      */
-    private fun getSize(tree: ParseTree): Int {
+    fun getSize(tree: ParseTree): Int {
 
-        // Switch case on operatorId
-        return when (tree.operatorId) {
+        // Switch case on operator
+        return when (tree.operator) {
 
             ParseTree.LEAF -> 1
-            ParseTree.KLEENE_STAR -> tree.children.sumBy { getSize(it) } + 1
+            ParseTree.KLEENE_STAR -> tree.children.sumBy { getSize(it as ParseTree) } + 1
 
-            else -> tree.children.sumBy { getSize(it) }
+            else -> tree.children.sumBy { getSize(it as ParseTree) }
         }
     }
 
@@ -59,7 +59,7 @@ object ParseTreeSizes {
         for ((index, child) in tree.children.withIndex()) {
 
             // Cache the size of this child
-            var accumulatedSize = getSize(child)
+            var accumulatedSize = getSize(child as ParseTree)
 
             // If the size of this child is smaller than the targetSize, we'll try to concatenate with our
             // brothers and sisters. We'll traverse increasingly linearly.
@@ -69,7 +69,7 @@ object ParseTreeSizes {
                 for (toIndex in (index + 1)..(tree.children.size - 1)) {
 
                     // Add the size of our brother to the accumulatedSize
-                    accumulatedSize += getSize(tree.children[toIndex])
+                    accumulatedSize += getSize(tree.children[toIndex] as ParseTree)
 
                     // If we've jumped over our targetSize, we'll just try again with our brother as starting child.
                     if (accumulatedSize > targetSize) break
@@ -77,7 +77,7 @@ object ParseTreeSizes {
                     // Yay, we've found a subList which has our beloved targetSize.
                     if (accumulatedSize == targetSize) {
                         // Clone our tree since we are modifying it, and set the subList as its children.
-                        val clone = tree.clone()
+                        val clone = tree.clone() as ParseTree
                         clone.children = clone.children.subList(index, toIndex + 1)
                         // Add to the results, and we're done for this window.
                         subtrees.add(clone)
