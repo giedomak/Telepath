@@ -51,47 +51,44 @@ class SimpleEvaluationEngineTest {
         assertEquals(expected, actual)
     }
 
-//    @Test
-//    fun evaluateLookupWithIntermediateResults() {
-//
-//        // Make the path along edge labels `a - b` known to the PathIdentifierStore.
-//        val id1 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
-//        val id2 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("c", "d", "e"))
-//        val id3 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b", "c", "d", "e"))
-//
-//        // Our expected results, i.e. the Paths along the edge labels `a - b`.
-//        val expected1 = listOf(
-//                Path(id1, PathTest.increasingNodes(3, 40)),
-//                Path(id1, PathTest.increasingNodes(3, 42))
-//        )
-//        val expected2 = listOf(
-//                Path(id2, PathTest.increasingNodes(4, 44)),
-//                Path(id2, PathTest.increasingNodes(4, 46))
-//        )
-//
-//        // Mock our KPathIndexInMemory in order to return the expected results.
-//        val mock = mock<KPathIndexInMemory> {
-//            on { search(PathPrefix(id1)) }.doReturn(expected1.stream())
-//            on { search(PathPrefix(id2)) }.doReturn(expected2.stream())
-//        }
-//
-//        // The input:
-//        //       CONCATENATION
-//        //        / | | | \
-//        //       a  b c d  e
-//        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c", "d", "e"))
-//
-//        // Our physical-plan:
-//        //       HASHJOIN
-//        //        /    \
-//        //    INDEXLOOKUP  INDEXLOOKUP
-//        //     / \    / | \
-//        //    a   b  c  d  e
-//        val physicalPlan = DynamicProgrammingPlanner.generate(input)
-//
-//        // Gather the actual results from our SimpleEvaluationEngine.
-//        val actual = SimpleEvaluationEngine(mock).evaluate(physicalPlan).toList()
-//
-//        assertEquals(listOf(Path(id3, PathTest.increasingNodes(6, 42))), actual)
-//    }
+    @Test
+    fun evaluateLookupWithIntermediateResults() {
+
+        // Make the path along edge labels `a - b` known to the PathIdentifierStore.
+        val id1 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
+        val id2 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("c", "d", "e"))
+        val id3 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b", "c", "d", "e"))
+
+        // Our expected results, i.e. the Paths along the edge labels `a - b`.
+        val expected1 = listOf(
+                Path(id1, PathTest.increasingNodes(3, 40)),
+                Path(id1, PathTest.increasingNodes(3, 42))
+        )
+        val expected2 = listOf(
+                Path(id2, PathTest.increasingNodes(4, 44)),
+                Path(id2, PathTest.increasingNodes(4, 46))
+        )
+
+        // Mock our KPathIndexInMemory in order to return the expected results.
+        val mock = mock<KPathIndexInMemory> {
+            on { search(PathPrefix(id1)) }.doReturn(expected1.stream())
+            on { search(PathPrefix(id2)) }.doReturn(expected2.stream())
+        }
+
+        // Our physical-plan:
+        //         HASHJOIN
+        //          /    \
+        //  INDEXLOOKUP INDEXLOOKUP
+        //      / \      / | \
+        //     a   b    c  d  e
+        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
+        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("c", "d", "e"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.HASHJOIN, listOf())
+        physicalPlan.children.addAll(listOf(child1, child2))
+
+        // Gather the actual results from our SimpleEvaluationEngine.
+        val actual = SimpleEvaluationEngine(mock).evaluate(physicalPlan).paths.toList()
+
+        assertEquals(listOf(Path(id3, PathTest.increasingNodes(6, 42))), actual)
+    }
 }
