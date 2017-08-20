@@ -1,9 +1,11 @@
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeFlattener
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreePrinter
 
-abstract class MultiTree<ImplementingTree : MultiTree<ImplementingTree>>(
+abstract class AbstractMultiTree<ImplementingTree : AbstractMultiTree<ImplementingTree>>(
         val query: Query,
         var leaf: Edge? = null
 ) : Cloneable {
@@ -20,7 +22,7 @@ abstract class MultiTree<ImplementingTree : MultiTree<ImplementingTree>>(
     /**
      * Set the leaf by giving in a [String] which we'll convert to an [Edge].
      *
-     * @param label The String for which we create an [Edge] and set it as leaf in this ParseTree.
+     * @param label The String for which we create an [Edge] and set it as leaf in this LogicalPlan.
      */
     fun setLeaf(label: String) {
         this.leaf = Edge(label)
@@ -51,7 +53,7 @@ abstract class MultiTree<ImplementingTree : MultiTree<ImplementingTree>>(
      * We'll replace or add when needed.
      *
      * @param index Index of the child.
-     * @param tree ParseTree we will be setting as our child.
+     * @param tree LogicalPlan we will be setting as our child.
      */
     fun setChild(index: Int, tree: ImplementingTree) {
         if (hasChild(index)) {
@@ -131,7 +133,7 @@ abstract class MultiTree<ImplementingTree : MultiTree<ImplementingTree>>(
         if (this === other) return true
         if (other?.javaClass != javaClass) return false
 
-        other as MultiTree<*>
+        other as AbstractMultiTree<*>
 
         if (leaf != other.leaf) return false
         if (operator != other.operator) return false

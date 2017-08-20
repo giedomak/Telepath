@@ -5,12 +5,12 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class MultiTreeFlattenerTest {
+class AbstractMultiTreeFlattenerTest {
 
     @Test
     fun flattensConcatenation() {
@@ -21,15 +21,15 @@ class MultiTreeFlattenerTest {
         //         a    CONCATENATION
         //                 /    \
         //                b      c
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
-        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b", "c"))
+        val root = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a"))
         root.setChild(1, child)
 
         // Expected:
         //       CONCATENATION
         //          /  |  \
         //         a   b   c
-        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c"))
+        val expected = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c"))
 
         // Then
         assertEquals(expected, root.flatten())
@@ -44,9 +44,9 @@ class MultiTreeFlattenerTest {
         //         a  CONCATENATION  d  CONCATENATION
         //                 /    \         /   \
         //                b      c       e     f
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f"))
-        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "d"))
+        val child1 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b", "c"))
+        val child2 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("e", "f"))
+        val root = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "d"))
         root.children.add(1, child1)
         root.children.add(3, child2)
 
@@ -54,7 +54,7 @@ class MultiTreeFlattenerTest {
         //          CONCATENATION
         //          /  / | | | \
         //         a  b  c d e  f
-        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
+        val expected = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c", "d", "e", "f"))
 
         // Then
         assertEquals(expected, root.flatten())
@@ -71,17 +71,17 @@ class MultiTreeFlattenerTest {
         //        CONCATENATION    d
         //           /    \
         //          b      c
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b", "c"))
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"))
+        val child1 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b", "c"))
+        val child2 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("d"))
         child2.children.add(0, child1)
-        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a"))
+        val root = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a"))
         root.setChild(1, child2)
 
         // Expected:
         //        CONCATENATION
         //          /  |  |  \
         //         a   b  c   c
-        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "c", "d"))
+        val expected = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c", "d"))
 
         // Then
         assertEquals(expected, root.flatten())
@@ -100,12 +100,12 @@ class MultiTreeFlattenerTest {
         //        b    UNION
         //             /  \
         //            c    d
-        val child1 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
-        val child2 = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b"))
+        val child1 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d"))
+        val child2 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b"))
         child2.children.add(child1)
-        val child3 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e"))
+        val child3 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("e"))
         child3.children.add(0, child2)
-        val root = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "f"))
+        val root = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "f"))
         root.children.add(1, child3)
 
         // Expected:
@@ -114,8 +114,8 @@ class MultiTreeFlattenerTest {
         //       a  UNION  e   f
         //          / | \
         //         b  c  d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"))
-        val expected = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f"))
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b", "c", "d"))
+        val expected = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "e", "f"))
         expected.children.add(1, child)
 
         // Then

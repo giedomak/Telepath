@@ -10,13 +10,13 @@ package com.github.giedomak.telepathdb
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.graph.PathStream
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
-import com.github.giedomak.telepathdb.planner.Planner
+import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.nhaarman.mockito_kotlin.*
 import org.hamcrest.CoreMatchers.containsString
@@ -53,7 +53,7 @@ class TelepathDBTest {
         //        CONCATENATION
         //           /   \
         //          a     b
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
         val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
@@ -68,8 +68,8 @@ class TelepathDBTest {
         val staticParser = mock<StaticParserRPQ> {
             on { parse(any()) }.doReturn(input)
         }
-        val evaluationEngine = mock<EvaluationEngine> {
-            on { evaluate(physicalPlan) }.doReturn(expectedPaths.stream())
+        val evaluationEngine = mock<SimpleEvaluationEngine> {
+            on { evaluate(physicalPlan) }.doReturn(PathStream(expectedPaths.stream()))
         }
         val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
             on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)

@@ -8,8 +8,8 @@
 package com.github.giedomak.telepathdb.staticparser
 
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeTest
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
@@ -20,23 +20,23 @@ class StaticParserRPQTest {
 
     @Test
     fun inputBecomesAParseTree() {
-        // Parse the input into a ParseTree
-        val actual = StaticParserRPQ.parse(Query(mock(), "a"))
+        // Parse the input into a LogicalPlan
+        val actual = StaticParserRPQ.parse(Query(mock(), "a/b"))
 
         // Then
-        assertEquals(ParseTreeTest.createSimpleParseTree("a"), actual)
+        assertEquals(LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b")), actual)
     }
 
     @Test
     fun concatenationInput() {
-        // Parse the input into a ParseTree
+        // Parse the input into a LogicalPlan
         val actual = StaticParserRPQ.parse(Query(mock(), "a/b"))
 
-        // Create the expected ParseTree
-        val a = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b"))
-        val b = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "c"))
-        val c = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("b", "b"))
-        val d = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, Arrays.asList("a", "b", "c"))
+        // Create the expected LogicalPlan
+        val a = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, Arrays.asList("a", "b"))
+        val b = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, Arrays.asList("a", "c"))
+        val c = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, Arrays.asList("b", "b"))
+        val d = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, Arrays.asList("a", "b", "c"))
 
         // Then
         assertEquals(a, actual)
@@ -47,14 +47,14 @@ class StaticParserRPQTest {
 
     @Test
     fun unionInput() {
-        // Parse the input into a ParseTree
+        // Parse the input into a LogicalPlan
         val actual = StaticParserRPQ.parse(Query(mock(), "a|b"))
 
-        // Create the expected ParseTree
-        val a = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b"))
-        val b = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "c"))
-        val c = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("b", "b"))
-        val d = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, Arrays.asList("a", "b", "c"))
+        // Create the expected LogicalPlan
+        val a = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, Arrays.asList("a", "b"))
+        val b = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, Arrays.asList("a", "c"))
+        val c = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, Arrays.asList("b", "b"))
+        val d = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, Arrays.asList("a", "b", "c"))
 
         // Then
         assertEquals(a, actual)

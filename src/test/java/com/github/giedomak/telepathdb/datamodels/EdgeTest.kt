@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels
 
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test

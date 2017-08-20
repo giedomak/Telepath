@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.physicallibrary.joins
 
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathStream
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.physicallibrary.BinaryPhysicalOperator
@@ -31,7 +31,7 @@ class HashJoin(
      * @param stream2 Second stream of paths we'll join on its firstNode().
      * @return A stream with the concatenated paths of stream1 and stream2.
      */
-     override fun evaluate(): Stream<Path> {
+    override fun evaluate(): Stream<Path> {
 
         // Make sure we get a free slot in the MemoryManager
         val offset = MemoryManager.maxId + 1

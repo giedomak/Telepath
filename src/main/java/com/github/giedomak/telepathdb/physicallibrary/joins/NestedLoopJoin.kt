@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.physicallibrary.joins
 
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathStream
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.physicallibrary.BinaryPhysicalOperator

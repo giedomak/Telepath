@@ -5,7 +5,7 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels
+package com.github.giedomak.telepathdb.datamodels.graph
 
 import java.io.Serializable
 

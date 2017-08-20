@@ -7,6 +7,8 @@
 
 package com.github.giedomak.telepathdb.datamodels
 
+import com.github.giedomak.telepathdb.datamodels.graph.Node
+import com.github.giedomak.telepathdb.datamodels.graph.Path
 import junit.framework.TestCase.assertFalse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals

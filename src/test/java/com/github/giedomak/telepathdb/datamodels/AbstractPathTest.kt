@@ -1,5 +1,6 @@
 package com.github.giedomak.telepathdb.datamodels
 
+import com.github.giedomak.telepathdb.datamodels.graph.AbstractPath
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertThat
 import org.junit.Test

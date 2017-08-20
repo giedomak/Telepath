@@ -5,12 +5,15 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.CONCATENATION
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion.CONCATENATION
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeSizes
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeUnionPuller
 
 /**
  * Data-structure to represent the given user input, and physical plans.
@@ -20,7 +23,7 @@ import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.C
  *
  * User input will get parsed through ANTLR into a parseTree by the [StaticParserRPQ][com.telepathdb.staticparser.StaticParserRPQ].
  *
- * The [Planner][com.telepathdb.planner.Planner] will parse such a parseTree from user input, into a physical plan.
+ * The [DynamicProgrammingPlanner][com.telepathdb.planner.DynamicProgrammingPlanner] will parse such a parseTree from user input, into a physical plan.
  * These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.
  *
  * @property id An ID given to a parseTree in order to make the life of the [MemoryManager][com.telepathdb.memorymanager.MemoryManager] easier.
@@ -30,20 +33,20 @@ import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree.Companion.C
  * @property isLeaf Boolean value indicating if this parseTree is a leaf.
  * @property nodeRepresentation Get a String representing the leaf or operator. I.e. `a` or `CONCATENATION[3]`.
  * @property leaf The payload when this parseTree is a leaf, given as an [Edge].
- * @constructor Create a non-root empty ParseTree.
+ * @constructor Create a non-root empty LogicalPlan.
  */
-class ParseTree(
+class LogicalPlan(
         query: Query,
         override var operator: Int = 0,
         leaf: Edge? = null
-) : MultiTree<ParseTree>(query, leaf) {
+) : AbstractMultiTree<LogicalPlan>(query, leaf) {
 
     override val operatorName get() = SYMBOLIC_NAMES[operator]
 
     /**
      * Delegate parse-tree-union-pulling to our [ParseTreeUnionPuller].
      */
-    fun pullUnions(): List<ParseTree> {
+    fun pullUnions(): List<LogicalPlan> {
         return ParseTreeUnionPuller.parse(this)
     }
 
@@ -54,29 +57,29 @@ class ParseTree(
     /**
      * Delegate parse-tree-sizing to our [ParseTreeSizes].
      */
-    fun subtreesOfSize(targetSize: Int): List<ParseTree> {
+    fun subtreesOfSize(targetSize: Int): List<LogicalPlan> {
         return ParseTreeSizes.subtreesOfSize(this, targetSize)
     }
 
     /**
      * Delegate parse-tree-containment to our [MultiTreeContainment].
      */
-    fun containsSubtreesThroughOperator(s1: ParseTree, s2: ParseTree, operatorId: Int): Boolean {
+    fun containsSubtreesThroughOperator(s1: LogicalPlan, s2: LogicalPlan, operatorId: Int): Boolean {
         return MultiTreeContainment.containsSubtreesThroughOperator(this, s1, s2, operatorId)
     }
 
     /**
      * Check if the current tree contains a given operator.
      *
-     * @param operatorId The operator constant (e.g. ParseTree.UNION) to check for containment in the tree.
+     * @param operatorId The operator constant (e.g. LogicalPlan.UNION) to check for containment in the tree.
      * @return Boolean indicating if the tree contains the operator.
      */
     fun contains(operatorId: Int): Boolean {
         return postOrderTraversal().any { it.operator == operatorId }
     }
 
-    fun mergeAndFlatten(tree: ParseTree, operator: Int): ParseTree {
-        val root = ParseTree(query, operator)
+    fun mergeAndFlatten(tree: LogicalPlan, operator: Int): LogicalPlan {
+        val root = LogicalPlan(query, operator)
         root.children.add(this.clone())
         root.children.add(tree.clone())
         return root.flatten()

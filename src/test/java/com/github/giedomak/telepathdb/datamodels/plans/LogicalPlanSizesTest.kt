@@ -5,12 +5,12 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.parsetree
+package com.github.giedomak.telepathdb.datamodels.plans
 
 import org.junit.Assert
 import org.junit.Test
 
-class ParseTreeSizesTest {
+class LogicalPlanSizesTest {
 
     @Test
     fun subtreesOfSize2() {
@@ -20,8 +20,8 @@ class ParseTreeSizesTest {
         //       a    b  UNION
         //                / \
         //               c   d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b"))
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d"))
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"))
         input.children.add(child)
 
         // Expected:
@@ -29,8 +29,8 @@ class ParseTreeSizesTest {
         //       /  \         / \
         //      a    b       c   d
         val expected = listOf(
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b")),
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b")),
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d"))
         )
 
         val actual = input.subtreesOfSize(2)
@@ -46,8 +46,8 @@ class ParseTreeSizesTest {
         //       a  UNION  e  f   g
         //          / | \
         //         b  c  d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c", "d"))
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "e", "f", "g"))
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b", "c", "d"))
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "e", "f", "g"))
         input.children.add(1, child)
 
         // Expected:
@@ -55,10 +55,10 @@ class ParseTreeSizesTest {
         //      / \     / \         /   \            /   \
         //     b   c   c   d       e     f          f     g
         val expected = listOf(
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("b", "c")),
-                ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d")),
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("e", "f")),
-                ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("f", "g"))
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b", "c")),
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d")),
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("e", "f")),
+                LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("f", "g"))
         )
 
         val actual = input.subtreesOfSize(2)
@@ -74,8 +74,8 @@ class ParseTreeSizesTest {
         //       a   b  UNION  d
         //               / \
         //              c   d
-        val child = ParseTreeTest.create1LevelParseTree(ParseTree.UNION, listOf("c", "d"))
-        val input = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("a", "b", "d"))
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d"))
+        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "d"))
         input.children.add(2, child)
 
         // Expected:
@@ -84,9 +84,9 @@ class ParseTreeSizesTest {
         //        b   UNION       UNION   d
         //             / \         / \
         //            c   d       c   d
-        val expected1 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("b"))
+        val expected1 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b"))
         expected1.children.add(child)
-        val expected2 = ParseTreeTest.create1LevelParseTree(ParseTree.CONCATENATION, listOf("d"))
+        val expected2 = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("d"))
         expected2.children.add(0, child)
         val expected = listOf(expected1, expected2)
 

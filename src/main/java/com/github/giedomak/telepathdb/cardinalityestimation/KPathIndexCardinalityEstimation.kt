@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.cardinalityestimation
 
-import com.github.giedomak.telepathdb.datamodels.parsetree.PhysicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 
 class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : CardinalityEstimation {

@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.kpathindex
 
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathPrefix
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.integrations.PathDBWrapper
 import com.github.giedomak.telepathdb.memorymanager.spliterator.FixedBatchSpliterator
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory

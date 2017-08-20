@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels.stores
 
-import com.github.giedomak.telepathdb.datamodels.Edge
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import java.util.*
 
 /**

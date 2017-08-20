@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.cardinalityestimation
 
 import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.datamodels.Path
+import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import org.junit.Before
 import org.junit.Test

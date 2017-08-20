@@ -8,7 +8,7 @@
 package com.github.giedomak.telepathdb.staticparser
 
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.staticparser.rpq.RPQVisitorParser
 import com.github.giedomak.telepathdb.utilities.Logger
 
@@ -17,14 +17,14 @@ import com.github.giedomak.telepathdb.utilities.Logger
  */
 object StaticParserRPQ : StaticParser {
 
-    override fun parse(query: Query): ParseTree {
+    override fun parse(query: Query): LogicalPlan {
 
         Logger.info("Your input: " + query.input)
         val rpqVisitorParser = RPQVisitorParser()
 
         val parseTree = rpqVisitorParser.parse(query)
 
-        // Print the parsed ParseTree
+        // Print the parsed LogicalPlan
         parseTree.print()
 
         return parseTree

@@ -7,10 +7,9 @@
 
 package com.github.giedomak.telepathdb.physicallibrary
 
-import com.github.giedomak.telepathdb.datamodels.Path
-import com.github.giedomak.telepathdb.datamodels.PathStream
+import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin
-import com.github.giedomak.telepathdb.physicallibrary.joins.NestedLoopJoin
 import java.util.stream.Stream
 
 /**
