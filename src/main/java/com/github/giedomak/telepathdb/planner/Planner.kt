@@ -23,6 +23,7 @@ object Planner {
         // Check if an IndexLookup is applicable
         val plan = tree1.merge(tree2, PhysicalPlan.LOOKUP).flatten() as PhysicalPlan
 
+        // TODO: k should be k-index dependent
         if (plan.level() == 2 && plan.children.size <= 3) {
             physicalPlans.add(plan)
         }
