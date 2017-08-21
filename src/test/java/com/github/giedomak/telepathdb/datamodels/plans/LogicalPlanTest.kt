@@ -82,7 +82,7 @@ class LogicalPlanTest {
 
     companion object {
 
-        // LogicalPlan with 1 level of children, root will get the operator param.
+        // LogicalPlan with 1 height of children, root will get the operator param.
         fun generateLogicalPlan(operator: Int, labels: List<String>, query: Query = mock()): LogicalPlan {
             val parseTree = LogicalPlan(query)
             parseTree.operator = operator

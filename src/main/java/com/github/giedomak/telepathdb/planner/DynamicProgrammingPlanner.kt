@@ -25,7 +25,7 @@ object DynamicProgrammingPlanner : Planner {
         val plan = tree1.merge(tree2, PhysicalOperator.INDEXLOOKUP).flatten()
 
         // TODO: k should be k-index dependent
-        if (plan.level() == 2 && plan.children.size <= 3) {
+        if (plan.height() == 1 && plan.children.size <= 3) {
             physicalPlans.add(plan)
         }
 

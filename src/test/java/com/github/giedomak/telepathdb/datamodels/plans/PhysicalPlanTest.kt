@@ -11,7 +11,7 @@ class PhysicalPlanTest {
 
     companion object {
 
-        // LogicalPlan with 1 level of children, root will get the operator param.
+        // LogicalPlan with 1 height of children, root will get the operator param.
         fun generatePhysicalPlan(operator: Int, labels: List<String>, query: Query = mock()): PhysicalPlan {
             val physicalPlan = PhysicalPlan(query, operator)
 
