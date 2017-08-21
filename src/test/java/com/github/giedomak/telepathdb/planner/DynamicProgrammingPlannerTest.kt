@@ -52,7 +52,7 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"))
 
         assertEquals(expected, actual)
     }
@@ -74,10 +74,10 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        //      INDEXLOOKUP
+        //      INDEX_LOOKUP
         //        /  |  \
         //       a   b   c
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b", "c"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b", "c"))
 
         assertEquals(expected, actual)
     }

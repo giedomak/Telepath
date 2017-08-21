@@ -22,15 +22,16 @@ object DynamicProgrammingPlanner : Planner {
         val physicalPlans = mutableListOf<PhysicalPlan>()
 
         // Check if an IndexLookup is applicable
-        val plan = tree1.merge(tree2, PhysicalOperator.INDEXLOOKUP).flatten()
+        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
 
         // TODO: k should be k-index dependent
         if (plan.height() == 1 && plan.children.size <= 3) {
             physicalPlans.add(plan)
         }
 
-        physicalPlans.add(tree1.merge(tree2, PhysicalOperator.HASHJOIN))
-        physicalPlans.add(tree1.merge(tree2, PhysicalOperator.NESTEDLOOPJOIN))
+        PhysicalOperator.JOIN_OPERATORS.forEach {
+            physicalPlans.add(tree1.merge(tree2, it))
+        }
 
         return physicalPlans
     }

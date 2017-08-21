@@ -55,7 +55,7 @@ class TelepathDBTest {
         //           /   \
         //          a     b
         val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
 

@@ -44,16 +44,9 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : Cardinal
 
         return when (physicalPlan.operator) {
 
-            PhysicalOperator.INDEXLOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
+            PhysicalOperator.INDEX_LOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
 
-            PhysicalOperator.HASHJOIN -> {
-                val d1 = getCardinality(physicalPlan.children.first())
-                val d2 = getCardinality(physicalPlan.children.last())
-                val selectivity = 1 / (Math.max(d1, d2))
-                d1 * d2 * selectivity
-            }
-
-            PhysicalOperator.NESTEDLOOPJOIN -> {
+            in PhysicalOperator.JOIN_OPERATORS -> {
                 val d1 = getCardinality(physicalPlan.children.first())
                 val d2 = getCardinality(physicalPlan.children.last())
                 val selectivity = 1 / (Math.max(d1, d2))

@@ -52,10 +52,10 @@ class SimpleEvaluationEngineTest {
         }
 
         // Our physical-plan:
-        //      INDEXLOOKUP
+        //      INDEX_LOOKUP
         //         /  \
         //        a    b
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"), queryMock)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"), queryMock)
 
         // Gather the actual results from our SimpleEvaluationEngine.
         val actual = SimpleEvaluationEngine.evaluate(physicalPlan).paths.toList()
@@ -98,14 +98,14 @@ class SimpleEvaluationEngineTest {
         }
 
         // Our physical-plan:
-        //         HASHJOIN
+        //         HASH_JOIN
         //          /    \
-        //  INDEXLOOKUP INDEXLOOKUP
+        //  INDEX_LOOKUP INDEX_LOOKUP
         //      / \      / | \
         //     a   b    c  d  e
-        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"), queryMock)
-        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("c", "d", "e"), queryMock)
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.HASHJOIN, listOf(), queryMock)
+        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"), queryMock)
+        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("c", "d", "e"), queryMock)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.HASH_JOIN, listOf(), queryMock)
         physicalPlan.children.addAll(listOf(child1, child2))
 
         // Gather the actual results from our SimpleEvaluationEngine.
