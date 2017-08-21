@@ -12,7 +12,7 @@ import java.io.Serializable
 /**
  * Exists for abstracting the comparision logic between path-prefixes and paths.
  */
-open class AbstractPath internal constructor(val pathId: Long) : Comparable<AbstractPath>, Serializable {
+abstract class AbstractPath(val pathId: Long) : Comparable<AbstractPath>, Serializable {
 
     override fun compareTo(other: AbstractPath): Int {
         if (this is PathPrefix) {
