@@ -9,30 +9,11 @@ package com.github.giedomak.telepathdb.physicaloperators
 
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
-import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.memorymanager.MemoryManager
-import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
  * Hash-join.
  */
-class HashJoin() : PhysicalOperator {
-
-    override var physicalPlan: PhysicalPlan? = null
-    private var stream1: PathStream? = null
-    private var stream2: PathStream? = null
-
-    constructor(physicalPlan: PhysicalPlan) : this() {
-        this.physicalPlan = physicalPlan
-    }
-
-    constructor(stream1: PathStream, stream2: PathStream) : this() {
-        this.stream1 = stream1
-        this.stream2 = stream2
-    }
-
-    private val finalStream1 get() = stream1 ?: firstChild.evaluate()
-    private val finalStream2 get() = stream2 ?: lastChild.evaluate()
+class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
 
     /**
      * Join two streams of Paths following the HashJoin algorithm and by using our MemoryManager.
@@ -42,22 +23,7 @@ class HashJoin() : PhysicalOperator {
      * @return A stream with the concatenated paths of stream1 and stream2.
      */
     override fun evaluate(): PathStream {
-
-        // Make sure we get a free slot in the MemoryManager
-        val offset = MemoryManager.maxId + 1
-
-        // Put all Paths from stream1 into a HashMap with the lastNode() as key
-        finalStream1.paths.forEach { MemoryManager[offset + it.nodes.last().id] = it }
-
-        Logger.debug("Done creating the hashTable, now concatenating")
-
-        // Get all Paths from the HashMap which have the firstNode() as key, and concatenate
-        return PathStream(
-                finalStream2.paths.flatMap { v2 ->
-                    MemoryManager[offset + v2.nodes.first().id]
-                            .map { v1 -> PathIdentifierStore.concatenatePaths(v1, v2) }
-                }
-        )
+        return OpenHashJoin(firstChild.evaluate(), lastChild.evaluate()).evaluate()
     }
 
     /**

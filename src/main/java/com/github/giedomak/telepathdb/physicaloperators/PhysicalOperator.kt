@@ -5,17 +5,17 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 
 interface PhysicalOperator {
 
-    val physicalPlan: PhysicalPlan?
+    val physicalPlan: PhysicalPlan
 
-    val firstChild get() = physicalPlan!!.children.first().physicalOperator!!
-    val lastChild get() = physicalPlan!!.children.last().physicalOperator!!
+    val firstChild get() = physicalPlan.children.first().physicalOperator!!
+    val lastChild get() = physicalPlan.children.last().physicalOperator!!
 
     fun evaluate(): PathStream
 
     fun cost(): Long
 
     fun cardinality(): Long {
-        return physicalPlan!!.cardinality()
+        return physicalPlan.cardinality()
     }
 
     companion object {
