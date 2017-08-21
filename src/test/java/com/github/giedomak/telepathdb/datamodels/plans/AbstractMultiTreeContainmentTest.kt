@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.datamodels.plans;
 
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
 import kotlin.test.assertFalse

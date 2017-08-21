@@ -11,7 +11,7 @@ import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
-import com.github.giedomak.telepathdb.physicallibrary.operators.HashJoin
+import com.github.giedomak.telepathdb.physicaloperators.HashJoin
 import com.github.giedomak.telepathdb.utilities.Logger
 import kotlin.streams.toList
 

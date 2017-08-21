@@ -9,7 +9,6 @@ package com.github.giedomak.telepathdb.memorymanager
 
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.memorymanager.spliterator.PartitioningSpliterator.Companion.partition
-import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
 import com.github.giedomak.telepathdb.utilities.Logger
 import org.apache.commons.lang3.SerializationUtils
 import org.parboiled.common.Tuple2
@@ -103,7 +102,7 @@ object MemoryManager {
         }
 
         // Gather the in-memory partitions and the partitions which are written to disk
-        return PhysicalLibrary.union(
+        return Stream.concat(
                 _paths.stream()
                         .flatMap { it.stream() },
                 files.stream()

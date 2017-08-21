@@ -2,13 +2,8 @@ package com.github.giedomak.telepathdb.datamodels.plans
 
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
-import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan.Companion.HASHJOIN
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
-import com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary
-import com.github.giedomak.telepathdb.physicallibrary.operators.HashJoin
-import com.github.giedomak.telepathdb.physicallibrary.operators.IndexLookup
-import com.github.giedomak.telepathdb.physicallibrary.operators.NestedLoopJoin
-import com.github.giedomak.telepathdb.physicallibrary.operators.PhysicalOperator
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 /**
  * Representation of the physical plan.
@@ -24,13 +19,11 @@ import com.github.giedomak.telepathdb.physicallibrary.operators.PhysicalOperator
  */
 class PhysicalPlan(
         query: Query,
-        override var operator: Int = 0
+        override var operator: Int = PhysicalOperator.LEAF
 ) : AbstractMultiTree<PhysicalPlan>(query) {
 
-    override val operatorName get() = SYMBOLIC_NAMES[operator]
-    var memoryManagerId = -1L
-
-    val physicalOperator get() = PhysicalLibrary.getPhysicalOperator(this)
+    val physicalOperator = PhysicalOperator.getPhysicalOperator(this)
+    override val operatorName get() = physicalOperator?.javaClass?.simpleName
 
     /**
      * Directly construct a PhysicalPlan for the given [leaf].
@@ -38,7 +31,7 @@ class PhysicalPlan(
      * @param query We always need a reference to a query.
      * @param leaf The [Edge] which will be the leaf of this LogicalPlan.
      */
-    constructor(query: Query, leaf: Edge) : this(query, INDEXLOOKUP) {
+    constructor(query: Query, leaf: Edge) : this(query, PhysicalOperator.INDEXLOOKUP) {
         // Create and set the child-leaf as a child of our INDEXLOOKUP
         val child = PhysicalPlan(query)
         child.leaf = leaf
@@ -62,15 +55,5 @@ class PhysicalPlan(
         root.children.add(this.clone())
         root.children.add(tree.clone())
         return root
-    }
-
-    companion object {
-
-        const val INDEXLOOKUP = 1
-        const val HASHJOIN = 2
-        const val NESTEDLOOPJOIN = 3
-
-        private val SYMBOLIC_NAMES = arrayOf(null, "INDEXLOOKUP", "HASHJOIN", "NESTEDLOOPJOIN")
-
     }
 }

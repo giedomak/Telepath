@@ -9,6 +9,7 @@ package com.github.giedomak.telepathdb.cardinalityestimation
 
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : CardinalityEstimation {
 
@@ -43,16 +44,16 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : Cardinal
 
         return when (physicalPlan.operator) {
 
-            PhysicalPlan.INDEXLOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
+            PhysicalOperator.INDEXLOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
 
-            PhysicalPlan.HASHJOIN -> {
+            PhysicalOperator.HASHJOIN -> {
                 val d1 = getCardinality(physicalPlan.children.first())
                 val d2 = getCardinality(physicalPlan.children.last())
                 val selectivity = 1 / (Math.max(d1, d2))
                 d1 * d2 * selectivity
             }
 
-            PhysicalPlan.NESTEDLOOPJOIN -> {
+            PhysicalOperator.NESTEDLOOPJOIN -> {
                 val d1 = getCardinality(physicalPlan.children.first())
                 val d2 = getCardinality(physicalPlan.children.last())
                 val selectivity = 1 / (Math.max(d1, d2))

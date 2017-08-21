@@ -12,10 +12,10 @@ import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
-import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
@@ -55,7 +55,7 @@ class SimpleEvaluationEngineTest {
         //      INDEXLOOKUP
         //         /  \
         //        a    b
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"), queryMock)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"), queryMock)
 
         // Gather the actual results from our SimpleEvaluationEngine.
         val actual = SimpleEvaluationEngine.evaluate(physicalPlan).paths.toList()
@@ -103,9 +103,9 @@ class SimpleEvaluationEngineTest {
         //  INDEXLOOKUP INDEXLOOKUP
         //      / \      / | \
         //     a   b    c  d  e
-        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"), queryMock)
-        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("c", "d", "e"), queryMock)
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.HASHJOIN, listOf(), queryMock)
+        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"), queryMock)
+        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("c", "d", "e"), queryMock)
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.HASHJOIN, listOf(), queryMock)
         physicalPlan.children.addAll(listOf(child1, child2))
 
         // Gather the actual results from our SimpleEvaluationEngine.

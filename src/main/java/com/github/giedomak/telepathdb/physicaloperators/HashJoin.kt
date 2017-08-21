@@ -5,7 +5,7 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.physicallibrary.operators
+package com.github.giedomak.telepathdb.physicaloperators
 
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
@@ -18,7 +18,7 @@ import com.github.giedomak.telepathdb.utilities.Logger
  */
 class HashJoin() : PhysicalOperator {
 
-    private var physicalPlan: PhysicalPlan? = null
+    override var physicalPlan: PhysicalPlan? = null
     private var stream1: PathStream? = null
     private var stream2: PathStream? = null
 
@@ -31,11 +31,8 @@ class HashJoin() : PhysicalOperator {
         this.stream2 = stream2
     }
 
-    private val leftChild get() = physicalPlan!!.children.first()
-    private val rightChild get() = physicalPlan!!.children.last()
-
-    private val finalStream1 get() = stream1 ?: leftChild.physicalOperator.evaluate()
-    private val finalStream2 get() = stream2 ?: rightChild.physicalOperator.evaluate()
+    private val finalStream1 get() = stream1 ?: firstChild.evaluate()
+    private val finalStream2 get() = stream2 ?: lastChild.evaluate()
 
     /**
      * Join two streams of Paths following the HashJoin algorithm and by using our MemoryManager.
@@ -67,6 +64,6 @@ class HashJoin() : PhysicalOperator {
      * Cost of Hash-join.
      */
     override fun cost(): Long {
-        return 2 * (leftChild.cardinality() + rightChild.cardinality())
+        return 2 * (firstChild.cardinality() + lastChild.cardinality())
     }
 }

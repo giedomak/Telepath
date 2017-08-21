@@ -16,7 +16,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 object SimpleEvaluationEngine : EvaluationEngine {
 
     override fun evaluate(physicalPlan: PhysicalPlan): PathStream {
-        return physicalPlan.physicalOperator.evaluate()
+        return physicalPlan.physicalOperator!!.evaluate()
     }
 
 }

@@ -16,6 +16,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -51,7 +52,7 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"))
 
         assertEquals(expected, actual)
     }
@@ -76,7 +77,7 @@ class DynamicProgrammingPlannerTest {
         //      INDEXLOOKUP
         //        /  |  \
         //       a   b   c
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b", "c"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b", "c"))
 
         assertEquals(expected, actual)
     }

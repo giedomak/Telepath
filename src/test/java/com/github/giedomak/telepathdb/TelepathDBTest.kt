@@ -17,6 +17,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.nhaarman.mockito_kotlin.*
 import org.hamcrest.CoreMatchers.containsString
@@ -54,7 +55,7 @@ class TelepathDBTest {
         //           /   \
         //          a     b
         val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEXLOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
 
