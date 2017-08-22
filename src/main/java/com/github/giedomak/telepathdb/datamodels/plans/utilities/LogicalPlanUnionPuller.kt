@@ -14,7 +14,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
  *
  * Illustrative example: `"a/(b|c)/d"` becomes `["a/b/d", "a/c/d"]`
  */
-object ParseTreeUnionPuller {
+object LogicalPlanUnionPuller {
 
     /**
      * Removes the UNION operator from a LogicalPlan.

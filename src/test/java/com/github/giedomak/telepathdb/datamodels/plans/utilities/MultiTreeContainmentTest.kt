@@ -5,16 +5,18 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.plans;
+package com.github.giedomak.telepathdb.datamodels.plans.utilities;
 
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class AbstractMultiTreeContainmentTest {
+class MultiTreeContainmentTest {
 
     @Test
     fun fullChildContainmentCheck() {

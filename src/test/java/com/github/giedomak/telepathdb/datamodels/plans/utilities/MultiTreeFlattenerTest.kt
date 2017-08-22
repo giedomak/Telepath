@@ -5,12 +5,14 @@
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
 
-package com.github.giedomak.telepathdb.datamodels.plans
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
 
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class AbstractMultiTreeFlattenerTest {
+class MultiTreeFlattenerTest {
 
     @Test
     fun flattensConcatenation() {

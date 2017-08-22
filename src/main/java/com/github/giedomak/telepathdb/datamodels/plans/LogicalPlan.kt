@@ -12,8 +12,8 @@ import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion.CONCATENATION
 import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment
-import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeSizes
-import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeUnionPuller
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanUnionPuller
 
 /**
  * Data-structure to represent the given user input, and physical plans.
@@ -44,21 +44,21 @@ class LogicalPlan(
     override val operatorName get() = SYMBOLIC_NAMES[operator]
 
     /**
-     * Delegate parse-tree-union-pulling to our [ParseTreeUnionPuller].
+     * Delegate parse-tree-union-pulling to our [LogicalPlanUnionPuller].
      */
     fun pullUnions(): List<LogicalPlan> {
-        return ParseTreeUnionPuller.parse(this)
+        return LogicalPlanUnionPuller.parse(this)
     }
 
     fun getSize(): Int {
-        return ParseTreeSizes.getSize(this)
+        return LogicalPlanSubtree.getSize(this)
     }
 
     /**
-     * Delegate parse-tree-sizing to our [ParseTreeSizes].
+     * Delegate parse-tree-sizing to our [LogicalPlanSubtree].
      */
     fun subtreesOfSize(targetSize: Int): List<LogicalPlan> {
-        return ParseTreeSizes.subtreesOfSize(this, targetSize)
+        return LogicalPlanSubtree.subtreesOfSize(this, targetSize)
     }
 
     /**

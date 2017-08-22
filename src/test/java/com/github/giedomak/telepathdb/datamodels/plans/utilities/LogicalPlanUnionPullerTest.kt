@@ -1,13 +1,16 @@
-package com.github.giedomak.telepathdb.datamodels.plans
+package com.github.giedomak.telepathdb.datamodels.plans.utilities
 
-class ParseTreeUnionPullerTest {
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
+import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
+
+class LogicalPlanUnionPullerTest {
 
 //    @Test
 //    fun pullsOutUnionsIntoMultipleParseTrees() {
 //
 //        // Given
 //        val input = exampleUnionParseTree()
-//        val actual = ParseTreeUnionPuller.parse(input)
+//        val actual = LogicalPlanUnionPuller.parse(input)
 //
 //        // Create expected parseTree
 //        //       CONCATENATION
@@ -44,7 +47,7 @@ class ParseTreeUnionPullerTest {
 //        //      / \
 //        //     a   b
 //        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("a", "b"))
-//        val actual = ParseTreeUnionPuller.parse(input)
+//        val actual = LogicalPlanUnionPuller.parse(input)
 //
 //        // Generate expected
 //        val a = LogicalPlanTest.createSimpleLogicalPlan("a")
