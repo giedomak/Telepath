@@ -16,7 +16,10 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.kpathindex.KPathIndex
+import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.github.giedomak.telepathdb.planner.enumerator.SimpleEnumerator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -27,18 +30,24 @@ class DynamicProgrammingPlannerTest {
 
     // MOCKS
 
-    val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
+    private val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
         on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)
     }
 
-    val telepathDBMock = mock<TelepathDB> {
+    private val indexMock = mock<KPathIndexInMemory> {
+        on { k }.doReturn(3)
+    }
+
+    private val telepathDBMock = mock<TelepathDB> {
         on { cardinalityEstimation }.doReturn(cardinalityEstimationMock)
         on { planner }.doReturn(DynamicProgrammingPlanner)
         on { costModel }.doReturn(AdvancedCostModel)
         on { pathIdentifierStore }.doReturn(PathIdentifierStore)
+        on { enumerator }.doReturn(SimpleEnumerator)
+        on { kPathIndex }.doReturn(indexMock)
     }
 
-    val queryMock = mock<Query> {
+    private val queryMock = mock<Query> {
         on { telepathDB }.doReturn(telepathDBMock)
     }
 

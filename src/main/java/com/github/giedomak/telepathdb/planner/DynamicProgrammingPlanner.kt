@@ -9,80 +9,85 @@ package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
-import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
- * Generate the best physical plan for a given [LogicalPlan].
+ * The DynamicProgrammingPlanner uses the DPsize algorithm for inspiration.
+ *
+ * We generate the best physical plan for smaller subtrees of a given logical plan. Which will guarantee we
+ * will have the cheapest physical plan for the full logical plan.
  */
 object DynamicProgrammingPlanner : Planner {
 
-    private fun enumerateConcatenation(tree1: PhysicalPlan, tree2: PhysicalPlan): List<PhysicalPlan> {
-
-        val physicalPlans = mutableListOf<PhysicalPlan>()
-
-        // Check if an IndexLookup is applicable
-        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
-
-        // TODO: k should be k-index dependent
-        if (plan.height() == 1 && plan.children.size <= 3) {
-            physicalPlans.add(plan)
-        }
-
-        PhysicalOperator.JOIN_OPERATORS.forEach {
-            physicalPlans.add(tree1.merge(tree2, it))
-        }
-
-        return physicalPlans
-    }
-
+    /**
+     * Generate the cheapest physical plan for a given logical plan.
+     *
+     * @param logicalPlan The logical plan for which we have to generate the cheapest physical plan.
+     * @return The cheapest physical plan for the given logical plan.
+     */
     override fun generate(logicalPlan: LogicalPlan): PhysicalPlan {
 
+        val enumerator = logicalPlan.query.telepathDB.enumerator
+
+        // Make sure we are dealing with a flattened logical plan.
         logicalPlan.flatten()
 
+        // We have to iterate until we reach the size of the logicalPlan we are searching a physical plan for.
         val n = logicalPlan.getSize()
 
-        val bestPlans = hashMapOf<Int, PhysicalPlan>()
+        val cheapestPhysicalPlans = hashMapOf<Int, PhysicalPlan>()
 
-        // Init the BestPlan for all sub-paths of size 1
-        logicalPlan.subtreesOfSize(1).forEach { bestPlans.put(it.hashCode(), PhysicalPlan(logicalPlan.query, it.leaf!!)) }
+        // Init the bestPlan for all subtrees of size 1 to:
+        //    INDEX_LOOKUP
+        //         |
+        //        LEAF
+        logicalPlan.subtreesOfSize(1).forEach {
+            cheapestPhysicalPlans.put(
+                    it.hashCode(),
+                    PhysicalPlan(logicalPlan.query, it.leaf!!))
+        }
 
+        // Alright, so we are increasingly calculating the best physical plan for each subtree of a given size.
         for (size in 2..n) {
 
-            for (i in 1..(size - 1)) {
+            // Our sliding window will split the subtree size into a left-part, and a right-part.
+            for (leftSize in 1..(size - 1)) {
 
-                val j = size - i
+                val rightSize = size - leftSize
 
-                for (s1 in logicalPlan.subtreesOfSize(i)) {
+                // Iterate over all subtrees of these left- and right-sizes.
+                for (subtree1 in logicalPlan.subtreesOfSize(leftSize)) {
 
-                    for (s2 in logicalPlan.subtreesOfSize(j)) {
+                    for (subtree2 in logicalPlan.subtreesOfSize(rightSize)) {
 
-                        Logger.debug("s1: $s1")
-                        Logger.debug("s2: $s2")
+                        // Check if subtree1 and subtree2 are contained in our logicalPlan through any operator.
+                        for (operator in LogicalPlan.OPERATORS) {
 
-                        val p1 = bestPlans.getValue(s1.hashCode())
-                        val p2 = bestPlans.getValue(s2.hashCode())
+                            // Actually check for containment with the operator.
+                            if (logicalPlan.containsSubtreesThroughOperator(subtree1, subtree2, operator)) {
 
-                        if (logicalPlan.containsSubtreesThroughOperator(s1, s2, LogicalPlan.CONCATENATION)) {
+                                // YAY, we are contained, so we have to calculate the best physical plan.
+                                // Re-use the best physical plan already calculated for these left- and right-parts.
+                                val plan1 = cheapestPhysicalPlans.getValue(subtree1.hashCode())
+                                val plan2 = cheapestPhysicalPlans.getValue(subtree2.hashCode())
 
-                            val subtree = s1.mergeAndFlatten(s2, LogicalPlan.CONCATENATION)
+                                // Enumerate or logical operator into applicable physical operators.
+                                val physicalPlans = enumerator.enumerate(plan1, plan2, operator)
 
-                            val plans = enumerateConcatenation(p1, p2).sortedBy { it.cost() }.toList()
-                            val newPlan = plans.first()
+                                // Sort these physical plans by cost, en pick the cheapest one.
+                                val currentPlan = physicalPlans.sortedBy { it.cost() }.first()
 
-                            Logger.debug("LETS GO")
-                            plans.forEach { it.print(); Logger.debug(it.cost()) }
+                                // We have to associate our physical plan to the logical plan where subtree1 and
+                                // subtree2 are children of the operator for which they are contained in logicalPlan.
+                                val subtree = subtree1.mergeAndFlatten(subtree2, operator)
 
-                            val bestPlan = bestPlans.getOrPut(subtree.hashCode(), { newPlan })
+                                // The cheapestPlan we already have for our subtree, or null.
+                                val cheapestPlan = cheapestPhysicalPlans[subtree.hashCode()]
 
-                            Logger.debug("subtree: $subtree")
-                            Logger.debug("bestPlan: $bestPlan")
-                            bestPlan.print()
-                            Logger.debug("cost: " + bestPlan.cost())
-
-                            if (newPlan.cost() < bestPlan.cost()) {
-                                bestPlans.put(subtree.hashCode(), newPlan)
-                                Logger.debug("CHEAPEST!")
+                                // Save our currentPlan as the cheapestPlan if its cost is cheaper than the known plan.
+                                if (cheapestPlan == null || currentPlan.cost() < cheapestPlan.cost()) {
+                                    cheapestPhysicalPlans.put(subtree.hashCode(), currentPlan)
+                                }
                             }
                         }
                     }
@@ -90,8 +95,13 @@ object DynamicProgrammingPlanner : Planner {
             }
         }
 
-        Logger.debug("Final: $logicalPlan")
+        // If everything went fine, we should have calculated the cheapest physical plan for our logicalPlan.
+        val physicalPlan = cheapestPhysicalPlans.getValue(logicalPlan.hashCode())
 
-        return bestPlans.getValue(logicalPlan.hashCode())
+        Logger.debug("Physical plan found!")
+        Logger.debug("logicalPlan: $logicalPlan")
+        Logger.debug("physicalPlan: $physicalPlan")
+
+        return physicalPlan
     }
 }
