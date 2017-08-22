@@ -8,12 +8,12 @@
 package com.github.giedomak.telepathdb.datamodels.plans.utilities
 
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
-import com.github.giedomak.telepathdb.datamodels.plans.utilities.ParseTreeSizes.subtreesOfSize
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree.subtreesOfSize
 
 /**
  * Abstract the [subtreesOfSize] functionality into its own class.
  */
-object ParseTreeSizes {
+object LogicalPlanSubtree {
 
     /**
      * Get the size of this parsetree. This recurses through its children, we should augment our tree --> time is money.
