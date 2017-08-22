@@ -17,6 +17,8 @@ import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.planner.DynamicProgrammingPlanner
+import com.github.giedomak.telepathdb.planner.Planner
+import com.github.giedomak.telepathdb.planner.enumerator.SimpleEnumerator
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.IOException
@@ -32,7 +34,8 @@ object TelepathDB {
     var evaluationEngine = SimpleEvaluationEngine
     val costModel = AdvancedCostModel
     var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
-    val planner = DynamicProgrammingPlanner
+    var planner: Planner = DynamicProgrammingPlanner
+    val enumerator = SimpleEnumerator
 
     // ------ STORES -------
 

@@ -98,6 +98,8 @@ class LogicalPlan(
         const val CONCATENATION = 3
         const val UNION = 4
 
+        val OPERATORS = listOf(KLEENE_STAR, PLUS, CONCATENATION, UNION)
+
         private val SYMBOLIC_NAMES = arrayOf(null, "KLEENE_STAR", "PLUS", "CONCATENATION", "UNION")
 
     }

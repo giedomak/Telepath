@@ -18,6 +18,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.github.giedomak.telepathdb.planner.Planner
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.nhaarman.mockito_kotlin.*
 import org.hamcrest.CoreMatchers.containsString
@@ -54,7 +55,7 @@ class TelepathDBTest {
         //        CONCATENATION
         //           /   \
         //          a     b
-        val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
+        val logicalPlan = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
         val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
@@ -67,7 +68,7 @@ class TelepathDBTest {
 
         // Mocking all the modules we'll use
         val staticParser = mock<StaticParserRPQ> {
-            on { parse(any()) }.doReturn(input)
+            on { parse(any()) }.doReturn(logicalPlan)
         }
         val evaluationEngine = mock<SimpleEvaluationEngine> {
             on { evaluate(physicalPlan) }.doReturn(PathStream(expectedPaths.stream()))
@@ -75,15 +76,19 @@ class TelepathDBTest {
         val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
             on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)
         }
+        val plannerMock = mock<Planner> {
+            on { generate(logicalPlan) }.doReturn(physicalPlan)
+        }
 
         // Set all the mocks
         telepathDB.staticParser = staticParser
         telepathDB.evaluationEngine = evaluationEngine
         telepathDB.cardinalityEstimation = cardinalityEstimationMock
-        // Don't wait for a second user input --> throw exception
+        telepathDB.planner = plannerMock
+        // Don't wait for a second user logicalPl --> throw exception
         doReturn("a/b").doThrow(IllegalArgumentException()).whenever(telepathDB).getUserInput(any())
 
-        // Since our second input will throw an exception, we'll catch it.
+        // Since our second logicalPl will throw an exception, we'll catch it.
         try {
             telepathDB.start()
         } catch (e: IllegalArgumentException) {
