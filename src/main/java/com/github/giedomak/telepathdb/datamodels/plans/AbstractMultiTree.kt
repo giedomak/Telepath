@@ -1,7 +1,7 @@
 package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeFlattener
 import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreePrinter
 
@@ -10,12 +10,16 @@ abstract class AbstractMultiTree<ImplementingTree : AbstractMultiTree<Implementi
         var leaf: Edge? = null
 ) : Cloneable {
 
-    abstract var operator: Int
+    // Since we are a tree, our children are also of the type ImplementingTree.
     var children = mutableListOf<ImplementingTree>()
-    val nodeRepresentation get() = (leaf?.label ?: operatorName + "[" + children.size + "]")
 
-    // Convert the operator identifier back to its symbolic name.
+    // The ImplementingTree should implement the operator and its String representation.
+    abstract var operator: Int
+    // String representation of the operator.
     abstract val operatorName: String?
+
+    // String representation of this Node, either the label if we are a leaf, or the operatorName if we are an operator.
+    val nodeRepresentation get() = (leaf?.label ?: operatorName + "[" + children.size + "]")
 
     val isLeaf get() = (leaf != null)
 
@@ -101,13 +105,26 @@ abstract class AbstractMultiTree<ImplementingTree : AbstractMultiTree<Implementi
     }
 
     /**
-     * Recursive function calculating the depth of the parseTree rooted at ourselves.
+     * Recursive function calculating the height of this tree.
      *
-     * @return The depth of this parseTree.
+     * The height of a node is the number of edges on the longest path from the node to a leaf.
+     * A leaf node will have a height of 0. The height of a tree would be the height of its root node.
+     *
+     * Example: Each node displays the height of the subtree rooted at that node.
+     *
+     *        3
+     *       / \
+     *      1   2
+     *     / \   \
+     *    0  0   1
+     *          /
+     *         0
+     *
+     * @return The height of this tree.
      */
-    fun level(): Int {
-        if (isLeaf) return 1
-        return children.map { it.level() }.max()!! + 1
+    fun height(): Int {
+        if (isLeaf) return 0
+        return children.map { it.height() }.max()!! + 1
     }
 
     /**

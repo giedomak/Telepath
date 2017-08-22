@@ -9,6 +9,7 @@ package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
@@ -21,15 +22,16 @@ object DynamicProgrammingPlanner : Planner {
         val physicalPlans = mutableListOf<PhysicalPlan>()
 
         // Check if an IndexLookup is applicable
-        val plan = tree1.merge(tree2, PhysicalPlan.INDEXLOOKUP).flatten()
+        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
 
         // TODO: k should be k-index dependent
-        if (plan.level() == 2 && plan.children.size <= 3) {
+        if (plan.height() == 1 && plan.children.size <= 3) {
             physicalPlans.add(plan)
         }
 
-        physicalPlans.add(tree1.merge(tree2, PhysicalPlan.HASHJOIN))
-        physicalPlans.add(tree1.merge(tree2, PhysicalPlan.NESTEDLOOPJOIN))
+        PhysicalOperator.JOIN_OPERATORS.forEach {
+            physicalPlans.add(tree1.merge(tree2, it))
+        }
 
         return physicalPlans
     }

@@ -7,8 +7,8 @@
 
 package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion.CONCATENATION
 import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment

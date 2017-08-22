@@ -9,11 +9,14 @@ package com.github.giedomak.telepathdb.planner
 
 import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
+import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
+import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -31,6 +34,8 @@ class DynamicProgrammingPlannerTest {
     val telepathDBMock = mock<TelepathDB> {
         on { cardinalityEstimation }.doReturn(cardinalityEstimationMock)
         on { planner }.doReturn(DynamicProgrammingPlanner)
+        on { costModel }.doReturn(AdvancedCostModel)
+        on { pathIdentifierStore }.doReturn(PathIdentifierStore)
     }
 
     val queryMock = mock<Query> {
@@ -47,7 +52,7 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"))
 
         assertEquals(expected, actual)
     }
@@ -69,10 +74,10 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        //      INDEXLOOKUP
+        //      INDEX_LOOKUP
         //        /  |  \
         //       a   b   c
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalPlan.INDEXLOOKUP, listOf("a", "b", "c"))
+        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b", "c"))
 
         assertEquals(expected, actual)
     }

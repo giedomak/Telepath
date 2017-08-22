@@ -1,11 +1,9 @@
 package com.github.giedomak.telepathdb.datamodels.plans
 
-import com.github.giedomak.telepathdb.TelepathDB
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan.Companion.HASHJOIN
-import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 /**
  * Representation of the physical plan.
@@ -14,18 +12,18 @@ import com.github.giedomak.telepathdb.memorymanager.MemoryManager
  * to the [LogicalPlan] class.
  *
  * @property query We always need a reference to our query which holds all the module implementations we'll need.
- * @property operator An [Int] representing the physical operator. See [HASHJOIN] for an example.
- * @property operatorName This property gets the symbolic name [String] belonging to our operator, e.g. HASHJOIN.
+ * @property operator An [Int] representing the physical operator. See [HASH_JOIN] for an example.
+ * @property operatorName This property gets the symbolic name [String] belonging to our operator, e.g. HASH_JOIN.
  * @property memoryManagerId This property will hold a reference to the [MemoryManager] slot we might be given
  *                           to indicate the location of intermediate results.
  */
 class PhysicalPlan(
         query: Query,
-        override var operator: Int = 0
+        override var operator: Int = PhysicalOperator.LEAF
 ) : AbstractMultiTree<PhysicalPlan>(query) {
 
-    override val operatorName get() = SYMBOLIC_NAMES[operator]
-    var memoryManagerId = -1L
+    val physicalOperator = PhysicalOperator.getPhysicalOperator(this)
+    override val operatorName get() = physicalOperator?.javaClass?.simpleName
 
     /**
      * Directly construct a PhysicalPlan for the given [leaf].
@@ -33,15 +31,15 @@ class PhysicalPlan(
      * @param query We always need a reference to a query.
      * @param leaf The [Edge] which will be the leaf of this LogicalPlan.
      */
-    constructor(query: Query, leaf: Edge) : this(query, INDEXLOOKUP) {
-        // Create and set the child-leaf as a child of our INDEXLOOKUP
+    constructor(query: Query, leaf: Edge) : this(query, PhysicalOperator.INDEX_LOOKUP) {
+        // Create and set the child-leaf as a child of our INDEX_LOOKUP
         val child = PhysicalPlan(query)
         child.leaf = leaf
         this.children.add(child)
     }
 
     fun pathIdOfChildren(): Long {
-        return PathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
+        return query.telepathDB.pathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
     }
 
     fun cardinality(): Long {
@@ -49,7 +47,7 @@ class PhysicalPlan(
     }
 
     fun cost(): Long {
-        return TelepathDB.costModel.cost(this)
+        return query.telepathDB.costModel.cost(this)
     }
 
     fun merge(tree: PhysicalPlan, operator: Int): PhysicalPlan {
@@ -57,15 +55,5 @@ class PhysicalPlan(
         root.children.add(this.clone())
         root.children.add(tree.clone())
         return root
-    }
-
-    companion object {
-
-        const val INDEXLOOKUP = 1
-        const val HASHJOIN = 2
-        const val NESTEDLOOPJOIN = 3
-
-        private val SYMBOLIC_NAMES = arrayOf(null, "INDEXLOOKUP", "HASHJOIN", "NESTEDLOOPJOIN")
-
     }
 }
