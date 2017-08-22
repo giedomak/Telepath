@@ -11,9 +11,8 @@ import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan.Companion.CONCATENATION
-import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment
 import com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree
-import com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanUnionPuller
+import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment
 
 /**
  * Data-structure to represent the given user input, and physical plans.
@@ -42,13 +41,6 @@ class LogicalPlan(
 ) : AbstractMultiTree<LogicalPlan>(query, leaf) {
 
     override val operatorName get() = SYMBOLIC_NAMES[operator]
-
-    /**
-     * Delegate parse-tree-union-pulling to our [LogicalPlanUnionPuller].
-     */
-    fun pullUnions(): List<LogicalPlan> {
-        return LogicalPlanUnionPuller.parse(this)
-    }
 
     fun getSize(): Int {
         return LogicalPlanSubtree.getSize(this)
