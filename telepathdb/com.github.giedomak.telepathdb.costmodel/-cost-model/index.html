@@ -17,13 +17,22 @@
 <p><a href="cost.html">cost</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.costmodel.CostModel$cost(com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree)/tree">tree</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html"><span class="identifier">ParseTree</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.costmodel.CostModel$cost(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan)/physicalPlan">physicalPlan</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 </tbody>
 </table>
 <h3>Inheritors</h3>
 <table>
 <tbody>
+<tr>
+<td>
+<p><a href="../-advanced-cost-model/index.html">AdvancedCostModel</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">AdvancedCostModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">CostModel</span></code>
+<p>This CostModel uses CPU cycles to calculate the cost of physical operators.</p>
+</td>
+</tr>
 <tr>
 <td>
 <p><a href="../-simple-cost-model/index.html">SimpleCostModel</a></p>

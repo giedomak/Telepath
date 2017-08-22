@@ -1,0 +1,210 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AbstractMultiTree - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.plans</a>&nbsp;/&nbsp;<a href=".">AbstractMultiTree</a><br/>
+<br/>
+<h1>AbstractMultiTree</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AbstractMultiTree</span><span class="symbol">&lt;</span><span class="identifier">ImplementingTree</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractMultiTree</span><span class="symbol">&lt;</span><span class="identifier">ImplementingTree</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-cloneable/index.html"><span class="identifier">Cloneable</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/AbstractMultiTree.kt#L8">(source)</a>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AbstractMultiTree</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$<init>(com.github.giedomak.telepathdb.datamodels.Query, com.github.giedomak.telepathdb.datamodels.graph.Edge)/query">query</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels/-query/index.html"><span class="identifier">Query</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$<init>(com.github.giedomak.telepathdb.datamodels.Query, com.github.giedomak.telepathdb.datamodels.graph.Edge)/leaf">leaf</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="children.html">children</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">children</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">ImplementingTree</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-leaf.html">isLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isLeaf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="leaf.html">leaf</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">leaf</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="node-representation.html">nodeRepresentation</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">nodeRepresentation</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="operator.html">operator</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">var </span><span class="identifier">operator</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="operator-name.html">operatorName</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">operatorName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="query.html">query</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">query</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels/-query/index.html"><span class="identifier">Query</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="clone.html">clone</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">clone</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ImplementingTree</span></code>
+<p>Deep clone; also clone its children recusively.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="equals.html">equals</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="flatten.html">flatten</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">flatten</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ImplementingTree</span></code>
+<p>Delegate parse-tree-flattening to our <a href="../../com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html">MultiTreeFlattener</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-child.html">getChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$getChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ImplementingTree</span><span class="symbol">?</span></code>
+<p>Return the child at a given index or null when not existent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="has-child.html">hasChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hasChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$hasChild(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if a child exists with <a href="has-child.html#com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$hasChild(kotlin.Int)/index">index</a> in our <a href="children.html">children</a> list.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="hash-code.html">hashCode</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="height.html">height</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">height</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Recursive function calculating the height of this tree.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="post-order-traversal.html">postOrderTraversal</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">postOrderTraversal</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">&lt;</span><span class="identifier">ImplementingTree</span><span class="symbol">&gt;</span></code>
+<p>Post-order traversal.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="print.html">print</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">print</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Delegate parse-tree-printing to our <a href="../../com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-printer/index.html">MultiTreePrinter</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-child.html">setChild</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setChild</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$setChild(kotlin.Int, com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree.ImplementingTree)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$setChild(kotlin.Int, com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree.ImplementingTree)/tree">tree</span><span class="symbol">:</span>&nbsp;<span class="identifier">ImplementingTree</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a child at a given index in our <a href="children.html">children</a> list.
+We'll replace or add when needed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-leaf.html">setLeaf</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLeaf</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree$setLeaf(kotlin.String)/label">label</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the leaf by giving in a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a> which we'll convert to an <a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html">Edge</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-logical-plan/index.html">LogicalPlan</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LogicalPlan</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractMultiTree</span><span class="symbol">&lt;</span><a href="../-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">&gt;</span></code>
+<p>Data-structure to represent the given user input, and physical plans.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-physical-plan/index.html">PhysicalPlan</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PhysicalPlan</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AbstractMultiTree</span><span class="symbol">&lt;</span><a href="../-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">&gt;</span></code>
+<p>Representation of the physical plan.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

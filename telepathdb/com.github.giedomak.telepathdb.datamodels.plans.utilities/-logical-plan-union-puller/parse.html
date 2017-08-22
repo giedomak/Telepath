@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LogicalPlanUnionPuller.parse - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities</a>&nbsp;/&nbsp;<a href="index.html">LogicalPlanUnionPuller</a>&nbsp;/&nbsp;<a href=".">parse</a><br/>
+<br/>
+<h1>parse</h1>
+<a name="com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanUnionPuller$parse(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan)"></a>
+<code><span class="keyword">fun </span><span class="identifier">parse</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanUnionPuller$parse(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan)/logicalPlan">logicalPlan</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanUnionPuller.kt#L28">(source)</a>
+<p>Removes the UNION operator from a LogicalPlan.</p>
+<p>Simply duplicate the tree and on the position of the UNION operator, the first tree
+gets the left-child and the other tree gets the right-child.</p>
+<h3>Parameters</h3>
+<p><a name="logicalPlan"></a>
+<code>logicalPlan</code> - The LogicalPlan to parse.</p>
+<p><strong>Return</strong><br/>
+List of ParseTrees each not containing the UNION operator.</p>
+</BODY>
+</HTML>

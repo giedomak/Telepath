@@ -2,19 +2,22 @@ $dokka.format:html
 $dokka.linkExtension:html
 
 com.github.giedomak.telepathdb
+com.github.giedomak.telepathdb.cardinalityestimation
 com.github.giedomak.telepathdb.costmodel
 com.github.giedomak.telepathdb.datamodels
+com.github.giedomak.telepathdb.datamodels.graph
 com.github.giedomak.telepathdb.datamodels.integrations
-com.github.giedomak.telepathdb.datamodels.parsetree
+com.github.giedomak.telepathdb.datamodels.plans
+com.github.giedomak.telepathdb.datamodels.plans.utilities
 com.github.giedomak.telepathdb.datamodels.stores
 com.github.giedomak.telepathdb.evaluationengine
 com.github.giedomak.telepathdb.kpathindex
 com.github.giedomak.telepathdb.kpathindex.utilities
 com.github.giedomak.telepathdb.memorymanager
 com.github.giedomak.telepathdb.memorymanager.spliterator
-com.github.giedomak.telepathdb.physicallibrary
-com.github.giedomak.telepathdb.physicallibrary.joins
+com.github.giedomak.telepathdb.physicaloperators
 com.github.giedomak.telepathdb.planner
+com.github.giedomak.telepathdb.planner.enumerator
 com.github.giedomak.telepathdb.staticparser
 com.github.giedomak.telepathdb.staticparser.rpq
 com.github.giedomak.telepathdb.utilities

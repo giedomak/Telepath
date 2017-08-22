@@ -11,9 +11,28 @@
 <tbody>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels/-abstract-path/index.html">com.github.giedomak.telepathdb.datamodels.AbstractPath</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans/-abstract-multi-tree/index.html">com.github.giedomak.telepathdb.datamodels.plans.AbstractMultiTree</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-abstract-path/index.html">com.github.giedomak.telepathdb.datamodels.graph.AbstractPath</a></td>
 <td>
 <p>Exists for abstracting the comparision logic between path-prefixes and paths.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.costmodel/-advanced-cost-model/index.html">com.github.giedomak.telepathdb.costmodel.AdvancedCostModel</a></td>
+<td>
+<p>This CostModel uses CPU cycles to calculate the cost of physical operators.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.cardinalityestimation/-cardinality-estimation/index.html">com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation</a></td>
+<td>
 </td>
 </tr>
 <tr>
@@ -24,7 +43,14 @@
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels/-edge/index.html">com.github.giedomak.telepathdb.datamodels.Edge</a></td>
+<a href="../com.github.giedomak.telepathdb.planner/-dynamic-programming-planner/index.html">com.github.giedomak.telepathdb.planner.DynamicProgrammingPlanner</a></td>
+<td>
+<p>The DynamicProgrammingPlanner uses the DPsize algorithm for inspiration.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html">com.github.giedomak.telepathdb.datamodels.graph.Edge</a></td>
 <td>
 <p>Data class for our Edge model.</p>
 </td>
@@ -38,9 +64,14 @@
 </tr>
 <tr>
 <td>
+<a href="../com.github.giedomak.telepathdb.planner.enumerator/-enumerator/index.html">com.github.giedomak.telepathdb.planner.enumerator.Enumerator</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../com.github.giedomak.telepathdb.evaluationengine/-evaluation-engine/index.html">com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine</a></td>
 <td>
-<p>Evaluate a physical-plan in order to get results from the path-index.</p>
 </td>
 </tr>
 <tr>
@@ -64,9 +95,15 @@
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.physicallibrary.joins/-hash-join/index.html">com.github.giedomak.telepathdb.physicallibrary.joins.HashJoin</a></td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-hash-join/index.html">com.github.giedomak.telepathdb.physicaloperators.HashJoin</a></td>
 <td>
 <p>Hash-join.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-index-lookup/index.html">com.github.giedomak.telepathdb.physicaloperators.IndexLookup</a></td>
+<td>
 </td>
 </tr>
 <tr>
@@ -85,6 +122,12 @@
 </tr>
 <tr>
 <td>
+<a href="../com.github.giedomak.telepathdb.cardinalityestimation/-k-path-index-cardinality-estimation/index.html">com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../com.github.giedomak.telepathdb.kpathindex/-k-path-index-in-memory/index.html">com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory</a></td>
 <td>
 <p>InMemory implementation of the KPathIndex.</p>
@@ -99,6 +142,27 @@
 </tr>
 <tr>
 <td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html">com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan</a></td>
+<td>
+<p>Data-structure to represent the given user input, and physical plans.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree</a></td>
+<td>
+<p>Abstract the <a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/subtrees-of-size.html">subtreesOfSize</a> functionality into its own class.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-union-puller/index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanUnionPuller</a></td>
+<td>
+<p>Split a <a href="../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html">LogicalPlan</a> on Union into multiple ParseTrees.</p>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html">com.github.giedomak.telepathdb.memorymanager.MemoryManager</a></td>
 <td>
 <p>Let all results flow through this memory manager so we have control over the data and caching.</p>
@@ -106,44 +170,43 @@
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.physicallibrary.joins/-nested-loop-join/index.html">com.github.giedomak.telepathdb.physicallibrary.joins.NestedLoopJoin</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-containment/index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContainment</a></td>
 <td>
-<p>Nested-loop-join.</p>
 </td>
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels/-node/index.html">com.github.giedomak.telepathdb.datamodels.Node</a></td>
-<td>
-<p>Data class for our Node model.</p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html">com.github.giedomak.telepathdb.datamodels.parsetree.ParseTree</a></td>
-<td>
-<p>Data-structure to represent the given user input, and physical plans.</p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree-flattener/index.html">com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeFlattener</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeFlattener</a></td>
 <td>
 <p>Flatten ParseTrees into multi-trees.</p>
 </td>
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree-printer/index.html">com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreePrinter</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-printer/index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreePrinter</a></td>
 <td>
-<p>Class to print a <a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html">ParseTree</a>.</p>
+<p>Class to print a <a href="#">LogicalPlan</a>.</p>
 </td>
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree-union-puller/index.html">com.github.giedomak.telepathdb.datamodels.parsetree.ParseTreeUnionPuller</a></td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-nested-loop-join/index.html">com.github.giedomak.telepathdb.physicaloperators.NestedLoopJoin</a></td>
 <td>
-<p>Split a <a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html">ParseTree</a> on Union into multiple ParseTrees.</p>
+<p>Nested-loop-join.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-node/index.html">com.github.giedomak.telepathdb.datamodels.graph.Node</a></td>
+<td>
+<p>Data class for our Node model.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-open-hash-join/index.html">com.github.giedomak.telepathdb.physicaloperators.OpenHashJoin</a></td>
+<td>
+<p>Hash-join.</p>
 </td>
 </tr>
 <tr>
@@ -154,7 +217,7 @@
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels/-path/index.html">com.github.giedomak.telepathdb.datamodels.Path</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-path/index.html">com.github.giedomak.telepathdb.datamodels.graph.Path</a></td>
 <td>
 <p>The Path model contains a list of edges, as well as a list of nodes to represent a specific path.</p>
 </td>
@@ -175,30 +238,47 @@
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.datamodels/-path-prefix/index.html">com.github.giedomak.telepathdb.datamodels.PathPrefix</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-path-prefix/index.html">com.github.giedomak.telepathdb.datamodels.graph.PathPrefix</a></td>
 <td>
 <p>This model is used for defining a search-query.</p>
 </td>
 </tr>
 <tr>
 <td>
-<a href="../com.github.giedomak.telepathdb.physicallibrary/-physical-library/index.html">com.github.giedomak.telepathdb.physicallibrary.PhysicalLibrary</a></td>
+<a href="../com.github.giedomak.telepathdb.datamodels.graph/-path-stream/index.html">com.github.giedomak.telepathdb.datamodels.graph.PathStream</a></td>
 <td>
-<p>The physical operators we support.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-physical-operator/index.html">com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels.plans/-physical-plan/index.html">com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan</a></td>
+<td>
+<p>Representation of the physical plan.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../com.github.giedomak.telepathdb.planner/-planner/index.html">com.github.giedomak.telepathdb.planner.Planner</a></td>
 <td>
-<p>Generate the best physical plan for a given <a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html">ParseTree</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.datamodels/-query/index.html">com.github.giedomak.telepathdb.datamodels.Query</a></td>
+<td>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../com.github.giedomak.telepathdb.staticparser.rpq/-r-p-q-visitor-parser/index.html">com.github.giedomak.telepathdb.staticparser.rpq.RPQVisitorParser</a></td>
 <td>
-<p>Parse the RPQ ANTLR4 AST into our internal ParseTree model.</p>
+<p>Parse the RPQ ANTLR4 AST into our internal LogicalPlan model.</p>
 </td>
 </tr>
 <tr>
@@ -209,9 +289,23 @@
 </tr>
 <tr>
 <td>
+<a href="../com.github.giedomak.telepathdb.planner.enumerator/-simple-enumerator/index.html">com.github.giedomak.telepathdb.planner.enumerator.SimpleEnumerator</a></td>
+<td>
+<p>The SimpleEnumerator will enumerate all physical operators we support for a given logical operator.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.evaluationengine/-simple-evaluation-engine/index.html">com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine</a></td>
+<td>
+<p>Evaluate a physical-plan in order to get results from the path-index.</p>
+</td>
+</tr>
+<tr>
+<td>
 <a href="../com.github.giedomak.telepathdb.staticparser/-static-parser/index.html">com.github.giedomak.telepathdb.staticparser.StaticParser</a></td>
 <td>
-<p>Parse the query language into our internal representation, i.e. a <a href="../com.github.giedomak.telepathdb.datamodels.parsetree/-parse-tree/index.html">ParseTree</a>.</p>
+<p>Parse the query language into our internal representation, i.e. a <a href="../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html">LogicalPlan</a>.</p>
 </td>
 </tr>
 <tr>
@@ -224,6 +318,12 @@
 <tr>
 <td>
 <a href="../com.github.giedomak.telepathdb/-telepath-d-b/index.html">com.github.giedomak.telepathdb.TelepathDB</a></td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<a href="../com.github.giedomak.telepathdb.physicaloperators/-union/index.html">com.github.giedomak.telepathdb.physicaloperators.Union</a></td>
 <td>
 </td>
 </tr>
