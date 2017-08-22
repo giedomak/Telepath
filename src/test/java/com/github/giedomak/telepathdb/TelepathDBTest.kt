@@ -85,10 +85,10 @@ class TelepathDBTest {
         telepathDB.evaluationEngine = evaluationEngine
         telepathDB.cardinalityEstimation = cardinalityEstimationMock
         telepathDB.planner = plannerMock
-        // Don't wait for a second user logicalPl --> throw exception
+        // Don't wait for a second user input --> throw exception
         doReturn("a/b").doThrow(IllegalArgumentException()).whenever(telepathDB).getUserInput(any())
 
-        // Since our second logicalPl will throw an exception, we'll catch it.
+        // Since our second input will throw an exception, we'll catch it.
         try {
             telepathDB.start()
         } catch (e: IllegalArgumentException) {
