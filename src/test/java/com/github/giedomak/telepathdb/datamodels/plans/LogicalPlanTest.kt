@@ -4,8 +4,41 @@ import com.github.giedomak.telepathdb.datamodels.Query
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Assert
 import org.junit.Test
+import kotlin.test.assertNotEquals
 
 class LogicalPlanTest {
+
+    @Test
+    fun equalsImplementation() {
+        val a = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"))
+        val b = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"))
+        val c = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("a", "b"))
+        val d = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c"))
+        val e = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("a", "b", "c"))
+
+        Assert.assertEquals(a, b)
+        assertNotEquals(a, c)
+        assertNotEquals(a, d)
+        assertNotEquals(a, e)
+        assertNotEquals(c, e)
+        assertNotEquals(d, e)
+    }
+
+    @Test
+    fun generatesHashCode() {
+        val a = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b")).hashCode()
+        val b = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b")).hashCode()
+        val c = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("a", "b")).hashCode()
+        val d = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b", "c")).hashCode()
+        val e = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("a", "b", "c")).hashCode()
+
+        Assert.assertEquals(a, b)
+        assertNotEquals(a, c)
+        assertNotEquals(a, d)
+        assertNotEquals(a, e)
+        assertNotEquals(c, e)
+        assertNotEquals(d, e)
+    }
 
     @Test
     fun outputsToString() {
