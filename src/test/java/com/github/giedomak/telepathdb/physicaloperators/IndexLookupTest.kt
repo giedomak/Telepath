@@ -46,6 +46,6 @@ class IndexLookupTest {
 
         val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"), query)
 
-        assertEquals(paths, physicalPlan.physicalOperator!!.evaluate().paths.toList())
+        assertEquals(paths, IndexLookup(physicalPlan).evaluate().paths.toList())
     }
 }
