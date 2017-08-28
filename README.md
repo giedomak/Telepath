@@ -2,8 +2,9 @@ TelepathDB
 =====
 [![Build Status](https://travis-ci.org/giedomak/TelepathDB.svg?branch=master)](https://travis-ci.org/giedomak/TelepathDB)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/54b77ddc30294e5ca6ce0743f50811a4)](https://www.codacy.com/app/giedomak/TelepathDB?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=giedomak/TelepathDB&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 [![Code Climate](https://codeclimate.com/github/giedomak/TelepathDB/badges/gpa.svg)](https://codeclimate.com/github/giedomak/TelepathDB)
+[![codebeat badge](https://codebeat.co/badges/ffa0cab1-0edc-4900-b96c-68a17c73e3a8)](https://codebeat.co/projects/github-com-giedomak-telepathdb-master)
+[![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 
 Massive graph-structured data collections are ubiquitous in contemporary data management scenarios such as social networks, linked open data, and chemical compound databases.
 
