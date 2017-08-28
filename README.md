@@ -40,15 +40,35 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
   Since this phase is one of the main contributions, an in-depth explenation can be found [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/README.md).
 
+              INDEX_LOOKUP
+                /  |  \
+               a   b   c
+
 4. __Evaluate the physical plan__
 
   The physical plan is evaluated in a bottom-up fashion. All intermediate results are materialized through our MemoryManager [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/memorymanager/MemoryManagerTest.kt#L25) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/MemoryManager.kt#L23).
 
-  For example: the evaluation of the [hash-join](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/OpenHashJoin.kt#L27).
+  The evaluation of the hash-join can be found  [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/OpenHashJoin.kt#L27).
+
+  Using [PathDB](https://github.com/maxsumrall/PathDB) to gather the paths satisfying our query:
+
+                kPathIndex.search(
+                        PathPrefix(
+                                physicalPlan.pathIdOfChildren()
+                        )
+                )
 
 5. __Visualize results__
 
   At the time of writing, results will be shown to the user through a command-line interface.
+
+  ```
+    TelepathDB: >>>>> Results:
+    TelepathDB: Path(pathId=9, nodes=[Node(id=10), Node(id=12), Node(id=14)])
+    TelepathDB: Path(pathId=9, nodes=[Node(id=10), Node(id=12), Node(id=8772)])
+    TelepathDB: Number of results: 2, after 5 ms
+    TelepathDB: ----------------------------
+  ```
 
 ## Architecture
 
