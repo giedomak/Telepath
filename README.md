@@ -44,7 +44,7 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
   Our planner uses the `DPsize` [algorithm](https://scholar.google.nl/scholar?q=Analysis+of+two+existing+and+one+new+dynamic+programming+algorithm+for+the+generation+of+optimal+bushy+join+trees+without+cross+products&btnG=&hl=en&as_sdt=0%2C5) as inspiration, which calculates the cheapest physical plan in a bottom-up fashion.
 
-  Since this phase is one of the main contributions, an in-depth explenation can be found [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/README.md).
+  Since this phase is one of the main contributions, an in-depth explanation can be found [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/README.md).
 
               INDEX_LOOKUP
                 /  |  \
