@@ -13,9 +13,9 @@ import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
- * Hash-join.
+ * Open hash-join to maintain compatibility with concatenating streams instead of evaluating physical plans.
  */
-open class OpenHashJoin(private var stream1: PathStream, private var stream2: PathStream) {
+class OpenHashJoin(private var stream1: PathStream, private var stream2: PathStream, private var pathIdentifierStore: PathIdentifierStore = PathIdentifierStore) {
 
     /**
      * Join two streams of Paths following the HashJoin algorithm and by using our MemoryManager.
@@ -38,7 +38,7 @@ open class OpenHashJoin(private var stream1: PathStream, private var stream2: Pa
         return PathStream(
                 stream2.paths.flatMap { v2 ->
                     MemoryManager[offset + v2.nodes.first().id]
-                            .map { v1 -> PathIdentifierStore.concatenatePaths(v1, v2) }
+                            .map { v1 -> pathIdentifierStore.concatenatePaths(v1, v2) }
                 }
         )
     }
