@@ -24,7 +24,9 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
   The user gives a regular path query as input. For example:
 
-  `a/(b/c)`
+  ```
+    a/(b/c)
+  ```
 
   Where `a`, `b` and `c` are edge labels, and `/` is interpreted as the concatenation logical operator.
 
