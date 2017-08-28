@@ -5,7 +5,7 @@ TelepathDB
 [![codecov](https://codecov.io/gh/giedomak/TelepathDB/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/TelepathDB)
 [![Code Climate](https://codeclimate.com/github/giedomak/TelepathDB/badges/gpa.svg)](https://codeclimate.com/github/giedomak/TelepathDB)
 
-Massive graph-structured data collections are ubiquitous in contemporary data management scenarios such as social networks, linked open data, and chemical compound databases. 
+Massive graph-structured data collections are ubiquitous in contemporary data management scenarios such as social networks, linked open data, and chemical compound databases.
 
 The selection and manipulation of paths forms the core of querying graph datasets. Path indexing techniques can speed up this core functionality of querying graph datasets.
 
@@ -15,185 +15,100 @@ We propose a path-index based graph database engine.
 
 The documentation can be found [here](https://giedomak.github.io/TelepathDB/telepathdb).
 
+## Life of a Query
+
+This section describes the essence of the life of a query within TelepathDB. Each heading contains links to its docs, test and source. In most cases, the test will give a clear insight into what each specific module produces.
+
+1. __Query input__
+
+  The user gives a regular path query as input. For example: `a/(b/c)`. Where `a`, `b` and `c` are edge labels, and `/` is interpreted as the concatenation logical operator.
+
+2. __Parse the input__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.staticparser/-static-parser-r-p-q/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/staticparser/StaticParserRPQTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/staticparser/StaticParserRPQ.kt#L18)
+
+  The query input is parsed into our internal representation of a logical plan. Our internal representation uses a tree datastructure:
+
+              CONCATENATION
+                /      \
+               a   CONCATENATION
+                      /   \
+                     b     c
+
+3. __Generate the cheapest physical plan__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.planner/-dynamic-programming-planner/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/planner/DynamicProgrammingPlannerTest.kt#L29) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/DynamicProgrammingPlanner.kt#L20)
+
+  Our planner uses the `DPsize` [algorithm](https://scholar.google.nl/scholar?q=Analysis+of+two+existing+and+one+new+dynamic+programming+algorithm+for+the+generation+of+optimal+bushy+join+trees+without+cross+products&btnG=&hl=en&as_sdt=0%2C5) as inspiration, which calculates the cheapest physical plan in a bottom-up fashion.
+
+  1. __Flatten into multi-children tree__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattenerTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattener.kt#L37)
+
+    Logical plans are flattened to prepare them for the subtree generator.
+
+    Given:
+
+                CONCATENATION
+                    /    \
+                   a    CONCATENATION
+                           /    \
+                          b      c
+
+    Output:
+
+               CONCATENATION
+                  /  |  \
+                 a   b   c
+
+  2. __Generate subtrees of a given size__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/index.html)  [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtreeTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtree.kt#L16)
+
+    Let's say we are trying to calculate the cheapest physical plan for a plan with size `2`. Then we are generating all subtrees of size `1`, and check if we can combine them. These smaller subtrees have its cheapest physical plan already calculated, so we'll want to re-use those.
+
+    Given:
+
+                   CONCATENATION
+                  /  |     |  |  \
+                 a  UNION  e  f   g
+                    / | \
+                   b  c  d
+
+    Subtrees of size `2`:
+
+               UNION   UNION    CONCATENATION    CONCATENATION
+                / \     / \         /   \            /   \
+               b   c   c   d       e     f          f     g
+
+  3. __Check containment of subtrees__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-containment/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainmentTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainment.kt#L13)
+
+    Given this logical plan:
+
+                       UNION
+                       /   \
+           CONCATENATION   CONCATENATION
+               /   \          /     \
+              a     b        c       d
+
+    Given `subtree1` and `subtree2`:
+
+           CONCATENATION           CONCATENATION
+               /    \                  /    \
+              a      b                c      d
+
+    `subtree1` and `subtree2` are contained in the logical plan through the `UNION` operator.
+
+  4. __Enumerate operators__
+
+    When two subtrees are contained through an operator in the logical plan, we'll calculate the cheapest physical plan for their combination. Remember we already know the cheapest physical plans for both subtrees.
+
+    As an example, let's say we've got two subtrees contained through the `CONCATENATION` operator. We enumerate the logical operator into hash-join, nested-loop-join and index-lookup.
+
+  5. __Costing physical plans__
+
+    Each physical operator has a cost associated to it which depends on the cardinality of the sets it operates on.
+
+    For example, the cost of hash-join is `2 * (M + N)`.
+
+  6. __Save the cheapest physical plan__
+
+    Once each enumerated physical plan has been costed, we save the cheapest physical plan. Since we work in a bottom-up fashion, after all iterations, we will have calculated the cheapest physical plan for the given logical plan.
+
 ## Architecture
 
 Schematic overview of the architecture:
 
 ![](src/main/resources/pathdb.png?raw=true)
-
-<!-- [![Build Status](https://travis-ci.org/maxsumrall/PathDB.svg?branch=master)](https://travis-ci.org/maxsumrall/PathDB)
-
-A data store for graph paths.
-
-#### Current implementation
-
-PathDB is a _k-path_ index implemented as a B+ tree. Datasets can be bulk-loaded into the index. The index can be sorted and paths can be found and merged into new entries of the index. The index and operations are disk-based and cached into memory. _IndexTree_ is the main class which handles most of the operations.
-
-#### Goal implementation
-
-PathDB consists out of __B+ tree implementation__ for the _k-path_ index. The B+ tree has operations for inserting, deleting and selecting. Query plans are interpreted by the __Interpreter__ module and this module is able to execute query plans by extending the B+ tree operations with merge-join and hash-join. PathDB is able to handle large files by reading and writing to disk. The module __DiskManager__ handles the reading and writing to disk.
-
-B+ tree implementation
------
-
-This section describes each class of our B+ tree implementation.
-
-### CompressedPageCursor
-
-This class extends the _PageProxyCursor_ abstract class which implements the _Closeable_ class from _java<i></i>.io_.
-
-This class describes the cursor which can be used for compressed pages. The following public methods are available:
-- next
-- pushChangesToDisk
-- compress
-- encodeKey
-- numberOfBytes
-- toBytes
-- toLong
-- getCurrentPageId
-- capacity
-- getSize
-- setOffset
-- getOffset
-- getBytes
-- getByte
-- putBytes
-- putByte
-- getLong
-- putLong
-- getInt
-- putInt
-- leafNodeContainsSpaceForNewKey
-- deferWriting
-- resumeWriting
-- internalNodeContainsSpaceForNewKeyAndChild
-- close
-
-### DiskCache
-
-Class responsible for caching pages from disk by using the libraries _DefaultFileSystemAbstraction, PagedFile, SingleFilePageSwapperFactory, MuninnPageCache_ and _PageCacheTracer_ libraries from __Neo4j__.
-
-### DiskCompressor
-
-Class responsible for compressing a _DiskCache_.
-
-### IndexBulkLoader
-
-Build an _IndexTree_ from a given _DiskCache_. It has a public method _run_ to generate the B+ tree. It has one other public method to return the first key from a leaf: _traverseToFindFirstKeyInLeafAsBytes_. This last method uses the _getFirstKeyInNodeAsBytes_ method from the _IndexInsertion_ class.
-
-It uses the following private methods to build the B+ tree:
-- addLeafToParent
-- buildUpperLeaves
-- copyUpLeafToParent
-
-### IndexDeletion
-
-This class has methods to delete elements from the index.
-
-The following public methods are available in an _IndexDeletion_:
-- remove
-- handleRemovedChildren
-- removeKeyAndChildFromInternalNode
-- removeKeyFromLeafNode
-- removeChildAtIndex
-
-Private methods:
-- removeKeyAtOffset
-- removeKeyAtIndex
-
-### IndexInsertion
-
-This class has methods to insert elements into the index.
-
-The following public methods are available in an _IndexInsertion_:
-- insert
-- addKeyAndChildToInternalNode
-- addKeyToLeafNode
-- getFirstKeyInNode
-- getFirstKeyInNodeAsBytes
-- popFirstKeyInNodeAsBytes
-
-Private methods:
-- insertAndBalanceKeysBetweenLeafNodes
-- insertAndBalanceKeysBetweenInternalNodes
-- newKeyBelongsInNewNode
-- insertKeyAtIndex
-- insertChildAtIndex
-
-### IndexSearch
-
-This class contains methods to find elements in the index given a key as input. There are methods to return the result as an _int[]_ or as a _SearchCursor_. Public methods:
-- find
-- findWithCursor
-- search
-
-### IndexTree
-
-This is the __main class__ which has class attributes instantiated from the classes _DiskCache, KeyImpl, IndexSearch, IndexInsertion and IndexDeletion_.
-
-The following public methods are available in an instance of _IndexTree_:
-- newRoot
-- find
-- insert
-- remove
-- setPrecedingId
-- setFollowingId
-- getChildIdAtIndex
-- getIndexOfChild
-- updateSiblingAndFollowingIdsInsertion
-- updateSiblingAndFollowingIdsDeletion
-- acquireNewLeafNode
-- acquireNewInternalNode
-- releaseNode
-- removeFirstKeyInInternalNode
-
-### InMemoryNode
-
-Class to convert nodes from their compressed state to their uncompressed state. Note: nodes are saved to disk in their compressed state.
-
-### KeyImpl
-
-Class with the definition of the indexable form of a path, e.g. its key.
-
-### NodeHeader
-
-_final_ class containing the specification for the header of a node.
-
-### NodeSize
-
-Class to check if a node fits into a page.
-
-### RemoveResultProxy
-
-This is a class used by the _IndexDeletion_ class. A _RemoveResultProxy_ instance is created when a node will be deleted from the index. To handle the updates of siblings and children in the process of deletion, necessary information, e.g. _removedNodeId, siblingNodeID, isLeaf_, is stored in the _RemoveResultProxy_ instance.
-
-### SearchCursor
-
-Class to define a cursor for search operations on the B+ tree. This class has public functions _next()_ and _hasNext()_.
-
-### SplitResult
-
-The same way as the class _RemoveResultProxy_ is used for deletion, _SplitResult_ is used for insertion. The attributes _key, primkey, left and right_ are stored in an instance of _SplitResult_.
-
-### TreeNodeIDManager
-
-This class manages which ids a node of the tree can obtain. The following public methods are available to manage these ids:
-- acquire
-- release
-- isNodeIdInFreePool
-
-DiskManager
------
-
-_WORK IN PROGRESS_
-
-This section describes how our limited memory size is used in combination with disk space to handle operations.
-
-This module currently uses the _DefaultFileSystemAbstraction, PagedFile, SingleFilePageSwapperFactory, MuninnPageCache_ and _PageCacheTracer_ libraries from __Neo4j__.
-
-Interpreter
------
-
-_WORK IN PROGRESS_
-
-This section describes how query-plans are executed and where join-algorithms fit in. -->
