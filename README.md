@@ -22,7 +22,11 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
 1. __Query input__
 
-  The user gives a regular path query as input. For example: `a/(b/c)`. Where `a`, `b` and `c` are edge labels, and `/` is interpreted as the concatenation logical operator.
+  The user gives a regular path query as input. For example:
+
+  `a/(b/c)`
+
+  Where `a`, `b` and `c` are edge labels, and `/` is interpreted as the concatenation logical operator.
 
 2. __Parse the input__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.staticparser/-static-parser-r-p-q/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/staticparser/StaticParserRPQTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/staticparser/StaticParserRPQ.kt#L18)
 
@@ -47,8 +51,6 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 4. __Evaluate the physical plan__
 
   The physical plan is evaluated in a bottom-up fashion. All intermediate results are materialized through our MemoryManager [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/memorymanager/MemoryManagerTest.kt#L25) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/MemoryManager.kt#L23).
-
-  The evaluation of the hash-join can be found  [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/OpenHashJoin.kt#L27).
 
   Using [PathDB](https://github.com/maxsumrall/PathDB) to gather the paths satisfying our query:
 
