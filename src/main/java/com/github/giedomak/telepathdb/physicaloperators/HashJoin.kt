@@ -23,7 +23,7 @@ class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      * @return A stream with the concatenated paths of stream1 and stream2.
      */
     override fun evaluate(): PathStream {
-        return OpenHashJoin(firstChild.evaluate(), lastChild.evaluate()).evaluate()
+        return OpenHashJoin(firstChild.evaluate(), lastChild.evaluate(), physicalPlan.query.telepathDB.pathIdentifierStore).evaluate()
     }
 
     /**
