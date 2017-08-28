@@ -15,7 +15,7 @@ import com.github.giedomak.telepathdb.utilities.Logger
 /**
  * Open hash-join to maintain compatibility with concatenating streams instead of evaluating physical plans.
  */
-class OpenHashJoin(private var stream1: PathStream, private var stream2: PathStream, private var pathIdentifierStore: PathIdentifierStore = PathIdentifierStore) {
+class OpenHashJoin(private val stream1: PathStream, private val stream2: PathStream, private val pathIdentifierStore: PathIdentifierStore = PathIdentifierStore) {
 
     /**
      * Join two streams of Paths following the HashJoin algorithm and by using our MemoryManager.
