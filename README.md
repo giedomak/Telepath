@@ -36,81 +36,19 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
 3. __Generate the cheapest physical plan__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.planner/-dynamic-programming-planner/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/planner/DynamicProgrammingPlannerTest.kt#L29) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/DynamicProgrammingPlanner.kt#L20)
 
-  Our planner uses the `DPsize` [algorithm](https://scholar.google.nl/scholar?q=Analysis+of+two+existing+and+one+new+dynamic+programming+algorithm+for+the+generation+of+optimal+bushy+join+trees+without+cross+products&btnG=&hl=en&as_sdt=0%2C5) as inspiration, which calculates the cheapest physical plan in a bottom-up fashion. See the next section.
+  Our planner uses the `DPsize` [algorithm](https://scholar.google.nl/scholar?q=Analysis+of+two+existing+and+one+new+dynamic+programming+algorithm+for+the+generation+of+optimal+bushy+join+trees+without+cross+products&btnG=&hl=en&as_sdt=0%2C5) as inspiration, which calculates the cheapest physical plan in a bottom-up fashion.
 
-### Planner
+  Since this phase is one of the main contributions, an in-depth explenation can be found [here](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/README.md).
 
-This section describes how the planner calculates the cheapest physical plan for a given logical plan.
+4. __Evaluate the physical plan__
 
-1. __Flatten into multi-children tree__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattenerTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattener.kt#L37)
+  The physical plan is evaluated in a bottom-up fashion. All intermediate results are materialized through our MemoryManager [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/memorymanager/MemoryManagerTest.kt#L25) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/MemoryManager.kt#L23).
 
-  Logical plans are flattened to prepare them for the subtree generator.
+  For example: the evaluation of the [hash-join](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/OpenHashJoin.kt#L27).
 
-  Given:
+5. __Visualize results__
 
-              CONCATENATION
-                  /    \
-                 a    CONCATENATION
-                         /    \
-                        b      c
-
-  Output:
-
-             CONCATENATION
-                /  |  \
-               a   b   c
-
-2. __Generate subtrees of a given size__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/index.html)  [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtreeTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtree.kt#L16)
-
-  Let's say we are trying to calculate the cheapest physical plan for a plan with size `2`. Then we are generating all subtrees of size `1`, and check if we can combine them. These smaller subtrees have its cheapest physical plan already calculated, so we'll want to re-use those.
-
-  Given:
-
-                 CONCATENATION
-                /  |     |  |  \
-               a  UNION  e  f   g
-                  / | \
-                 b  c  d
-
-  Subtrees of size `2`:
-
-             UNION   UNION    CONCATENATION    CONCATENATION
-              / \     / \         /   \            /   \
-             b   c   c   d       e     f          f     g
-
-3. __Check containment of subtrees__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-containment/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainmentTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainment.kt#L13)
-
-  Given this logical plan:
-
-                     UNION
-                     /   \
-         CONCATENATION   CONCATENATION
-             /   \          /     \
-            a     b        c       d
-
-  Given `subtree1` and `subtree2`:
-
-         CONCATENATION           CONCATENATION
-             /    \                  /    \
-            a      b                c      d
-
-  `subtree1` and `subtree2` are contained in the logical plan through the `UNION` operator.
-
-4. __Enumerate operators__
-
-  When two subtrees are contained through an operator in the logical plan, we'll calculate the cheapest physical plan for their combination. Remember we already know the cheapest physical plans for both subtrees.
-
-  As an example, let's say we've got two subtrees contained through the `CONCATENATION` operator. We enumerate the logical operator into hash-join, nested-loop-join and index-lookup.
-
-5. __Costing physical plans__
-
-  Each physical operator has a cost associated to it which depends on the cardinality of the sets it operates on.
-
-  For example, the cost of hash-join is `2 * (M + N)`.
-
-6. __Save the cheapest physical plan__
-
-  Once each enumerated physical plan has been costed, we save the cheapest physical plan. Since we work in a bottom-up fashion, after all iterations, we will have calculated the cheapest physical plan for the given logical plan.
+  At the time of writing, results will be shown to the user through a command-line interface.
 
 ## Architecture
 
