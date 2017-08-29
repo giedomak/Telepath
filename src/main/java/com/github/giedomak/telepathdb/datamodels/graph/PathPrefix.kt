@@ -33,7 +33,7 @@ import java.util.*
  * @property cardinality Get the cardinality of this [pathId] from the path index.
  * @constructor Creates a PathPrefix with only the list of edges known through the [pathId].
  */
-class PathPrefix(pathId: Long) : AbstractPath(pathId) {
+class PathPrefix(val pathId: Long) {
 
     var length = 0
     var nodes = emptyList<Node>()

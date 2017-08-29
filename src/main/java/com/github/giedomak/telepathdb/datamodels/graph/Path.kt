@@ -33,7 +33,7 @@ import java.util.*
  * @property length Getter for the size of our [nodes] list.
  * @constructor Creates a Path with an ID and a list of nodes. The list of nodes should have at least two nodes.
  */
-class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializable {
+class Path(val pathId: Long, val nodes: List<Node>) : Serializable {
 
     val length: Int get() = nodes.size
 
