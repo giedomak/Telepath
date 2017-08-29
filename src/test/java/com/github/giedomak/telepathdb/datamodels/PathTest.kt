@@ -53,21 +53,6 @@ class PathTest {
         assertEquals(a, b)
     }
 
-    // TODO: another nodes list, but with nodes with the same characteristics
-
-    // ---------- METHODS ---------
-
-    @Test
-    fun lengthReturnsNodesSize() {
-        // given
-        val a = Path(42, equalNodes(3, 42))
-        val b = Path(42, equalNodes(4, 24))
-
-        // then
-        assertEquals(3, a.length.toLong())
-        assertEquals(4, b.length.toLong())
-    }
-
     @Test
     fun differentPathsAreNotEqualsTest() {
         // given
@@ -80,14 +65,16 @@ class PathTest {
         differentNodes.add(Node(43))
 
         val d = Path(42, differentNodes)
+        val e = Path(43, equalNodes(4, 42))
 
         // then
-        assertFalse(a == b)
-        assertFalse(b == a)
-        assertFalse(a == c)
-        assertFalse(c == a)
-        assertFalse(c == d)
-        assertFalse(d == c)
+        assertNotEquals(a, b)
+        assertNotEquals(b, a)
+        assertNotEquals(a, c)
+        assertNotEquals(c, a)
+        assertNotEquals(c, d)
+        assertNotEquals(d, c)
+        assertNotEquals(a, e)
     }
 
     @Test
@@ -99,9 +86,9 @@ class PathTest {
         val path4 = Path(43, equalNodes(4, 44))
 
         // then
-        assertEquals(path1.hashCode().toLong(), path2.hashCode().toLong())
-        assertNotEquals(path1.hashCode().toLong(), path3.hashCode().toLong())
-        assertNotEquals(path1.hashCode().toLong(), path4.hashCode().toLong())
+        assertEquals(path1.hashCode(), path2.hashCode())
+        assertNotEquals(path1.hashCode(), path3.hashCode())
+        assertNotEquals(path1.hashCode(), path4.hashCode())
     }
 
     @Test
