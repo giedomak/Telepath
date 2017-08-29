@@ -26,7 +26,7 @@ object PathDBWrapper {
     }
 
     fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.PathPrefix {
-        return com.pathdb.pathIndex.PathPrefix(pathPrefix.pathId, pathPrefix.length, toNodeList(pathPrefix.nodes))
+        return com.pathdb.pathIndex.PathPrefix(pathPrefix.pathId, pathPrefix.nodes.size, toNodeList(pathPrefix.nodes))
     }
 
     fun toNode(node: Node): com.pathdb.pathIndex.Node {

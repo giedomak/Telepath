@@ -21,8 +21,8 @@ class PathPrefixTest {
     fun samePathPrefixPrefixesEqualEachOtherTest() {
         // given
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"))
-        val a = PathPrefix(pathId, 6, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(pathId, 6, PathTest.equalNodes(4, 42))
+        val a = PathPrefix(pathId, PathTest.equalNodes(4, 42))
+        val b = PathPrefix(pathId, PathTest.equalNodes(4, 42))
 
         // then
         assertEquals(a, a)
@@ -32,16 +32,16 @@ class PathPrefixTest {
     @Test
     fun differentPathPrefixPrefixesAreNotEqualsTest() {
         // given
-        val a = PathPrefix(42, 6, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(42, 6, PathTest.equalNodes(4, 24))
-        val c = PathPrefix(42, 6, PathTest.equalNodes(3, 42))
-        val d = PathPrefix(43, 6, PathTest.equalNodes(3, 42))
+        val a = PathPrefix(42, PathTest.equalNodes(4, 42))
+        val b = PathPrefix(42, PathTest.equalNodes(4, 24))
+        val c = PathPrefix(42, PathTest.equalNodes(3, 42))
+        val d = PathPrefix(43, PathTest.equalNodes(3, 42))
 
         val differentNodes = PathTest.equalNodes(3, 42)
         differentNodes.removeAt(differentNodes.size - 1)
         differentNodes.add(Node(43))
 
-        val e = PathPrefix(42, 6, differentNodes)
+        val e = PathPrefix(42, differentNodes)
 
         // then
         assertNotEquals(a, b)
@@ -59,9 +59,9 @@ class PathPrefixTest {
     @Test
     fun generatesHashCode() {
         // given
-        val a = PathPrefix(42, 6, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(42, 6, PathTest.equalNodes(4, 42))
-        val c = PathPrefix(42, 6, PathTest.equalNodes(4, 24))
+        val a = PathPrefix(42, PathTest.equalNodes(4, 42))
+        val b = PathPrefix(42, PathTest.equalNodes(4, 42))
+        val c = PathPrefix(42, PathTest.equalNodes(4, 24))
 
         // then
         assertEquals(a.hashCode(), b.hashCode())
@@ -71,24 +71,11 @@ class PathPrefixTest {
     @Test
     fun outputsToString() {
         // given
-        val pathId = PathIdentifierStore.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"))
-        val a = PathPrefix(pathId)
-        val output = "PathPrefix(" + "pathId=" + a.pathId + ", length=" + a.length + ", edges=" + PathIdentifierStore.getEdgeSet(pathId) + ", nodes=" + a.nodes + ")"
+        val a = PathPrefix(31)
+        val output = "PathPrefix(pathId=31, nodes=" + a.nodes + ")"
 
         // then
         assertEquals(a.toString(), output)
     }
 
-    companion object {
-
-        fun simplePathPrefix(pathId: Long, actualLength: Int, numberOfNodes: Int, value: Long?): PathPrefix {
-            val nodes = ArrayList<Node>(numberOfNodes + 1)
-
-            for (i in 0..numberOfNodes - 1) {
-                nodes.add(Node(value!!))
-            }
-
-            return PathPrefix(pathId, actualLength, nodes)
-        }
-    }
 }

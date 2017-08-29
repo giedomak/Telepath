@@ -8,7 +8,6 @@
 package com.github.giedomak.telepathdb.datamodels.graph
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * The Path model contains a list of edges, as well as a list of nodes to represent a specific path.
@@ -30,12 +29,9 @@ import java.util.*
  * @property pathId The ID given to a specific Path. We can use the [PathIdentifierStore][com.telepathdb.datamodels.stores.PathIdentifierStore]
  * to get the list of [edges][Edge].
  * @property nodes The ordered list of nodes along this [Path].
- * @property length Getter for the size of our [nodes] list.
  * @constructor Creates a Path with an ID and a list of nodes. The list of nodes should have at least two nodes.
  */
-class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializable {
-
-    val length: Int get() = nodes.size
+data class Path(val pathId: Long, val nodes: List<Node>) : Serializable {
 
     init {
         // Validations
@@ -43,26 +39,4 @@ class Path(pathId: Long, val nodes: List<Node>) : AbstractPath(pathId), Serializ
             throw IllegalArgumentException("A Path must have at least two nodes")
     }
 
-    //
-    // --------- HASHCODE & EQUALS & TO-STRING ---------
-    //
-
-    override fun hashCode(): Int {
-        return Objects.hash(length, nodes)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other?.javaClass != javaClass) return false
-
-        other as Path
-
-        if (nodes != other.nodes) return false
-
-        return true
-    }
-
-    override fun toString(): String {
-        return "Path(pathId=$pathId, nodes=$nodes)"
-    }
 }
