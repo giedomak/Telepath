@@ -14,7 +14,7 @@ We propose a path-index based graph database engine.
 
 ## Documentation
 
-The documentation can be found [here](https://giedomak.github.io/TelepathDB/telepathdb).
+The documentation can be found [here](https://giedomak.github.io/TelepathDB/telepathdb) and a schematic overview of the architecture can be found [here](https://github.com/giedomak/TelepathDB/tree/master/src/main/resources).
 
 ## Life of a Query
 
@@ -73,9 +73,3 @@ This section describes the essence of the life of a query within TelepathDB. Eac
     TelepathDB: Number of results: 2, after 5 ms
     TelepathDB: ----------------------------
   ```
-
-## Architecture
-
-Schematic overview of the architecture:
-
-![](src/main/resources/pathdb.png?raw=true)
