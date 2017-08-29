@@ -8,7 +8,6 @@
 package com.github.giedomak.telepathdb.datamodels.graph
 
 import java.io.Serializable
-import java.util.*
 
 /**
  * The Path model contains a list of edges, as well as a list of nodes to represent a specific path.
