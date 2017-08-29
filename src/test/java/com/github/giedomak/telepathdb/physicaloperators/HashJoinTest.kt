@@ -19,42 +19,46 @@ class HashJoinTest {
     @Test
     fun evaluates() {
 
+        // Mocked results
         val paths1 = listOf(
                 Path(42, PathTest.increasingNodes(3, 42)),
                 Path(42, PathTest.increasingNodes(3, 49))
         )
-
         val paths2 = listOf(
                 Path(42, PathTest.increasingNodes(3, 44)),
                 Path(42, PathTest.increasingNodes(3, 48))
         )
 
+        // Mock the evaluate call
         val operator1 = mock<PhysicalOperator> {
             on { evaluate() }.doReturn(PathStream(paths1.stream()))
         }
-
         val operator2 = mock<PhysicalOperator> {
             on { evaluate() }.doReturn(PathStream(paths2.stream()))
         }
 
+        // Mock the actual operators
         val child1 = mock<PhysicalPlan> {
             on { physicalOperator }.doReturn(operator1)
         }
-
         val child2 = mock<PhysicalPlan> {
             on { physicalOperator }.doReturn(operator2)
         }
 
+        // Expected result path
         val expected = Path(48, PathTest.increasingNodes(5, 42))
 
+        // Mock the concatenation of paths into the expected
         val store = mock<PathIdentifierStore> {
             on { concatenatePaths(paths1.first(), paths2.first()) }.doReturn(expected)
         }
 
+        // Mock the path identifier store to our module
         val telepathdb = mock<TelepathDB> {
             on { pathIdentifierStore }.doReturn(store)
         }
 
+        // Make sure our query knows about the module
         val query = mock<Query> {
             on { telepathDB }.doReturn(telepathdb)
         }

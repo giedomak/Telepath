@@ -16,7 +16,6 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.planner.enumerator.SimpleEnumerator

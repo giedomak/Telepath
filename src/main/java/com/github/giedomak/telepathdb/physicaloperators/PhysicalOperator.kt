@@ -23,9 +23,13 @@ interface PhysicalOperator {
         // ------ CONSTANTS ------
 
         const val LEAF = 0
+
         const val INDEX_LOOKUP = 1
+
         const val HASH_JOIN = 2
         const val NESTED_LOOP_JOIN = 3
+
+        const val UNION = 4
 
         // ------ COLLECTIONS -------
 
@@ -38,9 +42,13 @@ interface PhysicalOperator {
             return when (physicalPlan.operator) {
 
                 LEAF -> null
+
                 INDEX_LOOKUP -> IndexLookup(physicalPlan)
+
                 HASH_JOIN -> HashJoin(physicalPlan)
                 NESTED_LOOP_JOIN -> NestedLoopJoin(physicalPlan)
+
+                UNION -> Union(physicalPlan)
 
                 else -> TODO("Gotta catch em all")
             }

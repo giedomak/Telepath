@@ -11,7 +11,7 @@ import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 
 /**
- * Hash-join.
+ * Hash-join physical operator.
  */
 class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
 
