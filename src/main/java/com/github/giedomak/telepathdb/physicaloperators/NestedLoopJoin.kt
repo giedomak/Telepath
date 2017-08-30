@@ -10,7 +10,6 @@ package com.github.giedomak.telepathdb.physicaloperators
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
-import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 
 /**
  * Nested-loop-join.
@@ -20,7 +19,7 @@ class NestedLoopJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator
     override fun evaluate(): PathStream {
 
         // Because we are doing a nested loop, we have to create the stream again for each new iteration.
-        val streamSupplier = MemoryManager.streamSupplier(lastChild.evaluate().paths)
+        val streamSupplier = lastChild.evaluate().pathSupplier
 
         // Basically we are doing a nested loop to do an inner-join and concatenate the paths.
         return PathStream(

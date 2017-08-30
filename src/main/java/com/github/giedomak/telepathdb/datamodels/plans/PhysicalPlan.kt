@@ -2,7 +2,7 @@ package com.github.giedomak.telepathdb.datamodels.plans
 
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
-import com.github.giedomak.telepathdb.memorymanager.MemoryManager
+import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 /**
@@ -14,7 +14,7 @@ import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
  * @property query We always need a reference to our query which holds all the module implementations we'll need.
  * @property operator An [Int] representing the physical operator. See [HASH_JOIN] for an example.
  * @property operatorName This property gets the symbolic name [String] belonging to our operator, e.g. HASH_JOIN.
- * @property memoryManagerId This property will hold a reference to the [MemoryManager] slot we might be given
+ * @property memoryManagerId This property will hold a reference to the [SimpleMemoryManager] slot we might be given
  *                           to indicate the location of intermediate results.
  */
 class PhysicalPlan(
