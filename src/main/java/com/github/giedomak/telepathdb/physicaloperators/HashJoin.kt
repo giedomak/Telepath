@@ -26,7 +26,8 @@ class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
         return OpenHashJoin(
                 firstChild.evaluate(),
                 lastChild.evaluate(),
-                physicalPlan.query.telepathDB).evaluate()
+                physicalPlan.query.telepathDB
+        ).evaluate()
     }
 
     /**
