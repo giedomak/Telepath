@@ -87,7 +87,7 @@ object SimpleMemoryManager : MemoryManager {
     }
 
     /**
-     * Boolean value indicating of our new partition will fit into memory.
+     * Boolean value indicating if our new partition will fit into memory.
      *
      * This has to be public in order for our specs to mock it...
      */
