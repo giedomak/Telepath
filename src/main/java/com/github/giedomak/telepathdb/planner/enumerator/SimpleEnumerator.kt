@@ -3,6 +3,7 @@ package com.github.giedomak.telepathdb.planner.enumerator
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
  * The SimpleEnumerator will enumerate all physical operators we support for a given logical operator.
@@ -23,7 +24,9 @@ object SimpleEnumerator : Enumerator {
 
             LogicalPlan.CONCATENATION -> enumerateConcatenation(tree1, tree2)
 
-            else -> TODO("I know")
+            LogicalPlan.UNION -> listOf(tree1.merge(tree2, PhysicalOperator.UNION)).asSequence()
+
+            else -> TODO("I see you like to enumerate")
         }
 
     }
