@@ -9,16 +9,21 @@ package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
+import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
+import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.planner.DynamicProgrammingPlanner
 import com.github.giedomak.telepathdb.planner.Planner
+import com.github.giedomak.telepathdb.planner.enumerator.Enumerator
 import com.github.giedomak.telepathdb.planner.enumerator.SimpleEnumerator
+import com.github.giedomak.telepathdb.staticparser.StaticParser
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.IOException
@@ -29,13 +34,14 @@ object TelepathDB {
 
     // ------ MODULES ------
 
-    var staticParser = StaticParserRPQ
+    var staticParser: StaticParser = StaticParserRPQ
     val kPathIndex = KPathIndexInMemory()
-    var evaluationEngine = SimpleEvaluationEngine
-    val costModel = AdvancedCostModel
+    var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
+    val costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
     var planner: Planner = DynamicProgrammingPlanner
-    val enumerator = SimpleEnumerator
+    val enumerator: Enumerator = SimpleEnumerator
+    val memoryManager: MemoryManager = SimpleMemoryManager
 
     // ------ STORES -------
 
@@ -97,7 +103,7 @@ object TelepathDB {
             Logger.info("----------------------------")
 
             // Clear the intermediate results in our memory and cache
-            MemoryManager.clear()
+            memoryManager.clear()
         }
     }
 

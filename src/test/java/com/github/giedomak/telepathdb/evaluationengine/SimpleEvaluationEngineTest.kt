@@ -15,6 +15,7 @@ import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
+import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
@@ -91,6 +92,7 @@ class SimpleEvaluationEngineTest {
             on { evaluationEngine }.doReturn(SimpleEvaluationEngine)
             on { kPathIndex }.doReturn(kPathIndexMock)
             on { pathIdentifierStore }.doReturn(PathIdentifierStore)
+            on { memoryManager }.doReturn(SimpleMemoryManager)
         }
 
         val queryMock = mock<Query> {

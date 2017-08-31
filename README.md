@@ -52,7 +52,7 @@ This section describes the essence of the life of a query within TelepathDB. Eac
 
 4. __Evaluate the physical plan__
 
-  The physical plan is evaluated in a bottom-up fashion. All intermediate results are materialized through our MemoryManager [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/memorymanager/MemoryManagerTest.kt#L25) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/MemoryManager.kt#L23).
+  The physical plan is evaluated in a bottom-up fashion. All intermediate results are materialized through our MemoryManager [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/memorymanager/SimpleMemoryManagerTest.kt#L25) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/memorymanager/SimpleMemoryManager.kt#L23).
 
   Using [PathDB](https://github.com/maxsumrall/PathDB) to gather the paths satisfying our query:
 

@@ -25,7 +25,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.utilities.MultiTreeContai
  * The [DynamicProgrammingPlanner][com.telepathdb.planner.DynamicProgrammingPlanner] will parse such a parseTree from user input, into a physical plan.
  * These physical plans can have slightly different operators and payloads in regard to a parseTree generated from user input.
  *
- * @property id An ID given to a parseTree in order to make the life of the [MemoryManager][com.telepathdb.memorymanager.MemoryManager] easier.
+ * @property id An ID given to a parseTree in order to make the life of the [SimpleMemoryManager][com.telepathdb.memorymanager.SimpleMemoryManager] easier.
  * @property isRoot Boolean value indicating if this parseTree is the root of the binary-tree.
  * @property children Ordered list with the children of this parseTree, which are also parseTrees.
  * @property operator An [Int] representing the operator. See our [Companion] for these constants, i.e. [CONCATENATION].

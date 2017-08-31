@@ -22,7 +22,7 @@ import java.io.PrintStream
 import kotlin.streams.toList
 import kotlin.test.assertEquals
 
-class MemoryManagerTest {
+class SimpleMemoryManagerTest {
 
     private val logger = ByteArrayOutputStream()
     private val stdout = System.out
@@ -40,7 +40,7 @@ class MemoryManagerTest {
     @Test
     fun writesAndReadsPartitionsToDisk() {
 
-        val memoryManager = spy<MemoryManager>()
+        val memoryManager = spy<SimpleMemoryManager>()
         doReturn(false).whenever(memoryManager).fitsIntoMemory(any())
 
         val expected = listOf(
@@ -48,7 +48,7 @@ class MemoryManagerTest {
                 PathTest.simplePath(47, 4, 40)
         )
 
-        // Add our expected path to the MemoryManager, this should write it to disk since it does not fitsIntoMemory.
+        // Add our expected path to the SimpleMemoryManager, this should write it to disk since it does not fitsIntoMemory.
         val id = memoryManager.add(expected.stream())
 
         // Verify the Logger has written what we expected
@@ -63,22 +63,20 @@ class MemoryManagerTest {
     @Test
     fun clearsTheMemory() {
 
-        val memoryManager = spy<MemoryManager>()
-
         val expected = listOf(
                 PathTest.simplePath(42, 3, 44),
                 PathTest.simplePath(47, 4, 40)
         )
 
-        // Add our expected path to the MemoryManager, this should write it to disk since it does not fitsIntoMemory.
-        val id = memoryManager.add(expected.stream())
+        // Add our expected path to the SimpleMemoryManager, this should write it to disk since it does not fitsIntoMemory.
+        val id = SimpleMemoryManager.add(expected.stream())
 
         // Verify the memory manager holds our records
-        assertEquals(expected, memoryManager[id].toList())
+        assertEquals(expected, SimpleMemoryManager[id].toList())
 
-        memoryManager.clear()
+        SimpleMemoryManager.clear()
 
         // Verify the memory manager does not holds our records
-        assertEquals(emptyList(), memoryManager[id].toList())
+        assertEquals(emptyList(), SimpleMemoryManager[id].toList())
     }
 }

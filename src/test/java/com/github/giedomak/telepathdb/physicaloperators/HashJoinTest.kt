@@ -8,6 +8,7 @@ import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
+import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
@@ -56,6 +57,7 @@ class HashJoinTest {
         // Mock the path identifier store to our module
         val telepathdb = mock<TelepathDB> {
             on { pathIdentifierStore }.doReturn(store)
+            on { memoryManager }.doReturn(SimpleMemoryManager)
         }
 
         // Make sure our query knows about the module
