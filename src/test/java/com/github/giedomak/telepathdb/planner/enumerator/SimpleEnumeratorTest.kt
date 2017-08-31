@@ -89,4 +89,31 @@ class SimpleEnumeratorTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    fun enumeratesUnion() {
+
+        // Given these two trees and the UNION operator:
+        //
+        //      INDEX_LOOKUP       INDEX_LOOKUP
+        //        /     \            /     \
+        //       a      b           c      d
+        val tree1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"), query)
+        val tree2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("c", "d"), query)
+
+        // Expected:
+        //
+        //                  UNION
+        //                 /    \
+        //       INDEX_LOOKUP INDEX_LOOKUP
+        //         /     \      /    \
+        //        a      b     c     d
+        val expected = listOf(
+                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.UNION, listOf(tree1, tree2))
+        )
+
+        val actual = SimpleEnumerator.enumerate(tree1, tree2, LogicalPlan.UNION).toList()
+
+        assertEquals(expected, actual)
+    }
+
 }
