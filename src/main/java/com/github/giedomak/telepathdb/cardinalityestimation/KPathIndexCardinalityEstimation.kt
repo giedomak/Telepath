@@ -8,12 +8,14 @@
 package com.github.giedomak.telepathdb.cardinalityestimation
 
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
-class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : CardinalityEstimation {
+class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstimation {
 
-    private val statisticsStore = kPathIndex.getStatisticsStore()
+    // We can only use this CardinalityEstimation if the KPathIndexInMemory is used.
+    private val statisticsStore = (kPathIndex as KPathIndexInMemory).getStatisticsStore()
 
     /**
      * Returns the cardinality of a given [pathId] using the StatisticsStore from our kPathIndex.
@@ -35,10 +37,8 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : Cardinal
      * This method will recursively calculate the cardinality for its children in order to get the cardinality
      * for the root.
      *
-     * Assumption:
-     *
      * @param physicalPlan The root of the tree for which we want to get the cardinality.
-     * @return
+     * @return The cardinality of the given physicalPlan.
      */
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
@@ -53,7 +53,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndexInMemory) : Cardinal
                 d1 * d2 * selectivity
             }
 
-            else -> TODO("Whoooops")
+            else -> TODO("You forgot one!")
         }
     }
 }

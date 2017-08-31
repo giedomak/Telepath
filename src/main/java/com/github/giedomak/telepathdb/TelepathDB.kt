@@ -14,6 +14,7 @@ import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
+import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
@@ -35,7 +36,7 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    val kPathIndex = KPathIndexInMemory()
+    val kPathIndex: KPathIndex = KPathIndexInMemory()
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     val costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
