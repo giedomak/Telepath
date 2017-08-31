@@ -73,5 +73,11 @@ class PhysicalPlanTest {
 
             return physicalPlan
         }
+
+        fun generatePhysicalPlanWithChildren(operator: Int, children: List<PhysicalPlan>, query: Query = mock()): PhysicalPlan {
+            val physicalPlan = PhysicalPlan(query, operator)
+            physicalPlan.children.addAll(children)
+            return physicalPlan
+        }
     }
 }
