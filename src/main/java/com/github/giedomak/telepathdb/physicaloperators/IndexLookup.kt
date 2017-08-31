@@ -38,6 +38,6 @@ class IndexLookup(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      * Cost of an index lookup is very cheap.
      */
     override fun cost(): Long {
-        return physicalPlan.cardinality()
+        return 1
     }
 }

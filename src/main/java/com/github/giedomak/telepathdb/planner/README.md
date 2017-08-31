@@ -74,11 +74,25 @@ This document describes how the planner calculates the cheapest physical plan fo
 
   `subtree1` and `subtree2` are contained in the logical plan through the `CONCATENATION` operator.
 
-4. __Enumerate operators__
+4. __Enumerate operators__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.planner.enumerator/-simple-enumerator/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumeratorTest.kt) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumerator.kt#L10)
 
   When two subtrees are contained through an operator in the logical plan, we'll calculate the cheapest physical plan for their combination. Remember we already know the cheapest physical plans for both subtrees.
 
   As an example, let's say we've got two subtrees contained through the `CONCATENATION` operator. We enumerate the logical operator into hash-join, nested-loop-join and index-lookup.
+
+  Given these two trees and the CONCATENATION operator with a k-value greater than or equal to `4`:
+
+              INDEX_LOOKUP       INDEX_LOOKUP
+                /     \            /     \
+               a      b           c      d
+
+  Expected:
+
+           INDEX_LOOKUP              HASH_JOIN                NESTED_LOOP_JOIN
+            / |  |  \                  /    \                     /       \
+           a  b  c   d       INDEX_LOOKUP INDEX_LOOKUP    INDEX_LOOKUP INDEX_LOOKUP
+                               /     \      /    \          /     \      /    \
+                              a      b     c     d         a      b     c     d
 
 5. __Costing physical plans__
 
