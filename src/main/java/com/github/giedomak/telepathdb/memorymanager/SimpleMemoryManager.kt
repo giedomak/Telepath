@@ -112,17 +112,9 @@ object SimpleMemoryManager : MemoryManager {
 
     private fun getCombinedResults(paths: List<List<Path>>, files: List<File>): Stream<Path> {
 
-        // We don't want to assign to incoming params in method bodies. So copy to local variable.
-        var _paths = paths
-
-        if (_paths.isEmpty()) {
-            _paths = emptyList<List<Path>>()
-            // throw new IllegalArgumentException("whoops");
-        }
-
         // Gather the in-memory partitions and the partitions which are written to disk
         return Stream.concat(
-                _paths.stream()
+                paths.stream()
                         .flatMap { it.stream() },
                 files.stream()
                         .map { readPartition(it) }

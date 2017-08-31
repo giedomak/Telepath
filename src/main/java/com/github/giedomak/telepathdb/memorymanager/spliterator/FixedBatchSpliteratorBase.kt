@@ -47,7 +47,6 @@ abstract class FixedBatchSpliteratorBase<T> @JvmOverloads constructor(
         var value: Any? = null
 
         override fun accept(value: T) {
-            println("Accepting: " + value)
             this.value = value
         }
     }
