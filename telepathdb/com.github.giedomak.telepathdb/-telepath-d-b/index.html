@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>TelepathDB - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb</a>&nbsp;/&nbsp;<a href=".">TelepathDB</a><br/>
+<br/>
+<h1>TelepathDB</h1>
+<code><span class="keyword">object </span><span class="identifier">TelepathDB</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/TelepathDB.kt#L35">(source)</a>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="cardinality-estimation.html">cardinalityEstimation</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">cardinalityEstimation</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.cardinalityestimation/-cardinality-estimation/index.html"><span class="identifier">CardinalityEstimation</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="cost-model.html">costModel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">costModel</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.costmodel/-cost-model/index.html"><span class="identifier">CostModel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="enumerator.html">enumerator</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">enumerator</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.planner.enumerator/-enumerator/index.html"><span class="identifier">Enumerator</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="evaluation-engine.html">evaluationEngine</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">evaluationEngine</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.evaluationengine/-evaluation-engine/index.html"><span class="identifier">EvaluationEngine</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="k-path-index.html">kPathIndex</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">kPathIndex</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.kpathindex/-k-path-index/index.html"><span class="identifier">KPathIndex</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="memory-manager.html">memoryManager</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">memoryManager</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.memorymanager/-memory-manager/index.html"><span class="identifier">MemoryManager</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="path-identifier-store.html">pathIdentifierStore</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pathIdentifierStore</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels.stores/-path-identifier-store/index.html"><span class="identifier">PathIdentifierStore</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="planner.html">planner</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">planner</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.planner/-planner/index.html"><span class="identifier">Planner</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="static-parser.html">staticParser</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">staticParser</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.staticparser/-static-parser/index.html"><span class="identifier">StaticParser</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-user-input.html">getUserInput</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getUserInput</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.TelepathDB$getUserInput(java.util.Scanner)/scanner">scanner</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/Scanner.html"><span class="identifier">Scanner</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Retrieve input from the user until we retrieve 'END'.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="main.html">main</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">main</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.TelepathDB$main(kotlin.Array((kotlin.String)))/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Main loop. Setup the environment and wait for user-input.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start.html">start</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listen for query input and gather results.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

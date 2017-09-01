@@ -1,0 +1,31 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>KPathIndexCardinalityEstimation.getCardinality - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.cardinalityestimation</a>&nbsp;/&nbsp;<a href="index.html">KPathIndexCardinalityEstimation</a>&nbsp;/&nbsp;<a href=".">getCardinality</a><br/>
+<br/>
+<h1>getCardinality</h1>
+<a name="com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation$getCardinality(kotlin.Long)"></a>
+<code><span class="keyword">fun </span><span class="identifier">getCardinality</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation$getCardinality(kotlin.Long)/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/KPathIndexCardinalityEstimation.kt#L27">(source)</a>
+<p>Returns the cardinality of a given <a href="get-cardinality.html#com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation$getCardinality(kotlin.Long)/pathId">pathId</a> using the StatisticsStore from our kPathIndex.</p>
+<h3>Parameters</h3>
+<p><a name="pathId"></a>
+<code>pathId</code> - The pathId of the path we want the cardinality for.</p>
+<p><strong>Return</strong><br/>
+The cardinality of the given pathId or 1 when non-existent.</p>
+<a name="com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation$getCardinality(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan)"></a>
+<code><span class="keyword">fun </span><span class="identifier">getCardinality</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation$getCardinality(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan)/physicalPlan">physicalPlan</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/KPathIndexCardinalityEstimation.kt#L45">(source)</a>
+<p>Overrides <a href="../-cardinality-estimation/get-cardinality.html">CardinalityEstimation.getCardinality</a></p>
+<p>Returns the cardinality of a given physicalPlan.</p>
+<p>This method will recursively calculate the cardinality for its children in order to get the cardinality
+for the root.</p>
+<h3>Parameters</h3>
+<p><a name="physicalPlan"></a>
+<code>physicalPlan</code> - The root of the tree for which we want to get the cardinality.</p>
+<p><strong>Return</strong><br/>
+The cardinality of the given physicalPlan.</p>
+</BODY>
+</HTML>

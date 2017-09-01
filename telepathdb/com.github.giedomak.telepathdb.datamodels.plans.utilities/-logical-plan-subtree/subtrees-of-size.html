@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LogicalPlanSubtree.subtreesOfSize - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.plans.utilities</a>&nbsp;/&nbsp;<a href="index.html">LogicalPlanSubtree</a>&nbsp;/&nbsp;<a href=".">subtreesOfSize</a><br/>
+<br/>
+<h1>subtreesOfSize</h1>
+<a name="com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree$subtreesOfSize(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">subtreesOfSize</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree$subtreesOfSize(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan, kotlin.Int)/tree">tree</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree$subtreesOfSize(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan, kotlin.Int)/targetSize">targetSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.plans/-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtree.kt#L54">(source)</a>
+<p>Find all (partial) subtrees of a given <a href="subtrees-of-size.html#com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree$subtreesOfSize(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan, kotlin.Int)/targetSize">targetSize</a>.</p>
+<p>We use a sliding window to try and find a subList of a nodes' children which does match the given <a href="subtrees-of-size.html#com.github.giedomak.telepathdb.datamodels.plans.utilities.LogicalPlanSubtree$subtreesOfSize(com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan, kotlin.Int)/targetSize">targetSize</a>.</p>
+<p>Example tree:</p>
+<pre><code><pre><code>      CONCATENATION</code></pre>
+<pre><code>     /  |     |  |  \</code></pre>
+<pre><code>    a  UNION  e  f   g</code></pre>
+<pre><code>       / | \</code></pre>
+<pre><code>      b  c  d</code></pre></code></pre>
+<p>subtreesOfSize(tree, 2):</p>
+<pre><code><pre><code>    UNION   UNION    CONCATENATION    CONCATENATION</code></pre>
+<pre><code>     / \     / \         /   \            /   \</code></pre>
+<pre><code>    b   c   c   d       e     f          f     g</code></pre></code></pre>
+<h3>Parameters</h3>
+<p><a name="targetSize"></a>
+<code>targetSize</code> - We are looking for all (partial) subtrees of this size.</p>
+</BODY>
+</HTML>

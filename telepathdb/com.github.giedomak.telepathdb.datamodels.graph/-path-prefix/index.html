@@ -1,0 +1,61 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PathPrefix - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.graph</a>&nbsp;/&nbsp;<a href=".">PathPrefix</a><br/>
+<br/>
+<h1>PathPrefix</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">PathPrefix</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/graph/PathPrefix.kt#L30">(source)</a>
+<p>This model is used for defining a search-query.</p>
+<p>It needs at least a <a href="path-id.html">pathId</a> to know the edge labels along the path we are querying. It also has a constructor
+where nodes can be given as params. These <a href="nodes.html">nodes</a> will be a prefix of the path, and don't need to have the same
+length as the edges plus one.</p>
+<p>Example: <code>Luuk - knows - Giedo - drinksWith - Schaap</code>.
+We have a <a href="path-id.html">pathId</a> which corresponds to the array <code>["knows", "drinksWith"]</code>.
+If our pathPrefix only has this <a href="path-id.html">pathId</a>, it will query for all tuples which are connected through these two edges.
+When we have <code>["Luuk"]</code> as the <a href="nodes.html">nodes</a> property. It will query only for tuples which have <code>"Luuk"</code> as its first element.</p>
+<p>See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/PathPrefix.java for
+the implementation in PathDB.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">PathPrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathPrefix$<init>(kotlin.Long, kotlin.collections.List((com.github.giedomak.telepathdb.datamodels.graph.Node)))/pathId">pathId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathPrefix$<init>(kotlin.Long, kotlin.collections.List((com.github.giedomak.telepathdb.datamodels.graph.Node)))/nodes">nodes</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-node/index.html"><span class="identifier">Node</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyList&lt;Node&gt;()<span class="symbol">)</span></code>
+<p>Creates a PathPrefix with only the list of edges known through the <a href="-init-.html#com.github.giedomak.telepathdb.datamodels.graph.PathPrefix$<init>(kotlin.Long, kotlin.collections.List((com.github.giedomak.telepathdb.datamodels.graph.Node)))/pathId">pathId</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="nodes.html">nodes</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">nodes</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-node/index.html"><span class="identifier">Node</span></a><span class="symbol">&gt;</span></code>
+<p>Ordered list of nodes along the path we want to restrict our query with.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="path-id.html">pathId</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pathId</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The ID given to a specific Path. We can use the <a href="#">PathIdentifierStore</a>
+to get the list of <a href="../-edge/index.html">edges</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

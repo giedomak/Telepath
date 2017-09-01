@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PhysicalOperator - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.physicaloperators</a>&nbsp;/&nbsp;<a href=".">PhysicalOperator</a><br/>
+<br/>
+<h1>PhysicalOperator</h1>
+<code><span class="keyword">interface </span><span class="identifier">PhysicalOperator</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/PhysicalOperator.kt#L13">(source)</a>
+<p>Interface for physical operators.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="first-child.html">firstChild</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">firstChild</span><span class="symbol">: </span><span class="identifier">PhysicalOperator</span></code>
+<p>The first set of data to operate on.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="last-child.html">lastChild</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">lastChild</span><span class="symbol">: </span><span class="identifier">PhysicalOperator</span></code>
+<p>The last set of data to operate on.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="physical-plan.html">physicalPlan</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">physicalPlan</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a></code>
+<p>The physical plan holds information regarding the sets on which to operate on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="cardinality.html">cardinality</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">cardinality</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Delegate cardinality to the physical plan.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="cost.html">cost</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Calculates the cost of the physical operation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="evaluate.html">evaluate</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">evaluate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-path-stream/index.html"><span class="identifier">PathStream</span></a></code>
+<p>Evaluates the physical operator and produces a PathStream.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-h-a-s-h_-j-o-i-n.html">HASH_JOIN</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">HASH_JOIN</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-n-d-e-x_-l-o-o-k-u-p.html">INDEX_LOOKUP</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">INDEX_LOOKUP</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-j-o-i-n_-o-p-e-r-a-t-o-r-s.html">JOIN_OPERATORS</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">JOIN_OPERATORS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-e-a-f.html">LEAF</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">LEAF</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-n-e-s-t-e-d_-l-o-o-p_-j-o-i-n.html">NESTED_LOOP_JOIN</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">NESTED_LOOP_JOIN</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-n-i-o-n.html">UNION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">UNION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-physical-operator.html">getPhysicalOperator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPhysicalOperator</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator.Companion$getPhysicalOperator(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan)/physicalPlan">physicalPlan</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PhysicalOperator</span><span class="symbol">?</span></code>
+<p>Convert the operators constants to an actual PhysicalOperator instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-hash-join/index.html">HashJoin</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">HashJoin</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalOperator</span></code>
+<p>Hash-join physical operator.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-index-lookup/index.html">IndexLookup</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">IndexLookup</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalOperator</span></code>
+<p>Physical operator to lookup paths in the kPathIndex.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-nested-loop-join/index.html">NestedLoopJoin</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">NestedLoopJoin</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalOperator</span></code>
+<p>Nested-loop-join.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-union/index.html">Union</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">Union</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalOperator</span></code>
+<p>Union physical operator.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
