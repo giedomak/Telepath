@@ -73,3 +73,13 @@ This section describes the essence of the life of a query within TelepathDB. Eac
     TelepathDB: Number of results: 2, after 5 ms
     TelepathDB: ----------------------------
   ```
+
+## Want to contribute?
+
+The [contributing guide](https://github.com/giedomak/TelepathDB/blob/master/CONTRIBUTING.md)
+is a good place to start. If you have questions, feel free to ask.
+
+## Authors
+[![Giedo Mak](https://avatars0.githubusercontent.com/u/6235566?v=4&s=100)](https://github.com/giedomak) | [![Max Sumrall](https://avatars2.githubusercontent.com/u/628843?v=4&s=100)](https://github.com/maxsumrall) | [![Nikolay Yakovets](https://avatars3.githubusercontent.com/u/5265191?v=4&s=100)](https://github.com/nikk186) | <a href="https://github.com/HiroshiLyda"><img src="https://avatars0.githubusercontent.com/u/21098278?v=4&s=100" width="100" title="George Fletcher" ></a>
+---|---|---|---
+[Giedo Mak](https://github.com/giedomak) | [Max Sumrall](https://github.com/maxsumrall) | [Nikolay Yakovets](https://github.com/nikk186) | [George Fletcher](https://github.com/HiroshiLyda)
