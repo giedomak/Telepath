@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb
 
+import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
@@ -39,7 +40,7 @@ object TelepathDB {
     val kPathIndex: KPathIndex = KPathIndexInMemory()
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     val costModel: CostModel = AdvancedCostModel
-    var cardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
+    var cardinalityEstimation: CardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
     var planner: Planner = DynamicProgrammingPlanner
     val enumerator: Enumerator = SimpleEnumerator
     val memoryManager: MemoryManager = SimpleMemoryManager
