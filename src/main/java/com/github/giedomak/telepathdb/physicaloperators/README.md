@@ -80,26 +80,26 @@
   The [code snippet](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumerator.kt#L37) making this possible:
 
   ```kotlin
-      private fun enumerateConcatenation(tree1: PhysicalPlan, tree2: PhysicalPlan): Sequence<PhysicalPlan> {
+  private fun enumerateConcatenation(tree1: PhysicalPlan, tree2: PhysicalPlan): Sequence<PhysicalPlan> {
 
-        val physicalPlans = mutableListOf<PhysicalPlan>()
+      val physicalPlans = mutableListOf<PhysicalPlan>()
 
-        // Check if an INDEX_LOOKUP is applicable.
-        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
+      // Check if an INDEX_LOOKUP is applicable.
+      val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
 
-        // If the height of this tree is 1 (max number of edges to any leaf), AND the number of children
-        // is smaller or equal to the k-value of our index, we can do an INDEX_LOOKUP!
-        if (plan.height() == 1 && plan.children.size <= plan.query.telepathDB.kPathIndex.k) {
-            physicalPlans.add(plan)
-        }
+      // If the height of this tree is 1 (max number of edges to any leaf), AND the number of children
+      // is smaller or equal to the k-value of our index, we can do an INDEX_LOOKUP!
+      if (plan.height() == 1 && plan.children.size <= plan.query.telepathDB.kPathIndex.k) {
+          physicalPlans.add(plan)
+      }
 
-        // Don't forget to enumerate all the JOIN_OPERATORS
-        PhysicalOperator.JOIN_OPERATORS.forEach {
-            physicalPlans.add(tree1.merge(tree2, it))
-        }
+      // Don't forget to enumerate all the JOIN_OPERATORS
+      PhysicalOperator.JOIN_OPERATORS.forEach {
+          physicalPlans.add(tree1.merge(tree2, it))
+      }
 
-        return physicalPlans.asSequence()
-    }
+      return physicalPlans.asSequence()
+  }
   ```
 
 ### Cardinality estimation [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.cardinalityestimation/-k-path-index-cardinality-estimation/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/cardinalityestimation/KPathIndexCardinalityEstimationTest.kt#L23) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/KPathIndexCardinalityEstimation.kt#L16)
