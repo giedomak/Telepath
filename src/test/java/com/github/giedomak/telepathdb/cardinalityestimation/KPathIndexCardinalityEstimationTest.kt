@@ -16,7 +16,6 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.whenever
-import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -55,10 +54,7 @@ class KPathIndexCardinalityEstimationTest {
         val child2 = spy(PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("b")))
         doReturn(2L).whenever(child2).pathIdOfChildren()
 
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.UNION, listOf(
-                child1,
-                child2
-        ))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.UNION, listOf(child1, child2))
 
         val actual = cardinalityEstimation.getCardinality(physicalPlan)
 
@@ -79,10 +75,7 @@ class KPathIndexCardinalityEstimationTest {
 
         PhysicalOperator.JOIN_OPERATORS.forEach {
 
-            val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(it, listOf(
-                    child1,
-                    child2
-            ))
+            val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(it, listOf(child1, child2))
 
             val actual = cardinalityEstimation.getCardinality(physicalPlan)
 

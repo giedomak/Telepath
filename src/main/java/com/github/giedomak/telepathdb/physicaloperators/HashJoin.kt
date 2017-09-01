@@ -12,15 +12,17 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 
 /**
  * Hash-join physical operator.
+ *
+ * @property physicalPlan The physical plan holds information regarding the sets on which to operate on.
+ * @property firstChild The first set of data to operate on, which is a [PhysicalOperator] itself.
+ * @property lastChild The last set of data to operate on, which is a [PhysicalOperator] itself.
  */
 class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
 
     /**
-     * Join two streams of Paths following the HashJoin algorithm and by using our SimpleMemoryManager.
+     * Evaluate the hash-join.
      *
-     * @param stream1 First stream of paths we'll join on its lastNode().
-     * @param stream2 Second stream of paths we'll join on its firstNode().
-     * @return A stream with the concatenated paths of stream1 and stream2.
+     * @return A stream with the concatenated paths.
      */
     override fun evaluate(): PathStream {
         return OpenHashJoin(
