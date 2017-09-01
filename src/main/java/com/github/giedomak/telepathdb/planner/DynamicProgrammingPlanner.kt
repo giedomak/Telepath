@@ -32,6 +32,9 @@ object DynamicProgrammingPlanner : Planner {
         // Make sure we are dealing with a flattened logical plan.
         logicalPlan.flatten()
 
+        Logger.debug("Flattened logical plan:")
+        logicalPlan.print()
+
         // We have to iterate until we reach the size of the logicalPlan we are searching a physical plan for.
         val n = logicalPlan.getSize()
 
@@ -97,10 +100,6 @@ object DynamicProgrammingPlanner : Planner {
 
         // If everything went fine, we should have calculated the cheapest physical plan for our logicalPlan.
         val physicalPlan = cheapestPhysicalPlans.getValue(logicalPlan.hashCode())
-
-        Logger.debug("Physical plan found!")
-        Logger.debug("logicalPlan: $logicalPlan")
-        Logger.debug("physicalPlan: $physicalPlan")
 
         return physicalPlan
     }

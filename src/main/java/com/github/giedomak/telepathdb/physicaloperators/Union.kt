@@ -31,7 +31,14 @@ class Union(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      * Cost of the union operation.
      */
     override fun cost(): Long {
-        TODO("not implemented")
+
+        // Cost to produce results.
+        val myCost = firstChild.cardinality() + lastChild.cardinality()
+
+        // Our input sets might be intermediate results, so take their cost into account.
+        val intermediateResultsCost = firstChild.cost() + lastChild.cost()
+
+        return myCost + intermediateResultsCost
     }
 
 }

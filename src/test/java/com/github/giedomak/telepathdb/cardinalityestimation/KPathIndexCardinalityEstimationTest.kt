@@ -10,16 +10,25 @@ package com.github.giedomak.telepathdb.cardinalityestimation
 import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
+import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.spy
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class KPathIndexCardinalityEstimationTest {
 
-    private val cardinalityEstimation = KPathIndexCardinalityEstimation(TelepathDB.kPathIndex)
-
     @Test
-    fun returnsTheCardinality() {
+    fun returnsTheCardinalityOfPathsIds() {
+
+        val cardinalityEstimation = KPathIndexCardinalityEstimation(TelepathDB.kPathIndex)
+
+        createIndex()
+
         cardinalityEstimation.getCardinality(1)
         assertEquals(10, cardinalityEstimation.getCardinality(1))
         assertEquals(9, cardinalityEstimation.getCardinality(12))
@@ -34,8 +43,54 @@ class KPathIndexCardinalityEstimationTest {
         assertEquals(1, cardinalityEstimation.getCardinality(1039), "returns 1 on non-existing pathId")
     }
 
-    @Before
-    fun createIndex() {
+    @Test
+    fun returnsTheCardinalityOfUnion() {
+
+        val cardinalityEstimation = spy(KPathIndexCardinalityEstimation(TelepathDB.kPathIndex))
+        doReturn(10L).whenever(cardinalityEstimation).getCardinality(any<Long>())
+
+        val child1 = spy(PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a")))
+        doReturn(1L).whenever(child1).pathIdOfChildren()
+
+        val child2 = spy(PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("b")))
+        doReturn(2L).whenever(child2).pathIdOfChildren()
+
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.UNION, listOf(
+                child1,
+                child2
+        ))
+
+        val actual = cardinalityEstimation.getCardinality(physicalPlan)
+
+        assertEquals(20L, actual)
+    }
+
+    @Test
+    fun returnsTheCardinalityOfJoins() {
+
+        val cardinalityEstimation = spy(KPathIndexCardinalityEstimation(TelepathDB.kPathIndex))
+        doReturn(10L).whenever(cardinalityEstimation).getCardinality(any<Long>())
+
+        val child1 = spy(PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a")))
+        doReturn(1L).whenever(child1).pathIdOfChildren()
+
+        val child2 = spy(PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("b")))
+        doReturn(2L).whenever(child2).pathIdOfChildren()
+
+        PhysicalOperator.JOIN_OPERATORS.forEach {
+
+            val physicalPlan = PhysicalPlanTest.generatePhysicalPlanWithChildren(it, listOf(
+                    child1,
+                    child2
+            ))
+
+            val actual = cardinalityEstimation.getCardinality(physicalPlan)
+
+            assertEquals(10L, actual)
+        }
+    }
+
+    private fun createIndex() {
         for (_i in 1..10L) {
             for (i in 1..(10 * _i)) {
                 TelepathDB.kPathIndex.insert(Path(i, PathTest.equalNodes(3, 42)))

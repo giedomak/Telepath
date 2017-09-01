@@ -11,6 +11,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.github.giedomak.telepathdb.utilities.Logger
 
 class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstimation {
 
@@ -27,6 +28,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
         return try {
             statisticsStore.getCardinality(pathId)
         } catch (e: NullPointerException) {
+            Logger.debug("UNKNOWN CARDINALITY")
             1
         }
     }
@@ -49,8 +51,11 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
             in PhysicalOperator.JOIN_OPERATORS -> {
                 val d1 = getCardinality(physicalPlan.children.first())
                 val d2 = getCardinality(physicalPlan.children.last())
-                val selectivity = 1 / (Math.max(d1, d2))
-                d1 * d2 * selectivity
+                Math.max(d1, d2)
+            }
+
+            PhysicalOperator.UNION -> {
+                getCardinality(physicalPlan.children.first()) + getCardinality(physicalPlan.children.last())
             }
 
             else -> TODO("You forgot one!")

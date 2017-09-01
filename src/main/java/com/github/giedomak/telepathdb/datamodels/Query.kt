@@ -4,6 +4,7 @@ import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
 import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
+import com.github.giedomak.telepathdb.utilities.Logger
 
 data class Query(val telepathDB: TelepathDB, val input: String) {
 
@@ -13,10 +14,14 @@ data class Query(val telepathDB: TelepathDB, val input: String) {
 
     fun parseInput() {
         logicalPlan = telepathDB.staticParser.parse(this)
+        Logger.debug("Logical plan:")
+        logicalPlan!!.print()
     }
 
     fun generatePhysicalPlan() {
         physicalPlan = telepathDB.planner.generate(logicalPlan!!)
+        Logger.debug("Physical plan:")
+        physicalPlan!!.print()
     }
 
     fun evaluate() {
