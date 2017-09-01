@@ -32,7 +32,7 @@ class NestedLoopJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator
     }
 
     override fun cost(): Long {
-        // return Math.pow(cardinality2.toDouble(), cardinality1.toDouble()).toLong()
+//        return Math.pow(lastChild.cardinality().toDouble(), firstChild.cardinality().toDouble()).toLong()
         return Long.MAX_VALUE
     }
 }

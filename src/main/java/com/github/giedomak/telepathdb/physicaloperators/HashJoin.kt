@@ -34,6 +34,13 @@ class HashJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      * Cost of Hash-join.
      */
     override fun cost(): Long {
-        return 2 * (firstChild.cardinality() + lastChild.cardinality())
+
+        // The cost to produce results, i.e. 2 * (M + N)
+        val myCost = 2 * (firstChild.cardinality() + lastChild.cardinality())
+
+        // Our input sets might be intermediate results, so take their cost into account.
+        val intermediateResultsCost = firstChild.cost() + lastChild.cost()
+
+        return myCost + intermediateResultsCost
     }
 }

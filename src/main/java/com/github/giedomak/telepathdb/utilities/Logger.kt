@@ -12,6 +12,8 @@ package com.github.giedomak.telepathdb.utilities
  */
 object Logger {
 
+    private var padding = 20
+
     fun debug(message: Any, println: Boolean = true) {
         log(message.toString(), println)
     }
@@ -39,10 +41,14 @@ object Logger {
      * @param println Boolean indicating if we want to print on a newline or not.
      */
     private fun log(message: String, println: Boolean = true) {
+
+        // Dynamically adjust our padding length
+        if (callerClassName.length > padding) padding = callerClassName.length
+
         if (println) {
-            println(padLeft(callerClassName, 19) + ": " + message)
+            println(padLeft(callerClassName, padding) + ": " + message)
         } else {
-            print(padLeft(callerClassName, 19) + ": " + message)
+            print(padLeft(callerClassName, padding) + ": " + message)
         }
     }
 

@@ -38,6 +38,7 @@ class IndexLookup(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      * Cost of an index lookup is very cheap.
      */
     override fun cost(): Long {
+        // Since an index lookup is always a leaf, we don't have cost of intermediate steps here.
         return 1
     }
 }
