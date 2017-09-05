@@ -9,7 +9,7 @@ package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisCardinalityEstimation
-import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisEstimator.SynopsisEstimator
+import com.github.giedomak.telepathdb.cardinalityestimation.Synopsis.Synopsis
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query
@@ -38,7 +38,7 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { SynopsisEstimator.handleInsertion(it) })
+    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { Synopsis.handleInsertion(it) })
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     var costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex = kPathIndex)
@@ -83,6 +83,9 @@ object TelepathDB {
             // Parse the input
             query.parseInput()
 
+            // Flatten the logical plan
+            query.flattenLogicalPlan()
+
             // Generate the physical plan
             query.generatePhysicalPlan()
 
@@ -124,19 +127,19 @@ object TelepathDB {
 
         setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph1M.txt", 2)
 
-        SynopsisEstimator.afterMath()
+        Synopsis.afterMath()
 
-        Logger.debug(SynopsisEstimator.`in`(Edge("5")))
-        Logger.debug(SynopsisEstimator.out(Edge("5")))
-        Logger.debug(SynopsisEstimator.paths(Edge("5")))
-        Logger.debug(SynopsisEstimator.pairs(Edge("5")))
-        Logger.debug(SynopsisEstimator.`in`(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.out(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.middle(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.paths(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.pairs(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.one(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(SynopsisEstimator.two(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.`in`(Edge("5")))
+        Logger.debug(Synopsis.out(Edge("5")))
+        Logger.debug(Synopsis.paths(Edge("5")))
+        Logger.debug(Synopsis.pairs(Edge("5")))
+        Logger.debug(Synopsis.`in`(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.out(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.middle(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.paths(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.pairs(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.one(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(Synopsis.two(Pair(Edge("3"), Edge("5"))))
 
         // We're alive!
         val endTime = System.currentTimeMillis()

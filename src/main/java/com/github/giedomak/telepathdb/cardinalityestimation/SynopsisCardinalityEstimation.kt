@@ -1,6 +1,6 @@
 package com.github.giedomak.telepathdb.cardinalityestimation
 
-import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisEstimator.SynopsisEstimator
+import com.github.giedomak.telepathdb.cardinalityestimation.Synopsis.Synopsis
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
@@ -13,7 +13,7 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
         // TODO: could be different join operators mixed
         val clone = physicalPlan.clone().flatten()
 
-        // See if we got one of these:
+        // See if we got one of these after flattening:
         //
         //             HASH_JOIN
         //             /       \
@@ -24,8 +24,8 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
 
             val edges: List<Edge> = clone.children.flatMap { it.children.map { it.leaf!! } }
 
-            // We can get | T r/l1 | from our SynopsisEstimator.
-            var cardinality = SynopsisEstimator.pairs(Pair(edges[0], edges[1])).toFloat()
+            // We can get | T r/l1 | from our Synopsis.
+            var cardinality = Synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
 
             // | T r/l1/l2 | = | T r/l1 | * ( l1/l2.two / l1.in )
             for (index in 2 until edges.size) {
@@ -33,7 +33,7 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
                 val l1 = edges[index - 1]
                 val l2 = edges[index]
 
-                cardinality *= SynopsisEstimator.two(Pair(l1, l2)) / SynopsisEstimator.`in`(l1).toFloat()
+                cardinality *= Synopsis.two(Pair(l1, l2)) / Synopsis.`in`(l1).toFloat()
 
             }
 

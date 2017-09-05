@@ -9,6 +9,7 @@ import com.github.giedomak.telepathdb.utilities.Logger
 data class Query(val telepathDB: TelepathDB, val input: String) {
 
     var logicalPlan: LogicalPlan? = null
+    var flattenedLogicalPlan: LogicalPlan? = null
     var physicalPlan: PhysicalPlan? = null
     var results: PathStream? = null
 
@@ -21,8 +22,14 @@ data class Query(val telepathDB: TelepathDB, val input: String) {
         logicalPlan!!.print()
     }
 
+    fun flattenLogicalPlan() {
+        flattenedLogicalPlan = logicalPlan!!.clone().flatten()
+        Logger.debug("Flattened logical plan:")
+        flattenedLogicalPlan!!.print()
+    }
+
     fun generatePhysicalPlan() {
-        physicalPlan = telepathDB.planner.generate(logicalPlan!!)
+        physicalPlan = telepathDB.planner.generate(flattenedLogicalPlan!!)
         Logger.debug("Physical plan:")
         physicalPlan!!.print()
     }
