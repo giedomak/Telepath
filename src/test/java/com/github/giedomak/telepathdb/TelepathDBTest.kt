@@ -7,7 +7,7 @@
 
 package com.github.giedomak.telepathdb
 
-import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
+import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.PathStream
@@ -56,7 +56,7 @@ class TelepathDBTest {
         //           /   \
         //          a     b
         val logicalPlan = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a", "b"), Query(telepathDB, ""))
-        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"))
+        val physicalPlan = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b"), Query(telepathDB, ""))
         // Catch the pathId of `a - b`
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(listOf("a", "b"))
 
@@ -73,8 +73,8 @@ class TelepathDBTest {
         val evaluationEngine = mock<SimpleEvaluationEngine> {
             on { evaluate(physicalPlan) }.doReturn(PathStream(expectedPaths.stream()))
         }
-        val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
-            on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)
+        val cardinalityEstimationMock = mock<CardinalityEstimation> {
+            on { getCardinality(any()) }.doReturn(20)
         }
         val plannerMock = mock<Planner> {
             on { generate(logicalPlan) }.doReturn(physicalPlan)

@@ -10,7 +10,6 @@ package com.github.giedomak.telepathdb.datamodels.stores
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.graph.Node
 import com.github.giedomak.telepathdb.datamodels.graph.Path
-import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.kPathIdentifierStore
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.maxId
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore
@@ -150,7 +149,7 @@ object PathIdentifierStore {
         pathIds.add(maxId)
 
         // Print the addition
-        Logger.debug("Add: " + PathPrefix(maxId))
+        Logger.debug("Added: $maxId: $edges")
 
         // Increase maxId, but return the id we've just used for generation
         return ++maxId - 1

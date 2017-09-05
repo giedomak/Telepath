@@ -13,14 +13,13 @@ import com.github.giedomak.telepathdb.datamodels.integrations.PathDBWrapper
 import com.github.giedomak.telepathdb.memorymanager.spliterator.FixedBatchSpliterator
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory
 import com.pathdb.statistics.StatisticsStoreReader
-import java.io.IOException
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
 /**
  * InMemory implementation of the KPathIndex.
  */
-class KPathIndexInMemory : KPathIndex {
+class KPathIndexInMemory(private val insertionCallback: ((Path) -> Unit)? = null) : KPathIndex {
 
     // Populates our pathIndex property with the InMemoryIndex obtained from the InMemoryIndexFactory from the com.pathdb package.
     private val pathIndex: com.pathdb.pathIndex.PathIndex = InMemoryIndexFactory().inMemoryIndex
@@ -34,19 +33,13 @@ class KPathIndexInMemory : KPathIndex {
      */
     override fun search(pathPrefix: PathPrefix): Stream<Path> {
         // We have to cast the Path model from pathDB's one, to our own again
-        try {
-            return StreamSupport.stream(
-                    FixedBatchSpliterator(
-                            pathIndex.getPaths(
-                                    PathDBWrapper.toPathPrefix(pathPrefix)
-                            ).spliterator()
-                    ), true
-            ).map { PathDBWrapper.fromPath(it) }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return Stream.empty<Path>()
+        return StreamSupport.stream(
+                FixedBatchSpliterator(
+                        pathIndex.getPaths(
+                                PathDBWrapper.toPathPrefix(pathPrefix)
+                        ).spliterator()
+                ), true
+        ).map { PathDBWrapper.fromPath(it) }
     }
 
     /**
@@ -55,7 +48,11 @@ class KPathIndexInMemory : KPathIndex {
      * @param path The path we will insert into the KPathIndex.
      */
     override fun insert(path: Path) {
+        // Insertion into PathDB
         pathIndex.insert(PathDBWrapper.toPath(path))
+
+        // Invoke the callback
+        insertionCallback?.invoke(path)
     }
 
     /**

@@ -71,10 +71,10 @@ class DynamicProgrammingPlannerTest {
         // Input:
         //       CONCATENATION
         //        /      \
-        //       a   CONCATENATION
+        //       a      UNION
         //              /   \
         //             b     c
-        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("b", "c"), queryMock)
+        val child = LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b", "c"), queryMock)
         val input = LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("a"), queryMock)
         input.setChild(1, child)
 
@@ -82,10 +82,18 @@ class DynamicProgrammingPlannerTest {
         val actual = telepathDBMock.planner.generate(input)
 
         // Generate the expected physical plan
-        //      INDEX_LOOKUP
-        //        /  |  \
-        //       a   b   c
-        val expected = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b", "c"))
+        //             HASH_JOIN
+        //              /     \
+        //   INDEX_LOOKUP      UNION
+        //        |             /  \
+        //        a  INDEX_LOOKUP INDEX_LOOKUP
+        //                |            |
+        //                b            c
+        val child1 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a"))
+        val child2 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("b"))
+        val child3 = PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("c"))
+        val child4 = PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.UNION, listOf(child2, child3))
+        val expected = PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.HASH_JOIN, listOf(child1, child4))
 
         assertEquals(expected, actual)
     }

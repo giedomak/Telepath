@@ -11,6 +11,7 @@ import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
+import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
@@ -24,11 +25,11 @@ class KPathIndexCardinalityEstimationTest {
     @Test
     fun returnsTheCardinalityOfPathsIds() {
 
-        val cardinalityEstimation = KPathIndexCardinalityEstimation(TelepathDB.kPathIndex)
-
+        // Fill the index
         createIndex()
 
-        cardinalityEstimation.getCardinality(1)
+        val cardinalityEstimation = KPathIndexCardinalityEstimation(TelepathDB.kPathIndex)
+
         assertEquals(10, cardinalityEstimation.getCardinality(1))
         assertEquals(9, cardinalityEstimation.getCardinality(12))
         assertEquals(8, cardinalityEstimation.getCardinality(24))
@@ -84,6 +85,10 @@ class KPathIndexCardinalityEstimationTest {
     }
 
     private fun createIndex() {
+
+        // We use the actual KPathIndexInMemory, but we don't want callbacks.
+        TelepathDB.kPathIndex = KPathIndexInMemory()
+
         for (_i in 1..10L) {
             for (i in 1..(10 * _i)) {
                 TelepathDB.kPathIndex.insert(Path(i, PathTest.equalNodes(3, 42)))
