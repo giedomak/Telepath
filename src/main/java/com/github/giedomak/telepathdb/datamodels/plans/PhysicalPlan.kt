@@ -4,6 +4,7 @@ import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
+import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
  * Representation of the physical plan.

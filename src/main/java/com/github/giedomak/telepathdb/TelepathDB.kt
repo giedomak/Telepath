@@ -38,13 +38,13 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    val kPathIndex: KPathIndex = KPathIndexInMemory({ SynopsisEstimator.handleInsertion(it) })
+    var kPathIndex: KPathIndex = KPathIndexInMemory({ SynopsisEstimator.handleInsertion(it) })
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
-    val costModel: CostModel = AdvancedCostModel
+    var costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex)
     var planner: Planner = DynamicProgrammingPlanner
-    val enumerator: Enumerator = SimpleEnumerator
-    val memoryManager: MemoryManager = SimpleMemoryManager
+    var enumerator: Enumerator = SimpleEnumerator
+    var memoryManager: MemoryManager = SimpleMemoryManager
 
     // ------ STORES -------
 
