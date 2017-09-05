@@ -56,6 +56,24 @@ class SynopsisTest {
 
     }
 
+    @Test
+    fun hasDefaultSynopsis() {
+
+        assertEquals(0, synopsis.out(Edge("x")))
+        assertEquals(0, synopsis.`in`(Edge("x")))
+        assertEquals(0, synopsis.paths(Edge("x")))
+        assertEquals(0, synopsis.pairs(Edge("x")))
+
+        assertEquals(0, synopsis.out(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.`in`(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.middle(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.paths(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.pairs(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.one(Pair(Edge("x"), Edge("b"))))
+        assertEquals(0, synopsis.two(Pair(Edge("x"), Edge("b"))))
+
+    }
+
     private fun createSynopsis() {
 
         val id1 = PathIdentifierStore.getPathIdByEdgeLabel("a")
