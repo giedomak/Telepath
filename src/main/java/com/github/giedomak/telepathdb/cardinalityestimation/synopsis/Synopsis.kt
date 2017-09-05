@@ -3,7 +3,7 @@ package com.github.giedomak.telepathdb.cardinalityestimation.synopsis
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 
-object Synopsis {
+class Synopsis {
 
     private val syn1 = Syn1()
     private val syn2 = Syn2()

@@ -13,7 +13,6 @@ import com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query
-import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
@@ -38,7 +37,7 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { Synopsis.handleInsertion(it) })
+    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { (cardinalityEstimation as SynopsisCardinalityEstimation).synopsis.handleInsertion(it) })
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     var costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex = kPathIndex)
@@ -126,20 +125,6 @@ object TelepathDB {
         val startTime = System.currentTimeMillis()
 
         setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph1M.txt", 2)
-
-        Synopsis.afterMath()
-
-        Logger.debug(Synopsis.`in`(Edge("5")))
-        Logger.debug(Synopsis.out(Edge("5")))
-        Logger.debug(Synopsis.paths(Edge("5")))
-        Logger.debug(Synopsis.pairs(Edge("5")))
-        Logger.debug(Synopsis.`in`(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.out(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.middle(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.paths(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.pairs(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.one(Pair(Edge("3"), Edge("5"))))
-        Logger.debug(Synopsis.two(Pair(Edge("3"), Edge("5"))))
 
         // We're alive!
         val endTime = System.currentTimeMillis()

@@ -8,10 +8,14 @@ import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : CardinalityEstimation {
 
+    var synopsis = Synopsis()
+
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
         // TODO: could be different join operators mixed
         val clone = physicalPlan.clone().flatten()
+
+        clone.print()
 
         // See if we got one of these after flattening:
         //
@@ -25,7 +29,7 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
             val edges: List<Edge> = clone.children.flatMap { it.children.map { it.leaf!! } }
 
             // We can get | T r/l1 | from our Synopsis.
-            var cardinality = Synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
+            var cardinality = synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
 
             // | T r/l1/l2 | = | T r/l1 | * ( l1/l2.two / l1.in )
             for (index in 2 until edges.size) {
@@ -33,7 +37,7 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
                 val l1 = edges[index - 1]
                 val l2 = edges[index]
 
-                cardinality *= Synopsis.two(Pair(l1, l2)) / Synopsis.`in`(l1).toFloat()
+                cardinality *= synopsis.two(Pair(l1, l2)) / synopsis.`in`(l1).toFloat()
 
             }
 
