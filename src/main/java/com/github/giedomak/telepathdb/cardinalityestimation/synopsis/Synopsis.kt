@@ -2,6 +2,10 @@ package com.github.giedomak.telepathdb.cardinalityestimation.synopsis
 
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.graph.Path
+import com.github.giedomak.telepathdb.utilities.Logger
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 
 class Synopsis {
 
@@ -73,10 +77,14 @@ class Synopsis {
         return syn2.pairsMap[edges]?.size ?: 0
     }
 
+    // Make sure we invoked afterMath at least once when accessing it.
+    private var initAfterMath = true
+
     /**
      * Number of paths labeled l1 from nodes in out to nodes in middle.
      */
     fun one(edges: Pair<Edge, Edge>): Int {
+        if (initAfterMath) afterMath()
         return syn2.oneMap[edges] ?: 0
     }
 
@@ -84,8 +92,13 @@ class Synopsis {
      * Number of paths labeled l2 from nodes in middle to nodes in in.
      */
     fun two(edges: Pair<Edge, Edge>): Int {
+        if (initAfterMath) afterMath()
         return syn2.twoMap[edges] ?: 0
     }
+
+    // Needed for scheduling the afterMath()
+    private var handler: Future<*>? = null
+    private val executor = Executors.newScheduledThreadPool(2)
 
     /**
      * Update our Synopsis on new insertions into the index.
@@ -102,12 +115,22 @@ class Synopsis {
 
         }
 
+        // Do the afterMath only once
+        handler?.cancel(false)
+        handler = executor.schedule({
+            run {
+                afterMath()
+            }
+        }, 100, TimeUnit.MILLISECONDS)
+
     }
 
     /**
-     * Expensive function when updating SYN2; make sure to invoke this function manually when doing batch actions.
+     * Expensive function when updating SYN2.
      */
-    fun afterMath() {
+    private fun afterMath() {
+
+        Logger.debug("Gotta do some afterMath...")
 
         syn2.pairsMap.keys.forEach { edgePair ->
 
@@ -127,5 +150,7 @@ class Synopsis {
                         .size
             })
         }
+
+        initAfterMath = false
     }
 }

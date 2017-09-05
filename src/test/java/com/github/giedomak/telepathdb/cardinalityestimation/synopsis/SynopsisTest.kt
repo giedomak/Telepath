@@ -105,8 +105,6 @@ class SynopsisTest {
         )
 
         (paths + paths2).forEach { synopsis.handleInsertion(it) }
-
-        synopsis.afterMath()
     }
 
 }
