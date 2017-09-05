@@ -9,7 +9,7 @@ package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisCardinalityEstimation
-import com.github.giedomak.telepathdb.cardinalityestimation.Synopsis.Synopsis
+import com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query

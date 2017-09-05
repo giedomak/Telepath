@@ -1,4 +1,4 @@
-package com.github.giedomak.telepathdb.cardinalityestimation.Synopsis
+package com.github.giedomak.telepathdb.cardinalityestimation.synopsis
 
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.graph.Path

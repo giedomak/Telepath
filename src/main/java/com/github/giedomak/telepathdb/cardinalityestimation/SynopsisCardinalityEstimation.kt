@@ -1,6 +1,6 @@
 package com.github.giedomak.telepathdb.cardinalityestimation
 
-import com.github.giedomak.telepathdb.cardinalityestimation.Synopsis.Synopsis
+import com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
