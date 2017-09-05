@@ -15,8 +15,6 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
         // TODO: could be different join operators mixed
         val clone = physicalPlan.clone().flatten()
 
-        clone.print()
-
         // See if we got one of these after flattening:
         //
         //             HASH_JOIN
