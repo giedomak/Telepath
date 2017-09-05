@@ -51,7 +51,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
             in PhysicalOperator.JOIN_OPERATORS -> {
                 val d1 = getCardinality(physicalPlan.children.first())
                 val d2 = getCardinality(physicalPlan.children.last())
-                Math.max(d1, d2)
+                Math.min(d1, d2)
             }
 
             PhysicalOperator.UNION -> {

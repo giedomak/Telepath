@@ -8,10 +8,12 @@
 package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
-import com.github.giedomak.telepathdb.cardinalityestimation.KPathIndexCardinalityEstimation
+import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisCardinalityEstimation
+import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisEstimator.SynopsisEstimator
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query
+import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
@@ -30,17 +32,16 @@ import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
 import com.github.giedomak.telepathdb.utilities.Logger
 import java.io.IOException
 import java.util.*
-import kotlin.streams.toList
 
 object TelepathDB {
 
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    val kPathIndex: KPathIndex = KPathIndexInMemory()
+    val kPathIndex: KPathIndex = KPathIndexInMemory({ SynopsisEstimator.handleInsertion(it) })
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     val costModel: CostModel = AdvancedCostModel
-    var cardinalityEstimation: CardinalityEstimation = KPathIndexCardinalityEstimation(kPathIndex)
+    var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex)
     var planner: Planner = DynamicProgrammingPlanner
     val enumerator: Enumerator = SimpleEnumerator
     val memoryManager: MemoryManager = SimpleMemoryManager
@@ -79,8 +80,6 @@ object TelepathDB {
             // Retrieve input from the user until we retrieve 'END'
             val query = Query(this, getUserInput(scanner))
 
-            val startTime = System.currentTimeMillis()
-
             // Parse the input
             query.parseInput()
 
@@ -91,18 +90,7 @@ object TelepathDB {
             query.evaluate()
 
             // Print the results
-            val collectedResults = query.stream().paths.toList()
-            val endTime = System.currentTimeMillis()
-
-            Logger.info(">>>>> Results:")
-
-            collectedResults.stream().limit(10).forEach { Logger.info(it) }
-            if (collectedResults.size > 10) {
-                Logger.info("And " + (collectedResults.size - 10) + " more......")
-            }
-
-            Logger.info("Number of results: " + collectedResults.size + ", after " + (endTime - startTime) + " ms")
-            Logger.info("----------------------------")
+            query.printResults()
 
             // Clear the intermediate results in our memory and cache
             memoryManager.clear()
@@ -134,7 +122,21 @@ object TelepathDB {
 
         val startTime = System.currentTimeMillis()
 
-        setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph10k.txt", 3)
+        setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph1M.txt", 2)
+
+        SynopsisEstimator.afterMath()
+
+        Logger.debug(SynopsisEstimator.`in`(Edge("5")))
+        Logger.debug(SynopsisEstimator.out(Edge("5")))
+        Logger.debug(SynopsisEstimator.paths(Edge("5")))
+        Logger.debug(SynopsisEstimator.pairs(Edge("5")))
+        Logger.debug(SynopsisEstimator.`in`(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.out(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.middle(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.paths(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.pairs(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.one(Pair(Edge("3"), Edge("5"))))
+        Logger.debug(SynopsisEstimator.two(Pair(Edge("3"), Edge("5"))))
 
         // We're alive!
         val endTime = System.currentTimeMillis()
