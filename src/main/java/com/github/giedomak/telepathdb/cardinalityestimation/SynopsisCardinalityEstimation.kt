@@ -5,7 +5,6 @@ import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
-import com.github.giedomak.telepathdb.utilities.Logger
 
 class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : CardinalityEstimation {
 
@@ -41,8 +40,7 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
             return cardinality.toLong()
         }
 
-        // We got no use here
+        // We got no use here, switch to the KPathIndexCardinalityEstimation.
         return KPathIndexCardinalityEstimation(kPathIndex).getCardinality(physicalPlan)
     }
-
 }

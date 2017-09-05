@@ -38,10 +38,10 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    var kPathIndex: KPathIndex = KPathIndexInMemory({ SynopsisEstimator.handleInsertion(it) })
+    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { SynopsisEstimator.handleInsertion(it) })
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     var costModel: CostModel = AdvancedCostModel
-    var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex)
+    var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex = kPathIndex)
     var planner: Planner = DynamicProgrammingPlanner
     var enumerator: Enumerator = SimpleEnumerator
     var memoryManager: MemoryManager = SimpleMemoryManager
