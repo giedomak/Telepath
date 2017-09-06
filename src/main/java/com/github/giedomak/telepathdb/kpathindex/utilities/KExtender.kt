@@ -13,7 +13,6 @@ import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.physicaloperators.OpenHashJoin
 import com.github.giedomak.telepathdb.utilities.Logger
-import kotlin.streams.toList
 
 /**
  * Extend the path index to a higher k-value.
@@ -39,17 +38,20 @@ object KExtender {
                 .flatMap { kPathIndex.search(PathPrefix(it)) }
 
         // Concatenate the current K paths, with the K=1 paths so we get the K=K+1 paths
-        val paths = OpenHashJoin(PathStream(source_k), PathStream(k1)).evaluate().paths.toList()
-        Logger.debug("Concatenation done: " + paths.size)
+        val paths = OpenHashJoin(PathStream(source_k), PathStream(k1)).evaluate().paths
+
+        var count = 0
 
         // Make sure we insert after we collected the results, otherwise we get a concurrency exception
         // because we are inserting while we haven't consumed the whole stream yet.
-        paths.forEach { kPathIndex.insert(it) }
+        paths.forEach { kPathIndex.insert(it); count++ }
+
+        Logger.debug("Concatenation done: $count")
 
         // Set K to K+1
         kPathIndex.k = kPathIndex.k + 1
 
         // Recursive call until we reach our target k
-        return paths.size + run(kPathIndex, k)
+        return count + run(kPathIndex, k)
     }
 }
