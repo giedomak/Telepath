@@ -4,7 +4,6 @@ import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
 import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
-import com.github.giedomak.telepathdb.utilities.Logger
 
 /**
  * Representation of the physical plan.
@@ -26,6 +25,9 @@ class PhysicalPlan(
     val physicalOperator = PhysicalOperator.getPhysicalOperator(this)
     override val operatorName get() = physicalOperator?.javaClass?.simpleName
 
+    var cardinality: Long? = null
+        get() =  field ?: query.telepathDB.cardinalityEstimation.getCardinality(this)
+
     /**
      * Directly construct a PhysicalPlan for the given [leaf].
      *
@@ -41,10 +43,6 @@ class PhysicalPlan(
 
     fun pathIdOfChildren(): Long {
         return query.telepathDB.pathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
-    }
-
-    fun cardinality(): Long {
-        return query.telepathDB.cardinalityEstimation.getCardinality(this)
     }
 
     fun cost(): Long {

@@ -28,7 +28,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
         return try {
             statisticsStore.getCardinality(pathId)
         } catch (e: NullPointerException) {
-            Logger.debug("UNKNOWN CARDINALITY")
+            Logger.error("UNKNOWN CARDINALITY FOR PATH $pathId")
             1
         }
     }
@@ -44,7 +44,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
      */
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
-        return when (physicalPlan.operator) {
+        val cardinality = when (physicalPlan.operator) {
 
             PhysicalOperator.INDEX_LOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
 
@@ -60,5 +60,11 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
 
             else -> TODO("You forgot one!")
         }
+
+        // Augment the tree
+        physicalPlan.cardinality = cardinality
+
+        // And return the value
+        return cardinality
     }
 }
