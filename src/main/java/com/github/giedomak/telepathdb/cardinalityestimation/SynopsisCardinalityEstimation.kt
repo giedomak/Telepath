@@ -52,9 +52,6 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
 
             }
 
-            // Augment the tree
-            physicalPlan.cardinality = cardinality.toLong()
-
             // Return the result
             return cardinality.toLong()
         }

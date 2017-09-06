@@ -44,7 +44,7 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
      */
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
-        val cardinality = when (physicalPlan.operator) {
+        return when (physicalPlan.operator) {
 
             PhysicalOperator.INDEX_LOOKUP -> getCardinality(physicalPlan.pathIdOfChildren())
 
@@ -60,11 +60,5 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
 
             else -> TODO("You forgot one!")
         }
-
-        // Augment the tree
-        physicalPlan.cardinality = cardinality
-
-        // And return the value
-        return cardinality
     }
 }

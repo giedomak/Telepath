@@ -2,7 +2,6 @@ package com.github.giedomak.telepathdb.datamodels.plans
 
 import com.github.giedomak.telepathdb.datamodels.Query
 import com.github.giedomak.telepathdb.datamodels.graph.Edge
-import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
 /**
@@ -13,9 +12,8 @@ import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
  *
  * @property query We always need a reference to our query which holds all the module implementations we'll need.
  * @property operator An [Int] representing the physical operator. See [HASH_JOIN] for an example.
+ * @property physicalOperator The [PhysicalOperator] instance which corresponds to our [operator].
  * @property operatorName This property gets the symbolic name [String] belonging to our operator, e.g. HASH_JOIN.
- * @property memoryManagerId This property will hold a reference to the [SimpleMemoryManager] slot we might be given
- *                           to indicate the location of intermediate results.
  */
 class PhysicalPlan(
         query: Query,
@@ -25,8 +23,20 @@ class PhysicalPlan(
     val physicalOperator = PhysicalOperator.getPhysicalOperator(this)
     override val operatorName get() = physicalOperator?.javaClass?.simpleName
 
-    var cardinality: Long? = null
-        get() =  field ?: query.telepathDB.cardinalityEstimation.getCardinality(this)
+    // Augment our tree with the cardinality.
+    private var cardinality: Long? = null
+
+    /**
+     * The estimated cardinality of this physical plan.
+     *
+     * It will be lazy generated when accessed while not yet generated.
+     *
+     * @return The cardinality of this physical plan.
+     */
+    fun cardinality(): Long {
+        if (cardinality == null) cardinality = query.telepathDB.cardinalityEstimation.getCardinality(this)
+        return cardinality!!
+    }
 
     /**
      * Directly construct a PhysicalPlan for the given [leaf].
@@ -41,14 +51,25 @@ class PhysicalPlan(
         this.children.add(child)
     }
 
+    /**
+     * Assuming we are an INDEX_LOOKUP, this will return the pathId belonging to the edges made up by our children.
+     *
+     * @return PathId belonging to the edges made up by our children.
+     */
     fun pathIdOfChildren(): Long {
         return query.telepathDB.pathIdentifierStore.getPathIdByEdges(children.map { it.leaf!! })
     }
 
+    /**
+     * Delegate costing of this physical plan to the costModel of the module.
+     */
     fun cost(): Long {
         return query.telepathDB.costModel.cost(this)
     }
 
+    /**
+     * Merge this physical plan with another given physical plan through an operator.
+     */
     fun merge(tree: PhysicalPlan, operator: Int): PhysicalPlan {
         val root = PhysicalPlan(query, operator)
         root.children.add(this.clone())
