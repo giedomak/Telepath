@@ -6,6 +6,11 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 
+/**
+ * Cardinality estimation using a synopsis.
+ *
+ * The [Synopsis] is a statistics store which holds information regarding concatenations.
+ */
 class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : CardinalityEstimation {
 
     var synopsis = Synopsis()
@@ -15,6 +20,9 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
         kPathIndex.insertCallback = synopsis::handleInsertion
     }
 
+    /**
+     * Return the cardinality of a given physical plan.
+     */
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
         // TODO: could be different join operators mixed

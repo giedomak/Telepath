@@ -7,6 +7,9 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
+/**
+ * The synopsis is a statistics store to use with cardinality estimation for concatenations.
+ */
 class Synopsis {
 
     private val syn1 = Syn1()
