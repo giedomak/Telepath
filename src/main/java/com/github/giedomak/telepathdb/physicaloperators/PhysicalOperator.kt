@@ -18,7 +18,7 @@ interface PhysicalOperator {
     val firstChild get() = physicalPlan.children.first().physicalOperator!!
     val lastChild get() = physicalPlan.children.last().physicalOperator!!
 
-    val cardinality get() = physicalPlan.cardinality!!
+    val cardinality get() = physicalPlan.cardinality()
 
     /**
      * Evaluates the physical operator and produces a PathStream.
