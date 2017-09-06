@@ -98,7 +98,7 @@ This document describes how the planner calculates the cheapest physical plan fo
 
   Each physical operator has a cost associated to it which depends on the cardinality of the sets it operates on.
 
-  For example, the cost of [hash-join](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/HashJoin.kt#L32) is `2 * (M + N)`. Where `M` is the cardinality of set 1, and `N` is the cardinality of set 2.
+  For example, the cost of [hash-join](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/HashJoin.kt#L38) is `2 * (M + N)`. Where `M` is the cardinality of set 1, and `N` is the cardinality of set 2.
 
 6. __Save the cheapest physical plan__
 
