@@ -21,9 +21,9 @@ import kotlin.streams.toList
  */
 object SimpleMemoryManager : MemoryManager {
 
-    private const val MEMORY_BUDGET: Int = 10_000_000
+    private const val MEMORY_BUDGET: Int = 1_000_000
     private const val CACHE_BUDGET: Int = 100_000
-    private const val PARTITION_SIZE: Int = 1_000
+    private const val PARTITION_SIZE: Int = 100_000
     private const val BATCH_SIZE: Int = 100
 
     // HashMaps in which we store the data
@@ -125,7 +125,7 @@ object SimpleMemoryManager : MemoryManager {
     private fun getCombinedResults(id: Long): Stream<Path> {
 
         if (cache.a == id) {
-            return cache.b.parallelStream()
+            return cache.b.stream()
         }
 
         val paths = pathHashMap.getOrDefault(id, emptyList<List<Path>>())
@@ -133,7 +133,7 @@ object SimpleMemoryManager : MemoryManager {
 
         // Store and use the cache when possible
         if (storeInCacheWhenPossible(id, paths, files))
-            return cache.b.parallelStream()
+            return cache.b.stream()
 
         // Otherwise we just stream our results without the cache
         return getCombinedResults(paths, files)

@@ -38,7 +38,7 @@ class KPathIndexInMemory(override var insertCallback: ((Path) -> Unit)? = null) 
                         pathIndex.getPaths(
                                 PathDBWrapper.toPathPrefix(pathPrefix)
                         ).spliterator()
-                ), true
+                ), false
         ).map { PathDBWrapper.fromPath(it) }
     }
 

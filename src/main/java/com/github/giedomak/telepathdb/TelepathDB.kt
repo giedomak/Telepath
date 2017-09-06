@@ -9,7 +9,6 @@ package com.github.giedomak.telepathdb
 
 import com.github.giedomak.telepathdb.cardinalityestimation.CardinalityEstimation
 import com.github.giedomak.telepathdb.cardinalityestimation.SynopsisCardinalityEstimation
-import com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis
 import com.github.giedomak.telepathdb.costmodel.AdvancedCostModel
 import com.github.giedomak.telepathdb.costmodel.CostModel
 import com.github.giedomak.telepathdb.datamodels.Query
@@ -124,7 +123,7 @@ object TelepathDB {
 
         val startTime = System.currentTimeMillis()
 
-        setupDatabase("/Users/giedomak/Dropbox/graphInstances/graph1M.txt", 2)
+        setupDatabase("src/test/resources/cite.txt", 2)
 
         // We're alive!
         val endTime = System.currentTimeMillis()
