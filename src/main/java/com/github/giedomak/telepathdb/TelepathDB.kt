@@ -37,7 +37,7 @@ object TelepathDB {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
-    var kPathIndex: KPathIndex = KPathIndexInMemory(insertionCallback = { (cardinalityEstimation as SynopsisCardinalityEstimation).synopsis.handleInsertion(it) })
+    var kPathIndex: KPathIndex = KPathIndexInMemory()
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     var costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex = kPathIndex)

@@ -19,7 +19,7 @@ import java.util.stream.StreamSupport
 /**
  * InMemory implementation of the KPathIndex.
  */
-class KPathIndexInMemory(private val insertionCallback: ((Path) -> Unit)? = null) : KPathIndex {
+class KPathIndexInMemory(override var insertCallback: ((Path) -> Unit)? = null) : KPathIndex {
 
     // Populates our pathIndex property with the InMemoryIndex obtained from the InMemoryIndexFactory from the com.pathdb package.
     private val pathIndex: com.pathdb.pathIndex.PathIndex = InMemoryIndexFactory().inMemoryIndex
@@ -52,7 +52,7 @@ class KPathIndexInMemory(private val insertionCallback: ((Path) -> Unit)? = null
         pathIndex.insert(PathDBWrapper.toPath(path))
 
         // Invoke the callback
-        insertionCallback?.invoke(path)
+        insertCallback?.invoke(path)
     }
 
     /**

@@ -9,6 +9,7 @@ import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
  * @property physicalPlan The physical plan holds information regarding the sets on which to operate on.
  * @property firstChild The first set of data to operate on.
  * @property lastChild The last set of data to operate on.
+ * @property cardinality Delegate cardinality to the physical plan.
  */
 interface PhysicalOperator {
 
@@ -16,6 +17,8 @@ interface PhysicalOperator {
 
     val firstChild get() = physicalPlan.children.first().physicalOperator!!
     val lastChild get() = physicalPlan.children.last().physicalOperator!!
+
+    val cardinality get() = physicalPlan.cardinality()
 
     /**
      * Evaluates the physical operator and produces a PathStream.
@@ -30,13 +33,6 @@ interface PhysicalOperator {
      * @return The cost of the physical operation.
      */
     fun cost(): Long
-
-    /**
-     * Delegate cardinality to the physical plan.
-     */
-    fun cardinality(): Long {
-        return physicalPlan.cardinality()
-    }
 
     companion object {
 
