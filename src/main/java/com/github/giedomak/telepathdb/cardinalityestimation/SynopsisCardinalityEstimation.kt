@@ -10,6 +10,11 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
 
     var synopsis = Synopsis()
 
+    init {
+        // Set the callback on after insert
+        kPathIndex.insertCallback = synopsis::handleInsertion
+    }
+
     override fun getCardinality(physicalPlan: PhysicalPlan): Long {
 
         // TODO: could be different join operators mixed

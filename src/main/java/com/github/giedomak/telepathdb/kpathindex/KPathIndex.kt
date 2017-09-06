@@ -9,22 +9,20 @@ package com.github.giedomak.telepathdb.kpathindex
 
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
-
 import java.io.IOException
 import java.util.stream.Stream
 
 /**
- * KPathIndex interface defining the public methods of the kpathindex package.
+ * KPathIndex interface defining the public methods of a path index.
+ *
+ * @property k K indicates the paths with up to this K number of edges are indexed in the kPathIndex.
+ * For example: if K=2, the index contains all paths which have 1 or 2 edges along the path.
+ * @property insertCallback Callback which will be called after insertion of a path into the index.
  */
 interface KPathIndex {
 
-    /**
-     * Getter for K.
-     *
-     * K indicates the paths with up to this K number of edges are indexed in the kPathIndex.
-     * For example: if K=2, the index contains all paths which have 1 or 2 edges along the path.
-     */
     var k: Int
+    var insertCallback: ((Path) -> Unit)?
 
     /**
      * Search method to lookup paths in the KPathIndex.
@@ -41,4 +39,5 @@ interface KPathIndex {
      * @param path The path we will insert into the KPathIndex.
      */
     fun insert(path: Path)
+
 }
