@@ -94,7 +94,7 @@ This document describes how the planner calculates the cheapest physical plan fo
                                /     \      /    \          /     \      /    \
                               a      b     c     d         a      b     c     d
 
-5. __Cardinality estimation__
+5. __Cardinality estimation__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.cardinalityestimation/-synopsis-cardinality-estimation/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimationTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimation.kt#L14)
 
   When we are dealing with intermediate results, we need the estimated cardinality of these intermediate results to calculate the cost.
 
