@@ -7,9 +7,9 @@ import java.util.stream.Stream
 /**
  * Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.
  *
- * @property paths Stream of paths.
- * @property paths Supplier of streams of paths.
- * @param telepathDB If this module is given, we materialize the stream.
+ * @property paths Stream of paths. This acts as a Supplier if the paths are materialized.
+ * @property materialize Boolean indicating if the given stream has to be materialized.
+ * @param telepathDB A path stream must know about the TelepathDB module in order to materialize.
  */
 class PathStream(
         telepathDB: TelepathDB?,
