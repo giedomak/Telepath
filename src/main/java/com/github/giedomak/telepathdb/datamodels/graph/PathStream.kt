@@ -17,16 +17,17 @@ class PathStream(
         private val telepathDB: TelepathDB? = TelepathDB
 ) {
 
+    private val memoryManager get() = telepathDB!!.memoryManager
     private var memoryManagerId: Long? = null
 
-    val pathSupplier get() = Supplier { telepathDB!!.memoryManager[memoryManagerId!!] }
+    val pathSupplier get() = Supplier { memoryManager[memoryManagerId!!] }
 
     init {
 
         if (telepathDB != null) {
-            memoryManagerId = telepathDB.memoryManager.add(paths)
+            memoryManagerId = memoryManager.add(paths)
             Logger.debug(memoryManagerId!!)
-            paths = telepathDB.memoryManager[memoryManagerId!!]
+            paths = memoryManager[memoryManagerId!!]
         }
 
     }
