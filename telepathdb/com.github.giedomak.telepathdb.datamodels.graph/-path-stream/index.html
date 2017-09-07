@@ -8,8 +8,8 @@
 <a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.graph</a>&nbsp;/&nbsp;<a href=".">PathStream</a><br/>
 <br/>
 <h1>PathStream</h1>
-<code><span class="keyword">class </span><span class="identifier">PathStream</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/graph/PathStream.kt#L14">(source)</a>
-<p>Data class for holding streams of paths where we abstract away the materializing into the <a href="#">MemoryManager</a>.</p>
+<code><span class="keyword">class </span><span class="identifier">PathStream</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/graph/PathStream.kt#L15">(source)</a>
+<p>Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -18,8 +18,8 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">PathStream</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathStream$<init>(java.util.stream.Stream((com.github.giedomak.telepathdb.datamodels.graph.Path)), com.github.giedomak.telepathdb.TelepathDB)/paths">paths</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathStream$<init>(java.util.stream.Stream((com.github.giedomak.telepathdb.datamodels.graph.Path)), com.github.giedomak.telepathdb.TelepathDB)/telepathDB">telepathDB</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb/-telepath-d-b/index.html"><span class="identifier">TelepathDB</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
-<p>Data class for holding streams of paths where we abstract away the materializing into the <a href="#">MemoryManager</a>.</p>
+<code><span class="identifier">PathStream</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathStream$<init>(com.github.giedomak.telepathdb.TelepathDB, java.util.stream.Stream((com.github.giedomak.telepathdb.datamodels.graph.Path)), kotlin.Boolean)/telepathDB">telepathDB</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb/-telepath-d-b/index.html"><span class="identifier">TelepathDB</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathStream$<init>(com.github.giedomak.telepathdb.TelepathDB, java.util.stream.Stream((com.github.giedomak.telepathdb.datamodels.graph.Path)), kotlin.Boolean)/_paths">_paths</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.graph.PathStream$<init>(com.github.giedomak.telepathdb.TelepathDB, java.util.stream.Stream((com.github.giedomak.telepathdb.datamodels.graph.Path)), kotlin.Boolean)/materialize">materialize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span></code>
+<p>Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.</p>
 </td>
 </tr>
 </tbody>
@@ -29,20 +29,41 @@
 <tbody>
 <tr>
 <td>
+<p><a href="materialize.html">materialize</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">materialize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Boolean indicating if the given stream has to be materialized.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="path-supplier.html">pathSupplier</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">pathSupplier</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html"><span class="identifier">Supplier</span></a><span class="symbol">&lt;</span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
-<p>Supplier of streams of paths.</p>
-</td>
+<code><span class="keyword">val </span><span class="identifier">pathSupplier</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html"><span class="identifier">Supplier</span></a><span class="symbol">&lt;</span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="paths.html">paths</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">paths</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code>
-<p>Stream of paths.</p>
+<code><span class="keyword">val </span><span class="identifier">paths</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html"><span class="identifier">Stream</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code>
+<p>Stream of paths. This acts as a Supplier if the paths are materialized.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="ensure-materialization.html">ensureMaterialization</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ensureMaterialization</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PathStream</span></code>
+<p>Materialize the stream if we don't have a memoryManagerId yet.</p>
 </td>
 </tr>
 </tbody>

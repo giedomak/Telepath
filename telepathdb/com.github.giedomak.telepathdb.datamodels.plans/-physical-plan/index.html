@@ -8,7 +8,7 @@
 <a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.datamodels.plans</a>&nbsp;/&nbsp;<a href=".">PhysicalPlan</a><br/>
 <br/>
 <h1>PhysicalPlan</h1>
-<code><span class="keyword">class </span><span class="identifier">PhysicalPlan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abstract-multi-tree/index.html"><span class="identifier">AbstractMultiTree</span></a><span class="symbol">&lt;</span><span class="identifier">PhysicalPlan</span><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/PhysicalPlan.kt#L20">(source)</a>
+<code><span class="keyword">class </span><span class="identifier">PhysicalPlan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-abstract-multi-tree/index.html"><span class="identifier">AbstractMultiTree</span></a><span class="symbol">&lt;</span><span class="identifier">PhysicalPlan</span><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/PhysicalPlan.kt#L18">(source)</a>
 <p>Representation of the physical plan.</p>
 <p>This class extends AbstractMultiTree and and has physical operators instread of logical operators in comparison
 to the <a href="../-logical-plan/index.html">LogicalPlan</a> class.</p>
@@ -54,7 +54,9 @@ to the <a href="../-logical-plan/index.html">LogicalPlan</a> class.</p>
 <p><a href="physical-operator.html">physicalOperator</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">physicalOperator</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.physicaloperators/-physical-operator/index.html"><span class="identifier">PhysicalOperator</span></a><span class="symbol">?</span></code></td>
+<code><span class="keyword">val </span><span class="identifier">physicalOperator</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.physicaloperators/-physical-operator/index.html"><span class="identifier">PhysicalOperator</span></a><span class="symbol">?</span></code>
+<p>The <a href="../../com.github.giedomak.telepathdb.physicaloperators/-physical-operator/index.html">PhysicalOperator</a> instance which corresponds to our <a href="operator.html">operator</a>.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -106,28 +108,36 @@ to the <a href="../-logical-plan/index.html">LogicalPlan</a> class.</p>
 <p><a href="cardinality.html">cardinality</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">cardinality</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">cardinality</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The estimated cardinality of this physical plan.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="cost.html">cost</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Delegate costing of this physical plan to the costModel of the module.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="merge.html">merge</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">merge</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan$merge(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan, kotlin.Int)/tree">tree</span><span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalPlan</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan$merge(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan, kotlin.Int)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PhysicalPlan</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">merge</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan$merge(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan, kotlin.Int)/tree">tree</span><span class="symbol">:</span>&nbsp;<span class="identifier">PhysicalPlan</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan$merge(com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan, kotlin.Int)/operator">operator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PhysicalPlan</span></code>
+<p>Merge this physical plan with another given physical plan through an operator.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="path-id-of-children.html">pathIdOfChildren</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">pathIdOfChildren</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">pathIdOfChildren</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Assuming we are an INDEX_LOOKUP, this will return the pathId belonging to the edges made up by our children.</p>
+</td>
 </tr>
 </tbody>
 </table>

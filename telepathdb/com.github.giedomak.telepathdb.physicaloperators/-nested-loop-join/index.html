@@ -43,6 +43,15 @@
 <tbody>
 <tr>
 <td>
+<p><a href="../-physical-operator/cardinality.html">cardinality</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">cardinality</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Delegate cardinality to the physical plan.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="../-physical-operator/first-child.html">firstChild</a></p>
 </td>
 <td>
@@ -70,7 +79,7 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">cost</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Calculates the cost of the physical operation.</p>
+<p>The cost of our nested loop join implementation.</p>
 </td>
 </tr>
 <tr>
@@ -80,20 +89,6 @@
 <td>
 <code><span class="keyword">fun </span><span class="identifier">evaluate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-path-stream/index.html"><span class="identifier">PathStream</span></a></code>
 <p>Evaluates the physical operator and produces a PathStream.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3>Inherited Functions</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="../-physical-operator/cardinality.html">cardinality</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">cardinality</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Delegate cardinality to the physical plan.</p>
 </td>
 </tr>
 </tbody>

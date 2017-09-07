@@ -1,0 +1,113 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Synopsis - telepathdb</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepathdb</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepathdb.cardinalityestimation.synopsis</a>&nbsp;/&nbsp;<a href=".">Synopsis</a><br/>
+<br/>
+<h1>Synopsis</h1>
+<code><span class="keyword">class </span><span class="identifier">Synopsis</span></code> <a href="https://github.com/giedomak/TelepathDB/tree/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/synopsis/Synopsis.kt#L13">(source)</a>
+<p>The synopsis is a statistics store to use with cardinality estimation for concatenations.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Synopsis</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>The synopsis is a statistics store to use with cardinality estimation for concatenations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="handle-insertion.html">handleInsertion</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">handleInsertion</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$handleInsertion(com.github.giedomak.telepathdb.datamodels.graph.Path)/path">path</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-path/index.html"><span class="identifier">Path</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Update our Synopsis on new insertions into the index.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="in.html">in</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">in</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$in(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of nodes in G which have incoming <a href="in.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$in(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">in</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$in(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of nodes in G which have incoming <a href="in.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$in(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="middle.html">middle</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">middle</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$middle(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of nodes in G which have incoming edge labeled l1 and outgoing edge labeled l2.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="one.html">one</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">one</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$one(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of paths labeled l1 from nodes in out to nodes in middle.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="out.html">out</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">out</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$out(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of nodes in G which have outgoing <a href="out.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$out(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">out</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$out(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of nodes in G which have outgoing <a href="out.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$out(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pairs.html">pairs</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">pairs</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$pairs(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of pairs in G labeled by <a href="pairs.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$pairs(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">pairs</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$pairs(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of pairs in G labeled by l1/l2.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="paths.html">paths</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">paths</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$paths(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of paths in G labeled by <a href="paths.html#com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$paths(com.github.giedomak.telepathdb.datamodels.graph.Edge)/edge">edge</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">paths</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$paths(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of paths in G labeled with l1/l2.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="two.html">two</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">two</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepathdb.cardinalityestimation.synopsis.Synopsis$two(kotlin.Pair((com.github.giedomak.telepathdb.datamodels.graph.Edge, )))/edges">edges</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-pair/index.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.github.giedomak.telepathdb.datamodels.graph/-edge/index.html"><span class="identifier">Edge</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Number of paths labeled l2 from nodes in middle to nodes in in.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

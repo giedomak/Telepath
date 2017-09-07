@@ -3,6 +3,7 @@ $dokka.linkExtension:html
 
 com.github.giedomak.telepathdb
 com.github.giedomak.telepathdb.cardinalityestimation
+com.github.giedomak.telepathdb.cardinalityestimation.synopsis
 com.github.giedomak.telepathdb.costmodel
 com.github.giedomak.telepathdb.datamodels
 com.github.giedomak.telepathdb.datamodels.graph
