@@ -41,10 +41,11 @@ class OpenHashJoin(
         // Get all Paths from the HashMap which have the firstNode() as key, and concatenate.
         // By passing telepathDB as the second argument of the PathStream constructor, it gets materialized again.
         return PathStream(
+                telepathDB,
                 stream2.paths.flatMap { v2 ->
                     telepathDB.memoryManager[salt + v2.nodes.first().hashCode().toLong()]
                             .map { v1 -> telepathDB.pathIdentifierStore.concatenatePaths(v1, v2) }
                 }
-                , telepathDB)
+        )
     }
 }

@@ -20,6 +20,7 @@ class Union(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      */
     override fun evaluate(): PathStream {
         return PathStream(
+                physicalPlan.query.telepathDB,
                 Stream.concat(
                         firstChild.evaluate().paths,
                         lastChild.evaluate().paths

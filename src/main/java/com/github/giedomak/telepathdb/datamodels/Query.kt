@@ -62,9 +62,13 @@ data class Query(val telepathDB: TelepathDB, val input: String) {
     fun printResults() {
 
         Logger.debug(">>>>> Estimated number of results: " + physicalPlan!!.cardinality())
-        Logger.debug(">>>>> Actual number of results: " + results!!.pathSupplier.get().count())
-        Logger.info(">>>>> Results limited to 10:")
 
+        // If the results were materialized, we actually get a supplier. Meaning we can access the stream again.
+        if (results!!.materialize) {
+            Logger.debug(">>>>> Actual number of results: " + results!!.paths.count())
+        }
+
+        Logger.info(">>>>> Results limited to 10:")
         results!!.paths.limit(10).forEach { Logger.info(it) }
 
         Logger.info("Query evaluation in " + (endTime - startTime) + " ms")

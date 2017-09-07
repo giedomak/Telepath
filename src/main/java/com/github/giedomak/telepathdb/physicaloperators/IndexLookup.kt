@@ -26,11 +26,13 @@ class IndexLookup(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
      */
     override fun evaluate(): PathStream {
         return PathStream(
+                physicalPlan.query.telepathDB,
                 physicalPlan.query.telepathDB.kPathIndex.search(
                         PathPrefix(
                                 physicalPlan.pathIdOfChildren()
                         )
-                )
+                ),
+                false
         )
     }
 

@@ -16,7 +16,6 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
-import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.planner.Planner
 import com.github.giedomak.telepathdb.staticparser.StaticParserRPQ
@@ -73,7 +72,6 @@ class TelepathDBTest {
         }
         val pathStream = mock<PathStream> {
             on { paths }.doReturn(expectedPaths.stream())
-            on { pathSupplier }.doReturn(Supplier { expectedPaths.stream() })
         }
         val evaluationEngine = mock<SimpleEvaluationEngine> {
             on { evaluate(physicalPlan) }.doReturn(pathStream)

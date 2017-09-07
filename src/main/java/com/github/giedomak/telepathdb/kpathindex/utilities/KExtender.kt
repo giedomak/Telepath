@@ -38,7 +38,10 @@ object KExtender {
                 .flatMap { kPathIndex.search(PathPrefix(it)) }
 
         // Concatenate the current K paths, with the K=1 paths so we get the K=K+1 paths
-        val paths = OpenHashJoin(PathStream(source_k), PathStream(k1)).evaluate().paths
+        val paths = OpenHashJoin(
+                PathStream(null, source_k, false),
+                PathStream(null, k1, false)
+        ).evaluate().paths
 
         var count = 0
 

@@ -32,10 +32,10 @@ class HashJoinTest {
 
         // Mock the evaluate call
         val operator1 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths1.stream(), null))
+            on { evaluate() }.doReturn(PathStream(null, paths1.stream(), false))
         }
         val operator2 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths2.stream(), null))
+            on { evaluate() }.doReturn(PathStream(null, paths2.stream(), false))
         }
 
         // Mock the actual operators
