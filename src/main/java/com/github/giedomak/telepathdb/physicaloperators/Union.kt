@@ -37,9 +37,13 @@ class Union(override val physicalPlan: PhysicalPlan) : PhysicalOperator {
         val myCost = firstChild.cardinality + lastChild.cardinality
 
         // Our input sets might be intermediate results, so take their cost into account.
-        val intermediateResultsCost = firstChild.cost() + lastChild.cost()
+        val cost1 = firstChild.cost()
+        val cost2 = lastChild.cost()
 
-        return myCost + intermediateResultsCost
+        // Overflow check
+        if (myCost == Long.MAX_VALUE || cost1 == Long.MAX_VALUE || cost2 == Long.MAX_VALUE) return Long.MAX_VALUE
+
+        return myCost + cost1 + cost2
     }
 
 }
