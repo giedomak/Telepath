@@ -6,36 +6,55 @@ import com.github.giedomak.telepathdb.datamodels.plans.LogicalPlan
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.utilities.Logger
 
+/**
+ * Query model which is responsible for the-life-of-a-query.
+ *
+ * @property telepathDB Reference to the TelepathDB module.
+ * @property input The input as given by the user.
+ */
 data class Query(val telepathDB: TelepathDB, val input: String) {
 
-    var logicalPlan: LogicalPlan? = null
-    var flattenedLogicalPlan: LogicalPlan? = null
-    var physicalPlan: PhysicalPlan? = null
-    var results: PathStream? = null
+    private var logicalPlan: LogicalPlan? = null
+    private var flattenedLogicalPlan: LogicalPlan? = null
+    private var physicalPlan: PhysicalPlan? = null
+    private var results: PathStream? = null
 
     private var startTime = System.currentTimeMillis()
     private var endTime = System.currentTimeMillis()
 
     fun parseInput() {
+        val start = System.currentTimeMillis()
         logicalPlan = telepathDB.staticParser.parse(this)
-        Logger.debug("Logical plan:")
+        val ms = System.currentTimeMillis() - start
+
+        Logger.debug("Logical plan: ($ms ms)")
         logicalPlan!!.print()
     }
 
     fun flattenLogicalPlan() {
+        val start = System.currentTimeMillis()
         flattenedLogicalPlan = logicalPlan!!.clone().flatten()
-        Logger.debug("Flattened logical plan:")
+        val ms = System.currentTimeMillis() - start
+
+        Logger.debug("Flattened logical plan: ($ms ms)")
         flattenedLogicalPlan!!.print()
     }
 
     fun generatePhysicalPlan() {
+        val start = System.currentTimeMillis()
         physicalPlan = telepathDB.planner.generate(flattenedLogicalPlan!!)
-        Logger.debug("Physical plan:")
+        val ms = System.currentTimeMillis() - start
+
+        Logger.debug("Physical plan: ($ms ms)")
         physicalPlan!!.print()
     }
 
     fun evaluate() {
+        val start = System.currentTimeMillis()
         results = telepathDB.evaluationEngine.evaluate(physicalPlan!!)
+        val ms = System.currentTimeMillis() - start
+
+        Logger.debug("Evaluation step done in ($ms ms)")
 
         endTime = System.currentTimeMillis()
     }
@@ -43,6 +62,7 @@ data class Query(val telepathDB: TelepathDB, val input: String) {
     fun printResults() {
 
         Logger.debug(">>>>> Estimated number of results: " + physicalPlan!!.cardinality())
+        Logger.debug(">>>>> Actual number of results: " + results!!.pathSupplier.get().count())
         Logger.info(">>>>> Results limited to 10:")
 
         results!!.paths.limit(10).forEach { Logger.info(it) }

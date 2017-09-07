@@ -15,7 +15,6 @@ import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.maxI
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore
 import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore.pathIdentifierStore
 import com.github.giedomak.telepathdb.utilities.Logger
-import org.apache.commons.collections.ListUtils
 import org.apache.commons.lang3.StringUtils
 import java.util.stream.Collectors
 
@@ -102,20 +101,11 @@ object PathIdentifierStore {
      */
     fun concatenatePaths(path1: Path, path2: Path): Path {
         // Perform the union on both paths
-        @Suppress("UNCHECKED_CAST")
-        val edges = ListUtils.union(
-                getEdgeSet(path1.pathId), getEdgeSet(path2.pathId)
-        ) as List<Edge>
-
-        // Get the nodes of the second path
-        val sliced = path2.nodes.toMutableList()
+        val edges = getEdgeSet(path1.pathId) + getEdgeSet(path2.pathId)
 
         // Remove the first node from the second path, otherwise we have a duplicate
-        sliced.removeAt(0)
-
         // Perform union on the nodes from path1 and the sliced nodes from path2.
-        @Suppress("UNCHECKED_CAST")
-        val nodes = ListUtils.union(path1.nodes, sliced) as List<Node>
+        val nodes = path1.nodes + path2.nodes.subList(1, path2.nodes.size)
 
         return Path(getPathIdByEdges(edges), nodes)
     }

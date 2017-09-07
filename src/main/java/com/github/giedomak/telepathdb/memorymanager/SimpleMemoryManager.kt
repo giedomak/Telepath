@@ -157,7 +157,6 @@ object SimpleMemoryManager : MemoryManager {
             writePartition(id, partition)
         }
 
-        maxId = id
     }
 
     /**

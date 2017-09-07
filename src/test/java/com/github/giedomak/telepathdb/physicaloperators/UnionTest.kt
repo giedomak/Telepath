@@ -28,10 +28,10 @@ class UnionTest {
 
         // Mock them into the evaluation call
         val operator1 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths1.stream()))
+            on { evaluate() }.doReturn(PathStream(paths1.stream(), null))
         }
         val operator2 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths2.stream()))
+            on { evaluate() }.doReturn(PathStream(paths2.stream(), null))
         }
 
         // Mock them into the operator
@@ -66,10 +66,10 @@ class UnionTest {
 
         // Mock them into the evaluation call
         val operator1 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths1.stream()))
+            on { evaluate() }.doReturn(PathStream(paths1.stream(), null))
         }
         val operator2 = mock<PhysicalOperator> {
-            on { evaluate() }.doReturn(PathStream(paths2.stream()))
+            on { evaluate() }.doReturn(PathStream(paths2.stream(), null))
         }
 
         // Mock them into the operator
