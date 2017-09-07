@@ -1,6 +1,7 @@
 package com.github.giedomak.telepathdb.datamodels.graph
 
 import com.github.giedomak.telepathdb.TelepathDB
+import com.github.giedomak.telepathdb.utilities.Logger
 import java.util.function.Supplier
 import java.util.stream.Stream
 
@@ -13,15 +14,19 @@ import java.util.stream.Stream
  */
 class PathStream(
         var paths: Stream<Path>,
-        telepathDB: TelepathDB? = null
+        private val telepathDB: TelepathDB? = TelepathDB
 ) {
 
-    val pathSupplier get() = Supplier { paths }
+    private var memoryManagerId: Long? = null
+
+    val pathSupplier get() = Supplier { telepathDB!!.memoryManager[memoryManagerId!!] }
 
     init {
 
         if (telepathDB != null) {
-            paths = telepathDB.memoryManager[telepathDB.memoryManager.add(paths)]
+            memoryManagerId = telepathDB.memoryManager.add(paths)
+            Logger.debug(memoryManagerId!!)
+            paths = telepathDB.memoryManager[memoryManagerId!!]
         }
 
     }

@@ -19,12 +19,12 @@ class NestedLoopJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator
     override fun evaluate(): PathStream {
 
         // Because we are doing a nested loop, we have to create the stream again for each new iteration.
-        val streamSupplier = lastChild.evaluate().pathSupplier
+        val pathSupplier = lastChild.evaluate().pathSupplier
 
         // Basically we are doing a nested loop to do an inner-join and concatenate the paths.
         return PathStream(
                 firstChild.evaluate().paths.flatMap { v1 ->
-                    streamSupplier.get()
+                    pathSupplier.get()
                             .filter { v2 -> v1.nodes.last() == v2.nodes.first() }
                             .map { v2 -> PathIdentifierStore.concatenatePaths(v1, v2) }
                 }
