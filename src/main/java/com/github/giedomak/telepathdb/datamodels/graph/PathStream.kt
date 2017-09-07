@@ -10,7 +10,7 @@ import java.util.stream.Stream
  *
  * @property paths Stream of paths. This acts as a Supplier if the paths are materialized.
  * @property materialize Boolean indicating if the given stream has to be materialized.
- * @param telepathDB A path stream must know about the TelepathDB module in order to materialization.
+ * @param telepathDB A path stream must know about the TelepathDB module in order to materialize.
  */
 class PathStream(
         telepathDB: TelepathDB?,
@@ -34,10 +34,15 @@ class PathStream(
         if (materialize) ensureMaterialization()
     }
 
+    /**
+     * Materialize the stream if we don't have a memoryManagerId yet.
+     *
+     * @return Returns this for chaining purposes.
+     */
     fun ensureMaterialization(): PathStream {
         if (memoryManagerId == null) {
             // Materialize the paths into the memory manager
-            memoryManagerId = memoryManager!!.add(paths)
+            memoryManagerId = memoryManager!!.add(_paths)
             Logger.debug("Paths materialized with id: $memoryManagerId")
         }
 
