@@ -2,7 +2,7 @@
 
 This document describes how the planner calculates the cheapest physical plan for a given logical plan.
 
-1. __Flatten into multi-children tree__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattenerTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattener.kt#L37)
+## 1. Flatten into multi-children tree [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-flattener/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattenerTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeFlattener.kt#L37)
 
   Logical plans are flattened to prepare them for the subtree generator.
 
@@ -20,7 +20,7 @@ This document describes how the planner calculates the cheapest physical plan fo
                 /  |  \
                a   b   c
 
-2. __Generate subtrees of a given size__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/index.html)  [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtreeTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtree.kt#L16)
+## 2. Generate subtrees of a given size [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-logical-plan-subtree/index.html)  [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtreeTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/LogicalPlanSubtree.kt#L16)
 
   Let's say we are trying to calculate the cheapest physical plan for a plan with size `2`. Then we are generating all subtrees of size `1`, and check if we can combine them. These smaller subtrees have its cheapest physical plan already calculated, so we'll want to re-use those.
 
@@ -38,7 +38,7 @@ This document describes how the planner calculates the cheapest physical plan fo
               / \     / \         /   \            /   \
              b   c   c   d       e     f          f     g
 
-3. __Check containment of subtrees__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-containment/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainmentTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainment.kt#L13)
+## 3. Check containment of subtrees [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.datamodels.plans.utilities/-multi-tree-containment/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainmentTest.kt#L19) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/datamodels/plans/utilities/MultiTreeContainment.kt#L13)
 
   When two subtrees are contained in the logical plan through any operator, we calculate the cheapest physical plan for the combination of those two subtrees concatenated by the operator.
 
@@ -74,7 +74,7 @@ This document describes how the planner calculates the cheapest physical plan fo
 
   `subtree1` and `subtree2` are contained in the logical plan through the `CONCATENATION` operator.
 
-4. __Enumerate operators__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.planner.enumerator/-simple-enumerator/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumeratorTest.kt) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumerator.kt#L10)
+## 4. Enumerate operators [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.planner.enumerator/-simple-enumerator/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumeratorTest.kt) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/planner/enumerator/SimpleEnumerator.kt#L10)
 
   When two subtrees are contained through an operator in the logical plan, we'll calculate the cheapest physical plan for their combination. Remember we already know the cheapest physical plans for both subtrees.
 
@@ -94,7 +94,7 @@ This document describes how the planner calculates the cheapest physical plan fo
                                /     \      /    \          /     \      /    \
                               a      b     c     d         a      b     c     d
 
-5. __Cardinality estimation__ [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.cardinalityestimation/-synopsis-cardinality-estimation/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimationTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimation.kt#L14)
+## 5. Cardinality estimation [(docs)](https://giedomak.github.io/TelepathDB/telepathdb/com.github.giedomak.telepathdb.cardinalityestimation/-synopsis-cardinality-estimation/index.html) [(test)](https://github.com/giedomak/TelepathDB/blob/master/src/test/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimationTest.kt#L15) [(source)](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/cardinalityestimation/SynopsisCardinalityEstimation.kt#L14)
 
   When we are dealing with intermediate results, we need the estimated cardinality of these intermediate results to calculate the cost.
 
@@ -132,7 +132,7 @@ This document describes how the planner calculates the cheapest physical plan fo
     }
   ```
 
-6. __Costing physical plans__
+## 6. Costing physical plans
 
   Each physical operator has a cost associated to it which depends on the cardinality of the sets it operates on.
 
@@ -158,6 +158,6 @@ This document describes how the planner calculates the cheapest physical plan fo
     }
   ```
 
-7. __Save the cheapest physical plan__
+## 7. Save the cheapest physical plan
 
   Once each enumerated physical plan has been costed, we save the cheapest physical plan. Since we work in a bottom-up fashion, after all iterations, we will have calculated the cheapest physical plan for the given logical plan.
