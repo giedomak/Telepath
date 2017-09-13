@@ -21,8 +21,8 @@ class PathPrefixTest {
     fun samePathPrefixPrefixesEqualEachOtherTest() {
         // given
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel(Arrays.asList("a", "b", "c"))
-        val a = PathPrefix(pathId, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(pathId, PathTest.equalNodes(4, 42))
+        val a = PathPrefix(pathId, PathTest.equalNodes(4, "42"))
+        val b = PathPrefix(pathId, PathTest.equalNodes(4, "42"))
 
         // then
         assertEquals(a, a)
@@ -32,14 +32,14 @@ class PathPrefixTest {
     @Test
     fun differentPathPrefixPrefixesAreNotEqualsTest() {
         // given
-        val a = PathPrefix(42, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(42, PathTest.equalNodes(4, 24))
-        val c = PathPrefix(42, PathTest.equalNodes(3, 42))
-        val d = PathPrefix(43, PathTest.equalNodes(3, 42))
+        val a = PathPrefix(42, PathTest.equalNodes(4, "42"))
+        val b = PathPrefix(42, PathTest.equalNodes(4, "24"))
+        val c = PathPrefix(42, PathTest.equalNodes(3, "42"))
+        val d = PathPrefix(43, PathTest.equalNodes(3, "42"))
 
-        val differentNodes = PathTest.equalNodes(3, 42)
+        val differentNodes = PathTest.equalNodes(3, "42")
         differentNodes.removeAt(differentNodes.size - 1)
-        differentNodes.add(Node(43))
+        differentNodes.add(Node("43"))
 
         val e = PathPrefix(42, differentNodes)
 
@@ -59,9 +59,9 @@ class PathPrefixTest {
     @Test
     fun generatesHashCode() {
         // given
-        val a = PathPrefix(42, PathTest.equalNodes(4, 42))
-        val b = PathPrefix(42, PathTest.equalNodes(4, 42))
-        val c = PathPrefix(42, PathTest.equalNodes(4, 24))
+        val a = PathPrefix(42, PathTest.equalNodes(4, "42"))
+        val b = PathPrefix(42, PathTest.equalNodes(4, "42"))
+        val c = PathPrefix(42, PathTest.equalNodes(4, "24"))
 
         // then
         assertEquals(a.hashCode(), b.hashCode())

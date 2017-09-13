@@ -21,7 +21,7 @@ object EdgeIdentifierStore {
 
     /**
      * Get or create an Edge ID for a given Edge.
-
+     *
      * @param edge The Edge for which we want to generate or find an ID.
      * @return The ID generated for the given edge.
      */
@@ -52,7 +52,7 @@ object EdgeIdentifierStore {
     /**
      * This method is called when the given edgeLabel is not yet contained in the stores.
      * So it generates an ID and saves it to the stores.
-
+     *
      * @param edgeLabel The edgeLabel for which we need to generate an ID
      * @return The ID generated for the given edgeLabel
      */

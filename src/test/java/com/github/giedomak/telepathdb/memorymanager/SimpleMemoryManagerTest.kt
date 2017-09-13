@@ -44,8 +44,8 @@ class SimpleMemoryManagerTest {
         doReturn(false).whenever(memoryManager).fitsIntoMemory(any())
 
         val expected = listOf(
-                PathTest.simplePath(42, 3, 44),
-                PathTest.simplePath(47, 4, 40)
+                PathTest.simplePath(42, 3, "44"),
+                PathTest.simplePath(47, 4, "40")
         )
 
         // Add our expected path to the SimpleMemoryManager, this should write it to disk since it does not fitsIntoMemory.
@@ -64,8 +64,8 @@ class SimpleMemoryManagerTest {
     fun clearsTheMemory() {
 
         val expected = listOf(
-                PathTest.simplePath(42, 3, 44),
-                PathTest.simplePath(47, 4, 40)
+                PathTest.simplePath(42, 3, "44"),
+                PathTest.simplePath(47, 4, "40")
         )
 
         // Add our expected path to the SimpleMemoryManager, this should write it to disk since it does not fitsIntoMemory.

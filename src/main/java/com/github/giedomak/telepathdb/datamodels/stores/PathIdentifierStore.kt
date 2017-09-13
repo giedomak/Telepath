@@ -117,7 +117,7 @@ object PathIdentifierStore {
      * @return List of path identifiers of size k.
      */
     fun getPathIds(k: Int): List<Long> {
-        return kPathIdentifierStore.getOrDefault(k, emptyList<Long>())
+        return kPathIdentifierStore.getOrDefault(k, emptyList())
     }
 
     /**

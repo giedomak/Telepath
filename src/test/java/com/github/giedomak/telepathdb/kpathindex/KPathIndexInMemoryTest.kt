@@ -20,8 +20,8 @@ import kotlin.test.assertEquals
 class KPathIndexInMemoryTest {
 
     private val expected = listOf(
-            Path(42, PathTest.equalNodes(3, 42)),
-            Path(43, PathTest.equalNodes(2, 48))
+            Path(42, PathTest.equalNodes(3, "42")),
+            Path(43, PathTest.equalNodes(2, "48"))
     )
     private var kPathIndex = mock<KPathIndexInMemory> {
         on { search(PathPrefix(42)) }.doReturn(expected.stream())

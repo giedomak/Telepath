@@ -91,7 +91,7 @@ class KPathIndexCardinalityEstimationTest {
 
         for (_i in 1..10L) {
             for (i in 1..(10 * _i)) {
-                TelepathDB.kPathIndex.insert(Path(i, PathTest.equalNodes(3, 42)))
+                TelepathDB.kPathIndex.insert(Path(i, PathTest.equalNodes(3, "42")))
             }
         }
     }

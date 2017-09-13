@@ -17,8 +17,8 @@ class NodeTest {
     @Test
     fun outputsToString() {
         // given
-        val node = Node(33)
-        val expected = "Node(" + "id=" + node.id + ")"
+        val node = Node("33")
+        val expected = "Node(" + "label=33)"
 
         // then
         assertEquals(expected, node.toString())
@@ -27,12 +27,12 @@ class NodeTest {
     @Test
     fun generatesSameHashCode() {
         // given
-        val node1 = Node(42)
-        val node2 = Node(42)
-        val node3 = Node(46)
+        val node1 = Node("42")
+        val node2 = Node("42")
+        val node3 = Node("46")
 
         // then
-        assertEquals(node1.hashCode().toLong(), node2.hashCode().toLong())
-        assertNotEquals(node1.hashCode().toLong(), node3.hashCode().toLong())
+        assertEquals(node1.hashCode(), node2.hashCode())
+        assertNotEquals(node1.hashCode(), node3.hashCode())
     }
 }

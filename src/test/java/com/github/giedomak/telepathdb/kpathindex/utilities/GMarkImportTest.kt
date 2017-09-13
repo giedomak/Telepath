@@ -40,7 +40,7 @@ class GMarkImportTest {
         verify(kPathIndex, times(100)).insert(any())
 
         // Check if the first and last path are inserted
-        verify(kPathIndex).insert(Path(pathId, listOf(Node(10), Node(12))))
-        verify(kPathIndex).insert(Path(pathId, listOf(Node(2514), Node(3107))))
+        verify(kPathIndex).insert(Path(pathId, listOf(Node("10"), Node("12"))))
+        verify(kPathIndex).insert(Path(pathId, listOf(Node("2514"), Node("3107"))))
     }
 }
