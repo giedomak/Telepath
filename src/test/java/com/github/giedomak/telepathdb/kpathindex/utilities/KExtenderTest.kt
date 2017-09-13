@@ -30,9 +30,9 @@ class KExtenderTest {
         val path2 = PathIdentifierStore.getPathIdByEdgeLabel("2")
         val path3 = PathIdentifierStore.getPathIdByEdgeLabel("3")
 
-        val paths1 = listOf(Path(path1, listOf(Node(10), Node(12))))
-        val paths2 = listOf(Path(path2, listOf(Node(12), Node(14))), Path(path2, listOf(Node(12), Node(42))))
-        val paths3 = listOf(Path(path3, listOf(Node(42), Node(4))))
+        val paths1 = listOf(Path(path1, listOf(Node("10"), Node("12"))))
+        val paths2 = listOf(Path(path2, listOf(Node("12"), Node("14"))), Path(path2, listOf(Node("12"), Node("42"))))
+        val paths3 = listOf(Path(path3, listOf(Node("42"), Node("4"))))
 
         // Insert all k = 1 paths
         paths1.union(paths2).union(paths3).forEach { kPathIndex.insert(it) }
@@ -44,8 +44,8 @@ class KExtenderTest {
         val path5 = PathIdentifierStore.getPathIdByEdgeLabel(listOf("1", "2", "3"))
 
         // Verify these three paths have been inserted
-        verify(kPathIndex).insert(Path(path4, listOf(Node(10), Node(12), Node(14))))
-        verify(kPathIndex).insert(Path(path4, listOf(Node(10), Node(12), Node(42))))
-        verify(kPathIndex).insert(Path(path5, listOf(Node(10), Node(12), Node(42), Node(4))))
+        verify(kPathIndex).insert(Path(path4, listOf(Node("10"), Node("12"), Node("14"))))
+        verify(kPathIndex).insert(Path(path4, listOf(Node("10"), Node("12"), Node("42"))))
+        verify(kPathIndex).insert(Path(path5, listOf(Node("10"), Node("12"), Node("42"), Node("4"))))
     }
 }

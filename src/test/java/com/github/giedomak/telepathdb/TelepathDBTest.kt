@@ -27,7 +27,6 @@ import org.junit.Before
 import org.junit.Test
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
-import java.util.function.Supplier
 
 class TelepathDBTest {
 
@@ -62,8 +61,8 @@ class TelepathDBTest {
 
         // Our expected results
         val expectedPaths = listOf(
-                PathTest.simplePath(pathId, 3, 42),
-                PathTest.simplePath(pathId, 3, 45)
+                PathTest.simplePath(pathId, 3, "42"),
+                PathTest.simplePath(pathId, 3, "45")
         )
 
         // Mocking all the modules we'll use

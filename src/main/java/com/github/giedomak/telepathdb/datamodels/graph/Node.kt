@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels.graph
 
+import com.google.common.collect.HashBiMap
 import java.io.Serializable
 
 /**
@@ -15,4 +16,43 @@ import java.io.Serializable
  * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java for the
  * implementation in PathDB.
  */
-data class Node(val id: Long) : Serializable
+data class Node(val label: String) : Serializable {
+
+    val id get() = getIdentifier(label)
+
+    constructor(id: Long) : this(getLabel(id))
+
+    companion object IdentifierStore {
+
+        private val identifierMap = HashBiMap.create<Long, String>()
+        private var maxId: Long = 0
+
+        /**
+         * Get or create an Edge ID for a given Edge.
+         *
+         * @param edge The Edge for which we want to generate or find an ID.
+         * @return The ID generated for the given edge.
+         */
+        fun getIdentifier(label: String): Long {
+            // Access the store or generate a key
+            return identifierMap.inverse()[label] ?: generateIdentifier(label)
+        }
+
+        fun getLabel(id: Long): String {
+            return identifierMap.getValue(id)
+        }
+
+        /**
+         * This method is called when the given edgeLabel is not yet contained in the stores.
+         * So it generates an ID and saves it to the stores.
+         *
+         * @param edgeLabel The edgeLabel for which we need to generate an ID
+         * @return The ID generated for the given edgeLabel
+         */
+        private fun generateIdentifier(label: String): Long {
+            identifierMap.put(maxId, label)
+            return ++maxId - 1
+        }
+
+    }
+}

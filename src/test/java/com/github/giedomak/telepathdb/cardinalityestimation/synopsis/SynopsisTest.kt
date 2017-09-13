@@ -88,7 +88,7 @@ class SynopsisTest {
                 Path(id1, PathTest.increasingNodes(2, 42)),
                 Path(id1, PathTest.increasingNodes(2, 44)),
                 Path(id2, PathTest.increasingNodes(2, 45)),
-                Path(id2, PathTest.equalNodes(2, 46)),
+                Path(id2, PathTest.equalNodes(2, "46")),
                 Path(id3, PathTest.increasingNodes(2, 46))
         )
 

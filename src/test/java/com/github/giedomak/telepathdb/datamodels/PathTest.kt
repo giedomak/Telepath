@@ -9,7 +9,6 @@ package com.github.giedomak.telepathdb.datamodels
 
 import com.github.giedomak.telepathdb.datamodels.graph.Node
 import com.github.giedomak.telepathdb.datamodels.graph.Path
-import junit.framework.TestCase.assertFalse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
@@ -45,8 +44,8 @@ class PathTest {
     @Test
     fun samePathsEqualEachOtherTest() {
         // given
-        val a = Path(42, equalNodes(4, 42))
-        val b = Path(42, equalNodes(4, 42))
+        val a = Path(42, equalNodes(4, "42"))
+        val b = Path(42, equalNodes(4, "42"))
 
         // then
         assertEquals(a, a)
@@ -56,16 +55,16 @@ class PathTest {
     @Test
     fun differentPathsAreNotEqualsTest() {
         // given
-        val a = Path(42, equalNodes(4, 42))
-        val b = Path(42, equalNodes(4, 24))
-        val c = Path(42, equalNodes(3, 42))
+        val a = Path(42, equalNodes(4, "42"))
+        val b = Path(42, equalNodes(4, "24"))
+        val c = Path(42, equalNodes(3, "42"))
 
-        val differentNodes = equalNodes(3, 42)
+        val differentNodes = equalNodes(3, "42")
         differentNodes.removeAt(differentNodes.size - 1)
-        differentNodes.add(Node(43))
+        differentNodes.add(Node("43"))
 
         val d = Path(42, differentNodes)
-        val e = Path(43, equalNodes(4, 42))
+        val e = Path(43, equalNodes(4, "42"))
 
         // then
         assertNotEquals(a, b)
@@ -80,10 +79,10 @@ class PathTest {
     @Test
     fun generatesSameHashCode() {
         // given
-        val path1 = Path(42, equalNodes(4, 42))
-        val path2 = Path(42, equalNodes(4, 42))
-        val path3 = Path(42, equalNodes(4, 44))
-        val path4 = Path(43, equalNodes(4, 44))
+        val path1 = Path(42, equalNodes(4, "42"))
+        val path2 = Path(42, equalNodes(4, "42"))
+        val path3 = Path(42, equalNodes(4, "44"))
+        val path4 = Path(43, equalNodes(4, "44"))
 
         // then
         assertEquals(path1.hashCode(), path2.hashCode())
@@ -94,7 +93,7 @@ class PathTest {
     @Test
     fun outputsToString() {
         // given
-        val a = Path(42, equalNodes(4, 42))
+        val a = Path(42, equalNodes(4, "42"))
         val output = "Path(" + "pathId=" + a.pathId + ", nodes=" + a.nodes + ")"
 
         // then
@@ -107,7 +106,7 @@ class PathTest {
         val nodes = ArrayList<Node>(size)
         IntStream.generate { ThreadLocalRandom.current().nextInt(10) }
                 .limit(size.toLong())
-                .forEach { random -> nodes.add(Node(random.toLong())) }
+                .forEach { random -> nodes.add(Node(random.toString())) }
 
         return nodes
     }
@@ -121,22 +120,22 @@ class PathTest {
          * @param id    ID the nodes will be given.
          * @return List of nodes with the same ID.
          */
-        fun equalNodes(count: Int, id: Long): MutableList<Node> {
-            return (1..count).mapTo(mutableListOf()) { Node(id) }
+        fun equalNodes(count: Int, label: String): MutableList<Node> {
+            return (1..count).mapTo(mutableListOf()) { Node(label) }
         }
 
-        fun simplePath(pathID: Long, length: Int, value: Long?): Path {
+        fun simplePath(pathID: Long, length: Int, label: String): Path {
             val nodes = ArrayList<Node>(length)
 
-            for (i in 0..length - 1) {
-                nodes.add(Node(value!!))
+            for (i in 0 until length) {
+                nodes.add(Node(label))
             }
 
             return Path(pathID, nodes)
         }
 
         fun increasingNodes(count: Int, startingId: Long): List<Node> {
-            return (startingId..(startingId + count - 1)).map { Node(it) }
+            return (startingId..(startingId + count - 1)).map { Node(it.toString()) }
         }
     }
 }

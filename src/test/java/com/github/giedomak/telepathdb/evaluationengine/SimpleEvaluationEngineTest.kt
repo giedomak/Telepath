@@ -33,8 +33,8 @@ class SimpleEvaluationEngineTest {
 
         // Our expected results, i.e. the Paths along the edge labels `a - b`.
         val expected = listOf(
-                Path(id, PathTest.equalNodes(3, 42)),
-                Path(id, PathTest.equalNodes(3, 33))
+                Path(id, PathTest.equalNodes(3, "42")),
+                Path(id, PathTest.equalNodes(3, "33"))
         )
 
         // Mock our KPathIndexInMemory in order to return the expected results.

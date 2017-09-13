@@ -47,14 +47,14 @@ object GMarkImport {
                 val split = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
                 // split[0] is the starting node id
-                val startNodeID = split[0].toLong()
+                val startNodeLabel = split[0]
                 // split[1] is the edge label
                 val edgeLabel = split[1]
                 // split[2] is the end node id
-                val endNodeID = split[2].toLong()
+                val endNodeLabel = split[2]
 
                 // Put them into a list
-                val nodes = listOf(Node(startNodeID), Node(endNodeID))
+                val nodes = listOf(Node(startNodeLabel), Node(endNodeLabel))
 
                 // Get the path identifier from the pathIdentifierStore
                 val pathIdentifier = PathIdentifierStore.getPathIdByEdgeLabel(edgeLabel)
