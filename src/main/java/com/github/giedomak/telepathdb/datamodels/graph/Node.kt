@@ -15,6 +15,9 @@ import java.io.Serializable
  *
  * See https://github.com/maxsumrall/PathDB/blob/master/src/main/java/com/pathdb/pathIndex/Node.java for the
  * implementation in PathDB.
+ *
+ * @property label The label attached to this node.
+ * @property id The identifier which maps to our label.
  */
 data class Node(val label: String) : Serializable {
 
