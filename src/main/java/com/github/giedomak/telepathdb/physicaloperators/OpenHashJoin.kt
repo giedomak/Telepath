@@ -45,6 +45,7 @@ class OpenHashJoin(
                 stream2.paths.flatMap { v2 ->
                     telepathDB.memoryManager[salt + v2.nodes.first().hashCode().toLong()]
                             .map { v1 -> telepathDB.pathIdentifierStore.concatenatePaths(v1, v2) }
+                            .filter { it != null }
                 }
         )
     }

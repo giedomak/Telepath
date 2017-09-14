@@ -17,8 +17,8 @@ import com.github.giedomak.telepathdb.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepathdb.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
 import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
-import com.github.giedomak.telepathdb.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepathdb.kpathindex.utilities.KExtender
+import com.github.giedomak.telepathdb.kpathindex.utilities.LUBMImport
 import com.github.giedomak.telepathdb.memorymanager.MemoryManager
 import com.github.giedomak.telepathdb.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepathdb.planner.DynamicProgrammingPlanner
@@ -123,7 +123,16 @@ object TelepathDB {
 
         val startTime = System.currentTimeMillis()
 
-        setupDatabase("src/test/resources/cite.txt", 2)
+//        GMarkImport.run(kPathIndex, "src/test/resources/cite.txt")
+        LUBMImport.run(kPathIndex, "/Users/giedomak/Documents/Apps/lubm-uba/Universities.nt")
+
+        // Extend the index and synopsis to k = 2
+        KExtender.run(kPathIndex, 2)
+
+        // Clear the results in our memory and cache
+        memoryManager.clear()
+
+//        kPathIndex.k = 1
 
         // We're alive!
         val endTime = System.currentTimeMillis()
@@ -131,19 +140,4 @@ object TelepathDB {
         Logger.debug("TelepathDB is up and running after " + (endTime - startTime) + " ms")
     }
 
-    /**
-     * Setup the database and extend to our k-value.
-     */
-    private fun setupDatabase(gMarkFile: String, k: Int) {
-
-        try {
-            // Import test dataset
-            GMarkImport.run(kPathIndex, gMarkFile)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        // Extend from k=1 to k
-        KExtender.run(kPathIndex, k)
-    }
 }

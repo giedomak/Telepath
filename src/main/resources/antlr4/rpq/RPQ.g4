@@ -28,7 +28,7 @@ binaryOperator
 // Lexer rules
 
 LABEL
-    : CHARS+ ;
+    : ('!')? (CHARS+) ;
 
 KLEENE_STAR
     : '*' ;

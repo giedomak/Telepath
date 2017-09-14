@@ -37,7 +37,7 @@ class GMarkImportTest {
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel("1")
 
         // Check if there are 100 insertions
-        verify(kPathIndex, times(100)).insert(any())
+        verify(kPathIndex, times(200)).insert(any())
 
         // Check if the first and last path are inserted
         verify(kPathIndex).insert(Path(pathId, listOf(Node("10"), Node("12"))))

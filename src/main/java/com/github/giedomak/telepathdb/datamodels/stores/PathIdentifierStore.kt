@@ -99,9 +99,12 @@ object PathIdentifierStore {
      * @param path2 The last part of the to-be concatenated path.
      * @return The concatenation of the two given paths.
      */
-    fun concatenatePaths(path1: Path, path2: Path): Path {
+    fun concatenatePaths(path1: Path, path2: Path): Path? {
         // Perform the union on both paths
         val edges = getEdgeSet(path1.pathId) + getEdgeSet(path2.pathId)
+
+        // TODO: For now we skip concatenations of its own inverse.
+        if (edges.size == 2 && edges.first() == edges.last().inverse()) return null
 
         // Remove the first node from the second path, otherwise we have a duplicate
         // Perform union on the nodes from path1 and the sliced nodes from path2.
