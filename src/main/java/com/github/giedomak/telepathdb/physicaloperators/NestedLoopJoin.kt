@@ -28,6 +28,7 @@ class NestedLoopJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator
                     pathSupplier.get()
                             .filter { v2 -> v1.nodes.last() == v2.nodes.first() }
                             .map { v2 -> PathIdentifierStore.concatenatePaths(v1, v2) }
+                            .filter { it != null }
                 }
         )
     }

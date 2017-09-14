@@ -10,4 +10,11 @@ package com.github.giedomak.telepathdb.datamodels.graph
 /**
  * Data class for our Edge model.
  */
-data class Edge(val label: String)
+data class Edge(val label: String) {
+
+    fun inverse(): Edge {
+        if (label.indexOf("!") == 0) return Edge(label.substring(1))
+        return Edge("!" + label)
+    }
+
+}

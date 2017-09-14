@@ -7,6 +7,7 @@
 
 package com.github.giedomak.telepathdb.datamodels.graph
 
+import com.github.giedomak.telepathdb.datamodels.stores.PathIdentifierStore
 import java.io.Serializable
 
 /**
@@ -37,6 +38,12 @@ data class Path(val pathId: Long, val nodes: List<Node>) : Serializable {
         // Validations
         if (nodes.size < 2)
             throw IllegalArgumentException("A Path must have at least two nodes")
+    }
+
+    fun inverse(): Path {
+        val edges = PathIdentifierStore.getEdgeSet(pathId).map { it.inverse() }
+        val newId = PathIdentifierStore.getPathIdByEdges(edges.reversed())
+        return Path(newId, nodes.reversed())
     }
 
 }
