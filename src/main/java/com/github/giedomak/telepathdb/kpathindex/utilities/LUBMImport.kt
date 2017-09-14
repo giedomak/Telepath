@@ -31,14 +31,13 @@ object LUBMImport {
                 val split = line.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
                 // split[0] is the starting node id
-                val startNodeLabel = split[0]
+                val startNodeLabel = split[0].replace("<", "").replace(">", "")
                 // split[1] is the edge label
-                var edgeLabel = split[1]
+                var edgeLabel = split[1].replace("<", "").replace(">", "")
                 // split[2] is the end node id
-                val endNodeLabel = split[2]
+                val endNodeLabel = split[2].replace("<", "").replace(">", "")
 
                 // Prepare data
-                edgeLabel = edgeLabel.replace("<", "").replace(">", "")
                 edgeLabel = edgeLabel.replace("http://www.lehigh.edu/~zhp2/2004/0401/univ-bench.owl#", "")
 
                 // Skip noisy stuff
