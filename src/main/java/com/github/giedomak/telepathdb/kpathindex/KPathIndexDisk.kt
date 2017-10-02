@@ -8,17 +8,18 @@ import com.google.common.io.Files
 import com.jakewharton.byteunits.BinaryByteUnit
 import com.pathdb.pathIndex.persisted.LMDBIndexFactory
 import com.pathdb.statistics.StatisticsStoreReader
+import java.io.File
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
-class KPathIndexDisk(override var insertCallback: ((Path) -> Unit)? = null) : KPathIndex {
-
-    // Populates our pathIndex property with the LMDBIndex obtained from PathDB.
-    private val dir = Files.createTempDir()
+class KPathIndexDisk(
+        override var insertCallback: ((Path) -> Unit)? = null,
+        dir: File = Files.createTempDir()
+) : KPathIndex {
 
     private val pathIndex: com.pathdb.pathIndex.PathIndex =
             LMDBIndexFactory(dir)
-                    .withMaxDBSize(1, BinaryByteUnit.GIBIBYTES)
+                    .withMaxDBSize(7, BinaryByteUnit.GIBIBYTES)
                     .build()
 
     override var k = 0
