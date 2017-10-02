@@ -9,7 +9,7 @@ grammar RPQ;
 
 /**
  * Parser rules
- * Each parser rule gets one of the following names: queryOperator, queryOperatorQuery, leaf or parenthesis
+ * Each parser rule gets one of the following names: unaryExpression, binaryExpression, leaf or parenthesis
  */
 
 query

@@ -102,35 +102,35 @@ This document describes how the planner calculates the cheapest physical plan fo
 
   Using this synopsis we can estimate the cardinality of paths where `k = 3`, by using the synopsis for `k = 1` and `k = 2`.
 
-  ```kotlin
-    // See if we got one of these after flattening:
-    //
-    //             HASH_JOIN
-    //             /       \
-    //     INDEX_LOOKUP  INDEX_LOOKUP
-    //       /  |  \        /   \
-    //      a   b   c      d     e      <--- EDGES
-    if (clone.operator in PhysicalOperator.JOIN_OPERATORS && clone.height() == 2) {
+```kotlin
+// See if we got one of these after flattening:
+//
+//             HASH_JOIN
+//             /       \
+//     INDEX_LOOKUP  INDEX_LOOKUP
+//       /  |  \        /   \
+//      a   b   c      d     e      <--- EDGES
+if (clone.operator in PhysicalOperator.JOIN_OPERATORS && clone.height() == 2) {
 
-        val edges: List<Edge> = clone.children.flatMap { it.children.map { it.leaf!! } }
+    val edges: List<Edge> = clone.children.flatMap { it.children.map { it.leaf!! } }
 
-        // We can get | T r/l1 | from our Synopsis.
-        var cardinality = synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
+    // We can get | T r/l1 | from our Synopsis.
+    var cardinality = synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
 
-        // | T r/l1/l2 | = | T r/l1 | * ( l1/l2.two / l1.in )
-        for (index in 2 until edges.size) {
+    // | T r/l1/l2 | = | T r/l1 | * ( l1/l2.two / l1.in )
+    for (index in 2 until edges.size) {
 
-            val l1 = edges[index - 1]
-            val l2 = edges[index]
+        val l1 = edges[index - 1]
+        val l2 = edges[index]
 
-            cardinality *= synopsis.two(Pair(l1, l2)) / synopsis.`in`(l1).toFloat()
+        cardinality *= synopsis.two(Pair(l1, l2)) / synopsis.`in`(l1).toFloat()
 
-        }
-
-        // Return the result
-        return cardinality.toLong()
     }
-  ```
+
+    // Return the result
+    return cardinality.toLong()
+}
+```
 
 ## 6. Costing physical plans
 
@@ -138,25 +138,25 @@ This document describes how the planner calculates the cheapest physical plan fo
 
   For example, the cost of [hash-join](https://github.com/giedomak/TelepathDB/blob/master/src/main/java/com/github/giedomak/telepathdb/physicaloperators/HashJoin.kt#L38) is `2 * (M + N)`. Where `M` is the cardinality of set 1, and `N` is the cardinality of set 2.
 
-  ```kotlin
-    /**
-     * Cost of Hash-join.
-     */
-    override fun cost(): Long {
+```kotlin
+/**
+ * Cost of Hash-join.
+ */
+override fun cost(): Long {
 
-        // The cost to produce results, i.e. 2 * (M + N)
-        val myCost = 2 * (firstChild.cardinality + lastChild.cardinality)
+    // The cost to produce results, i.e. 2 * (M + N)
+    val myCost = 2 * (firstChild.cardinality + lastChild.cardinality)
 
-        // Our input sets might be intermediate results, so take their cost into account.
-        val cost1 = firstChild.cost()
-        val cost2 = lastChild.cost()
+    // Our input sets might be intermediate results, so take their cost into account.
+    val cost1 = firstChild.cost()
+    val cost2 = lastChild.cost()
 
-        // Overflow check
-        if (myCost == Long.MAX_VALUE || cost1 == Long.MAX_VALUE || cost2 == Long.MAX_VALUE) return Long.MAX_VALUE
+    // Overflow check
+    if (myCost == Long.MAX_VALUE || cost1 == Long.MAX_VALUE || cost2 == Long.MAX_VALUE) return Long.MAX_VALUE
 
-        return myCost + cost1 + cost2
-    }
-  ```
+    return myCost + cost1 + cost2
+}
+```
 
 ## 7. Save the cheapest physical plan
 
