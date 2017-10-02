@@ -11,7 +11,7 @@ import com.github.giedomak.telepathdb.TelepathDB
 import com.github.giedomak.telepathdb.datamodels.PathTest
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlanTest
-import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
+import com.github.giedomak.telepathdb.kpathindex.KPathIndexDisk
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
@@ -87,7 +87,7 @@ class KPathIndexCardinalityEstimationTest {
     private fun createIndex() {
 
         // We use the actual KPathIndexInMemory, but we don't want callbacks.
-        TelepathDB.kPathIndex = KPathIndexInMemory()
+        TelepathDB.kPathIndex = KPathIndexDisk()
 
         for (_i in 1..10L) {
             for (i in 1..(10 * _i)) {

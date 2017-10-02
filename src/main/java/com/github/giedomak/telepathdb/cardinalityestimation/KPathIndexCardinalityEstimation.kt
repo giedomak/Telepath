@@ -9,14 +9,14 @@ package com.github.giedomak.telepathdb.cardinalityestimation
 
 import com.github.giedomak.telepathdb.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepathdb.kpathindex.KPathIndex
-import com.github.giedomak.telepathdb.kpathindex.KPathIndexInMemory
+import com.github.giedomak.telepathdb.kpathindex.KPathIndexDisk
 import com.github.giedomak.telepathdb.physicaloperators.PhysicalOperator
 import com.github.giedomak.telepathdb.utilities.Logger
 
 class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstimation {
 
     // We can only use this CardinalityEstimation if the KPathIndexInMemory is used.
-    private val statisticsStore = (kPathIndex as KPathIndexInMemory).getStatisticsStore()
+    private val statisticsStore = (kPathIndex as KPathIndexDisk).getStatisticsStore()
 
     /**
      * Returns the cardinality of a given [pathId] using the StatisticsStore from our kPathIndex.

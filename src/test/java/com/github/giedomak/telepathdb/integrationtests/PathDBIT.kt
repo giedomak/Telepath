@@ -7,10 +7,13 @@
 
 package com.github.giedomak.telepathdb.integrationtests
 
-import com.pathdb.pathIndex.Node
-import com.pathdb.pathIndex.Path
-import com.pathdb.pathIndex.PathPrefix
+import com.google.common.io.Files
+import com.jakewharton.byteunits.BinaryByteUnit
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory
+import com.pathdb.pathIndex.models.ImmutablePath
+import com.pathdb.pathIndex.models.ImmutablePathPrefix
+import com.pathdb.pathIndex.models.Node
+import com.pathdb.pathIndex.persisted.LMDBIndexFactory
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -19,20 +22,42 @@ import java.util.*
 class PathDBIT {
 
     @Test
-    fun pathIndexIntegrationTest() {
+    fun pathIndexInMemoryIntegrationTest() {
         // given
-        val index = InMemoryIndexFactory().inMemoryIndex
+        val index = InMemoryIndexFactory().index
 
         // when
         val nodes = ArrayList<Node>()
         nodes.add(Node(1))
         nodes.add(Node(2))
         nodes.add(Node(3))
-        val path = Path(42, nodes)
+        val path = ImmutablePath.of(42, nodes)
         index.insert(path)
 
         // then
-        val paths = index.getPaths(PathPrefix(42, 3))
+        val paths = index.getPaths(ImmutablePathPrefix.of(42, emptyList()))
+        val iterator = paths.iterator()
+        val next = iterator.next()
+        assertEquals("Should have found the same path in the index.", path, next)
+        assertFalse(iterator.hasNext())
+    }
+
+    @Test
+    fun pathIndexDiskIntegrationTest() {
+        // given
+        val dir = Files.createTempDir()
+        val index = LMDBIndexFactory(dir).withMaxDBSize(1, BinaryByteUnit.GIBIBYTES).build()
+
+        // when
+        val nodes = ArrayList<Node>()
+        nodes.add(Node(1))
+        nodes.add(Node(2))
+        nodes.add(Node(3))
+        val path = ImmutablePath.of(42, nodes)
+        index.insert(path)
+
+        // then
+        val paths = index.getPaths(ImmutablePathPrefix.of(42, emptyList()))
         val iterator = paths.iterator()
         val next = iterator.next()
         assertEquals("Should have found the same path in the index.", path, next)

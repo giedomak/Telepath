@@ -5,7 +5,7 @@
 
     <groupId>com.github.giedomak</groupId>
     <artifactId>telepathdb</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
 
     <name>TelepathDB</name>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </dependency>
 
         <!-- Language recognition; needed for parsing regular path queries -->
@@ -399,6 +399,17 @@
             <url>https://jcenter.bintray.com/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <!-- We want SNAPSHOT artifacts for PathDB -->
+    <repositories>
+        <repository>
+            <id>snapshots-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <!-- Distribute to OSSRH -->
     <distributionManagement>

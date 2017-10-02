@@ -1,28 +1,27 @@
-/**
- * Copyright (C) 2016-2017 - All rights reserved.
- * This file is part of the telepathdb project which is released under the GPLv3 license.
- * See file LICENSE.txt or go to http://www.gnu.org/licenses/gpl.txt for full license details.
- * You may use, distribute and modify this code under the terms of the GPLv3 license.
- */
-
 package com.github.giedomak.telepathdb.kpathindex
 
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
 import com.github.giedomak.telepathdb.datamodels.integrations.PathDBWrapper
 import com.github.giedomak.telepathdb.memorymanager.spliterator.FixedBatchSpliterator
-import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory
+import com.google.common.io.Files
+import com.jakewharton.byteunits.BinaryByteUnit
+import com.pathdb.pathIndex.persisted.LMDBIndexFactory
 import com.pathdb.statistics.StatisticsStoreReader
+import java.io.File
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
-/**
- * InMemory implementation of the KPathIndex.
- */
-class KPathIndexInMemory(override var insertCallback: ((Path) -> Unit)? = null) : KPathIndex {
+class KPathIndexDisk(
+        override var insertCallback: ((Path) -> Unit)? = null,
+        dir: File = Files.createTempDir()
+) : KPathIndex {
 
-    // Populates our pathIndex property with the InMemoryIndex obtained from the InMemoryIndexFactory from the com.pathdb package.
-    private val pathIndex: com.pathdb.pathIndex.PathIndex = InMemoryIndexFactory().index
+    private val pathIndex: com.pathdb.pathIndex.PathIndex =
+            LMDBIndexFactory(dir)
+                    .withMaxDBSize(7, BinaryByteUnit.GIBIBYTES)
+                    .build()
+
     override var k = 0
 
     /**
