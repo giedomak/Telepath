@@ -34,7 +34,7 @@
         <dependency>
             <groupId>com.pathdb</groupId>
             <artifactId>pathdb</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Language recognition; needed for parsing regular path queries -->

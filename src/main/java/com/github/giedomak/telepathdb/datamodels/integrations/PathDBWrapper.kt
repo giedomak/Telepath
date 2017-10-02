@@ -10,6 +10,7 @@ package com.github.giedomak.telepathdb.datamodels.integrations
 import com.github.giedomak.telepathdb.datamodels.graph.Node
 import com.github.giedomak.telepathdb.datamodels.graph.Path
 import com.github.giedomak.telepathdb.datamodels.graph.PathPrefix
+import com.pathdb.pathIndex.models.ImmutablePathPrefix
 import java.util.stream.Collectors
 
 /**
@@ -17,33 +18,33 @@ import java.util.stream.Collectors
  */
 object PathDBWrapper {
 
-    fun toPath(path: Path): com.pathdb.pathIndex.Path {
-        return com.pathdb.pathIndex.Path(path.pathId, toNodeList(path.nodes))
+    fun toPath(path: Path): com.pathdb.pathIndex.models.Path {
+        return com.pathdb.pathIndex.models.ImmutablePath.of(path.pathId, toNodeList(path.nodes))
     }
 
-    fun fromPath(path: com.pathdb.pathIndex.Path): Path {
+    fun fromPath(path: com.pathdb.pathIndex.models.Path): Path {
         return Path(path.pathId, fromNodeList(path.nodes))
     }
 
-    fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.PathPrefix {
-        return com.pathdb.pathIndex.PathPrefix(pathPrefix.pathId, pathPrefix.nodes.size, toNodeList(pathPrefix.nodes))
+    fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.models.PathPrefix{
+        return ImmutablePathPrefix.of(pathPrefix.pathId, toNodeList(pathPrefix.nodes))
     }
 
-    fun toNode(node: Node): com.pathdb.pathIndex.Node {
-        return com.pathdb.pathIndex.Node(node.id)
+    fun toNode(node: Node): com.pathdb.pathIndex.models.Node {
+        return com.pathdb.pathIndex.models.Node(node.id)
     }
 
-    fun fromNode(node: com.pathdb.pathIndex.Node): Node {
+    fun fromNode(node: com.pathdb.pathIndex.models.Node): Node {
         return Node(node.id)
     }
 
-    fun toNodeList(nodes: List<Node>): List<com.pathdb.pathIndex.Node> {
+    fun toNodeList(nodes: List<Node>): List<com.pathdb.pathIndex.models.Node> {
         return nodes.stream()
                 .map { toNode(it) }
                 .collect(Collectors.toList())
     }
 
-    fun fromNodeList(nodes: List<com.pathdb.pathIndex.Node>): List<Node> {
+    fun fromNodeList(nodes: List<com.pathdb.pathIndex.models.Node>): List<Node> {
         return nodes.stream()
                 .map { fromNode(it) }
                 .collect(Collectors.toList())

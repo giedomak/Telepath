@@ -7,10 +7,10 @@
 
 package com.github.giedomak.telepathdb.integrationtests
 
-import com.pathdb.pathIndex.Node
-import com.pathdb.pathIndex.Path
-import com.pathdb.pathIndex.PathPrefix
 import com.pathdb.pathIndex.inMemoryTree.InMemoryIndexFactory
+import com.pathdb.pathIndex.models.ImmutablePath
+import com.pathdb.pathIndex.models.ImmutablePathPrefix
+import com.pathdb.pathIndex.models.Node
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -21,18 +21,18 @@ class PathDBIT {
     @Test
     fun pathIndexIntegrationTest() {
         // given
-        val index = InMemoryIndexFactory().inMemoryIndex
+        val index = InMemoryIndexFactory().index
 
         // when
         val nodes = ArrayList<Node>()
         nodes.add(Node(1))
         nodes.add(Node(2))
         nodes.add(Node(3))
-        val path = Path(42, nodes)
+        val path = ImmutablePath.of(42, nodes);
         index.insert(path)
 
         // then
-        val paths = index.getPaths(PathPrefix(42, 3))
+        val paths = index.getPaths(ImmutablePathPrefix.of(42, emptyList()))
         val iterator = paths.iterator()
         val next = iterator.next()
         assertEquals("Should have found the same path in the index.", path, next)
