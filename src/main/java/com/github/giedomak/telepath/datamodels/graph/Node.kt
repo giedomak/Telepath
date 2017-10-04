@@ -19,16 +19,20 @@ import java.io.Serializable
  * @property label The label attached to this node.
  * @property id The identifier which maps to our label.
  */
-data class Node(val label: String) : Serializable {
+data class Node(val id: Long) : Serializable {
 
-    val id get() = getIdentifier(label)
+    val label get() = getLabel(id)
 
-    constructor(id: Long) : this(getLabel(id))
+    constructor(label: String) : this(getIdentifier(label))
+
+    override fun toString(): String {
+        return this.javaClass.simpleName + "(id=$id, label=$label)"
+    }
 
     /**
      * Store which holds the mapping from labels to identifiers.
      */
-    private companion object IdentifierStore {
+    companion object IdentifierStore {
 
         private val identifierMap = HashBiMap.create<Long, String>()
         private var maxId: Long = 0
@@ -63,6 +67,15 @@ data class Node(val label: String) : Serializable {
         private fun generateIdentifier(label: String): Long {
             identifierMap.put(maxId, label)
             return ++maxId - 1
+        }
+
+        fun numberOfNodes(): Int {
+            return identifierMap.size
+        }
+
+        fun clear() {
+            identifierMap.clear()
+            maxId = 0
         }
 
     }

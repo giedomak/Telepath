@@ -124,7 +124,7 @@ class Synopsis {
             run {
                 afterMath()
             }
-        }, 100, TimeUnit.MILLISECONDS)
+        }, 200, TimeUnit.MILLISECONDS)
 
     }
 

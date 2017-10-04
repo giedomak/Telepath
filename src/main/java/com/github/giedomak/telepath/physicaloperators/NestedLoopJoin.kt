@@ -47,6 +47,7 @@ class NestedLoopJoin(override val physicalPlan: PhysicalPlan) : PhysicalOperator
         // Overflow check
         if (myCost == Long.MAX_VALUE || cost1 == Long.MAX_VALUE || cost2 == Long.MAX_VALUE) return Long.MAX_VALUE
 
+        return Long.MAX_VALUE
         return myCost + cost1 + cost2
     }
 }

@@ -38,6 +38,6 @@ interface KPathIndex {
      *
      * @param path The path we will insert into the KPathIndex.
      */
-    fun insert(path: Path)
+    fun insert(path: Path, dryRun: Boolean = false)
 
 }

@@ -123,6 +123,13 @@ object PathIdentifierStore {
         return kPathIdentifierStore.getOrDefault(k, emptyList())
     }
 
+    fun clear() {
+        pathIdentifierStore.clear()
+        pathEdgeSerializationStore.clear()
+        kPathIdentifierStore.clear()
+        maxId = 1
+    }
+
     /**
      * Generate a path identifier for an edge set and add it to the store
      *

@@ -6,6 +6,7 @@ import com.github.giedomak.telepath.datamodels.integrations.PathDBWrapper
 import com.github.giedomak.telepath.memorymanager.spliterator.FixedBatchSpliterator
 import com.google.common.io.Files
 import com.jakewharton.byteunits.BinaryByteUnit
+import com.pathdb.pathIndex.persisted.LMDB
 import com.pathdb.pathIndex.persisted.LMDBIndexFactory
 import com.pathdb.statistics.StatisticsStoreReader
 import java.io.File
@@ -46,9 +47,9 @@ class KPathIndexDisk(
      *
      * @param path The path we will insert into the KPathIndex.
      */
-    override fun insert(path: Path) {
+    override fun insert(path: Path, dryRun: Boolean) {
         // Insertion into PathDB
-        pathIndex.insert(PathDBWrapper.toPath(path))
+        if (!dryRun) pathIndex.insert(PathDBWrapper.toPath(path))
 
         // Invoke the callback
         insertCallback?.invoke(path)
@@ -59,5 +60,9 @@ class KPathIndexDisk(
      */
     fun getStatisticsStore(): StatisticsStoreReader {
         return pathIndex.statisticsStore
+    }
+
+    fun close() {
+        (pathIndex as LMDB).close()
     }
 }

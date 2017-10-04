@@ -20,10 +20,10 @@ import kotlin.streams.toList
  */
 object SimpleMemoryManager : MemoryManager {
 
-    private const val MEMORY_BUDGET: Int = 1_000_000
-    private const val CACHE_BUDGET: Int = 100_000
-    private const val PARTITION_SIZE: Int = 100_000
-    private const val BATCH_SIZE: Int = 100
+    private const val MEMORY_BUDGET: Int = 3_000_000
+    private const val CACHE_BUDGET: Int = 200_000
+    private const val PARTITION_SIZE: Int = 50_000
+    private const val BATCH_SIZE: Int = 5_000
 
     // HashMaps in which we store the data
     private val pathHashMap = hashMapOf<Long, MutableList<List<Path>>>()
@@ -79,6 +79,7 @@ object SimpleMemoryManager : MemoryManager {
      */
     override fun clear() {
         pathHashMap.clear()
+        fileHashMap.values.forEach { it.forEach { it.delete() } }
         fileHashMap.clear()
         cache = Pair(-1L, emptyList<Path>())
         memoryUsed = 0
@@ -231,7 +232,7 @@ object SimpleMemoryManager : MemoryManager {
      * @return The object.
      */
     private fun deserialize(data: ByteArray): Any {
-        return SerializationUtils.deserialize<Any>(data)
+        return SerializationUtils.deserialize(data)
     }
 
 }
