@@ -1,0 +1,40 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Enumerator - telepath</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepath</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepath.planner.enumerator</a>&nbsp;/&nbsp;<a href=".">Enumerator</a><br/>
+<br/>
+<h1>Enumerator</h1>
+<code><span class="keyword">interface </span><span class="identifier">Enumerator</span></code> <a href="https://github.com/giedomak/Telepath/tree/master/src/main/java/com/github/giedomak/telepath/planner/enumerator/Enumerator.kt#L8">(source)</a>
+<p>Merge two given physical plans by enumerating the applicable physical operators.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="enumerate.html">enumerate</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">enumerate</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepath.planner.enumerator.Enumerator$enumerate(com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, kotlin.Int)/tree1">tree1</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepath.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepath.planner.enumerator.Enumerator$enumerate(com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, kotlin.Int)/tree2">tree2</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepath.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepath.planner.enumerator.Enumerator$enumerate(com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, com.github.giedomak.telepath.datamodels.plans.PhysicalPlan, kotlin.Int)/logicalOperator">logicalOperator</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/-sequence/index.html"><span class="identifier">Sequence</span></a><span class="symbol">&lt;</span><a href="../../com.github.giedomak.telepath.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-simple-enumerator/index.html">SimpleEnumerator</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">SimpleEnumerator</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Enumerator</span></code>
+<p>The SimpleEnumerator will enumerate all physical operators we support for a given logical operator.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

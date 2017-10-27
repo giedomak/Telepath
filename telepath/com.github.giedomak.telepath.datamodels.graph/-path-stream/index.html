@@ -1,0 +1,72 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>PathStream - telepath</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">telepath</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepath.datamodels.graph</a>&nbsp;/&nbsp;<a href=".">PathStream</a><br/>
+<br/>
+<h1>PathStream</h1>
+<code><span class="keyword">class </span><span class="identifier">PathStream</span></code> <a href="https://github.com/giedomak/Telepath/tree/master/src/main/java/com/github/giedomak/telepath/datamodels/graph/PathStream.kt#L15">(source)</a>
+<p>Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">PathStream</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepath.datamodels.graph.PathStream$<init>(com.github.giedomak.telepath.Telepath, java.util.stream.Stream((com.github.giedomak.telepath.datamodels.graph.Path)), kotlin.Boolean)/telepath">telepath</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.giedomak.telepath/-telepath/index.html"><span class="identifier">Telepath</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepath.datamodels.graph.PathStream$<init>(com.github.giedomak.telepath.Telepath, java.util.stream.Stream((com.github.giedomak.telepath.datamodels.graph.Path)), kotlin.Boolean)/_paths">_paths</span><span class="symbol">:</span>&nbsp;<span class="identifier">Stream</span><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.giedomak.telepath.datamodels.graph.PathStream$<init>(com.github.giedomak.telepath.Telepath, java.util.stream.Stream((com.github.giedomak.telepath.datamodels.graph.Path)), kotlin.Boolean)/materialize">materialize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span></code>
+<p>Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="materialize.html">materialize</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">materialize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Boolean indicating if the given stream has to be materialized.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="path-supplier.html">pathSupplier</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pathSupplier</span><span class="symbol">: </span><span class="identifier">Supplier</span><span class="symbol">&lt;</span><span class="identifier">Stream</span><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="paths.html">paths</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">paths</span><span class="symbol">: </span><span class="identifier">Stream</span><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code>
+<p>Stream of paths. This acts as a Supplier if the paths are materialized.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="ensure-materialization.html">ensureMaterialization</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">ensureMaterialization</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PathStream</span></code>
+<p>Materialize the stream if we don't have a memoryManagerId yet.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
