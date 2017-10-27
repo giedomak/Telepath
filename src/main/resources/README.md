@@ -14,7 +14,7 @@ Directory structure:
     │   │   └── com
     │   │       └── github
     │   │           └── giedomak
-    │   │               └── telepathdb
+    │   │               └── telepath
     │   │                   ├── cardinalityestimation
     │   │                   │   └── synopsis
     │   │                   ├── costmodel
@@ -46,7 +46,7 @@ Directory structure:
         │   └── com
         │       └── github
         │           └── giedomak
-        │               └── telepathdb
+        │               └── telepath
         │                   ├── cardinalityestimation
         │                   │   └── synopsis
         │                   ├── datamodels

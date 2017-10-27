@@ -25,4 +25,4 @@ exclude_paths:
   - 'tests/'
   - 'spec/'
   - '**/vendor/'
-  - 'src/main/java/com/telepathdb/memorymanager/spliterator/FixedBatchSpliteratorBase.java'
+  - 'src/main/java/com/telepath/memorymanager/spliterator/FixedBatchSpliteratorBase.java'

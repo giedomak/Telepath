@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.giedomak</groupId>
-    <artifactId>telepathdb</artifactId>
+    <artifactId>telepath</artifactId>
     <version>0.2.0</version>
     <packaging>jar</packaging>
 
-    <name>TelepathDB</name>
+    <name>Telepath</name>
     <description>We propose a path-index based graph database engine.</description>
-    <url>https://github.com/giedomak/TelepathDB</url>
+    <url>https://github.com/giedomak/Telepath</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,6 +51,7 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
         <!-- Matchers that can be combined to create flexible expressions of intent -->
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -58,12 +59,14 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+
         <!-- We use Mockito to mock objects -->
         <dependency>
             <groupId>com.nhaarman</groupId>
             <artifactId>mockito-kotlin-kt1.1</artifactId>
             <version>1.5.0</version>
         </dependency>
+
         <!-- KOTLIN! YAY! -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -76,6 +79,7 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+
         <!-- Check for newer versions with `mvn versions:display-dependency-updates` and `mvn versions:display-property-updates`
          See http://www.mojohaus.org/versions-maven-plugin/usage.html for other usages -->
         <dependency>
@@ -293,7 +297,7 @@
                             <!-- Source directory -->
                             <dir>${project.basedir}</dir>
                             <!-- URL showing where the source code can be accessed through the web browser -->
-                            <url>https://github.com/giedomak/TelepathDB/tree/master</url>
+                            <url>https://github.com/giedomak/Telepath/tree/master</url>
                             <!--Suffix which is used to append the line number to the URL. Use #L for GitHub -->
                             <urlSuffix>#L</urlSuffix>
                         </link>
@@ -346,7 +350,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.github.giedomak.telepathdb.TelepathDB</mainClass>
+                                    <mainClass>com.github.giedomak.telepath.Telepath</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -376,8 +380,8 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/giedomak/TelepathDB</url>
-        <connection>scm:git:https://github.com/giedomak/TelepathDB.git</connection>
+        <url>https://github.com/giedomak/Telepath</url>
+        <connection>scm:git:https://github.com/giedomak/Telepath.git</connection>
     </scm>
 
     <developers>
