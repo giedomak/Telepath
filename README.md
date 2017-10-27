@@ -14,7 +14,7 @@ We propose a path-index based graph database engine.
 
 ## Documentation
 
-The documentation can be found [here](https://giedomak.github.io/Telepath/telepath) and a schematic overview of the architecture can be found [here](https://github.com/giedomak/Telepath/tree/master/src/main/resources).
+The documentation can be found [here](https://giedomak.github.io/Telepath/telepath/) and a schematic overview of the architecture can be found [here](https://github.com/giedomak/Telepath/tree/master/src/main/resources).
 
 ## Life of a Query
 
