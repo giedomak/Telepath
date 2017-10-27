@@ -11,7 +11,6 @@ import com.github.giedomak.telepath.datamodels.graph.Path
 import com.github.giedomak.telepath.memorymanager.spliterator.PartitioningSpliterator.Companion.partition
 import com.github.giedomak.telepath.utilities.Logger
 import org.apache.commons.lang3.SerializationUtils
-import org.parboiled.common.Tuple2
 import java.io.*
 import java.util.stream.Stream
 import kotlin.streams.toList
@@ -31,7 +30,7 @@ object SimpleMemoryManager : MemoryManager {
     private val fileHashMap = hashMapOf<Long, MutableList<File>>()
 
     // Small cache holding one piece of data
-    private var cache = Tuple2(-1L, emptyList<Path>())
+    private var cache = Pair(-1L, emptyList<Path>())
 
     // Keep track of how much memory we have used so far
     private var memoryUsed = 0
@@ -81,7 +80,7 @@ object SimpleMemoryManager : MemoryManager {
     override fun clear() {
         pathHashMap.clear()
         fileHashMap.clear()
-        cache = Tuple2(-1L, emptyList<Path>())
+        cache = Pair(-1L, emptyList<Path>())
         memoryUsed = 0
         maxId = 0L
     }
@@ -103,7 +102,7 @@ object SimpleMemoryManager : MemoryManager {
 
         if (paths.size * PARTITION_SIZE + files.size * PARTITION_SIZE < CACHE_BUDGET) {
             // Small enough for our cache, so store and return true
-            cache = Tuple2(id, getCombinedResults(paths, files).toList())
+            cache = Pair(id, getCombinedResults(paths, files).toList())
             return true
         }
 
@@ -124,8 +123,8 @@ object SimpleMemoryManager : MemoryManager {
 
     private fun getCombinedResults(id: Long): Stream<Path> {
 
-        if (cache.a == id) {
-            return cache.b.stream()
+        if (cache.first == id) {
+            return cache.second.stream()
         }
 
         val paths = pathHashMap.getOrDefault(id, emptyList<List<Path>>())
@@ -133,7 +132,7 @@ object SimpleMemoryManager : MemoryManager {
 
         // Store and use the cache when possible
         if (storeInCacheWhenPossible(id, paths, files))
-            return cache.b.stream()
+            return cache.second.stream()
 
         // Otherwise we just stream our results without the cache
         return getCombinedResults(paths, files)
