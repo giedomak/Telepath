@@ -2,7 +2,7 @@ Telepath
 =====
 [![Build Status](https://travis-ci.org/giedomak/Telepath.svg?branch=master)](https://travis-ci.org/giedomak/Telepath)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/54b77ddc30294e5ca6ce0743f50811a4)](https://www.codacy.com/app/giedomak/Telepath?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=giedomak/Telepath&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/giedomak/Telepath/badges/gpa.svg)](https://codeclimate.com/github/giedomak/Telepath)
+[![Maintainability](https://api.codeclimate.com/v1/badges/be773a45c811a21e1b00/maintainability)](https://codeclimate.com/github/giedomak/Telepath/maintainability)
 [![codebeat badge](https://codebeat.co/badges/ffa0cab1-0edc-4900-b96c-68a17c73e3a8)](https://codebeat.co/projects/github-com-giedomak-telepath-master)
 [![codecov](https://codecov.io/gh/giedomak/Telepath/branch/master/graph/badge.svg)](https://codecov.io/gh/giedomak/Telepath)
 
