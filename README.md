@@ -17,7 +17,7 @@ We propose a path-index based graph database engine.
 The documentation can be found [here](https://giedomak.github.io/Telepath/telepath/) and a schematic overview of the architecture can be found [here](https://github.com/giedomak/Telepath/tree/master/src/main/resources).
 
 Giedo Mak. Telepath: A path-index based graph database engine.
-MSc Thesis. Department of Mathematics and Computer Science, Eindhoven University of Technology. 2017. [PDF](https://github.com/giedomak/Telepath/tree/master/src/main/resources/thesis.pdf)
+MSc Thesis. Department of Mathematics and Computer Science, Eindhoven University of Technology. 2017. [PDF](https://github.com/giedomak/Telepath/raw/master/src/main/resources/thesis.pdf)
 
 ## Life of a Query
 
