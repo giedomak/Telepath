@@ -15,8 +15,8 @@ import com.github.giedomak.telepath.utilities.Logger
 data class Query(val telepath: Telepath, val input: String) {
 
     private var logicalPlan: LogicalPlan? = null
-    private var flattenedLogicalPlan: LogicalPlan? = null
-    private var physicalPlan: PhysicalPlan? = null
+     var flattenedLogicalPlan: LogicalPlan? = null
+     var physicalPlan: PhysicalPlan? = null
     private var results: PathStream? = null
 
     private var startTime = System.currentTimeMillis()
@@ -63,6 +63,10 @@ data class Query(val telepath: Telepath, val input: String) {
         return ms
     }
 
+    fun printEstimate() {
+        Logger.debug(">>>>> Estimated number of results: " + physicalPlan!!.cardinality())
+    }
+
     fun printCount(force: Boolean = false) {
         // If the results were materialized, we actually get a supplier. Meaning we can access the stream again.
         if (results!!.materialize || force) {
@@ -71,8 +75,6 @@ data class Query(val telepath: Telepath, val input: String) {
     }
 
     fun printResults(maxSize: Long = 10) {
-
-        Logger.debug(">>>>> Estimated number of results: " + physicalPlan!!.cardinality())
 
         Logger.info(">>>>> Results limited to $maxSize:")
         results!!.paths.limit(maxSize).forEach { Logger.info(it) }

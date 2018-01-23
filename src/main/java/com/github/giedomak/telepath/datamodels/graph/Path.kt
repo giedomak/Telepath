@@ -32,7 +32,24 @@ import java.io.Serializable
  * @property nodes The ordered list of nodes along this [Path].
  * @constructor Creates a Path with an ID and a list of nodes. The list of nodes should have at least two nodes.
  */
-data class Path(val pathId: Long, val nodes: List<Node>) : Serializable {
+data class Path(val pathId: Long, val nodes: List<Node>) : Serializable, Comparable<Path> {
+
+    private val length get() = nodes.size - 1
+
+    override fun compareTo(other: Path): Int {
+
+        if (this == other) return 0
+        if (this.pathId != other.pathId) return if (this.pathId > other.pathId) 1 else -1
+        if (this.length != other.length) return this.length - other.length
+
+        for (i in nodes.indices) {
+            if (this.nodes[i].id != other.nodes[i].id) {
+                return java.lang.Long.compare(this.nodes[i].id, other.nodes[i].id)
+            }
+        }
+
+        return 0
+    }
 
     init {
         // Validations

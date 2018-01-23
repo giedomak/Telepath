@@ -44,7 +44,7 @@ abstract class FixedBatchSpliteratorBase<T> @JvmOverloads constructor(
 
     internal class HoldingConsumer<T> : Consumer<T> {
 
-        var value: Any? = null
+        var value: T? = null
 
         override fun accept(value: T) {
             this.value = value

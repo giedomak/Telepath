@@ -28,7 +28,8 @@ class KPathIndexCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstim
         return try {
             statisticsStore.getCardinality(pathId)
         } catch (e: NullPointerException) {
-            Logger.error("UNKNOWN CARDINALITY FOR PATH $pathId")
+//            throw IllegalStateException("UNKNOWN CARDINALITY FOR PATH $pathId")
+//            Logger.error("UNKNOWN CARDINALITY FOR PATH $pathId")
             1
         }
     }

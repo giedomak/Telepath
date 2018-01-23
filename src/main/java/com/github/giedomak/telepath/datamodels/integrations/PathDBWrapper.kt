@@ -11,7 +11,7 @@ import com.github.giedomak.telepath.datamodels.graph.Node
 import com.github.giedomak.telepath.datamodels.graph.Path
 import com.github.giedomak.telepath.datamodels.graph.PathPrefix
 import com.pathdb.pathIndex.models.ImmutablePathPrefix
-import java.util.stream.Collectors
+import kotlin.streams.toList
 
 /**
  * Convert our data classes from and to the ones from [com.pathdb].
@@ -26,27 +26,27 @@ object PathDBWrapper {
         return Path(path.pathId, fromNodeList(path.nodes))
     }
 
-    fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.models.PathPrefix{
+    fun toPathPrefix(pathPrefix: PathPrefix): com.pathdb.pathIndex.models.PathPrefix {
         return ImmutablePathPrefix.of(pathPrefix.pathId, toNodeList(pathPrefix.nodes))
     }
 
-    fun toNode(node: Node): com.pathdb.pathIndex.models.Node {
+    private fun toNode(node: Node): com.pathdb.pathIndex.models.Node {
         return com.pathdb.pathIndex.models.Node(node.id)
     }
 
-    fun fromNode(node: com.pathdb.pathIndex.models.Node): Node {
+    private fun fromNode(node: com.pathdb.pathIndex.models.Node): Node {
         return Node(node.id)
     }
 
-    fun toNodeList(nodes: List<Node>): List<com.pathdb.pathIndex.models.Node> {
+    private fun toNodeList(nodes: List<Node>): List<com.pathdb.pathIndex.models.Node> {
         return nodes.stream()
                 .map { toNode(it) }
-                .collect(Collectors.toList())
+                .toList()
     }
 
-    fun fromNodeList(nodes: List<com.pathdb.pathIndex.models.Node>): List<Node> {
+    private fun fromNodeList(nodes: List<com.pathdb.pathIndex.models.Node>): List<Node> {
         return nodes.stream()
                 .map { fromNode(it) }
-                .collect(Collectors.toList())
+                .toList()
     }
 }

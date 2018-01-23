@@ -17,18 +17,19 @@ class SynopsisTest {
 
     @Test
     fun tracksSyn1Statistics() {
+        // TODO: 3 stats have been deleted for benchmark performance
 
-        assertEquals(2, synopsis.out(Edge("a")))
+//        assertEquals(2, synopsis.out(Edge("a")))
         assertEquals(2, synopsis.`in`(Edge("a")))
         assertEquals(3, synopsis.paths(Edge("a")))
         assertEquals(2, synopsis.pairs(Edge("a")))
 
-        assertEquals(2, synopsis.out(Edge("b")))
+//        assertEquals(2, synopsis.out(Edge("b")))
         assertEquals(1, synopsis.`in`(Edge("b")))
         assertEquals(2, synopsis.paths(Edge("b")))
         assertEquals(2, synopsis.pairs(Edge("b")))
 
-        assertEquals(1, synopsis.out(Edge("c")))
+//        assertEquals(1, synopsis.out(Edge("c")))
         assertEquals(1, synopsis.`in`(Edge("c")))
         assertEquals(1, synopsis.paths(Edge("c")))
         assertEquals(1, synopsis.pairs(Edge("c")))
@@ -37,21 +38,22 @@ class SynopsisTest {
 
     @Test
     fun tracksSyn2Statistics() {
+        // TODO: 4 stats have been deleted for benchmark performance
 
-        assertEquals(4, synopsis.out(Pair(Edge("a"), Edge("b"))))
+//        assertEquals(4, synopsis.out(Pair(Edge("a"), Edge("b"))))
         assertEquals(4, synopsis.`in`(Pair(Edge("a"), Edge("b"))))
         assertEquals(4, synopsis.middle(Pair(Edge("a"), Edge("b"))))
         assertEquals(5, synopsis.paths(Pair(Edge("a"), Edge("b"))))
         assertEquals(4, synopsis.pairs(Pair(Edge("a"), Edge("b"))))
-        assertEquals(2, synopsis.one(Pair(Edge("a"), Edge("b"))))
+//        assertEquals(2, synopsis.one(Pair(Edge("a"), Edge("b"))))
         assertEquals(2, synopsis.two(Pair(Edge("a"), Edge("b"))))
 
-        assertEquals(3, synopsis.out(Pair(Edge("b"), Edge("c"))))
+//        assertEquals(3, synopsis.out(Pair(Edge("b"), Edge("c"))))
         assertEquals(3, synopsis.`in`(Pair(Edge("b"), Edge("c"))))
         assertEquals(3, synopsis.middle(Pair(Edge("b"), Edge("c"))))
         assertEquals(4, synopsis.paths(Pair(Edge("b"), Edge("c"))))
         assertEquals(3, synopsis.pairs(Pair(Edge("b"), Edge("c"))))
-        assertEquals(1, synopsis.one(Pair(Edge("b"), Edge("c"))))
+//        assertEquals(1, synopsis.one(Pair(Edge("b"), Edge("c"))))
         assertEquals(1, synopsis.two(Pair(Edge("b"), Edge("c"))))
 
     }
@@ -69,8 +71,8 @@ class SynopsisTest {
         assertEquals(0, synopsis.middle(Pair(Edge("x"), Edge("b"))))
         assertEquals(0, synopsis.paths(Pair(Edge("x"), Edge("b"))))
         assertEquals(0, synopsis.pairs(Pair(Edge("x"), Edge("b"))))
-        assertEquals(0, synopsis.one(Pair(Edge("x"), Edge("b"))))
-        assertEquals(0, synopsis.two(Pair(Edge("x"), Edge("b"))))
+//        assertEquals(0, synopsis.one(Pair(Edge("x"), Edge("b"))))
+//        assertEquals(0, synopsis.two(Pair(Edge("x"), Edge("b"))))
 
     }
 

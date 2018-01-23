@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2016-2017 - All rights reserved.
- * This file is part of the telepathdb project which is released under the GPLv3 license.
+ * This file is part of the Telepath project which is released under the GPLv3 license.
  * See file LICENSE.txt or go to http://www.gnu.org/licenses/gpl.txt for full license details.
  * You may use, distribute and modify this code under the terms of the GPLv3 license.
  */
@@ -11,11 +11,18 @@ import com.github.giedomak.telepath.Telepath
 import com.github.giedomak.telepath.cardinalityestimation.SynopsisCardinalityEstimation
 import com.github.giedomak.telepath.datamodels.Query
 import com.github.giedomak.telepath.datamodels.graph.Node
+import com.github.giedomak.telepath.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepath.kpathindex.KPathIndexDisk
 import com.github.giedomak.telepath.kpathindex.utilities.AdvogatoImport
 import com.github.giedomak.telepath.kpathindex.utilities.KExtender
 import com.github.giedomak.telepath.kpathindex.utilities.LUBMImport
+
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
+import java.text.SimpleDateFormat
+import java.util.*
 
 object Benchmark {
 
@@ -60,34 +67,40 @@ object Benchmark {
     @JvmStatic
     fun main(args: Array<String>?) {
 
-        setupLUBM()
+//        while (true) {
 
-        // Run the experiments
-        val resultsLUBMk2 = runLUBM(true) + runLUBM(false)
-        Logger.debug(resultsLUBMk2)
+            setupLUBM()
+        runLUBMCardinalityEstimation()
+//
+//            // Run the experiments
+//            runLUBM(false)
+//
+//            Telepath.kPathIndex.k = 1
+//            runLUBM(false)
 
-        Telepath.kPathIndex.k = 1
-        val resultsLUBMk1 = runLUBM(true) + runLUBM(false)
-        Logger.debug(resultsLUBMk1)
+            setupAdvogato()
 
-        setupAdvogato()
+            runAdvogatoCardinalityEstimation()
 
-        val resultsAdvogatok2 = runAdvogato(true) + runAdvogato(false)
-        Logger.debug(resultsAdvogatok2)
+//            runAdvogatoCardinality()
 
-        Telepath.kPathIndex.k = 1
-        val resultsAdvogatok1 = runAdvogato(true) + runAdvogato(false)
-        Logger.debug(resultsAdvogatok1)
+//            setupLUBM()
+//
+//            runLUBMCardinality()
 
-        Logger.debug(resultsLUBMk2)
-        Logger.debug(resultsLUBMk1)
-        Logger.debug(resultsAdvogatok2)
-        Logger.debug(resultsAdvogatok1)
+//            runAdvogato(false)
+//
+//            Telepath.kPathIndex.k = 1
+//            runAdvogato(false)
+
+//        }
     }
 
     private fun extendK() {
         // Make sure our Paths are known in our PathIdentifierStore, plus this constructs the Synopsis
         KExtender.run(Telepath.kPathIndex, 2, true)
+
+        (Telepath.cardinalityEstimation as SynopsisCardinalityEstimation).synopsis.done()
     }
 
     private fun setupLUBM() {
@@ -150,12 +163,172 @@ object Benchmark {
         return results
     }
 
+    private fun runLUBMCardinality() {
+
+        for ((key, value) in LUBM) {
+            runCardinality(key, value)
+        }
+
+    }
+
+    private fun runAdvogatoCardinality() {
+
+        for ((key, value) in ADVOGATO) {
+            runCardinality(key, value)
+        }
+
+    }
+
+    private fun runAdvogatoCardinalityEstimation() {
+
+        val yay = mutableListOf<Pair<String, Long>>()
+
+        for ((key, value) in ADVOGATO) {
+            yay.add(runCardinalityEstimation(key, value))
+        }
+
+        Logger.debug(yay)
+
+    }
+
+    private fun runLUBMCardinalityEstimation() {
+
+        val yay = mutableListOf<Pair<String, Long>>()
+
+        for ((key, value) in LUBM) {
+            yay.add(runCardinalityEstimation(key, value))
+        }
+
+        Logger.debug(yay)
+
+    }
+
+    private fun runCardinalityEstimation(key: String, value: String) : Pair<String, Long> {
+        // Retrieve input from the user until we retrieve 'END'
+        val query = Query(Telepath, value)
+
+        // Parse the input
+        query.parseInput()
+
+        // Flatten the logical plan
+        query.flattenLogicalPlan()
+
+        query.generatePhysicalPlan()
+
+        Logger.debug("Result $key: ${query.physicalPlan!!.cardinality()}")
+
+        return Pair(key, query.physicalPlan!!.cardinality())
+    }
+
+    private fun runCardinality(key: String, value: String) {
+
+
+        // Retrieve input from the user until we retrieve 'END'
+        val query = Query(Telepath, value)
+
+        // Parse the input
+        query.parseInput()
+
+        // Flatten the logical plan
+        query.flattenLogicalPlan()
+
+        query.generatePhysicalPlan()
+
+        val start = System.currentTimeMillis()
+
+//        query.physicalPlan!!.physicalOperator!!.evaluate().paths.count().toInt()
+
+//        val yay = System.currentTimeMillis() - start
+
+        val yay = intermediateResult(query.physicalPlan!!)
+
+        Logger.debug("Yay: $yay")
+
+        // Generate the physical plan
+        val plans = CardinalityBenchmark.generate(query.flattenedLogicalPlan!!).toList()
+
+        Logger.debug("Plans: ${plans.size}")
+        plans.forEach { it.print() }
+
+//        val mss = mutableListOf<Long>()
+//
+//        plans.forEach {
+//
+//            val start2 = System.currentTimeMillis()
+//
+//            it.physicalOperator!!.evaluate().paths.count()
+//
+//            val ms2 = System.currentTimeMillis() - start2
+//            mss.add(ms2)
+//
+//            Logger.debug("Result: $ms2")
+//
+//        }
+
+        val intermediateResults = hashMapOf<PhysicalPlan, Int>()
+
+        // Evaluate the physical plan
+        plans.forEach {
+
+            val result = intermediateResult(it)
+
+            intermediateResults.put(it, result)
+
+            Logger.debug("Result: $result")
+
+        }
+
+//        val sorted = mss.sorted()
+        val sorted = intermediateResults.values.sorted()
+
+        Logger.debug("THE CHOSEN ONE: $yay")
+        Logger.debug("Cheap: ${sorted.first()}")
+        Logger.debug("Expensive: ${sorted.last()}")
+        Logger.debug("Average: ${sorted.average()}")
+        Logger.debug("Plans: ${sorted.size}")
+        val index = sorted.indexOf(yay)
+        Logger.debug("Index: $index")
+        Logger.debug("Sorted: $sorted")
+
+
+        // Print the results
+//        if (first) query.printResults(1)
+//        if (!first) query.printCount(true)
+
+        val ms = System.currentTimeMillis() - start
+
+        query.printEstimate()
+        Logger.debug("Query evaluation in $ms")
+
+        val timestamp = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date())
+
+        Files.write(
+                Paths.get("cardinality.txt"),
+                ("$timestamp: \"Query $key: $ms. THE CHOSEN ONE: $yay, " +
+                        "Cheap: ${sorted.first()}, Expensive: ${sorted.last()}, " +
+                        "Average: ${sorted.average()}, Plans: ${sorted.size}" +
+                        ", Index: $index, Sorted: $sorted \r\n").toByteArray(),
+                StandardOpenOption.APPEND,
+                StandardOpenOption.CREATE
+        )
+
+        // Clear the intermediate results in our memory and cache
+        Telepath.memoryManager.clear()
+
+    }
+
+    private fun intermediateResult(pp: PhysicalPlan): Int {
+        return pp.postOrderTraversal().filter { !it.isLeaf }.sumBy { it.physicalOperator!!.evaluate().paths.count().toInt() }
+    }
+
     private fun runQuery(key: String, value: String, results: MutableList<Pair<String, String>>, first: Boolean): MutableList<Pair<String, String>> {
 
         // Record the timings
         val physicalPlanTimings = mutableListOf<Long>()
         val evaluationTimings = mutableListOf<Long>()
         val queryEvaluationTimings = mutableListOf<Long>()
+
+        val k = Telepath.kPathIndex.k
 
         // Run 20 times
         for (i in 1..20) {
@@ -183,7 +356,20 @@ object Benchmark {
             if (first) query.printResults(1)
             if (!first) query.printCount(true)
 
-            queryEvaluationTimings.add(System.currentTimeMillis() - start)
+            val ms = System.currentTimeMillis() - start
+            queryEvaluationTimings.add(ms)
+
+            query.printEstimate()
+            Logger.debug("Query evaluation in $ms")
+
+            val timestamp = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date())
+
+            Files.write(
+                    Paths.get("runs.txt"),
+                    "$timestamp: \"Run $i of Query $key: $ms. K = $k, First: $first \r\n".toByteArray(),
+                    StandardOpenOption.APPEND,
+                    StandardOpenOption.CREATE
+            )
 
             // Clear the intermediate results in our memory and cache
             Telepath.memoryManager.clear()
@@ -193,9 +379,18 @@ object Benchmark {
         val evaluationResult = evaluationTimings.sorted().drop(2).reversed().drop(2).average()
         val queryEvaluationResult = queryEvaluationTimings.sorted().drop(2).reversed().drop(2).average()
 
-        val k = Telepath.kPathIndex.k
 
-        results.add(Pair(key, "$k, $first, $physicalPlanResult, $evaluationResult, $queryEvaluationResult"))
+        val result = Pair(key, "$k, $first, $physicalPlanResult, $evaluationResult, $queryEvaluationResult")
+        results.add(result)
+
+        val timestamp = SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(Date())
+
+        Files.write(
+                Paths.get("benchmark.txt"),
+                "$timestamp: $result \r\n".toByteArray(),
+                StandardOpenOption.APPEND,
+                StandardOpenOption.CREATE
+        )
 
         Logger.debug("$key: $k: $first: Physical plans average: $physicalPlanResult")
         Logger.debug("$key: $k: $first: Evaluations average: $evaluationResult")

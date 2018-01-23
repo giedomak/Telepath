@@ -48,8 +48,8 @@ class SimpleEnumeratorTest {
         //         /     \      /    \          /     \      /    \
         //        a      b     c     d         a      b     c     d
         val expected = listOf(
-                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.HASH_JOIN, listOf(tree1, tree2)),
-                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.NESTED_LOOP_JOIN, listOf(tree1, tree2))
+                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.HASH_JOIN, listOf(tree1, tree2))
+//                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.NESTED_LOOP_JOIN, listOf(tree1, tree2))
         )
 
         val actual = SimpleEnumerator.enumerate(tree1, tree2, LogicalPlan.CONCATENATION).toList()
@@ -80,11 +80,14 @@ class SimpleEnumeratorTest {
         //                          a      b     c     d         a      b     c     d
         val expected = listOf(
                 PhysicalPlanTest.generatePhysicalPlan(PhysicalOperator.INDEX_LOOKUP, listOf("a", "b", "c", "d")),
-                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.HASH_JOIN, listOf(tree1, tree2)),
-                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.NESTED_LOOP_JOIN, listOf(tree1, tree2))
+                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.HASH_JOIN, listOf(tree1, tree2))
+//                PhysicalPlanTest.generatePhysicalPlanWithChildren(PhysicalOperator.NESTED_LOOP_JOIN, listOf(tree1, tree2))
         )
 
         val actual = SimpleEnumerator.enumerate(tree1, tree2, LogicalPlan.CONCATENATION).toList()
+
+        expected.forEach { it.print() }
+        actual.forEach { it.print() }
 
         assertEquals(expected, actual)
     }

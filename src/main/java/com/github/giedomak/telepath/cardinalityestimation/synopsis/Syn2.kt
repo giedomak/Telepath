@@ -7,7 +7,7 @@ import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore
 
 class Syn2 {
 
-    val outMap = hashMapOf<Pair<Edge, Edge>, HashSet<Node>>()
+//    val outMap = hashMapOf<Pair<Edge, Edge>, HashSet<Node>>()
     val inMap = hashMapOf<Pair<Edge, Edge>, HashSet<Node>>()
     val middleMap = hashMapOf<Pair<Edge, Edge>, HashSet<Node>>()
     val pathsMap = hashMapOf<Pair<Edge, Edge>, Int>()
@@ -26,7 +26,7 @@ class Syn2 {
         val node3 = path.nodes.last()
 
         // OUT
-        outMap.compute(edgePair, { _, value -> value?.add(node1); value ?: HashSet(listOf(node1)) })
+//        outMap.compute(edgePair, { _, value -> value?.add(node1); value ?: HashSet(listOf(node1)) })
 
         // IN
         inMap.compute(edgePair, { _, value -> value?.add(node3); value ?: HashSet(listOf(node3)) })
