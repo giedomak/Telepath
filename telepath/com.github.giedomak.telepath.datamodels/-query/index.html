@@ -29,12 +29,26 @@
 <tbody>
 <tr>
 <td>
+<p><a href="flattened-logical-plan.html">flattenedLogicalPlan</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">flattenedLogicalPlan</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepath.datamodels.plans/-logical-plan/index.html"><span class="identifier">LogicalPlan</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="input.html">input</a></p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">input</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
 <p>The input as given by the user.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="physical-plan.html">physicalPlan</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">physicalPlan</span><span class="symbol">: </span><a href="../../com.github.giedomak.telepath.datamodels.plans/-physical-plan/index.html"><span class="identifier">PhysicalPlan</span></a><span class="symbol">?</span></code></td>
 </tr>
 <tr>
 <td>
@@ -55,7 +69,7 @@
 <p><a href="evaluate.html">evaluate</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">evaluate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">evaluate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -69,7 +83,7 @@
 <p><a href="generate-physical-plan.html">generatePhysicalPlan</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">generatePhysicalPlan</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">generatePhysicalPlan</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -80,10 +94,24 @@
 </tr>
 <tr>
 <td>
+<p><a href="print-count.html">printCount</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">printCount</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepath.datamodels.Query$printCount(kotlin.Boolean)/force">force</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="print-estimate.html">printEstimate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">printEstimate</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="print-results.html">printResults</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">printResults</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">printResults</span><span class="symbol">(</span><span class="identifier" id="com.github.giedomak.telepath.datamodels.Query$printResults(kotlin.Long)/maxSize">maxSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;10<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 </tbody>
 </table>

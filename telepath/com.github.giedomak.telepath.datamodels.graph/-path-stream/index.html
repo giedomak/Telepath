@@ -8,7 +8,7 @@
 <a href="../../index.html">telepath</a>&nbsp;/&nbsp;<a href="../index.html">com.github.giedomak.telepath.datamodels.graph</a>&nbsp;/&nbsp;<a href=".">PathStream</a><br/>
 <br/>
 <h1>PathStream</h1>
-<code><span class="keyword">class </span><span class="identifier">PathStream</span></code> <a href="https://github.com/giedomak/Telepath/tree/master/src/main/java/com/github/giedomak/telepath/datamodels/graph/PathStream.kt#L15">(source)</a>
+<code><span class="keyword">class </span><span class="identifier">PathStream</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterable/index.html"><span class="identifier">Iterable</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code> <a href="https://github.com/giedomak/Telepath/tree/master/src/main/java/com/github/giedomak/telepath/datamodels/graph/PathStream.kt#L15">(source)</a>
 <p>Data class for holding streams of paths where we abstract away the materializing into the MemoryManager.</p>
 <h3>Constructors</h3>
 <table>
@@ -65,6 +65,13 @@
 <code><span class="keyword">fun </span><span class="identifier">ensureMaterialization</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">PathStream</span></code>
 <p>Materialize the stream if we don't have a memoryManagerId yet.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="iterator.html">iterator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">iterator</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterator/index.html"><span class="identifier">Iterator</span></a><span class="symbol">&lt;</span><a href="../-path/index.html"><span class="identifier">Path</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 </tbody>
 </table>

@@ -17,6 +17,7 @@ com.github.giedomak.telepath.kpathindex.utilities
 com.github.giedomak.telepath.memorymanager
 com.github.giedomak.telepath.memorymanager.spliterator
 com.github.giedomak.telepath.physicaloperators
+com.github.giedomak.telepath.physicaloperators.sortmergejoin
 com.github.giedomak.telepath.planner
 com.github.giedomak.telepath.planner.enumerator
 com.github.giedomak.telepath.staticparser
