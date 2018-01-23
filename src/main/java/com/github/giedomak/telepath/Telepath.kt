@@ -19,7 +19,9 @@ import com.github.giedomak.telepath.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepath.kpathindex.KPathIndex
 import com.github.giedomak.telepath.kpathindex.KPathIndexDisk
 import com.github.giedomak.telepath.kpathindex.utilities.AdvogatoImport
+import com.github.giedomak.telepath.kpathindex.utilities.GMarkImport
 import com.github.giedomak.telepath.kpathindex.utilities.KExtender
+import com.github.giedomak.telepath.kpathindex.utilities.LUBMImport
 import com.github.giedomak.telepath.memorymanager.MemoryManager
 import com.github.giedomak.telepath.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepath.planner.DynamicProgrammingPlanner
@@ -140,16 +142,14 @@ object Telepath {
 
         val startTime = System.currentTimeMillis()
 
-//        GMarkImport.run(kPathIndex, "src/test/resources/graph10K.txt")
-//        GMarkImport.run(kPathIndex, "src/test/resources/cite.txt")
-//        LUBMImport.run(kPathIndex, "/Users/giedomak/Documents/Apps/lubm-uba/10/Universities.nt", true)
-        AdvogatoImport.run(kPathIndex, "src/test/resources/advogato-graph-2014-07-07.dot", true)
+        GMarkImport.run(kPathIndex, "src/test/resources/graph10K.txt")
+//        LUBMImport.run(kPathIndex, "/Users/giedomak/Documents/Apps/lubm-uba/10/Universities.nt", false)
+//        AdvogatoImport.run(kPathIndex, "src/test/resources/advogato-graph-2014-07-07.dot", false)
 
         Logger.debug("Number of nodes: " + Node.numberOfNodes())
 
         // Extend the index and synopsis to k = 2
-        KExtender.run(kPathIndex, 2, true)
-        kPathIndex.k = 1
+        KExtender.run(kPathIndex, 2, false)
 
         // Clear the results in our memory and cache
         memoryManager.clear()
@@ -159,5 +159,4 @@ object Telepath {
         Logger.debug("----------------------------")
         Logger.debug("Telepath is up and running after " + (endTime - startTime) + " ms")
     }
-
 }
