@@ -15,7 +15,7 @@ object Logger {
     private var padding = 20
 
     fun debug(message: Any, println: Boolean = true) {
-        log(message.toString(), println)
+        log(message.toString(), println = println)
     }
 
     fun info(message: Any) {
@@ -27,11 +27,11 @@ object Logger {
     }
 
     fun error(message: Any) {
-        log(message.toString())
+        log(message.toString(), error = true)
     }
 
     fun fatal(message: Any) {
-        log(message.toString())
+        log(message.toString(), error = true)
     }
 
     /**
@@ -40,15 +40,23 @@ object Logger {
      * @param message The message to print.
      * @param println Boolean indicating if we want to print on a newline or not.
      */
-    private fun log(message: String, println: Boolean = true) {
+    private fun log(message: String, println: Boolean = true, error: Boolean = false) {
 
         // Dynamically adjust our padding length
         if (callerClassName.length > padding) padding = callerClassName.length
 
         if (println) {
-            println(padLeft(callerClassName, padding) + ": " + message)
+            if(error) {
+                System.err.println(padLeft(callerClassName, padding) + ": " + message)
+            } else {
+                println(padLeft(callerClassName, padding) + ": " + message)
+            }
         } else {
-            print(padLeft(callerClassName, padding) + ": " + message)
+            if(error) {
+                System.err.print(padLeft(callerClassName, padding) + ": " + message)
+            } else {
+                print(padLeft(callerClassName, padding) + ": " + message)
+            }
         }
     }
 

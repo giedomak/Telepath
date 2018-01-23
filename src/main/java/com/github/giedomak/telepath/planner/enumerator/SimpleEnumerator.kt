@@ -57,18 +57,27 @@ object SimpleEnumerator : Enumerator {
         //      INDEX_LOOKUP
         //        /    \
         //       a      b
-        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP).flatten()
+        val plan = tree1.merge(tree2, PhysicalOperator.INDEX_LOOKUP)
+        val flattened = plan.flatten()
 
         // If the height of this tree is 1 (max number of edges to any leaf), AND the number of children
         // is smaller or equal to the k-value of our index, we can do an INDEX_LOOKUP!
-        if (plan.height() == 1 && plan.children.size <= plan.query.telepath.kPathIndex.k) {
-            physicalPlans.add(plan)
+        if (flattened.height() == 1) {
+            if (flattened.children.size <= flattened.query.telepath.kPathIndex.k) {
+                physicalPlans.add(flattened)
+            }
+//            plan.operator = PhysicalOperator.SORT_MERGE_JOIN
+//            plan.children.first().children.forEach { it.leaf = it.leaf!!.inverse() }
+//            plan.children.first().children.reverse()
+//            physicalPlans.add(plan)
         }
 
         // Don't forget to enumerate all the JOIN_OPERATORS
-        PhysicalOperator.JOIN_OPERATORS.forEach {
-            physicalPlans.add(tree1.merge(tree2, it))
-        }
+//        PhysicalOperator.JOIN_OPERATORS.forEach {
+//            physicalPlans.add(tree1.merge(tree2, it))
+//        }
+
+        physicalPlans.add(tree1.merge(tree2, PhysicalOperator.HASH_JOIN))
 
         return physicalPlans.asSequence()
     }

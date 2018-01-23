@@ -16,7 +16,11 @@ class PathStream(
         telepath: Telepath?,
         private val _paths: Stream<Path>,
         val materialize: Boolean = true
-) {
+) : Iterable<Path> {
+
+    override fun iterator(): Iterator<Path> {
+        return paths.iterator()
+    }
 
     // We only care about the memory manager
     private val memoryManager = telepath?.memoryManager

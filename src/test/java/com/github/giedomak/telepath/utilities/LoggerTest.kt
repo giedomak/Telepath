@@ -21,15 +21,18 @@ class LoggerTest {
     // Need to test console output (System.out)
     private val outContent = ByteArrayOutputStream()
     private val stdout = System.out
+    private val stderr = System.err
 
     @Before
     fun setUpStreams() {
         System.setOut(PrintStream(outContent))
+        System.setErr(PrintStream(outContent))
     }
 
     @After
     fun cleanUpStreams() {
         System.setOut(stdout)
+        System.setErr(stderr)
     }
 
     @Test

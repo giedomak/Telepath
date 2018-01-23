@@ -30,7 +30,7 @@ class LUBMImportTest {
         val pathId = PathIdentifierStore.getPathIdByEdgeLabel("worksFor")
 
         // Check if there are 100 insertions
-        verify(kPathIndex, times(98)).insert(any())
+        verify(kPathIndex, times(98)).insert(any(), any())
 
         // Check if the first and last path are inserted
         verify(kPathIndex).insert(Path(pathId, listOf(Node("http://www.Department0.University0.edu/FullProfessor3"), Node("http://www.Department0.University0.edu"))))

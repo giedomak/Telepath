@@ -11,7 +11,7 @@ import com.github.giedomak.telepath.physicaloperators.PhysicalOperator
  *
  * The [Synopsis] is a statistics store which holds information regarding concatenations.
  */
-class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : CardinalityEstimation {
+class SynopsisCardinalityEstimation(kPathIndex: KPathIndex) : CardinalityEstimation {
 
     var synopsis = Synopsis()
 
@@ -35,9 +35,15 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
         //     INDEX_LOOKUP  INDEX_LOOKUP
         //       /  |  \        /   \
         //      a   b   c      d     e      <--- EDGES
-        if (clone.operator in PhysicalOperator.JOIN_OPERATORS && clone.height() == 2) {
+        if (physicalPlan.height() > 1 && physicalPlan.postOrderTraversal().none { it.operator == PhysicalOperator.UNION }) {
 
-            val edges: List<Edge> = clone.children.flatMap { it.children.map { it.leaf!! } }
+            val modified = physicalPlan.clone()
+
+            modified.postOrderTraversal()
+                    .filter { it.operator == PhysicalOperator.SORT_MERGE_JOIN }
+                    .forEach { it.children.first().children.forEach { it.leaf = it.leaf!!.inverse() } }
+
+            val edges: List<Edge> = modified.postOrderTraversal().filter { it.isLeaf }.map { it.leaf!! }.toList()
 
             // We can get | T r/l1 | from our Synopsis.
             var cardinality = synopsis.pairs(Pair(edges[0], edges[1])).toFloat()
@@ -54,9 +60,18 @@ class SynopsisCardinalityEstimation(private val kPathIndex: KPathIndex) : Cardin
 
             // Return the result
             return cardinality.toLong()
+        } else if (clone.operator == PhysicalOperator.INDEX_LOOKUP && clone.height() == 1) {
+
+            val edges: List<Edge> = clone.children.map { it.leaf!! }
+
+            if (edges.size == 1) {
+                return synopsis.pairs(edges.first()).toLong()
+            } else if (edges.size == 2) {
+                return synopsis.pairs(Pair(edges.first(), edges.last())).toLong()
+            }
         }
 
         // We got no use here, switch to the KPathIndexCardinalityEstimation.
-        return KPathIndexCardinalityEstimation(kPathIndex).getCardinality(physicalPlan)
+        return KPathIndexCardinalityEstimation(physicalPlan.query.telepath.kPathIndex).getCardinality(physicalPlan)
     }
 }

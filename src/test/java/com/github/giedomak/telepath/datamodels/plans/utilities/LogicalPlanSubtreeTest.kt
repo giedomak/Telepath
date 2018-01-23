@@ -53,12 +53,14 @@ class LogicalPlanSubtreeTest {
         input.children.add(1, child)
 
         // Expected:
-        //     UNION   UNION    CONCATENATION    CONCATENATION
-        //      / \     / \         /   \            /   \
-        //     b   c   c   d       e     f          f     g
+        //     UNION   UNION    UNION   CONCATENATION    CONCATENATION
+        //      / \     / \      / \       /   \            /   \
+        //     b   c   c   b    d   b     e     f          f     g
+        // TODO: Union should include 'b' - 'd' subtree
         val expected = listOf(
                 LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("b", "c")),
                 LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("c", "d")),
+//                LogicalPlanTest.generateLogicalPlan(LogicalPlan.UNION, listOf("d", "b")),
                 LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("e", "f")),
                 LogicalPlanTest.generateLogicalPlan(LogicalPlan.CONCATENATION, listOf("f", "g"))
         )

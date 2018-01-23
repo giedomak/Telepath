@@ -12,10 +12,10 @@ import com.github.giedomak.telepath.datamodels.graph.Node
 import com.github.giedomak.telepath.datamodels.graph.Path
 import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore.kPathIdentifierStore
 import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore.maxId
-import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore.pathEdgeSerializationStore
 import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore.pathIdentifierStore
 import com.github.giedomak.telepath.utilities.Logger
-import org.apache.commons.lang3.StringUtils
+import com.google.common.collect.HashBiMap
+import org.apache.commons.lang.StringUtils
 import java.util.stream.Collectors
 
 /**
@@ -33,10 +33,9 @@ import java.util.stream.Collectors
  */
 object PathIdentifierStore {
 
-    private val pathIdentifierStore = hashMapOf<Long, String>()
-    private val pathEdgeSerializationStore = hashMapOf<String, Long>()
-    private val kPathIdentifierStore = hashMapOf<Int, MutableList<Long>>()
-    private var maxId: Long = 1
+    private val pathIdentifierStore = HashBiMap.create<Long, List<Edge>>()
+    private val kPathIdentifierStore = HashMap<Int, MutableList<Long>>()
+    private var maxId = 1L
 
     /**
      * Get the Path identifier which belongs to a certain edge set.
@@ -46,10 +45,10 @@ object PathIdentifierStore {
      */
     fun getPathIdByEdges(edges: List<Edge>): Long {
         // Serialize the edge set
-        val serialized = serializeEdgeSet(edges)
+//        val serialized = serializeEdgeSet(edges)
 
         // Access the store or generate a key
-        return pathEdgeSerializationStore[serialized] ?: generatePathId(edges)
+        return pathIdentifierStore.inverse()[edges] ?: generatePathId(edges)
     }
 
     /**
@@ -81,11 +80,12 @@ object PathIdentifierStore {
      * @return A list of Edges belonging to a certain path identifier.
      */
     fun getEdgeSet(pathIdentifier: Long): List<Edge> {
-        if (pathIdentifierStore.containsKey(pathIdentifier)) {
-            return deserializeEdgeSet(pathIdentifierStore[pathIdentifier] ?: "")
-        } else {
-            throw IllegalArgumentException("PathIdentifierStore: pathIdentifier not known")
-        }
+        return pathIdentifierStore[pathIdentifier]!!
+//        if (pathIdentifierStore.containsKey(pathIdentifier)) {
+//            return deserializeEdgeSet(pathIdentifierStore[pathIdentifier]!!)
+//        } else {
+//            throw IllegalArgumentException("PathIdentifierStore: pathIdentifier not known")
+//        }
     }
 
     /**
@@ -123,23 +123,28 @@ object PathIdentifierStore {
         return kPathIdentifierStore.getOrDefault(k, emptyList())
     }
 
+    fun clear() {
+        pathIdentifierStore.clear()
+        kPathIdentifierStore.clear()
+        maxId = 1
+    }
+
     /**
      * Generate a path identifier for an edge set and add it to the store
      *
      * @param edges List of edges of which to generate a Path identifier for
      * @return The generated path identifier
      */
+    @Synchronized
     private fun generatePathId(edges: List<Edge>): Long {
         // Serialize the edge set
-        val serialized = serializeEdgeSet(edges)
+//        val serialized = serializeEdgeSet(edges)
 
         // Add to the stores
-        pathEdgeSerializationStore.put(serialized, maxId)
-        pathIdentifierStore.put(maxId, serialized)
+        pathIdentifierStore.put(maxId, edges)
 
         // Add to the k-store
-        val pathIds = kPathIdentifierStore.getOrPut(edges.size, { mutableListOf() })
-        pathIds.add(maxId)
+        kPathIdentifierStore.compute(edges.size, { _, value -> value?.add(maxId); value ?: mutableListOf(maxId) })
 
         // Print the addition
         Logger.debug("Added: $maxId: $edges")

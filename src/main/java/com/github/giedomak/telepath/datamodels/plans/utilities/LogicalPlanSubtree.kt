@@ -57,7 +57,8 @@ object LogicalPlanSubtree {
         if (getSize(tree) == targetSize) return listOf(tree)
 
         // Init our results list
-        val subtrees = mutableListOf<LogicalPlan>()
+        val subtrees = mutableSetOf<LogicalPlan>()
+
 
         for ((index, child) in tree.children.withIndex()) {
 
@@ -69,7 +70,7 @@ object LogicalPlanSubtree {
             if (accumulatedSize < targetSize) {
 
                 // Trying to find a subList of our children which together have the targetSize.
-                for (toIndex in (index + 1)..(tree.children.size - 1)) {
+                for (toIndex in (index + 1) until tree.children.size) {
 
                     // Add the size of our brother to the accumulatedSize
                     accumulatedSize += getSize(tree.children[toIndex])
@@ -93,6 +94,6 @@ object LogicalPlanSubtree {
                 subtrees.addAll(subtreesOfSize(child, targetSize))
             }
         }
-        return subtrees
+        return subtrees.toList()
     }
 }

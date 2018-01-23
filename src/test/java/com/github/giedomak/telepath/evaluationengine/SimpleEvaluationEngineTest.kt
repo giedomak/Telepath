@@ -8,17 +8,21 @@
 package com.github.giedomak.telepath.evaluationengine
 
 import com.github.giedomak.telepath.Telepath
+import com.github.giedomak.telepath.cardinalityestimation.KPathIndexCardinalityEstimation
 import com.github.giedomak.telepath.datamodels.PathTest
 import com.github.giedomak.telepath.datamodels.Query
 import com.github.giedomak.telepath.datamodels.graph.Path
 import com.github.giedomak.telepath.datamodels.graph.PathPrefix
+import com.github.giedomak.telepath.datamodels.plans.PhysicalPlan
 import com.github.giedomak.telepath.datamodels.plans.PhysicalPlanTest
 import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepath.kpathindex.KPathIndexInMemory
 import com.github.giedomak.telepath.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepath.physicaloperators.PhysicalOperator
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Test
 import kotlin.streams.toList
 import kotlin.test.assertEquals
@@ -88,16 +92,20 @@ class SimpleEvaluationEngineTest {
             on { search(PathPrefix(id2)) }.doReturn(expected2.stream())
         }
 
+        val cardinalityEstimationMock = mock<KPathIndexCardinalityEstimation> {
+            on { getCardinality(any<PhysicalPlan>()) }.doReturn(20)
+        }
+
         val telepathMock = mock<Telepath> {
             on { evaluationEngine }.doReturn(SimpleEvaluationEngine)
             on { kPathIndex }.doReturn(kPathIndexMock)
             on { pathIdentifierStore }.doReturn(PathIdentifierStore)
             on { memoryManager }.doReturn(SimpleMemoryManager)
+            on { cardinalityEstimation }.doReturn(cardinalityEstimationMock)
         }
 
-        val queryMock = mock<Query> {
-            on { telepath }.doReturn(telepathMock)
-        }
+        val queryMock = mock<Query>()
+        whenever(queryMock.telepath).doReturn(telepathMock)
 
         // Our physical-plan:
         //         HASH_JOIN

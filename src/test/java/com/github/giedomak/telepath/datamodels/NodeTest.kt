@@ -18,7 +18,7 @@ class NodeTest {
     fun outputsToString() {
         // given
         val node = Node("33")
-        val expected = "Node(" + "label=33)"
+        val expected = "Node(id=" + node.id + ", label=33)"
 
         // then
         assertEquals(expected, node.toString())

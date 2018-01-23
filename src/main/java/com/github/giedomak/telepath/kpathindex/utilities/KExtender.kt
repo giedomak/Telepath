@@ -19,7 +19,7 @@ import com.github.giedomak.telepath.utilities.Logger
  */
 object KExtender {
 
-    fun run(kPathIndex: KPathIndex, k: Int): Long {
+    fun run(kPathIndex: KPathIndex, k: Int, dryRun: Boolean = false): Long {
 
         // Return if our kPathIndex is already of size k
         if (kPathIndex.k >= k) return 0
@@ -39,17 +39,31 @@ object KExtender {
 
         // Concatenate the current K paths, with the K=1 paths so we get the K=K+1 paths
         val paths = OpenHashJoin(
-                PathStream(null, source_k, false),
-                PathStream(null, k1, false)
+                stream1 = PathStream(null, source_k, false),
+                stream2 = PathStream(null, k1, false),
+                materialize = true,
+                parallel = false
         ).evaluate().paths
 
         var count = 0
 
+        var start = System.currentTimeMillis()
+
         // Make sure we insert after we collected the results, otherwise we get a concurrency exception
         // because we are inserting while we haven't consumed the whole stream yet.
-        paths.forEach { kPathIndex.insert(it); count++ }
+        paths.forEach {
+            kPathIndex.insert(it, dryRun)
+            count++
+            if (count % 5000 == 0) {
+                val secs = (System.currentTimeMillis() - start) / 1_000f
+                val speed = (5000 / secs).toInt()
+                Logger.debug("\r Currently inserted: $count, Speed: $speed per second.", false)
+                start = System.currentTimeMillis()
 
-        Logger.debug("Concatenation done: $count")
+            }
+        }
+
+        Logger.debug("\nConcatenation done: $count")
 
         // Set K to K+1
         kPathIndex.k = kPathIndex.k + 1

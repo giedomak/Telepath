@@ -44,8 +44,9 @@ interface PhysicalOperator {
 
         const val HASH_JOIN = 2
         const val NESTED_LOOP_JOIN = 3
+        const val SORT_MERGE_JOIN = 4
 
-        const val UNION = 4
+        const val UNION = 5
 
         // ------ COLLECTIONS -------
 
@@ -69,6 +70,7 @@ interface PhysicalOperator {
 
                 HASH_JOIN -> HashJoin(physicalPlan)
                 NESTED_LOOP_JOIN -> NestedLoopJoin(physicalPlan)
+                SORT_MERGE_JOIN -> SortMergeJoin(physicalPlan)
 
                 UNION -> Union(physicalPlan)
 

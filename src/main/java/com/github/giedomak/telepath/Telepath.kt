@@ -12,13 +12,14 @@ import com.github.giedomak.telepath.cardinalityestimation.SynopsisCardinalityEst
 import com.github.giedomak.telepath.costmodel.AdvancedCostModel
 import com.github.giedomak.telepath.costmodel.CostModel
 import com.github.giedomak.telepath.datamodels.Query
+import com.github.giedomak.telepath.datamodels.graph.Node
 import com.github.giedomak.telepath.datamodels.stores.PathIdentifierStore
 import com.github.giedomak.telepath.evaluationengine.EvaluationEngine
 import com.github.giedomak.telepath.evaluationengine.SimpleEvaluationEngine
 import com.github.giedomak.telepath.kpathindex.KPathIndex
 import com.github.giedomak.telepath.kpathindex.KPathIndexDisk
+import com.github.giedomak.telepath.kpathindex.utilities.AdvogatoImport
 import com.github.giedomak.telepath.kpathindex.utilities.KExtender
-import com.github.giedomak.telepath.kpathindex.utilities.LUBMImport
 import com.github.giedomak.telepath.memorymanager.MemoryManager
 import com.github.giedomak.telepath.memorymanager.SimpleMemoryManager
 import com.github.giedomak.telepath.planner.DynamicProgrammingPlanner
@@ -36,7 +37,10 @@ object Telepath {
     // ------ MODULES ------
 
     var staticParser: StaticParser = StaticParserRPQ
+//    var kPathIndex: KPathIndex = KPathIndexDisk(dir = File("/Users/giedomak/Desktop/10k2/"))
+//    var kPathIndex: KPathIndex = KPathIndexDisk(dir = File("/Users/giedomak/Desktop/Advogatok2/"))
     var kPathIndex: KPathIndex = KPathIndexDisk()
+//    var kPathIndex: KPathIndex = KPathIndexInMemory()
     var evaluationEngine: EvaluationEngine = SimpleEvaluationEngine
     var costModel: CostModel = AdvancedCostModel
     var cardinalityEstimation: CardinalityEstimation = SynopsisCardinalityEstimation(kPathIndex = kPathIndex)
@@ -75,26 +79,39 @@ object Telepath {
 
         while (true) {
 
-            // Retrieve input from the user until we retrieve 'END'
-            val query = Query(this, getUserInput(scanner))
+            try {
 
-            // Parse the input
-            query.parseInput()
+                // Retrieve input from the user until we retrieve 'END'
+                val query = Query(this, getUserInput(scanner))
 
-            // Flatten the logical plan
-            query.flattenLogicalPlan()
+                // Parse the input
+                query.parseInput()
 
-            // Generate the physical plan
-            query.generatePhysicalPlan()
+                // Flatten the logical plan
+                query.flattenLogicalPlan()
 
-            // Evaluate the physical plan
-            query.evaluate()
+                // Generate the physical plan
+                query.generatePhysicalPlan()
 
-            // Print the results
-            query.printResults()
+                // Evaluate the physical plan
+                query.evaluate()
 
-            // Clear the intermediate results in our memory and cache
-            memoryManager.clear()
+                // Print the results
+                query.printEstimate()
+//                query.printCount(true)
+                query.printResults()
+
+                // Clear the intermediate results in our memory and cache
+                memoryManager.clear()
+
+            } catch (exception: Exception) {
+                if (exception is IllegalArgumentException) {
+                    // Re-raise the exception when we are dealing with IllegalArgumentException.
+                    // This is used to test the integration of this function.
+                    throw exception
+                }
+                exception.printStackTrace()
+            }
         }
     }
 
@@ -123,16 +140,19 @@ object Telepath {
 
         val startTime = System.currentTimeMillis()
 
+//        GMarkImport.run(kPathIndex, "src/test/resources/graph10K.txt")
 //        GMarkImport.run(kPathIndex, "src/test/resources/cite.txt")
-        LUBMImport.run(kPathIndex, "/Users/giedomak/Documents/Apps/lubm-uba/Universities.nt")
+//        LUBMImport.run(kPathIndex, "/Users/giedomak/Documents/Apps/lubm-uba/10/Universities.nt", true)
+        AdvogatoImport.run(kPathIndex, "src/test/resources/advogato-graph-2014-07-07.dot", true)
+
+        Logger.debug("Number of nodes: " + Node.numberOfNodes())
 
         // Extend the index and synopsis to k = 2
-        KExtender.run(kPathIndex, 2)
+        KExtender.run(kPathIndex, 2, true)
+        kPathIndex.k = 1
 
         // Clear the results in our memory and cache
         memoryManager.clear()
-
-//        kPathIndex.k = 1
 
         // We're alive!
         val endTime = System.currentTimeMillis()

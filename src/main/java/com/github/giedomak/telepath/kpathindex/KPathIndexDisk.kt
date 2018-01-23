@@ -9,6 +9,7 @@ import com.jakewharton.byteunits.BinaryByteUnit
 import com.pathdb.pathIndex.persisted.LMDBIndexFactory
 import com.pathdb.statistics.StatisticsStoreReader
 import java.io.File
+import java.util.*
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
@@ -19,7 +20,7 @@ class KPathIndexDisk(
 
     private val pathIndex: com.pathdb.pathIndex.PathIndex =
             LMDBIndexFactory(dir)
-                    .withMaxDBSize(7, BinaryByteUnit.GIBIBYTES)
+                    .withMaxDBSize(45, BinaryByteUnit.GIBIBYTES)
                     .build()
 
     override var k = 0
@@ -34,9 +35,11 @@ class KPathIndexDisk(
         // We have to cast the Path model from pathDB's one, to our own again
         return StreamSupport.stream(
                 FixedBatchSpliterator(
-                        pathIndex.getPaths(
-                                PathDBWrapper.toPathPrefix(pathPrefix)
-                        ).spliterator()
+                        Spliterators.spliteratorUnknownSize(
+                                pathIndex.getPaths(
+                                        PathDBWrapper.toPathPrefix(pathPrefix)
+                                ).iterator()
+                        , Spliterator.SORTED or Spliterator.ORDERED or Spliterator.NONNULL or Spliterator.DISTINCT or Spliterator.IMMUTABLE)
                 ), false
         ).map { PathDBWrapper.fromPath(it) }
     }
@@ -46,9 +49,9 @@ class KPathIndexDisk(
      *
      * @param path The path we will insert into the KPathIndex.
      */
-    override fun insert(path: Path) {
+    override fun insert(path: Path, dryRun: Boolean) {
         // Insertion into PathDB
-        pathIndex.insert(PathDBWrapper.toPath(path))
+        if (!dryRun) pathIndex.insert(PathDBWrapper.toPath(path))
 
         // Invoke the callback
         insertCallback?.invoke(path)

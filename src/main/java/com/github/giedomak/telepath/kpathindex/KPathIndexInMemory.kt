@@ -47,9 +47,9 @@ class KPathIndexInMemory(override var insertCallback: ((Path) -> Unit)? = null) 
      *
      * @param path The path we will insert into the KPathIndex.
      */
-    override fun insert(path: Path) {
+    override fun insert(path: Path, dryRun: Boolean) {
         // Insertion into PathDB
-        pathIndex.insert(PathDBWrapper.toPath(path))
+        if (!dryRun) pathIndex.insert(PathDBWrapper.toPath(path))
 
         // Invoke the callback
         insertCallback?.invoke(path)

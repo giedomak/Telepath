@@ -20,7 +20,7 @@ class PhysicalPlan(
         override var operator: Int = PhysicalOperator.LEAF
 ) : AbstractMultiTree<PhysicalPlan>(query) {
 
-    val physicalOperator = PhysicalOperator.getPhysicalOperator(this)
+    val physicalOperator get() = PhysicalOperator.getPhysicalOperator(this)
     override val operatorName get() = physicalOperator?.javaClass?.simpleName
 
     // Augment our tree with the cardinality.

@@ -29,7 +29,7 @@ class FixedBatchSpliterator<T> @JvmOverloads constructor(
     companion object {
 
         fun <T> withBatchSize(input: Stream<T>, batchSize: Int): Stream<T> {
-            return stream(FixedBatchSpliterator(input.spliterator(), batchSize), true)
+            return stream(FixedBatchSpliterator(input.spliterator(), batchSize), false)
         }
 
         fun <T> batchedSpliterator(toWrap: Spliterator<T>, batchSize: Int): FixedBatchSpliterator<T> {
